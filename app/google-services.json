@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "195721057706",
+    "project_id": "mypills-9d156",
+    "storage_bucket": "mypills-9d156.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195721057706:android:5e6022d287dbe88ffc47d3",
+        "android_client_info": {
+          "package_name": "app.vazovsky.mypills"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "195721057706-7hi1106l8ea925vph5mjoldo976d2d1k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.vazovsky.mypills",
+            "certificate_hash": "4f668add255c91fd5e42285dd4b3474b534a4e4b"
+          }
+        },
+        {
+          "client_id": "195721057706-vnnrvtl768ttgcnqandu4f57loma1bke.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCt7KZ2PmjqeGtbzl1SB220sRtoP2eJ3Q4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "195721057706-vnnrvtl768ttgcnqandu4f57loma1bke.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppBarStyle" parent="Widget.Design.AppBarLayout">
+        <item name="android:background">@color/transparent</item>
+        <item name="liftOnScroll">true</item>
+    </style>
+
+    <style name="ToolbarStyle" parent="Widget.MaterialComponents.Toolbar">
+        <item name="navigationIconTint">@color/white</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="android:titleTextStyle">@style/ToolbarTitleTextStyle</item>
+        <item name="titleTextAppearance">@style/ToolbarTitleTextStyle</item>
+        <item name="android:titleTextAppearance">@style/ToolbarTitleTextStyle</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+    </style>
+
+    <style name="ToolbarTitleTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="fontFamily">@font/nunito_black</item>
+        <item name="android:textSize">@dimen/titleSize</item>
+    </style>
+</resources>

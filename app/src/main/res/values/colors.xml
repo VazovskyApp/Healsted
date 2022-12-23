@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ic_launcher_background">#222222</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="whiteParakeet">#F4F2F2</color>
+    <color name="blackAlienWare">#222222</color>
+    <color name="dove_gray">#676767</color>
+
+    <color name="lightGray">#d9e0e6</color>
+    <color name="darkGray">#a1adb7</color>
+    <color name="violet">#8746ff</color>
+
+    <color name="bottomNavigationItemDashboard">#343175</color>
+    <color name="bottomNavigationItemPills">#00A351</color>
+    <color name="bottomNavigationItemHealth">#D3468F</color>
+    <color name="bottomNavigationItemSettings">#EBA344</color>
+
+    <color name="mediumSlateBlue">#8174F2</color>
+    <color name="frenchSkyBlue">#74A6F2</color>
+    <color name="skyBlue">#74E5F2</color>
+</resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/padding_16"
+    android:paddingTop="88dp"
+    android:paddingEnd="@dimen/padding_16"
+    android:paddingBottom="88dp">
+
+    <TextView
+        android:id="@+id/textErrorTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:lineSpacingExtra="5sp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        tools:text="@string/error_internet_message" />
+
+    <TextView
+        android:id="@+id/textErrorDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="18dp"
+        android:gravity="center"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="?android:textColorSecondary"
+        tools:text="@string/error_internet_message" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/error_button_label"
+        tools:text="Обновить"
+        tools:visibility="visible" />
+</LinearLayout>

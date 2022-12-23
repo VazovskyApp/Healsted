@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">My Pills</string>
+
+    <!-- Menu -->
+    <string name="menu_profile_label">Профиль</string>
+    <string name="menu_pills_label">Медикаменты</string>
+    <string name="menu_dashboard_label">Главная</string>
+    <string name="menu_health_label">Здоровье</string>
+    <string name="menu_settings_label">Настройки</string>
+
+    <!-- Welcome Strings -->
+    <string name="welcome_string_morning">Доброе утро, %s!</string>
+    <string name="welcome_string_afternoon">Добрый день, %s!</string>
+    <string name="welcome_string_evening">Добрый вечер, %s!</string>
+    <string name="welcome_string_night">Доброй ночи, %s!</string>
+</resources>

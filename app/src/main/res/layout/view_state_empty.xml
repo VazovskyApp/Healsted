@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:paddingEnd="@dimen/padding_16"
+    tools:paddingStart="@dimen/padding_16"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationViewEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/empty_state_animation_horizontal_margin"
+        android:layout_marginEnd="@dimen/empty_state_animation_horizontal_margin"
+        app:layout_constraintBottom_toTopOf="@id/textEmptyTitle"
+        app:layout_constraintDimensionRatio="260:222"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/default_empty"
+        tools:background="#d4d4d4" />
+
+    <TextView
+        android:id="@+id/textEmptyTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lineSpacingExtra="3sp"
+        android:paddingStart="@dimen/padding_8"
+        android:paddingTop="24dp"
+        android:paddingEnd="@dimen/padding_8"
+        android:textAppearance="@style/Font.Heading_1"
+        app:layout_constraintBottom_toTopOf="@id/textEmptyComment"
+        app:layout_constraintTop_toBottomOf="@id/animationViewEmpty"
+        app:layout_goneMarginBottom="20dp"
+        tools:text="Здесь ничего нет" />
+
+    <TextView
+        android:id="@+id/textEmptyComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lineSpacingExtra="3dp"
+        android:paddingStart="@dimen/padding_8"
+        android:paddingTop="10dp"
+        android:paddingEnd="@dimen/padding_8"
+        android:paddingBottom="20dp"
+        android:textAppearance="@style/Font.Body_1"
+        android:textColor="?android:textColorSecondary"
+        app:layout_constraintBottom_toTopOf="@id/buttonEmpty"
+        app:layout_constraintTop_toBottomOf="@+id/textEmptyTitle"
+        tools:text="Но скоро появится" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textEmptyComment"
+        tools:text="Текст кнопки"
+        tools:visibility="visible" />
+</merge>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pills_graph"
+    app:startDestination="@id/pillsFragment">
+
+    <fragment
+        android:id="@+id/pillsFragment"
+        android:name="app.vazovsky.mypills.presentation.pills.PillsFragment"
+        android:label="PillsFragment"
+        tools:layout="@layout/fragment_pills" />
+</navigation>

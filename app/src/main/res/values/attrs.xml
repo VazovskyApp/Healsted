@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StateViewFlipper">
+        <attr name="loadingLayoutRes" format="reference" />
+        <attr name="errorLayoutRes" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="EmptyView">
+        <attr name="loopAnimation" format="boolean" />
+        <attr name="isDarkMode" format="boolean" />
+        <attr name="emptyAnimationSrc" format="reference" />
+        <attr name="emptyImageSrc" format="reference" />
+        <attr name="emptyTitle" format="reference" />
+        <attr name="emptyComment" format="reference" />
+        <attr name="emptyButton" format="reference" />
+    </declare-styleable>
+
+    <attr name="errorSnackbarBackgroundColor" format="reference|color" />
+</resources>

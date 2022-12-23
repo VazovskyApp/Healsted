@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Font">
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">@font/nunito_regular</item>
+    </style>
+
+    <!-- TODO добавить dimens -->
+    <style name="Font.Heading_1">
+        <item name="android:textSize">26sp</item>
+    </style>
+
+    <style name="Font.Heading_1.Black">
+        <item name="android:fontFamily">@font/nunito_black_italic</item>
+        <item name="fontFamily">@font/nunito_black_italic</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="Font.Body_1">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Font.Body_1.Bold">
+        <item name="fontFamily">@font/nunito_bold</item>
+    </style>
+
+    <style name="Font.Body_1.Light">
+        <item name="fontFamily">@font/nunito_light</item>
+    </style>
+</resources>

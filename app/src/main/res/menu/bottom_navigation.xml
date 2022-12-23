@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@id/profile_graph"
+        android:icon="@drawable/ic_menu_profile"
+        android:title="@string/menu_profile_label" />
+
+    <item
+        android:id="@id/pills_graph"
+        android:icon="@drawable/ic_menu_pills"
+        android:title="@string/menu_pills_label" />
+
+    <item
+        android:id="@id/dashboard_graph"
+        android:title="@string/menu_dashboard_label" />
+
+    <item
+        android:id="@id/health_graph"
+        android:icon="@drawable/ic_menu_health"
+        android:title="@string/menu_health_label" />
+
+    <item
+        android:id="@id/settings_graph"
+        android:icon="@drawable/ic_menu_settings"
+        android:title="@string/menu_settings_label" />
+
+</menu>

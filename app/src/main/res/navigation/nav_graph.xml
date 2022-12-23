@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/routingFragment">
+
+    <fragment
+        android:id="@+id/routingFragment"
+        android:name="app.vazovsky.mypills.presentation.routing.RoutingFragment"
+        android:label="RoutingFragment"
+        tools:layout="@layout/fragment_routing" />
+
+    <include app:graph="@navigation/auth_graph" />
+    <include app:graph="@navigation/profile_graph" />
+    <include app:graph="@navigation/pills_graph" />
+    <include app:graph="@navigation/dashboard_graph" />
+    <include app:graph="@navigation/health_graph" />
+    <include app:graph="@navigation/settings_graph" />
+</navigation>
