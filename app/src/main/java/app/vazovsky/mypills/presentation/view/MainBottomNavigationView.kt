@@ -29,13 +29,15 @@ class MainBottomNavigationView @JvmOverloads constructor(
         val cornerSize = resources.getDimension(R.dimen.bottom_navigation_view_corner_size)
         val bottomNavigationViewBackground = background as MaterialShapeDrawable
         bottomNavigationViewBackground.shapeAppearanceModel =
-            bottomNavigationViewBackground.shapeAppearanceModel.toBuilder().setAllCornerSizes(cornerSize).setTopEdge(
-                FabEdgeTreatment(
-                    fabDiameter = resources.getDimension(R.dimen.bottom_navigation_services_fab_size),
-                    fabMargin = resources.getDimension(R.dimen.bottom_navigation_fab_margin),
-                    centerCornersRadius = resources.getDimension(R.dimen.bottom_navigation_small_corner_size),
-                )
-            ).build()
+            bottomNavigationViewBackground.shapeAppearanceModel.toBuilder()
+                .setAllCornerSizes(cornerSize)
+                .setTopEdge(
+                    FabEdgeTreatment(
+                        fabDiameter = resources.getDimension(R.dimen.bottom_navigation_services_fab_size),
+                        fabMargin = resources.getDimension(R.dimen.bottom_navigation_fab_margin),
+                        centerCornersRadius = resources.getDimension(R.dimen.bottom_navigation_small_corner_size),
+                    )
+                ).build()
 
         doOnPreDraw {
             if (isCompatShadow()) {

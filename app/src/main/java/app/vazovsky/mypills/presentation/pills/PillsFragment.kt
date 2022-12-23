@@ -11,6 +11,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PillsFragment : BaseFragment(R.layout.fragment_pills) {
 
+    override val showBottomNavigationView: Boolean
+        get() = true
+
     private val binding by viewBinding(FragmentPillsBinding::bind)
     private val viewModel: PillsViewModel by viewModels()
 

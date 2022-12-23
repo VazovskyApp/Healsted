@@ -9,6 +9,9 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
+    override val showBottomNavigationView: Boolean
+        get() = true
+
     private val binding by viewBinding(FragmentSettingsBinding::bind)
     private val viewModel: SettingsViewModel by viewModels()
 

@@ -8,6 +8,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import app.vazovsky.mypills.R
 import app.vazovsky.mypills.databinding.ActivityMainBinding
+import app.vazovsky.mypills.extensions.observeNavigationCommands
 import app.vazovsky.mypills.managers.BottomNavigationViewManager
 import app.vazovsky.mypills.presentation.base.BaseActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -18,7 +19,10 @@ class MainActivity : BaseActivity(), BottomNavigationViewManager {
 
     private val binding by viewBinding(ActivityMainBinding::bind)
     private val viewModel: MainViewModel by viewModels()
-    override fun onBindViewModel() = Unit
+    override fun onBindViewModel() = with(viewModel) {
+        observeNavigationCommands(this, R.id.navHostFragment)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
