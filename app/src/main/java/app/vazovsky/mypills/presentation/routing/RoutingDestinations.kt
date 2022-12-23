@@ -9,7 +9,7 @@ class RoutingDestinations @Inject constructor() {
     )
 
     fun auth() = NavigationCommand.To(
-        RoutingFragmentDirections.actionRoutingFragmentToAuthFragment()
+        RoutingFragmentDirections.actionRoutingFragmentToAuthGraph()
     )
 
     fun dashboard() = NavigationCommand.To(

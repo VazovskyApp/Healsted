@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/auth_graph"
+    app:startDestination="@id/authFragment">
+
+    <include app:graph="@navigation/dashboard_graph" />
+
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="app.vazovsky.mypills.presentation.auth.AuthFragment"
+        android:label="AuthFragment"
+        tools:layout="@layout/fragment_auth">
+        <action
+            android:id="@+id/action_authFragment_to_dashboard_graph2"
+            app:destination="@id/dashboard_graph" />
+    </fragment>
+
+</navigation>

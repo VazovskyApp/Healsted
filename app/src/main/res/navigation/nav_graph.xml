@@ -9,26 +9,16 @@
         android:id="@+id/routingFragment"
         android:name="app.vazovsky.mypills.presentation.routing.RoutingFragment"
         android:label="RoutingFragment"
-        tools:layout="@layout/fragment_routing" >
-        <action
-            android:id="@+id/action_routingFragment_to_authFragment"
-            app:destination="@id/authFragment" />
+        tools:layout="@layout/fragment_routing">
         <action
             android:id="@+id/action_routingFragment_to_dashboard_graph"
             app:destination="@id/dashboard_graph" />
         <action
+            android:id="@+id/action_routingFragment_to_auth_graph"
+            app:destination="@id/auth_graph" />
+        <action
             android:id="@+id/action_routingFragment_to_onBoardingFragment"
             app:destination="@id/onBoardingFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/authFragment"
-        android:name="app.vazovsky.mypills.presentation.auth.AuthFragment"
-        android:label="AuthFragment"
-        tools:layout="@layout/fragment_auth" >
-        <action
-            android:id="@+id/action_authFragment_to_dashboard_graph"
-            app:destination="@id/dashboard_graph" />
     </fragment>
 
     <fragment
@@ -36,11 +26,11 @@
         android:name="app.vazovsky.mypills.presentation.onboarding.OnBoardingFragment"
         android:label="OnBoardingFragment" >
         <action
-            android:id="@+id/action_onBoardingFragment_to_authFragment"
-            app:destination="@id/authFragment" />
-        <action
             android:id="@+id/action_onBoardingFragment_to_dashboard_graph"
             app:destination="@id/dashboard_graph" />
+        <action
+            android:id="@+id/action_onBoardingFragment_to_auth_graph"
+            app:destination="@id/auth_graph" />
     </fragment>
 
     <include app:graph="@navigation/profile_graph" />
@@ -48,4 +38,5 @@
     <include app:graph="@navigation/dashboard_graph" />
     <include app:graph="@navigation/health_graph" />
     <include app:graph="@navigation/settings_graph" />
+    <include app:graph="@navigation/auth_graph" />
 </navigation>

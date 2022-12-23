@@ -1,10 +1,11 @@
-package app.vazovsky.mypills.presentation.profile
+package app.vazovsky.mypills.presentation.profile.profile
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import app.vazovsky.mypills.R
 import app.vazovsky.mypills.databinding.FragmentProfileBinding
 import app.vazovsky.mypills.presentation.base.BaseFragment
+import app.vazovsky.mypills.presentation.profile.profile.ProfileViewModel
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
