@@ -1,8 +1,9 @@
-package app.vazovsky.mypills.presentation.mainscreen
+package app.vazovsky.mypills.presentation.onboarding
 
 import app.vazovsky.mypills.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : BaseViewModel()
+class OnBoardingViewModel @Inject constructor() : BaseViewModel() {
+}
