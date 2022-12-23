@@ -31,4 +31,6 @@
     <dimen name="bottom_navigation_services_fab_size">46dp</dimen>
     <dimen name="bottom_navigation_fab_margin">4dp</dimen>
     <dimen name="bottom_navigation_small_corner_size">10dp</dimen>
+
+    <dimen name="text_input_stroke_width">1dp</dimen>
 </resources>

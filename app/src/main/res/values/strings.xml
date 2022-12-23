@@ -13,4 +13,12 @@
     <string name="welcome_string_afternoon">Добрый день, %s!</string>
     <string name="welcome_string_evening">Добрый вечер, %s!</string>
     <string name="welcome_string_night">Доброй ночи, %s!</string>
+
+    <!-- Авторизация -->
+    <string name="sign_in_title">Вход или\nрегистрация</string>
+    <string name="sign_in_phone">Номер телефона</string>
+    <string name="sign_in_get_code">Получить код</string>
+    <string name="sign_in_phone_code">+7</string>
+    <string name="sign_up_vk_label">Создать аккаунт</string>
+
 </resources>

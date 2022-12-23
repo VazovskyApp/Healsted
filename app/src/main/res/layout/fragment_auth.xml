@@ -8,9 +8,19 @@
         android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="AUTH"
+        android:layout_marginHorizontal="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:text="Вход или регистрация"
         android:textAppearance="@style/Font.Heading_1.Black"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/contentPhoneNumber"
+        android:layout_marginTop="@dimen/margin_16"
+        layout="@layout/content_phone_field"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="@dimen/margin_16"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/textViewTitle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

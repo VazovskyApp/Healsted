@@ -15,5 +15,17 @@
         <attr name="emptyButton" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="ValidationTextInputLayout">
+        <attr name="errorEmpty" format="string" />
+        <attr name="errorMalformed" format="string" />
+        <attr name="validationPattern" format="string" />
+        <attr name="emptyCheck" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="PhoneEditText">
+        <attr name="countryCode" format="integer" />
+    </declare-styleable>
+
+
     <attr name="errorSnackbarBackgroundColor" format="reference|color" />
 </resources>

@@ -27,6 +27,7 @@ lottie = "3.4.0"
 glide = "4.14.2"
 bubble-tab-bar = "1.0.8"
 emoji-rating-bar = "1.0.4"
+decoro = "1.5.1"
 
 [libraries]
 
@@ -66,6 +67,7 @@ glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = 
 
 bubble-tab-bar = { module = "io.ak1:bubbletabbar", version.ref = "bubble-tab-bar" }
 emoji-rating-bar = { module = "com.github.unaisulhadi:emojiratingbar", version.ref = "emoji-rating-bar" }
+decoro = { module = "ru.tinkoff.decoro:decoro", version.ref = "decoro" }
 
 [plugins]
 android-app = { id = "com.android.application", version.ref = "agp" }
