@@ -5,5 +5,7 @@
         <item name="android:navigationBarColor">@color/white</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="appBarLayoutStyle">@style/AppBarStyle</item>
+        <item name="toolbarStyle">@style/ToolbarStyle</item>
     </style>
 </resources>

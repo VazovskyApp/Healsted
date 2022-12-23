@@ -2,9 +2,9 @@ package app.vazovsky.mypills.presentation.routing
 
 import androidx.lifecycle.LiveData
 import app.vazovsky.mypills.data.model.base.LoadableResult
-import app.vazovsky.mypills.domain.RoutingFlowUseCase
-import app.vazovsky.mypills.domain.RoutingResult
 import app.vazovsky.mypills.domain.base.UseCase
+import app.vazovsky.mypills.domain.routing.RoutingFlowUseCase
+import app.vazovsky.mypills.domain.routing.RoutingResult
 import app.vazovsky.mypills.presentation.base.BaseViewModel
 import app.vazovsky.mypills.presentation.base.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
