@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.viewModels
 import app.vazovsky.mypills.R
 import app.vazovsky.mypills.databinding.FragmentProfileBinding
+import app.vazovsky.mypills.extensions.fitTopInsetsWithPadding
 import app.vazovsky.mypills.presentation.base.BaseFragment
 import app.vazovsky.mypills.presentation.profile.profile.ProfileViewModel
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -22,11 +23,11 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     }
 
-    override fun onSetupLayout(savedInstanceState: Bundle?) {
-
+    override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
+        root.fitTopInsetsWithPadding()
     }
 
-    override fun onBindViewModel() {
-
+    override fun onBindViewModel() = with(viewModel) {
+        observeNavigationCommands()
     }
 }

@@ -7,7 +7,7 @@ import javax.inject.Inject
 /** Роутинг для графа профиля */
 class ProfileRoutingFlowUseCase @Inject constructor() : UseCaseUnary<UseCase.None, ProfileRoutingResult>() {
     override suspend fun execute(params: UseCase.None): ProfileRoutingResult {
-        return ProfileRoutingResult.AUTH
+        return ProfileRoutingResult.PROFILE
     }
 }
 
