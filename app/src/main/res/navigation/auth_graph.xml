@@ -13,7 +13,15 @@
         android:label="AuthFragment"
         tools:layout="@layout/fragment_auth">
         <action
-            android:id="@+id/action_authFragment_to_dashboard_graph2"
+            android:id="@+id/action_authFragment_to_verificationFragment"
+            app:destination="@id/verificationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/verificationFragment"
+        android:name="app.vazovsky.mypills.presentation.verification.VerificationFragment"
+        android:label="VerificationFragment">
+        <action
+            android:id="@+id/action_verificationFragment_to_dashboard_graph"
             app:destination="@id/dashboard_graph" />
     </fragment>
 

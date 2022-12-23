@@ -1,19 +1,17 @@
-package app.vazovsky.mypills.presentation.auth
+package app.vazovsky.mypills.presentation.verification
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import app.vazovsky.mypills.R
-import app.vazovsky.mypills.databinding.FragmentAuthBinding
+import app.vazovsky.mypills.databinding.FragmentVerificationBinding
 import app.vazovsky.mypills.extensions.fitTopInsetsWithPadding
 import app.vazovsky.mypills.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
-class AuthFragment : BaseFragment(R.layout.fragment_auth) {
+class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
 
-    private val binding by viewBinding(FragmentAuthBinding::bind)
-    private val viewModel: AuthViewModel by viewModels()
+    private val binding by viewBinding(FragmentVerificationBinding::bind)
+    private val viewModel: VerificationViewModel by viewModels()
 
     override fun callOperations() {
 
@@ -21,8 +19,8 @@ class AuthFragment : BaseFragment(R.layout.fragment_auth) {
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitTopInsetsWithPadding()
-        buttonSendCode.setOnClickListener {
-            viewModel.openVerification()
+        buttonDashboard.setOnClickListener {
+            viewModel.openDashboard()
         }
     }
 
