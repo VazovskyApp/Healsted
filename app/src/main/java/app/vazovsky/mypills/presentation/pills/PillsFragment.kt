@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.fragment.app.viewModels
 import app.vazovsky.mypills.R
 import app.vazovsky.mypills.databinding.FragmentPillsBinding
+import app.vazovsky.mypills.extensions.fitTopInsetsWithPadding
+import app.vazovsky.mypills.extensions.observeNavigationCommands
 import app.vazovsky.mypills.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,11 +23,11 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
 
     }
 
-    override fun onSetupLayout(savedInstanceState: Bundle?) {
-
+    override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
+        root.fitTopInsetsWithPadding()
     }
 
-    override fun onBindViewModel() {
-
+    override fun onBindViewModel() = with(viewModel) {
+        observeNavigationCommands()
     }
 }
