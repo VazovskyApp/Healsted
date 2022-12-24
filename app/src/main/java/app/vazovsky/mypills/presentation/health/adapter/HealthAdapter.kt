@@ -1,4 +1,4 @@
-package app.vazovsky.mypills.presentation.health.monitoring
+package app.vazovsky.mypills.presentation.health.adapter
 
 import android.view.ViewGroup
 import app.vazovsky.mypills.data.model.MonitoringAttribute

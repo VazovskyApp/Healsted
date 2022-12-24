@@ -4,6 +4,8 @@ import app.vazovsky.mypills.data.repository.DashboardRepository
 import app.vazovsky.mypills.data.repository.DashboardRepositoryImpl
 import app.vazovsky.mypills.data.repository.HealthRepository
 import app.vazovsky.mypills.data.repository.HealthRepositoryImpl
+import app.vazovsky.mypills.data.repository.SettingsRepository
+import app.vazovsky.mypills.data.repository.SettingsRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -17,4 +19,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindHealthRepository(healthRepository: HealthRepositoryImpl): HealthRepository
+
+    @Binds
+    abstract fun bindSettingsRepository(settingsRepository: SettingsRepositoryImpl): SettingsRepository
 }

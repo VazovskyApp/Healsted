@@ -8,7 +8,7 @@ import app.vazovsky.mypills.data.model.MonitoringAttribute
 import app.vazovsky.mypills.databinding.FragmentHealthBinding
 import app.vazovsky.mypills.extensions.fitTopInsetsWithPadding
 import app.vazovsky.mypills.presentation.base.BaseFragment
-import app.vazovsky.mypills.presentation.health.monitoring.HealthAdapter
+import app.vazovsky.mypills.presentation.health.adapter.HealthAdapter
 import app.vazovsky.mypills.presentation.view.GridSpaceItemDecoration
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
