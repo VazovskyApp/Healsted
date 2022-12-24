@@ -51,12 +51,15 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         recyclerViewSettings.adapter = settingsAdapter
         settingsAdapter.onItemClick = { item ->
             when (item.type) {
-                SettingType.ACCOUNT -> Unit
-                SettingType.NOTIFICATION -> Unit
-                SettingType.REPORT_A_BAG -> Unit
-                SettingType.SEND_FEEDBACK -> Unit
-                SettingType.ABOUT_US -> Unit
-                SettingType.LOG_OUT -> Unit
+                SettingType.ACCOUNT -> viewModel.openAccount()
+                SettingType.NOTIFICATION -> viewModel.openNotifications()
+                SettingType.REPORT_A_BAG -> viewModel.openReportBug()
+                SettingType.SEND_FEEDBACK -> viewModel.openSendFeedback()
+                SettingType.ABOUT_US -> viewModel.openAboutUs()
+                SettingType.LOG_OUT -> {
+                    /** TODO сделать выход из профиля реально / почему-то после этого settings это dashboard */
+                    viewModel.openAuth()
+                }
             }
         }
     }

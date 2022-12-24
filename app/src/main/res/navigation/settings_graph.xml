@@ -5,9 +5,55 @@
     android:id="@+id/settings_graph"
     app:startDestination="@id/settingsFragment">
 
+    <include app:graph="@navigation/auth_graph" />
+
     <fragment
         android:id="@+id/settingsFragment"
         android:name="app.vazovsky.mypills.presentation.settings.SettingsFragment"
         android:label="SettingsFragment"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_auth_graph"
+            app:destination="@id/auth_graph" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsAboutUsFragment"
+            app:destination="@id/settingsAboutUsFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsNotificationFragment"
+            app:destination="@id/settingsNotificationFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsReportBugFragment"
+            app:destination="@id/settingsReportBugFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsSendFeedbackFragment"
+            app:destination="@id/settingsSendFeedbackFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsAccountFragment"
+            app:destination="@id/settingsAccountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsAccountFragment"
+        android:name="app.vazovsky.mypills.presentation.settings.account.SettingsAccountFragment"
+        android:label="SettingsAccountFragment"
+        tools:layout="@layout/fragment_settings_account" />
+    <fragment
+        android:id="@+id/settingsAboutUsFragment"
+        android:name="app.vazovsky.mypills.presentation.settings.aboutus.SettingsAboutUsFragment"
+        android:label="SettingsAboutUsFragment"
+        tools:layout="@layout/fragment_settings_about_us" />
+    <fragment
+        android:id="@+id/settingsNotificationFragment"
+        android:name="app.vazovsky.mypills.presentation.settings.notification.SettingsNotificationFragment"
+        android:label="SettingsNotificationFragment"
+        tools:layout="@layout/fragment_settings_notification" />
+    <fragment
+        android:id="@+id/settingsReportBugFragment"
+        android:name="app.vazovsky.mypills.presentation.settings.reportbug.SettingsReportBugFragment"
+        android:label="SettingsReportBugFragment"
+        tools:layout="@layout/fragment_settings_report_bug" />
+    <fragment
+        android:id="@+id/settingsSendFeedbackFragment"
+        android:name="app.vazovsky.mypills.presentation.settings.sendfeedback.SettingsSendFeedbackFragment"
+        android:label="SettingsSendFeedbackFragment"
+        tools:layout="@layout/fragment_settings_send_feedback" />
 </navigation>

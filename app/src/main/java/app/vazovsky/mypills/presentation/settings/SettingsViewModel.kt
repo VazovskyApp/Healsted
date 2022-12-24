@@ -12,6 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
+    private val settingsDestinations: SettingsDestinations,
     private val getSettingsUseCase: GetSettingsUseCase,
 ) : BaseViewModel() {
 
@@ -22,5 +23,29 @@ class SettingsViewModel @Inject constructor(
     /** Получение настроек */
     fun getSettings() {
         _settingsLiveData.launchLoadData(getSettingsUseCase.executeFlow(UseCase.None))
+    }
+
+    fun openAuth() {
+        navigate(settingsDestinations.auth())
+    }
+
+    fun openAccount() {
+        navigate(settingsDestinations.account())
+    }
+
+    fun openAboutUs() {
+        navigate(settingsDestinations.aboutUs())
+    }
+
+    fun openNotifications() {
+        navigate(settingsDestinations.notification())
+    }
+
+    fun openReportBug() {
+        navigate(settingsDestinations.reportBug())
+    }
+
+    fun openSendFeedback() {
+        navigate(settingsDestinations.sendFeedback())
     }
 }
