@@ -6,7 +6,9 @@ import app.vazovsky.mypills.R
 import app.vazovsky.mypills.databinding.FragmentSettingsBinding
 import app.vazovsky.mypills.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     override val showBottomNavigationView: Boolean
