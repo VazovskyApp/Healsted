@@ -12,9 +12,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SettingsAboutUsFragment : BaseFragment(R.layout.fragment_settings_about_us) {
 
-    override val showBottomNavigationView: Boolean
-        get() = true
-
     private val binding by viewBinding(FragmentSettingsAboutUsBinding::bind)
     private val viewModel: SettingsAboutUsViewModel by viewModels()
 

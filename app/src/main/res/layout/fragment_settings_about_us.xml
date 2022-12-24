@@ -16,22 +16,94 @@
             android:layout_height="?actionBarSize"
             app:navigationIcon="@drawable/ic_back"
             app:navigationIconTint="@color/black"
-            app:title="ABOUT US"
-            app:titleTextAppearance="@style/Font.Heading_1.Black"
+            app:title="@string/settings_about_us_title"
+            app:titleCentered="true"
+            app:titleTextAppearance="@style/Font.Heading_1"
             app:titleTextColor="@color/black" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ImageView
+            android:id="@+id/imageViewIcon"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="@dimen/margin_16"
+            android:background="@color/frenchSkyBlue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewAppName"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/app_name"
+            android:textAlignment="center"
+            android:textAppearance="@style/Font.Body_1.Bold"
+            android:textSize="24sp"
+            app:layout_constraintTop_toBottomOf="@id/imageViewIcon" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+        <TextView
+            android:id="@+id/textViewVersion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/settings_about_us_version"
+            android:textAlignment="center"
+            android:textAppearance="@style/Font.Body_1"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/textViewAppName" />
 
+        <TextView
+            android:id="@+id/textViewIssueDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/settings_about_us_issue_date"
+            android:textAlignment="center"
+            android:textAppearance="@style/Font.Body_1"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/textViewVersion" />
+
+        <TextView
+            android:id="@+id/textViewDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/settings_about_us_description"
+            android:textAlignment="center"
+            android:textAppearance="@style/Font.Body_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewIssueDate" />
+
+        <TextView
+            android:id="@+id/textViewShare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:padding="@dimen/padding_16"
+            android:text="@string/settings_about_us_share"
+            android:textAlignment="center"
+            android:textAppearance="@style/Font.Body_1"
+            app:layout_constraintBottom_toTopOf="@id/textViewDeveloper" />
+
+        <TextView
+            android:id="@+id/textViewDeveloper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="@string/settings_about_us_developed"
+            android:textAlignment="center"
+            android:textAppearance="@style/Font.Body_1.Bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

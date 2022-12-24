@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Pills</string>
+    <string name="app_name">Мои таблетки</string>
 
     <!-- Menu -->
     <string name="menu_profile_label">Профиль</string>
@@ -20,5 +20,11 @@
     <string name="sign_in_get_code">Получить код</string>
     <string name="sign_in_phone_code">+7</string>
     <string name="sign_up_vk_label">Создать аккаунт</string>
+    <string name="settings_about_us_title">О приложении</string>
+    <string name="settings_about_us_version">Версия 1.0.0</string>
+    <string name="settings_about_us_issue_date">Выпущено 01.01.2023</string>
+    <string name="settings_about_us_description">Приложение для отслеживания принятия лекарств. Приложение для отслеживания принятия лекарств. Приложение для отслеживания принятия лекарств.</string>
+    <string name="settings_about_us_share">Поделиться приложением</string>
+    <string name="settings_about_us_developed">Developed by VazovskyApp</string>
 
 </resources>
