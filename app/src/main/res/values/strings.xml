@@ -26,5 +26,7 @@
     <string name="settings_about_us_description">Приложение для отслеживания принятия лекарств. Приложение для отслеживания принятия лекарств. Приложение для отслеживания принятия лекарств.</string>
     <string name="settings_about_us_share">Поделиться приложением</string>
     <string name="settings_about_us_developed">Developed by VazovskyApp</string>
+    <string name="settings_send_feedback_title">Написать разработчику</string>
+    <string name="settings_send_feedback_menu_send">Отправить</string>
 
 </resources>

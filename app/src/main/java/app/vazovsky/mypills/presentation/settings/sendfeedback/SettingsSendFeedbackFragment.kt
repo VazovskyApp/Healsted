@@ -24,7 +24,13 @@ class SettingsSendFeedbackFragment : BaseFragment(R.layout.fragment_settings_sen
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitTopInsetsWithPadding()
+
+        setupToolbar()
+    }
+
+    private fun setupToolbar() = with(binding) {
         toolbar.setNavigationOnClickListener { viewModel.navigateBack() }
+        toolbar.menu.findItem(R.id.menuSend).isEnabled = !editTextFeedback.text.isNullOrBlank()
     }
 
     override fun onBindViewModel() = with(viewModel) {

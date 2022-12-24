@@ -86,14 +86,18 @@
 
         <TextView
             android:id="@+id/textViewShare"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            android:drawablePadding="8dp"
             android:padding="@dimen/padding_16"
             android:text="@string/settings_about_us_share"
             android:textAlignment="center"
-            android:textAppearance="@style/Font.Body_1"
-            app:layout_constraintBottom_toTopOf="@id/textViewDeveloper" />
+            android:textAppearance="@style/Font.Body_1.Bold"
+            app:drawableLeftCompat="@drawable/ic_share"
+            app:layout_constraintBottom_toTopOf="@id/textViewDeveloper"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textViewDeveloper"
