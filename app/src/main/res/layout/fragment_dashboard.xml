@@ -103,7 +103,17 @@
                 android:textAppearance="@style/Font.Body_1"
                 app:layout_constraintTop_toBottomOf="@id/textViewTitle" />
 
-            <TextView
+            <ImageButton
+                android:id="@+id/buttonAddPill"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:background="@drawable/ic_plus"
+                app:layout_constraintBottom_toBottomOf="@id/textViewDate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/textViewTitle" />
+
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewTodayPills"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

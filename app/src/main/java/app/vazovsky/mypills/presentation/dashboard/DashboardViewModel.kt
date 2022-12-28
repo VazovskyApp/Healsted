@@ -5,5 +5,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class DashboardViewModel @Inject constructor() : BaseViewModel() {
+class DashboardViewModel @Inject constructor(
+    private val dashboardDestinations: DashboardDestinations,
+) : BaseViewModel() {
+    fun openAddPill() {
+        navigate(dashboardDestinations.addPill())
+    }
 }

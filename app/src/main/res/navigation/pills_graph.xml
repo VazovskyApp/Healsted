@@ -5,9 +5,16 @@
     android:id="@+id/pills_graph"
     app:startDestination="@id/pillsFragment">
 
+    <include app:graph="@navigation/add_pill_graph" />
+
     <fragment
         android:id="@+id/pillsFragment"
         android:name="app.vazovsky.mypills.presentation.pills.PillsFragment"
         android:label="PillsFragment"
-        tools:layout="@layout/fragment_pills" />
+        tools:layout="@layout/fragment_pills">
+        <action
+            android:id="@+id/action_pillsFragment_to_add_pill"
+            app:destination="@id/add_pill" />
+    </fragment>
+
 </navigation>
