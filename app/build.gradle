@@ -49,6 +49,7 @@ kapt {
 
 dependencies {
     implementation(libs.material)
+    implementation(libs.core)
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.splashscreen)

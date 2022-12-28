@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Мои таблетки</string>
 
+    <string name="channel_name">Pills</string>
+    <string name="channel_description">PillsTracker</string>
+
     <!-- Menu -->
     <string name="menu_profile_label">Профиль</string>
     <string name="menu_pills_label">Медикаменты</string>

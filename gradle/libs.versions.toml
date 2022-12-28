@@ -3,6 +3,7 @@
 agp = "7.3.1"
 gms = "4.3.14"
 material = "1.6.1"
+core = "1.6.0"
 
 androidx-lifecycle = "2.5.1"
 androidx-splashscreen = "1.0.0-beta02"
@@ -32,6 +33,7 @@ decoro = "1.5.1"
 [libraries]
 
 material = { module = "com.google.android.material:material", version.ref = "material" }
+core = { module = "androidx.core:core", version.ref = "core" }
 androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx-navigation" }
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx-navigation" }
 androidx-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-splashscreen" }
