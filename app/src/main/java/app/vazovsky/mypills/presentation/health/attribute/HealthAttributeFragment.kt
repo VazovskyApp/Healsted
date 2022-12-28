@@ -34,7 +34,7 @@ class HealthAttributeFragment : BaseFragment(R.layout.fragment_health_attribute)
     }
 
     private fun setupMonitoring() = with(binding) {
-        toolbar.title = monitoring.title
+        toolbar.title = monitoring.type.toString()
         textViewValue.text = monitoring.value
     }
 

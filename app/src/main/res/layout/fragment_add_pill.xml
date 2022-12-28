@@ -8,7 +8,9 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        app:liftOnScroll="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -19,69 +21,162 @@
             app:titleTextColor="@color/black" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewPillType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/editTextName"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_marginTop="16dp"
-            android:hint="Название" />
+            android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/editTextDosage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_marginTop="16dp"
-            android:hint="Дозировка" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewPillType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewTakePill"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+            <EditText
+                android:id="@+id/editTextName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="16dp"
+                android:hint="Название"
+                app:layout_constraintTop_toBottomOf="@id/recyclerViewPillType" />
 
-        <EditText
-            android:id="@+id/editTextComment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_marginTop="8dp"
-            android:hint="Комментарий" />
+            <EditText
+                android:id="@+id/editTextDosage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="16dp"
+                android:hint="Дозировка"
+                app:layout_constraintTop_toBottomOf="@id/editTextName" />
 
-        <EditText
-            android:id="@+id/timeNotification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_marginTop="8dp"
-            android:hint="Время уведомления" />
+            <Spinner
+                android:id="@+id/spinnerDatesTakenType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="4dp"
+                app:layout_constraintEnd_toStartOf="@id/spinnerTakePillType"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTextDosage" />
 
-        <EditText
-            android:id="@+id/dateNotification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_marginTop="8dp"
-            android:hint="Дата уведомления" />
+            <Spinner
+                android:id="@+id/spinnerTakePillType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/spinnerDatesTakenType"
+                app:layout_constraintTop_toBottomOf="@id/editTextDosage" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonConfirm"
-            android:text="Подтвердить"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_16" />
-    </LinearLayout>
+            <EditText
+                android:id="@+id/editTextComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="16dp"
+                android:hint="Комментарий"
+                app:layout_constraintTop_toBottomOf="@id/spinnerDatesTakenType" />
 
+            <TextView
+                android:id="@+id/textViewTimeNotification"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="16dp"
+                android:text="@string/add_view_time_notification"
+                android:textAppearance="@style/Font.Body_1.Bold"
+                app:layout_constraintBottom_toBottomOf="@id/timePickerTimeNotification"
+                app:layout_constraintEnd_toStartOf="@id/timePickerTimeNotification"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTextComment" />
+
+            <TimePicker
+                android:id="@+id/timePickerTimeNotification"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="8dp"
+                android:timePickerMode="spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textViewTimeNotification"
+                app:layout_constraintTop_toBottomOf="@id/editTextComment" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonAddTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="8dp"
+                android:text="Добавить время"
+                app:layout_constraintTop_toBottomOf="@id/timePickerTimeNotification" />
+
+            <TextView
+                android:id="@+id/textViewStartDateNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="8dp"
+                android:text="Старт"
+                android:textAppearance="@style/Font.Body_1.Bold"
+                app:layout_constraintBottom_toBottomOf="@id/datePickerStartDateNotification"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/buttonAddTime" />
+
+            <DatePicker
+                android:id="@+id/datePickerStartDateNotification"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="8dp"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textViewStartDateNotification"
+                app:layout_constraintTop_toBottomOf="@id/buttonAddTime" />
+
+            <TextView
+                android:id="@+id/textViewEndDateNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="8dp"
+                android:text="Конец"
+                android:textAppearance="@style/Font.Body_1.Bold"
+                app:layout_constraintBottom_toBottomOf="@id/datePickerEndDateNotification"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/datePickerStartDateNotification" />
+
+            <DatePicker
+                android:id="@+id/datePickerEndDateNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="8dp"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textViewEndDateNotification"
+                app:layout_constraintTop_toBottomOf="@id/datePickerStartDateNotification" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonConfirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginBottom="@dimen/margin_16"
+                android:text="Подтвердить"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/datePickerEndDateNotification" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

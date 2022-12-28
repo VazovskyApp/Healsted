@@ -18,7 +18,7 @@ class SettingsViewHolder(
 
     @SuppressLint("UseCompatLoadingForDrawables")
     fun bind(item: SettingsItem) = with(binding) {
-        textViewTitle.text = item.title
+        textViewTitle.text = item.type.toString()
         item.icon?.let { imageViewIcon.background = root.context.getDrawable(it) }
         root.setOnClickListener { onItemClick.invoke(item) }
     }

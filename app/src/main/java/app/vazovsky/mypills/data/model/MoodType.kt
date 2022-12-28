@@ -1,8 +1,14 @@
 package app.vazovsky.mypills.data.model
 
-/** TODO добавить еще два */
-enum class MoodType {
-    BAD,
-    NORMAL,
-    GREAT,
+enum class MoodType(private val friendlyName: String) {
+    EMPTY("Нет"),
+    AWFUL("Ужасно"),
+    BAD("Плохо"),
+    OKAY("Нормально"),
+    GOOD("Хорошо"),
+    GREAT("Отлично");
+
+    override fun toString(): String {
+        return friendlyName
+    }
 }

@@ -1,7 +1,11 @@
 package app.vazovsky.mypills.data.model
 
-enum class DatesTakenType {
-    EVERYDAY,
-    IN_A_DAY,
-    SELECTED_DAYS,
+enum class DatesTakenType(private val friendlyName: String) {
+    EVERYDAY("Каждый день"),
+    IN_A_DAY("Через день"),
+    SELECTED_DAYS("По выбранным дням");
+
+    override fun toString(): String {
+        return friendlyName
+    }
 }

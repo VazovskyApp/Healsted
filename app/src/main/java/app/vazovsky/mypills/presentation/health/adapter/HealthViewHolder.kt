@@ -16,7 +16,7 @@ class HealthViewHolder(
     private val binding by viewBinding(ItemMonitoringBinding::bind)
 
     fun bind(item: MonitoringAttribute) = with(binding) {
-        textViewTitle.text = item.title
+        textViewTitle.text = item.type.toString()
         /** Добавить форматирование */
         textViewValue.text = item.value
         root.setOnClickListener { onItemClick.invoke(item) }
