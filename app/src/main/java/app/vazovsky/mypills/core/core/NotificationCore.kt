@@ -94,10 +94,9 @@ class NotificationCore @Inject constructor() {
         application.apply {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val importance = NotificationManager.IMPORTANCE_HIGH
-                val channel =
-                    NotificationChannel(Channel_ID_DEFAULT, "Channel_Default", importance).apply {
-                        description = "This is default channel"
-                    }
+                val channel = NotificationChannel(Channel_ID_DEFAULT, "Channel_Default", importance).apply {
+                    description = "This is default channel"
+                }
                 val notificationManager: NotificationManager =
                     getSystemService(NOTIFICATION_SERVICE) as NotificationManager
                 notificationManager.createNotificationChannel(channel)
