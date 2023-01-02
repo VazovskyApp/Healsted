@@ -11,7 +11,7 @@ data class Pill(
     val dates: List<OffsetDateTime>? = null,
     val datesTaken: DatesTakenType = DatesTakenType.EVERYDAY,
     val datesTakenSelected: List<DatesTakenSelected> = listOf(),
-    val startDate: LocalDate? = null,
+    val startDate: LocalDate,
     val endDate: LocalDate? = null,
     val amount: Float = 1F,
 )

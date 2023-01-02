@@ -2,6 +2,7 @@ package app.vazovsky.mypills.presentation.addpill
 
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import app.vazovsky.mypills.R
 import app.vazovsky.mypills.data.model.DatesTakenType
@@ -24,11 +25,16 @@ class AddPillFragment : BaseFragment(R.layout.fragment_add_pill) {
 
     }
 
+    override fun onBindViewModel() = with(viewModel) {
+        observeNavigationCommands()
+    }
+
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitTopInsetsWithPadding()
         setDatesTakenType()
         setTakePillType()
         setTimeNotification()
+        setDateNotification()
     }
 
     private fun setDatesTakenType() = with(binding) {
@@ -47,7 +53,9 @@ class AddPillFragment : BaseFragment(R.layout.fragment_add_pill) {
         }
     }
 
-    override fun onBindViewModel() = with(viewModel) {
-        observeNavigationCommands()
+    private fun setDateNotification() = with(binding) {
+        switchEndDateEnabled.setOnCheckedChangeListener { buttonView, isChecked ->
+            linearLayoutEndDateNotification.isVisible = isChecked
+        }
     }
 }

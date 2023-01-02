@@ -32,5 +32,6 @@
     <string name="settings_send_feedback_title">Написать разработчику</string>
     <string name="settings_send_feedback_menu_send">Отправить</string>
     <string name="add_view_time_notification">Время уведомления</string>
+    <string name="add_pill_end_date_enabled">Есть конечная дата</string>
 
 </resources>
