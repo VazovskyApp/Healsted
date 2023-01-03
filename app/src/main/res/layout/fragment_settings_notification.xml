@@ -15,10 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             app:navigationIcon="@drawable/ic_back"
-            app:navigationIconTint="@color/black"
-            app:title="NOTIFICATION"
-            app:titleTextAppearance="@style/Font.Heading_1.Black"
-            app:titleTextColor="@color/black" />
+            app:title="@string/settings_notifications_title"
+            app:titleTextAppearance="@style/Font.Heading_1.Black" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -30,6 +28,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <!-- TODO придумать, чем это вообще заполнить -->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

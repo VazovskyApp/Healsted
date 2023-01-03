@@ -16,26 +16,34 @@
             android:layout_height="?actionBarSize"
             app:menu="@menu/settings_send_feedback_toolbar"
             app:navigationIcon="@drawable/ic_back"
-            app:navigationIconTint="@color/black"
             app:title="@string/settings_send_feedback_title"
             app:titleCentered="true"
-            app:titleTextAppearance="@style/Font.Heading_1"
-            app:titleTextColor="@color/black" />
+            app:titleTextAppearance="@style/Font.Heading_1" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <TextView
+            android:id="@+id/ratingBarReview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_16"
+            android:text="Место для рейтинга прилы"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewReview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="32dp"
             app:cardCornerRadius="16dp"
-            app:cardElevation="10dp">
+            app:cardElevation="10dp"
+            app:layout_constraintTop_toBottomOf="@id/ratingBarReview">
 
             <EditText
                 android:id="@+id/editTextFeedback"
@@ -46,5 +54,16 @@
                 android:lines="4"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.cardview.widget.CardView>
-    </androidx.core.widget.NestedScrollView>
+
+        <TextView
+            android:id="@+id/textViewDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/settings_send_feedback_description"
+            android:textAppearance="@style/Font.Body_1.Bold"
+            app:layout_constraintTop_toBottomOf="@id/cardViewReview" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -15,11 +15,9 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             app:navigationIcon="@drawable/ic_back"
-            app:navigationIconTint="@color/black"
             app:title="@string/settings_about_us_title"
             app:titleCentered="true"
-            app:titleTextAppearance="@style/Font.Heading_1"
-            app:titleTextColor="@color/black" />
+            app:titleTextAppearance="@style/Font.Heading_1" />
     </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -95,6 +93,7 @@
             android:textAlignment="center"
             android:textAppearance="@style/Font.Body_1.Bold"
             app:drawableLeftCompat="@drawable/ic_share"
+            app:drawableTint="?colorOnPrimary"
             app:layout_constraintBottom_toTopOf="@id/textViewDeveloper"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
