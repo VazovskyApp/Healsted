@@ -1,16 +1,16 @@
-package app.vazovsky.mypills.presentation.pills.tab
+package app.vazovsky.mypills.presentation.pills.tab.active
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import app.vazovsky.mypills.R
-import app.vazovsky.mypills.databinding.FragmentCompletedPillsTabBinding
+import app.vazovsky.mypills.databinding.FragmentActivePillsTabBinding
 import app.vazovsky.mypills.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 
-class CompletedPillsTab : BaseFragment(R.layout.fragment_completed_pills_tab) {
+class ActivePillsTab : BaseFragment(R.layout.fragment_active_pills_tab) {
 
-    private val binding by viewBinding(FragmentCompletedPillsTabBinding::bind)
-    private val viewModel: CompletedPillsTabViewModel by viewModels()
+    private val binding by viewBinding(FragmentActivePillsTabBinding::bind)
+    private val viewModel: ActivePillsTabViewModel by viewModels()
 
     override fun callOperations() {
 
