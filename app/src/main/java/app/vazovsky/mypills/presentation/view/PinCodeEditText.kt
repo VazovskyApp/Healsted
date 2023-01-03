@@ -25,8 +25,8 @@ class PinCodeEditText : AppCompatEditText {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-//    private val errorTextColor = context.getColorCompat(context.resolveAttribute(MaterialR.attr.colorError))
-//    private val defaultTextColor = context.getColorCompat(context.resolveAttribute(android.R.attr.textColor))
+    private val errorTextColor = context.getColorCompat(context.resolveAttribute(MaterialR.attr.colorError))
+    private val defaultTextColor = context.getColorCompat(context.resolveAttribute(android.R.attr.textColor))
     private val placeholderRadius = resources.getDimension(R.dimen.pin_code_placeholder_radius)
     private val space = resources.getDimensionPixelSize(R.dimen.pin_code_space)
     private val placeholderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -75,7 +75,7 @@ class PinCodeEditText : AppCompatEditText {
         val bottom = height
         val textLength = min(text?.length ?: 0, codeLength)
 
-        //paint.color = if (isError) errorTextColor else defaultTextColor
+        paint.color = if (isError) errorTextColor else defaultTextColor
         paint.getTextWidths(text, 0, textLength, textWidthsArray)
 
         for (charIndex in 0 until codeLength) {

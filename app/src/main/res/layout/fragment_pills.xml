@@ -14,8 +14,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            app:title="Мои таблетки"
-            app:titleTextColor="@color/black" />
+            app:title="Мои таблетки"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

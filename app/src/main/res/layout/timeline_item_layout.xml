@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="16dp">
+
+    <TextView
+        android:id="@+id/monthView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textAppearance="@style/Font.Body_1.Bold"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/monthTextSize"
+        tools:text="Март" />
+
+    <TextView
+        android:id="@+id/dateView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:maxLength="2"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textAppearance="@style/Font.Heading_1.Black"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/dateTextSize"
+        android:textStyle="bold"
+        tools:text="23" />
+
+    <TextView
+        android:id="@+id/dayView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:gravity="center_horizontal"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textAppearance="@style/Font.Body_1.Bold"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/dayTextSize"
+        tools:text="TUE" />
+</LinearLayout>

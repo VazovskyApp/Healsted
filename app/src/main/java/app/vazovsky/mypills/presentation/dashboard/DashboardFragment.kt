@@ -1,6 +1,8 @@
 package app.vazovsky.mypills.presentation.dashboard
 
 import android.os.Bundle
+import android.view.View
+import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import app.vazovsky.mypills.R
 import app.vazovsky.mypills.databinding.FragmentDashboardBinding
@@ -24,10 +26,10 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitTopInsetsWithPadding()
+    }
 
-        buttonAddPill.setOnClickListener {
-            viewModel.openAddPill()
-        }
+    override fun applyBottomNavigationViewPadding(view: View, bottomNavigationViewHeight: Int) = with(binding) {
+        linearLayoutContent.updatePadding(bottom = bottomNavigationViewHeight)
     }
 
     override fun onBindViewModel() = with(viewModel) {

@@ -8,121 +8,96 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="0dp"
-        app:liftOnScroll="true">
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsingToolbar"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:contentScrim="@color/mediumSlateBlue"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:titleEnabled="false">
-
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_collapseMode="pin">
-
-                <app.vazovsky.mypills.presentation.view.TextViewNoClipping
-                    android:id="@+id/textViewWelcome"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_16"
-                    android:layout_marginTop="@dimen/margin_16"
-                    android:padding="2dp"
-                    android:text="Доброе утро, Vazovsky"
-                    android:textAppearance="@style/Font.Heading_1.Black" />
-
-                <TextView
-                    android:id="@+id/textViewMood"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_16"
-                    android:layout_marginTop="8dp"
-                    android:text="Как настроение сегодня?"
-                    android:textAppearance="@style/Font.Body_1.Bold" />
-
-                <TextView
-                    android:id="@+id/ratingBarMood"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_16"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="Место для настроения" />
-            </LinearLayout>
-
-            <!-- Сделать добавление title при скролле -->
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                app:layout_collapseMode="pin" />
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
+            android:layout_height="?actionBarSize"
+            app:title="Доброе утро, Vazovsky" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <TextView
+            android:id="@+id/textViewMood"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            android:layout_marginTop="8dp"
+            android:text="Как настроение сегодня?"
+            android:textAppearance="@style/Font.Body_1.Bold"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/calendarWeek"
+        <TextView
+            android:id="@+id/ratingBarMood"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="Место для настроения"
+            app:layout_constraintTop_toBottomOf="@id/textViewMood" />
+
+        <LinearLayout
+            android:id="@+id/linearLayoutContent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_round_sheet"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ratingBarMood">
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_16"
-                android:layout_marginTop="12dp"
-                android:text="Место для календаря за неделю"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_margin="@dimen/margin_20"
+                app:cardBackgroundColor="?colorSecondary"
+                app:cardCornerRadius="10dp">
+
+                <app.vazovsky.mypills.presentation.timeline.DatePickerTimeline
+                    android:id="@+id/datePickerTimeline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:dateTextColor="?colorOnPrimary"
+                    app:dayTextColor="?colorOnPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:monthTextColor="?colorOnPrimary" />
+            </androidx.cardview.widget.CardView>
 
             <app.vazovsky.mypills.presentation.view.TextViewNoClipping
                 android:id="@+id/textViewTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginHorizontal="@dimen/margin_20"
                 android:layout_marginTop="12dp"
                 android:text="Сегодня"
                 android:textAppearance="@style/Font.Heading_1.Black"
-                app:layout_constraintTop_toBottomOf="@id/calendarWeek" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/textViewDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginHorizontal="@dimen/margin_20"
                 android:text="17 марта, Среда"
                 android:textAppearance="@style/Font.Body_1"
-                app:layout_constraintTop_toBottomOf="@id/textViewTitle" />
-
-            <ImageButton
-                android:id="@+id/buttonAddPill"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="@dimen/margin_16"
-                android:background="@drawable/ic_plus"
-                app:layout_constraintBottom_toBottomOf="@id/textViewDate"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/textViewTitle" />
+                android:textColor="@color/black" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewTodayPills"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginHorizontal="@dimen/margin_20"
                 android:layout_marginTop="12dp"
-                android:text="Место для списка сегодняшних таблеток"
-                app:layout_constraintTop_toBottomOf="@id/textViewDate" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.core.widget.NestedScrollView>
+                android:text="Место для списка сегодняшних таблеток" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
