@@ -10,7 +10,7 @@ import app.vazovsky.mypills.R
 import app.vazovsky.mypills.databinding.FragmentDashboardBinding
 import app.vazovsky.mypills.extensions.fitTopInsetsWithPadding
 import app.vazovsky.mypills.presentation.base.BaseFragment
-import app.vazovsky.mypills.presentation.timeline.OnDateSelectedListener
+import app.vazovsky.mypills.presentation.view.timeline.OnDateSelectedListener
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate

@@ -1,4 +1,4 @@
-package app.vazovsky.mypills.presentation.timeline
+package app.vazovsky.mypills.presentation.view.timeline
 
 interface OnDateSelectedListener {
     fun onDateSelected(year: Int, month: Int, day: Int, dayOfWeek: Int)

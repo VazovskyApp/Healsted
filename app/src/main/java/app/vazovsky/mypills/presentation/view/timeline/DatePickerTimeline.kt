@@ -1,4 +1,4 @@
-package app.vazovsky.mypills.presentation.timeline
+package app.vazovsky.mypills.presentation.view.timeline
 
 import android.annotation.TargetApi
 import android.content.Context

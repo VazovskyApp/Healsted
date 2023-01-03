@@ -31,10 +31,21 @@
         <attr name="dateTextColor" format="color" />
         <attr name="dayTextColor" format="color" />
         <attr name="disabledColor" format="color" />
-        <!--<attr name="selectionBackgroundColor" format="color"/>-->
-        <!--<attr name="monthTextSize" format="dimension"/>-->
-        <!--<attr name="dateTextSize" format="dimension"/>-->
-        <!--<attr name="dayTextSize" format="dimension"/>-->
+    </declare-styleable>
+
+    <declare-styleable name="EmojiRatingBar">
+        <attr name="showText" format="boolean" />
+        <attr name="showAllText" format="boolean" />
+        <attr name="titleColor" format="color" />
+        <attr name="android:fontFamily"/>
+        <attr name="defaultValue" format="enum">
+            <enum name="EMPTY" value="0" />
+            <enum name="AWFUL" value="1" />
+            <enum name="BAD" value="2" />
+            <enum name="OKAY" value="3" />
+            <enum name="GOOD" value="4" />
+            <enum name="GREAT" value="5" />
+        </attr>
     </declare-styleable>
 
     <attr name="errorSnackbarBackgroundColor" format="reference|color" />

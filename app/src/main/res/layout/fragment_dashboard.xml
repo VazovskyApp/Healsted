@@ -32,14 +32,12 @@
             android:textAppearance="@style/Font.Body_1.Bold"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <app.vazovsky.mypills.presentation.view.rating.EmojiRatingBar
             android:id="@+id/ratingBarMood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_16"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            android:text="Место для настроения"
             app:layout_constraintTop_toBottomOf="@id/textViewMood" />
 
         <LinearLayout
@@ -59,7 +57,7 @@
                 app:cardBackgroundColor="?colorSecondary"
                 app:cardCornerRadius="10dp">
 
-                <app.vazovsky.mypills.presentation.timeline.DatePickerTimeline
+                <app.vazovsky.mypills.presentation.view.timeline.DatePickerTimeline
                     android:id="@+id/datePickerTimeline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
