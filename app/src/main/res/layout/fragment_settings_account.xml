@@ -15,23 +15,108 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             app:navigationIcon="@drawable/ic_back"
-            app:navigationIconTint="@color/black"
-            app:title="ACCOUNT"
-            app:titleTextAppearance="@style/Font.Heading_1.Black"
-            app:titleTextColor="@color/black" />
+            app:title="@string/settings_account_title"
+            app:titleTextAppearance="@style/Font.Heading_1.Black" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageViewAvatar"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/CircleShape" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:layout_constraintBottom_toBottomOf="@id/imageViewAvatar"
+            app:layout_constraintEnd_toEndOf="@id/imageViewAvatar"
+            app:shapeAppearanceOverlay="@style/CircleShape"
+            app:srcCompat="@drawable/bg_edit" />
+
+        <TextView
+            android:id="@+id/textViewNickname"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            android:layout_marginTop="20dp"
+            android:text="@string/settings_account_nickname"
+            android:textAppearance="@style/Font.Body_1"
+            app:layout_constraintTop_toBottomOf="@id/imageViewAvatar" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+        <EditText
+            android:id="@+id/editTextNickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/Font.Body_1.Bold"
+            app:layout_constraintTop_toBottomOf="@id/textViewNickname" />
 
+        <TextView
+            android:id="@+id/textViewPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            android:layout_marginTop="20dp"
+            android:text="@string/settings_account_phone"
+            android:textAppearance="@style/Font.Body_1"
+            app:layout_constraintTop_toBottomOf="@id/editTextNickname" />
+
+        <EditText
+            android:id="@+id/editTextPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/Font.Body_1.Bold"
+            app:layout_constraintTop_toBottomOf="@id/textViewPhone" />
+
+        <TextView
+            android:id="@+id/textViewBirthday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            android:layout_marginTop="20dp"
+            android:text="@string/settings_account_birthday"
+            android:textAppearance="@style/Font.Body_1"
+            app:layout_constraintTop_toBottomOf="@id/editTextPhone" />
+
+        <EditText
+            android:id="@+id/editTextBirthday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/Font.Body_1.Bold"
+            app:layout_constraintTop_toBottomOf="@id/textViewBirthday" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_16"
+            android:backgroundTint="?colorOnPrimary"
+            android:padding="16dp"
+            android:text="@string/settings_account_save"
+            android:textAllCaps="true"
+            android:textAppearance="@style/Font.Body_1.Bold"
+            android:textColor="?colorOnBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextBirthday"
+            app:layout_constraintVertical_bias="1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

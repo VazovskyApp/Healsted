@@ -37,5 +37,10 @@
     <string name="pills_active_tab_title">Активные</string>
     <string name="pills_completed_tab_title">Завершенные</string>
     <string name="health_update">Обновить</string>
+    <string name="settings_account_title">Редактировать аккаунт</string>
+    <string name="settings_account_save">Сохранить</string>
+    <string name="settings_account_birthday">День рождения</string>
+    <string name="settings_account_phone">Номер телефона</string>
+    <string name="settings_account_nickname">Никнейм</string>
 
 </resources>
