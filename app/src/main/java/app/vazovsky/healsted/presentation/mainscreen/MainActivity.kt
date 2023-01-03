@@ -57,7 +57,7 @@ class MainActivity : BaseActivity(), BottomNavigationViewManager {
             notificationContent = "Ура, я продвигаюсь чуток",
             notificationPackageName = packageName,
             notificationClassPackageName = MainActivity::class.java.toString(),
-            clickReferrerEndPoint = "MyPills",
+            clickReferrerEndPoint = "Healsted",
         )
 
         setupBottomNavigation()
