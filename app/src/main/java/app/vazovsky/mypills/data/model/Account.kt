@@ -9,4 +9,5 @@ data class Account(
     val phoneNumber: Phone,
     val birthday: LocalDate? = null,
     val avatar: String? = null,
+    val level: AccountLevel ,
 )
