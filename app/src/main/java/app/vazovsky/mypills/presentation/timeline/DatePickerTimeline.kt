@@ -52,9 +52,6 @@ class DatePickerTimeline : LinearLayout {
         timelineView!!.disabledDateColor =
             a.getColor(R.styleable.DatePickerTimeline_disabledColor, resources.getColor(R.color.grey))
 
-//        timelineView.setMonthTextSize(a.getDimension(R.styleable.DatePickerTimeline_monthTextSize, getResources().getDimension(R.dimen.monthTextSize)));
-//        timelineView.setDateTextSize(a.getDimension(R.styleable.DatePickerTimeline_dateTextSize, getResources().getDimension(R.dimen.dateTextSize)));
-//        timelineView.setDayTextSize(a.getDimension(R.styleable.DatePickerTimeline_dayTextSize, getResources().getDimension(R.dimen.dayTextSize)));
         timelineView?.deactivateDates(listOf())
         a.recycle()
         timelineView!!.invalidate()

@@ -42,11 +42,9 @@ class TimelineView : RecyclerView {
         month = 0
         date = 1
         setHasFixedSize(true)
-        setLayoutManager(
-            LinearLayoutManager(
-                getContext(), LinearLayoutManager.HORIZONTAL,
-                false
-            )
+        layoutManager = LinearLayoutManager(
+            context, LinearLayoutManager.HORIZONTAL,
+            false
         )
         adapter = TimelineAdapter(this, -1)
         setAdapter(adapter)
@@ -83,9 +81,5 @@ class TimelineView : RecyclerView {
 
     fun deactivateDates(deactivatedDates: List<Date>) {
         adapter?.disableDates(deactivatedDates)
-    }
-
-    companion object {
-        private const val TAG = "TimelineView"
     }
 }
