@@ -6,6 +6,7 @@ import app.vazovsky.mypills.domain.base.UseCase
 import app.vazovsky.mypills.domain.base.UseCaseUnary
 import javax.inject.Inject
 
+/** Получение данных о мониторинге здоровья */
 class GetHealthMonitoringUseCase @Inject constructor(
     private val healthRepository: HealthRepository,
 ) : UseCaseUnary<UseCase.None, List<MonitoringAttribute>>() {
