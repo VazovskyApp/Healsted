@@ -7,5 +7,7 @@
         <item name="windowNoTitle">true</item>
         <item name="appBarLayoutStyle">@style/AppBarStyle</item>
         <item name="toolbarStyle">@style/ToolbarStyle</item>
+
+<!--        <item name="colorPrimary">@color/</item>-->
     </style>
 </resources>

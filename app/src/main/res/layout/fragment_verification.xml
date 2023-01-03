@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textViewTitle"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="VERIFICATION"
-        android:textAppearance="@style/Font.Heading_1.Black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="?actionBarSize"
+        app:navigationIcon="@drawable/ic_back"
+        app:navigationIconTint="@color/black" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonDashboard"
+    <app.vazovsky.mypills.presentation.view.StateViewFlipper
+        android:id="@+id/stateViewFlipper"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
-        android:paddingVertical="@dimen/padding_16"
-        android:text="Перейти в дашборд"
-        android:textAppearance="@style/Font.Body_1.Bold"
-        android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/textViewTitle" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/content"
+            layout="@layout/content_verification" />
+    </app.vazovsky.mypills.presentation.view.StateViewFlipper>
+</LinearLayout>
