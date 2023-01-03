@@ -15,6 +15,7 @@
     <dimen name="text_40">40sp</dimen>
 
     <dimen name="titleSize">18sp</dimen>
+    <dimen name="tabsSpace">8dp</dimen>
 
     <!-- StateViewFlipper -->
     <dimen name="error_state_animation_horizontal_margin">72dp</dimen>
