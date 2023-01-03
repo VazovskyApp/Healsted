@@ -34,4 +34,7 @@
     <string name="add_view_time_notification">Время уведомления</string>
     <string name="add_pill_end_date_enabled">Есть конечная дата</string>
 
+    <string name="pills_active_tab_title">Активные</string>
+    <string name="pills_completed_tab_title">Завершенные</string>
+
 </resources>
