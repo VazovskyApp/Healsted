@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <app.vazovsky.mypills.presentation.view.PinCodeEditText
+            <app.vazovsky.healsted.presentation.view.PinCodeEditText
                 android:id="@+id/pinCodeEditText"
                 style="@style/PinCodeStyle"
                 android:layout_width="match_parent"

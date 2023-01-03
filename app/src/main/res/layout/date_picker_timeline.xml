@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     tools:parentTag="LinearLayout">
 
-    <app.vazovsky.mypills.presentation.view.timeline.TimelineView
+    <app.vazovsky.healsted.presentation.view.timeline.TimelineView
         android:id="@+id/timelineView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

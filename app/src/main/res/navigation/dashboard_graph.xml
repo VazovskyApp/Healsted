@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="app.vazovsky.mypills.presentation.dashboard.DashboardFragment"
+        android:name="app.vazovsky.healsted.presentation.dashboard.DashboardFragment"
         android:label="DashboardFragment"
         tools:layout="@layout/fragment_dashboard">
         <action

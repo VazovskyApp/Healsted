@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/healthFragment"
-        android:name="app.vazovsky.mypills.presentation.health.HealthFragment"
+        android:name="app.vazovsky.healsted.presentation.health.HealthFragment"
         android:label="HealthFragment"
         tools:layout="@layout/fragment_health">
         <action
@@ -15,19 +15,19 @@
             app:destination="@id/healthAttributeFragment">
             <argument
                 android:name="healthMonitoring"
-                app:argType="app.vazovsky.mypills.data.model.MonitoringAttribute"
+                app:argType="app.vazovsky.healsted.data.model.MonitoringAttribute"
                 app:nullable="false" />
         </action>
     </fragment>
 
     <fragment
         android:id="@+id/healthAttributeFragment"
-        android:name="app.vazovsky.mypills.presentation.health.attribute.HealthAttributeFragment"
+        android:name="app.vazovsky.healsted.presentation.health.attribute.HealthAttributeFragment"
         android:label="HealthAttributeFragment"
         tools:layout="@layout/fragment_health_attribute">
         <argument
             android:name="healthMonitoring"
-            app:argType="app.vazovsky.mypills.data.model.MonitoringAttribute"
+            app:argType="app.vazovsky.healsted.data.model.MonitoringAttribute"
             app:nullable="false" />
     </fragment>
 </navigation>

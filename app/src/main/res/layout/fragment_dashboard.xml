@@ -32,7 +32,7 @@
             android:textAppearance="@style/Font.Body_1.Bold"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <app.vazovsky.mypills.presentation.view.rating.EmojiRatingBar
+        <app.vazovsky.healsted.presentation.view.rating.EmojiRatingBar
             android:id="@+id/ratingBarMood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                 app:cardBackgroundColor="?colorSecondary"
                 app:cardCornerRadius="10dp">
 
-                <app.vazovsky.mypills.presentation.view.timeline.DatePickerTimeline
+                <app.vazovsky.healsted.presentation.view.timeline.DatePickerTimeline
                     android:id="@+id/datePickerTimeline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
                     app:monthTextColor="?colorOnPrimary" />
             </androidx.cardview.widget.CardView>
 
-            <app.vazovsky.mypills.presentation.view.TextViewNoClipping
+            <app.vazovsky.healsted.presentation.view.TextViewNoClipping
                 android:id="@+id/textViewTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

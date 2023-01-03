@@ -21,7 +21,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <app.vazovsky.mypills.presentation.view.ValidationTextInputLayout
+    <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
         android:id="@+id/textInputLayoutPhone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -34,13 +34,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:validationPattern="@string/phone_validation_pattern">
 
-        <app.vazovsky.mypills.presentation.view.PhoneEditText
+        <app.vazovsky.healsted.presentation.view.PhoneEditText
             android:id="@+id/editTextPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionNext"
             android:inputType="phone" />
 
-    </app.vazovsky.mypills.presentation.view.ValidationTextInputLayout>
+    </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

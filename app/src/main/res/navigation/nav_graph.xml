@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/routingFragment"
-        android:name="app.vazovsky.mypills.presentation.routing.RoutingFragment"
+        android:name="app.vazovsky.healsted.presentation.routing.RoutingFragment"
         android:label="RoutingFragment"
         tools:layout="@layout/fragment_routing">
         <action
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/onBoardingFragment"
-        android:name="app.vazovsky.mypills.presentation.onboarding.OnBoardingFragment"
+        android:name="app.vazovsky.healsted.presentation.onboarding.OnBoardingFragment"
         android:label="OnBoardingFragment" >
         <action
             android:id="@+id/action_onBoardingFragment_to_dashboard_graph"

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Мои таблетки</string>
+    <string name="app_name">Healsted</string>
 
     <string name="channel_name">Pills</string>
     <string name="channel_description">PillsTracker</string>

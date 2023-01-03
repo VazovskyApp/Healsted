@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/addPillFragment"
-        android:name="app.vazovsky.mypills.presentation.addpill.AddPillFragment"
+        android:name="app.vazovsky.healsted.presentation.addpill.AddPillFragment"
         android:label="AddPillFragment"
         tools:layout="@layout/fragment_add_pill" />
 </navigation>

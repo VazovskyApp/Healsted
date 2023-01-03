@@ -29,7 +29,7 @@
             tools:visibility="visible" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <app.vazovsky.mypills.presentation.view.StateViewFlipper
+    <app.vazovsky.healsted.presentation.view.StateViewFlipper
         android:id="@+id/stateViewFlipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -41,7 +41,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/bg_round_sheet">
 
-            <app.vazovsky.mypills.presentation.view.EmptyRecyclerView
+            <app.vazovsky.healsted.presentation.view.EmptyRecyclerView
                 android:id="@+id/recyclerViewPills"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
@@ -56,5 +56,5 @@
                 app:srcCompat="@drawable/ic_plus" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </app.vazovsky.mypills.presentation.view.StateViewFlipper>
+    </app.vazovsky.healsted.presentation.view.StateViewFlipper>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

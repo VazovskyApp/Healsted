@@ -10,11 +10,11 @@ plugins {
 }
 
 android {
-    namespace 'app.vazovsky.mypills'
+    namespace 'app.vazovsky.healsted'
     compileSdk 33
 
     defaultConfig {
-        applicationId "app.vazovsky.mypills"
+        applicationId "app.vazovsky.healsted"
         minSdk 24
         targetSdk 33
         versionCode 1

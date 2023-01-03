@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
-        android:name=".MyPillsApp"
+        android:name="app.vazovsky.healsted.HealstedApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -17,11 +17,12 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.mainscreen.MainActivity"
+            android:name="app.vazovsky.healsted.presentation.mainscreen.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="transBundle.app"/>
+                <action android:name="transBundle.app" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

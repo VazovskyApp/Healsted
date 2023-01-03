@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/authFragment"
-        android:name="app.vazovsky.mypills.presentation.auth.AuthFragment"
+        android:name="app.vazovsky.healsted.presentation.auth.AuthFragment"
         android:label="AuthFragment"
         tools:layout="@layout/fragment_auth">
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/verificationFragment"
-        android:name="app.vazovsky.mypills.presentation.verification.VerificationFragment"
+        android:name="app.vazovsky.healsted.presentation.verification.VerificationFragment"
         android:label="VerificationFragment">
         <action
             android:id="@+id/action_verificationFragment_to_dashboard_graph"

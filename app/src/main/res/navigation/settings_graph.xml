@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="app.vazovsky.mypills.presentation.settings.SettingsFragment"
+        android:name="app.vazovsky.healsted.presentation.settings.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/fragment_settings">
         <action
@@ -33,27 +33,27 @@
     </fragment>
     <fragment
         android:id="@+id/settingsAccountFragment"
-        android:name="app.vazovsky.mypills.presentation.settings.account.SettingsAccountFragment"
+        android:name="app.vazovsky.healsted.presentation.settings.account.SettingsAccountFragment"
         android:label="SettingsAccountFragment"
         tools:layout="@layout/fragment_settings_account" />
     <fragment
         android:id="@+id/settingsAboutUsFragment"
-        android:name="app.vazovsky.mypills.presentation.settings.aboutus.SettingsAboutUsFragment"
+        android:name="app.vazovsky.healsted.presentation.settings.aboutus.SettingsAboutUsFragment"
         android:label="SettingsAboutUsFragment"
         tools:layout="@layout/fragment_settings_about_us" />
     <fragment
         android:id="@+id/settingsNotificationFragment"
-        android:name="app.vazovsky.mypills.presentation.settings.notification.SettingsNotificationFragment"
+        android:name="app.vazovsky.healsted.presentation.settings.notification.SettingsNotificationFragment"
         android:label="SettingsNotificationFragment"
         tools:layout="@layout/fragment_settings_notification" />
     <fragment
         android:id="@+id/settingsReportBugFragment"
-        android:name="app.vazovsky.mypills.presentation.settings.reportbug.SettingsReportBugFragment"
+        android:name="app.vazovsky.healsted.presentation.settings.reportbug.SettingsReportBugFragment"
         android:label="SettingsReportBugFragment"
         tools:layout="@layout/fragment_settings_report_bug" />
     <fragment
         android:id="@+id/settingsSendFeedbackFragment"
-        android:name="app.vazovsky.mypills.presentation.settings.sendfeedback.SettingsSendFeedbackFragment"
+        android:name="app.vazovsky.healsted.presentation.settings.sendfeedback.SettingsSendFeedbackFragment"
         android:label="SettingsSendFeedbackFragment"
         tools:layout="@layout/fragment_settings_send_feedback" />
 </navigation>

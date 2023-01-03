@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/profileRoutingFragment"
-        android:name="app.vazovsky.mypills.presentation.profile.routing.ProfileRoutingFragment"
+        android:name="app.vazovsky.healsted.presentation.profile.routing.ProfileRoutingFragment"
         android:label="ProfileRoutingFragment"
         tools:layout="@layout/fragment_profile_routing" >
         <action
@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="app.vazovsky.mypills.presentation.profile.profile.ProfileFragment"
+        android:name="app.vazovsky.healsted.presentation.profile.profile.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile" />
 
