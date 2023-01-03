@@ -15,11 +15,23 @@ class HealthViewHolder(
 
     private val binding by viewBinding(ItemMonitoringBinding::bind)
 
-    fun bind(item: MonitoringAttribute) = with(binding) {
+    fun bind(item: MonitoringAttribute, position: Int) = with(binding) {
+        root.setOnClickListener { onItemClick.invoke(item) }
+        val backgroundColorId = when (position % 5) {
+            0 -> R.color.pillsCardBlue
+            1 -> R.color.pillsCardOrange
+            2 -> R.color.pillsCardRed
+            3 -> R.color.pillsCardViolet
+            else -> R.color.pillsCardGreen
+        }
+        root.setCardBackgroundColor(
+            root.context.getColor(backgroundColorId)
+        )
+
         textViewTitle.text = item.type.toString()
         /** Добавить форматирование */
         textViewValue.text = item.value
-        root.setOnClickListener { onItemClick.invoke(item) }
+
         //imageViewBackground.load()
     }
 }

@@ -16,7 +16,6 @@ import app.vazovsky.mypills.presentation.pills.tab.PillsTabsAdapter
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import timber.log.Timber
 
 @AndroidEntryPoint
 class PillsFragment : BaseFragment(R.layout.fragment_pills) {
@@ -82,7 +81,7 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
             spanCount = 2,
             spacing = R.dimen.padding_16,
             includeEdge = true,
-            excludeTopEdge = false
+            excludeTopEdge = false,
         )
     }
 }

@@ -17,6 +17,6 @@ class HealthAdapter @Inject constructor() : BaseAdapter<MonitoringAttribute, Hea
     }
 
     override fun onBindViewHolder(holder: HealthViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position)
     }
 }

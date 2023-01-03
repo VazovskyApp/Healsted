@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/margin_4"
-    android:layout_marginTop="@dimen/margin_4"
-    android:layout_marginEnd="@dimen/margin_4"
-    android:layout_marginBottom="@dimen/margin_4"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="4dp">
+    app:cardCornerRadius="20dp"
+    app:cardElevation="30dp"
+    tools:cardBackgroundColor="@color/pills_card_blue">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -25,9 +23,9 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_16"
             android:layout_marginTop="@dimen/margin_16"
-            android:text="Вес"
             android:textAppearance="@style/Font.Body_1.Bold"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Вес" />
 
         <TextView
             android:id="@+id/textViewValue"
@@ -35,9 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_16"
             android:layout_marginTop="4dp"
-            android:text="45 кг"
             android:textAppearance="@style/Font.Body_1"
-            app:layout_constraintTop_toBottomOf="@id/textViewTitle" />
+            app:layout_constraintTop_toBottomOf="@id/textViewTitle"
+            tools:text="45 кг" />
 
         <TextView
             android:id="@+id/textViewUpdate"
@@ -46,7 +44,7 @@
             android:layout_marginHorizontal="@dimen/margin_16"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="@dimen/margin_16"
-            android:text="Обновить"
+            android:text="@string/health_update"
             android:textAppearance="@style/Font.Body_1.Light"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textViewValue" />

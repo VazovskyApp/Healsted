@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import app.vazovsky.mypills.R
 import app.vazovsky.mypills.data.model.MonitoringAttribute
 import app.vazovsky.mypills.databinding.FragmentHealthBinding
+import app.vazovsky.mypills.extensions.addDefaultGridSpaceItemDecoration
 import app.vazovsky.mypills.extensions.fitTopInsetsWithPadding
 import app.vazovsky.mypills.presentation.base.BaseFragment
 import app.vazovsky.mypills.presentation.health.adapter.HealthAdapter
-import app.vazovsky.mypills.presentation.view.GridSpaceItemDecoration
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -36,7 +36,12 @@ class HealthFragment : BaseFragment(R.layout.fragment_health) {
     private fun setupRecyclerView() = with(binding) {
         recyclerViewHealthMonitoring.adapter = healthAdapter
         recyclerViewHealthMonitoring.layoutManager = GridLayoutManager(context, 2)
-        recyclerViewHealthMonitoring.addItemDecoration(GridSpaceItemDecoration(2, 20, false, false))
+        recyclerViewHealthMonitoring.addDefaultGridSpaceItemDecoration(
+            spanCount = 2,
+            spacing = R.dimen.padding_16,
+            includeEdge = true,
+            excludeTopEdge = false,
+        )
         healthAdapter.onItemClick = { attr ->
             viewModel.openAttribute(attr)
         }

@@ -36,5 +36,6 @@
 
     <string name="pills_active_tab_title">Активные</string>
     <string name="pills_completed_tab_title">Завершенные</string>
+    <string name="health_update">Обновить</string>
 
 </resources>
