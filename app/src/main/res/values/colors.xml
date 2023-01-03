@@ -27,4 +27,12 @@
     <color name="rate_color_good_">#77C179</color>
     <color name="rate_color_great">#5F9868</color>
     <color name="some_random_color">#FF00FF</color>
+
+    <color name="pillsCardBlue">#585CE5</color>
+    <color name="pillsCardOrange">#E79F5B</color>
+    <color name="pillsCardRed">#E65A81</color>
+    <color name="pillsCardViolet">#A176EB</color>
+    <color name="pillsCardGreen">#65D9B9</color>
+    <color name="pillsCardTransparent50">#50FFFFFF</color>
+    <color name="pillsCardTransparent30">#30FFFFFF</color>
 </resources>

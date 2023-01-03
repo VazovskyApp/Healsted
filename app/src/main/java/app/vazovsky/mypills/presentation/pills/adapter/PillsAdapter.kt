@@ -14,6 +14,6 @@ class PillsAdapter @Inject constructor() : BaseAdapter<Pill, PillsViewHolder>() 
     }
 
     override fun onBindViewHolder(holder: PillsViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position)
     }
 }

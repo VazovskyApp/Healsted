@@ -1,6 +1,8 @@
 package app.vazovsky.mypills.presentation.pills
 
 import android.os.Bundle
+import android.view.View
+import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import app.vazovsky.mypills.R
@@ -57,6 +59,10 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
         }
     }
 
+    override fun applyBottomNavigationViewPadding(view: View, bottomNavigationViewHeight: Int) = with(binding) {
+        constraintLayout.updatePadding(bottom = bottomNavigationViewHeight)
+    }
+
     private fun setupTabs() = with(binding) {
         recyclerViewTabs.adapter = pillsTabsAdapter.apply {
             onItemClick = {
@@ -72,6 +78,11 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
             onItemClick = {}
         }
         recyclerViewPills.layoutManager = GridLayoutManager(requireContext(), 2)
-        recyclerViewPills.addDefaultGridSpaceItemDecoration(2)
+        recyclerViewPills.addDefaultGridSpaceItemDecoration(
+            spanCount = 2,
+            spacing = R.dimen.padding_16,
+            includeEdge = true,
+            excludeTopEdge = false
+        )
     }
 }
