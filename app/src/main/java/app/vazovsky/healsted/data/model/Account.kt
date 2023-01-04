@@ -4,9 +4,11 @@ import java.time.LocalDate
 
 /** Данные об аккаунте */
 data class Account(
-    val id: String,
+    val accountHolder: User,
     val nickname: String,
-    val phoneNumber: Phone,
+    val name: String = "",
+    val surname: String = "",
+    val patronymic: String = "",
     val birthday: LocalDate? = null,
     val avatar: String? = null,
     val level: AccountLevel = AccountLevel.BACTERIA,
