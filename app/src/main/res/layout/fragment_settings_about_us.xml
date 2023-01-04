@@ -27,14 +27,14 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <ImageView
-            android:id="@+id/imageViewIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:background="@drawable/ic_launcher_foreground"
+            android:id="@+id/imageViewLogo"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_logo" />
 
         <TextView
             android:id="@+id/textViewAppName"
@@ -45,7 +45,7 @@
             android:textAlignment="center"
             android:textAppearance="@style/Font.Body_1.Bold"
             android:textSize="24sp"
-            app:layout_constraintTop_toBottomOf="@id/imageViewIcon" />
+            app:layout_constraintTop_toBottomOf="@id/imageViewLogo" />
 
         <TextView
             android:id="@+id/textViewVersion"
