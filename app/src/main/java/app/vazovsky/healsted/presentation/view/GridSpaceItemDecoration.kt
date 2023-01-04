@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class GridSpaceItemDecoration(
-    private val spanCount: Int, private val spacing: Int, private val includeEdge: Boolean, private val excludeTopEdge: Boolean
+    private val spanCount: Int,
+    private val spacing: Int,
+    private val includeEdge: Boolean,
+    private val excludeTopEdge: Boolean,
 ) : RecyclerView.ItemDecoration() {
     private var orientation = -1
 
@@ -39,7 +42,8 @@ class GridSpaceItemDecoration(
                 outRect.bottom = (column + 1) * spacing / spanCountPos // (column + 1) * ((1f / spanCount) * spacing)
             }
 
-            if (position < spanCountPos) { // topWindowInsets edge
+            // topWindowInsets edge
+            if (position < spanCountPos) {
                 if (orientation == VERTICAL) {
                     if (!excludeTopEdge) {
                         outRect.top = spacing
@@ -56,9 +60,9 @@ class GridSpaceItemDecoration(
             }
         } else {
             if (orientation == VERTICAL) {
-                outRect.left = column * spacing / spanCountPos // column * ((1f / spanCount) * spacing)
+                outRect.left = column * spacing / spanCountPos
             } else {
-                outRect.top = column * spacing / spanCountPos // column * ((1f / spanCount) * spacing)
+                outRect.top = column * spacing / spanCountPos
             }
             if (orientation == VERTICAL) {
                 outRect.right = spacing - (column + 1) * spacing / spanCountPos
@@ -80,9 +84,7 @@ class GridSpaceItemDecoration(
         return if (parent.layoutManager is GridLayoutManager) {
             (parent.layoutManager as GridLayoutManager).orientation
         } else {
-            throw IllegalStateException(
-                "GridSpacingItemDecoration can only be used with a GridLayoutManager."
-            )
+            throw IllegalStateException("GridSpacingItemDecoration can only be used with a GridLayoutManager.")
         }
     }
 }

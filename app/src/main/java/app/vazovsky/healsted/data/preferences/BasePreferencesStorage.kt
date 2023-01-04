@@ -7,6 +7,7 @@ import androidx.annotation.WorkerThread
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+/** Базовые преференсы */
 abstract class BasePreferencesStorage constructor(
     protected val context: Context,
 ) {

@@ -72,9 +72,7 @@ class LinearSpaceItemDecoration(
         return if (parent.layoutManager is LinearLayoutManager) {
             (parent.layoutManager as LinearLayoutManager).orientation
         } else {
-            throw IllegalStateException(
-                "DividerItemDecoration can only be used with a LinearLayoutManager."
-            )
+            throw IllegalStateException("DividerItemDecoration can only be used with a LinearLayoutManager.")
         }
     }
 

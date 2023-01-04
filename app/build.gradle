@@ -32,6 +32,7 @@ android {
         }
     }
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -57,7 +58,7 @@ dependencies {
 
     implementation(libs.kotlin)
     implementation(libs.kotlin.serialization)
-    implementation(libs.desugaring)
+    coreLibraryDesugaring(libs.desugaring)
 
     implementation(libs.hilt)
     kapt(libs.hilt.compiler)

@@ -6,15 +6,16 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.util.AttributeSet
-import androidx.annotation.NonNull
 import androidx.appcompat.widget.AppCompatTextView
 
-class TextViewNoClipping(context: Context, attrs: AttributeSet?) : AppCompatTextView(context, attrs) {
+/** TextView без обрезания границ */
+class TextViewNoClipping @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+) : AppCompatTextView(context, attrs) {
 
-    private class NonClippableCanvas(@NonNull val bitmap: Bitmap) : Canvas(bitmap) {
-        override fun clipRect(left: Float, top: Float, right: Float, bottom: Float): Boolean {
-            return true
-        }
+    private class NonClippableCanvas(val bitmap: Bitmap) : Canvas(bitmap) {
+        override fun clipRect(left: Float, top: Float, right: Float, bottom: Float) = true
     }
 
     private var nonClippableCanvas: NonClippableCanvas? = null
@@ -27,8 +28,6 @@ class TextViewNoClipping(context: Context, attrs: AttributeSet?) : AppCompatText
                     nonClippableCanvas = NonClippableCanvas(it)
                 }
             } catch (ex: Throwable) {
-                // If for some reasons the bitmap cannot be created,
-                // we fall back on default rendering (potentially cropping the text).
                 nonClippableCanvas?.bitmap?.recycle()
                 nonClippableCanvas = null
             }
@@ -39,14 +38,9 @@ class TextViewNoClipping(context: Context, attrs: AttributeSet?) : AppCompatText
 
     override fun onDraw(canvas: Canvas) {
         nonClippableCanvas?.let {
-            // Clear the canvas from the previous font.
             it.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
-
-            // Draw on the canvas (-> bitmap) that will use clipping on the NonClippableCanvas, resulting in no-clipping
             super.onDraw(it)
-
-            // Finally draw the bitmap that contains the rendered text (no clipping used here, will display on top of padding)
             canvas.drawBitmap(it.bitmap, 0f, 0f, null)
-        } ?: super.onDraw(canvas) // If nonClippableCanvas is not available, use default rendering process
+        } ?: super.onDraw(canvas)
     }
 }

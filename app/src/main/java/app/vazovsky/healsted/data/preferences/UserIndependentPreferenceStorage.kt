@@ -7,6 +7,7 @@ import javax.inject.Singleton
 
 private const val PREF_USER_INDEPENDENT_FILE_NAME = "pref_user_independent_file"
 
+/** Преференсы, которые зависят от логаута */
 @Singleton
 class UserIndependentPreferenceStorage @Inject constructor(
     context: Context,

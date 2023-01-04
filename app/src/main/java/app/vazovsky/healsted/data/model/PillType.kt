@@ -1,5 +1,6 @@
 package app.vazovsky.healsted.data.model
 
+/** Тип лекарства */
 enum class PillType(private val friendlyName: String) {
     TABLETS("Таблетки"),
     CAPSULE("Капсулы"),
@@ -10,7 +11,5 @@ enum class PillType(private val friendlyName: String) {
     CREAM("Крем"),
     SPRAY("Спрей");
 
-    override fun toString(): String {
-        return friendlyName
-    }
+    override fun toString() = friendlyName
 }

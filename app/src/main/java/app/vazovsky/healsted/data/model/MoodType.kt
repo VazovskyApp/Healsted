@@ -1,5 +1,6 @@
 package app.vazovsky.healsted.data.model
 
+/** Тип значения настроения */
 enum class MoodType(private val friendlyName: String) {
     EMPTY("Нет"),
     AWFUL("Ужасно"),
@@ -8,7 +9,5 @@ enum class MoodType(private val friendlyName: String) {
     GOOD("Хорошо"),
     GREAT("Отлично");
 
-    override fun toString(): String {
-        return friendlyName
-    }
+    override fun toString() = friendlyName
 }

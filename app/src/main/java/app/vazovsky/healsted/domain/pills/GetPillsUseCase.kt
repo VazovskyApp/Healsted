@@ -6,6 +6,7 @@ import app.vazovsky.healsted.data.repository.PillsRepository
 import app.vazovsky.healsted.domain.base.UseCaseUnary
 import javax.inject.Inject
 
+/** Получение данных о лекарствах */
 class GetPillsUseCase @Inject constructor(
     private val pillsRepository: PillsRepository,
 ) : UseCaseUnary<GetPillsUseCase.Params, List<Pill>>() {
@@ -15,6 +16,7 @@ class GetPillsUseCase @Inject constructor(
     }
 
     data class Params(
+        /** Отмеченный слот */
         val slot: PillsTabSlot?,
     )
 }

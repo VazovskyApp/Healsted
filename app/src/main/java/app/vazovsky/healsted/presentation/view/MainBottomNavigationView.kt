@@ -33,7 +33,7 @@ class MainBottomNavigationView @JvmOverloads constructor(
                 .setAllCornerSizes(cornerSize)
                 .setTopEdge(
                     FabEdgeTreatment(
-                        fabDiameter = resources.getDimension(R.dimen.bottom_navigation_services_fab_size),
+                        fabDiameter = resources.getDimension(R.dimen.bottom_navigation_fab_size),
                         fabMargin = resources.getDimension(R.dimen.bottom_navigation_fab_margin),
                         centerCornersRadius = resources.getDimension(R.dimen.bottom_navigation_small_corner_size),
                     )
@@ -67,7 +67,7 @@ class MainBottomNavigationView @JvmOverloads constructor(
         }
     }
 
-    /** Находит FAB сервисов в нижнем меню */
+    /** Находит FAB дашборда в нижнем меню */
     private fun findDashboardFab(): View? {
         if (parent !is FrameLayout) {
             // If we aren't in a CoordinatorLayout we won't have a dependent FAB.
@@ -82,9 +82,8 @@ class MainBottomNavigationView @JvmOverloads constructor(
         return null
     }
 
-    /** Прикрепить NavController */
+    /** Прикрепление NavController */
     fun attachNavController(navController: NavController) {
-        // установка слушателя переходов в графe
         navController.addOnDestinationChangedListener(this)
     }
 

@@ -6,7 +6,7 @@ import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.base.UseCaseUnary
 import javax.inject.Inject
 
-/** Получение медикаментов, назначенных на сегодняшний день */
+/** Получение медикаментов, назначенных на текущий день */
 class GetTodayPillsUseCase @Inject constructor(
     private val dashboardRepository: DashboardRepository,
 ) : UseCaseUnary<UseCase.None, List<Pill>>() {

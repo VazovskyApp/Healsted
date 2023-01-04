@@ -17,7 +17,10 @@ import app.vazovsky.healsted.data.model.base.NetworkError
 import app.vazovsky.healsted.data.model.base.ParsedError
 import com.airbnb.lottie.LottieAnimationView
 
-class StateViewFlipper(context: Context, attrs: AttributeSet? = null) : ViewFlipper(context, attrs) {
+class StateViewFlipper @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+) : ViewFlipper(context, attrs) {
 
     enum class State(val displayedChild: Int) {
         LOADING(0),
@@ -57,14 +60,17 @@ class StateViewFlipper(context: Context, attrs: AttributeSet? = null) : ViewFlip
         }
     }
 
+    /** Метод для повтора запроса */
     fun setRetryMethod(retry: () -> Unit) {
         buttonError.setOnClickListener { retry.invoke() }
     }
 
+    /** Скрытие иконки ошибки запроса */
     fun hideErrorIcon() {
         animationViewError?.isVisible = false
     }
 
+    /** Установка кастомного состояния */
     fun setCustomState() {
         changeState(State.CUSTOM)
         runAnimationAndStopOthers()
@@ -81,6 +87,7 @@ class StateViewFlipper(context: Context, attrs: AttributeSet? = null) : ViewFlip
         }
     }
 
+    /** Установка анимации для загрузки */
     fun setLoadingView(@LayoutRes layout: Int) {
         removeView(loadingView)
         loadingView = LayoutInflater.from(context).inflate(layout, this, false)
@@ -88,6 +95,7 @@ class StateViewFlipper(context: Context, attrs: AttributeSet? = null) : ViewFlip
         changeState(state)
     }
 
+    /** Изменение состояния флиппера */
     fun changeState(newState: State) {
         if (stateIsDisabled(newState)) return
         if (state != newState || displayedChild != newState.displayedChild) {
@@ -96,11 +104,13 @@ class StateViewFlipper(context: Context, attrs: AttributeSet? = null) : ViewFlip
         }
     }
 
+    /** Установка состояния загрузки */
     private fun setStateLoading() {
         changeState(State.LOADING)
         runAnimationAndStopOthers()
     }
 
+    /** Установка состояния ошибки */
     private fun setStateError(error: ParsedError, useApiErrorMessage: Boolean) {
         changeState(State.ERROR)
 
@@ -111,6 +121,7 @@ class StateViewFlipper(context: Context, attrs: AttributeSet? = null) : ViewFlip
         runAnimationAndStopOthers(animationViewError)
     }
 
+    /** Установка состояния данных */
     private fun setStateData() {
         changeState(State.DATA)
         runAnimationAndStopOthers()
@@ -125,9 +136,7 @@ class StateViewFlipper(context: Context, attrs: AttributeSet? = null) : ViewFlip
         animationView?.playAnimation()
     }
 
-    /**
-     * Ошибка "Что-то с интернетом"
-     */
+    /** Ошибка для случаев проблем с сетью */
     private fun setStateNetworkError() {
         setErrorStateContent(
             titleRes = R.string.error_no_network_title,
@@ -136,9 +145,7 @@ class StateViewFlipper(context: Context, attrs: AttributeSet? = null) : ViewFlip
         )
     }
 
-    /**
-     * Ошибка "Что-то не так"
-     */
+    /** Неизвестная ошибка */
     private fun setGeneralError(error: ParsedError, useApiErrorMessage: Boolean) {
         setErrorStateContent(
             titleRes = R.string.error_something_wrong_title,
@@ -151,12 +158,14 @@ class StateViewFlipper(context: Context, attrs: AttributeSet? = null) : ViewFlip
         )
     }
 
+    /** Установка отображения состояния ошибки */
     private fun setErrorStateContent(@StringRes titleRes: Int, @StringRes descriptionRes: Int, @RawRes errorRes: Int) {
         textErrorTitle?.setText(titleRes)
         textErrorDescription?.setText(descriptionRes)
         animationViewError?.setAnimation(errorRes)
     }
 
+    /** Установка отображения состояния ошибки */
     private fun setErrorStateContent(@StringRes titleRes: Int, description: String, @RawRes errorRes: Int) {
         textErrorTitle?.setText(titleRes)
         textErrorDescription?.text = description
@@ -168,7 +177,6 @@ class StateViewFlipper(context: Context, attrs: AttributeSet? = null) : ViewFlip
     }
 
     private class LayoutResProvider(context: Context, attrs: AttributeSet?) {
-
         companion object {
             @LayoutRes
             val DEFAULT_ERROR_LAYOUT = R.layout.view_state_error
@@ -186,11 +194,7 @@ class StateViewFlipper(context: Context, attrs: AttributeSet? = null) : ViewFlip
 
                 val loadingId = array.getResourceId(R.styleable.StateViewFlipper_loadingLayoutRes, -1)
                 loadingRes = if (loadingId == -1) DEFAULT_LOADING_LAYOUT else loadingId
-
-                errorRes = array.getResourceId(
-                    R.styleable.StateViewFlipper_errorLayoutRes,
-                    DEFAULT_ERROR_LAYOUT
-                )
+                errorRes = array.getResourceId(R.styleable.StateViewFlipper_errorLayoutRes, DEFAULT_ERROR_LAYOUT)
 
                 array.recycle()
             } else {

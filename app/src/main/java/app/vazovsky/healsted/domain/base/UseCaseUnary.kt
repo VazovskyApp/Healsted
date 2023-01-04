@@ -5,6 +5,7 @@ import app.vazovsky.healsted.data.model.base.Progressable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
+/** Данные для юз-кейсов */
 abstract class UseCaseUnary<in Params, Result> : UseCase where Result : Any {
 
     abstract suspend fun execute(params: Params): Result
@@ -13,6 +14,7 @@ abstract class UseCaseUnary<in Params, Result> : UseCase where Result : Any {
         return loadData(payload) { execute(params) }
     }
 
+    /** Загрузка данных */
     private fun loadData(
         payload: Result? = null,
         block: suspend () -> Result,
@@ -29,6 +31,7 @@ abstract class UseCaseUnary<in Params, Result> : UseCase where Result : Any {
         }
     }
 
+    /** Обновление прогресса загрузки данных */
     @Suppress("UNCHECKED_CAST")
     private fun updateProgress(payload: Result?, inProgress: Boolean): Result? {
         return if (payload != null && payload is Progressable<*>) {

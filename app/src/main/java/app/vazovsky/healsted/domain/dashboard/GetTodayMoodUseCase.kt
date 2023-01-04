@@ -6,7 +6,7 @@ import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.base.UseCaseUnary
 import javax.inject.Inject
 
-/** Получение сегодняшнего настроения */
+/** Получение настроения за сегодня */
 class GetTodayMoodUseCase @Inject constructor(
     private val dashboardRepository: DashboardRepository,
 ) : UseCaseUnary<UseCase.None, Mood>() {

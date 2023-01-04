@@ -1,7 +1,7 @@
 package app.vazovsky.healsted.presentation.view
 
 /**
- * Определение spanSize на лету для элементов списка
+ * Определение spanSize для элементов списка
  * Используется в
  * @see GridSpaceItemDecoration
  */

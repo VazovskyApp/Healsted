@@ -9,7 +9,7 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor() : ProfileRepository {
-    @RequiresApi(Build.VERSION_CODES.O)
+
     override fun getProfile(): Account {
         return Account(
             id = "0",

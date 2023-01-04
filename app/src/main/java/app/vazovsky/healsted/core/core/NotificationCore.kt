@@ -54,6 +54,7 @@ class NotificationCore @Inject constructor() {
         notificationViewModel = ViewModelProvider(owner)[NotificationViewModel::class.java]
     }
 
+    /** Создать воркер */
     fun createWorker(
         application: Application,
         token: String,
@@ -84,10 +85,10 @@ class NotificationCore @Inject constructor() {
             .setInputData(data.build())
             .build()
 
-        workManager
-            .enqueue(work)
+        workManager.enqueue(work)
     }
 
+    /** Завершить работу воркера */
     fun cancelWorker(
         application: Application,
         tag: String
@@ -95,6 +96,7 @@ class NotificationCore @Inject constructor() {
         WorkManager.getInstance(application.applicationContext!!).cancelAllWorkByTag(tag)
     }
 
+    /** Создание стандартного канала уведомлений */
     private fun createNotificationDefaultChannel(
         application: Application
     ) {
@@ -111,6 +113,7 @@ class NotificationCore @Inject constructor() {
         }
     }
 
+    /** Отправить уведомление в канале по умолчанию */
     fun sendOnDefaultChannel(
         context: Context,
         notificationId: String,
@@ -149,6 +152,7 @@ class NotificationCore @Inject constructor() {
         }
     }
 
+    /** Нажатие на уведомление */
     fun clickedOnNotification(
         endPoint: String,
         token: String,

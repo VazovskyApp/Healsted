@@ -35,13 +35,13 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabDashboard"
-            android:layout_width="@dimen/bottom_navigation_services_fab_size"
-            android:layout_height="@dimen/bottom_navigation_services_fab_size"
+            android:layout_width="@dimen/bottom_navigation_fab_size"
+            android:layout_height="@dimen/bottom_navigation_fab_size"
             android:layout_gravity="center_horizontal|bottom"
             android:foregroundGravity="center"
             app:backgroundTint="?colorSurface"
             app:elevation="@dimen/bottom_navigation_view_elevation"
-            app:fabCustomSize="@dimen/bottom_navigation_services_fab_size"
+            app:fabCustomSize="@dimen/bottom_navigation_fab_size"
             app:srcCompat="@drawable/ic_menu_dashboard"
             app:tint="@null"
             tools:ignore="ContentDescription" />

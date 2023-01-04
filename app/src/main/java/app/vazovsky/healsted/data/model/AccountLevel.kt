@@ -1,6 +1,10 @@
 package app.vazovsky.healsted.data.model
 
-enum class AccountLevel(private val friendlyName: String, private val xpCount: Int) {
+/** Уровень аккаунта */
+enum class AccountLevel(
+    private val friendlyName: String,
+    private val xpCount: Int,
+) {
     BACTERIA("Бактерия", 100),
     VIRUS("Вирус", 200),
     INDESTRUCTIBLE("Неубиваемый", 500),

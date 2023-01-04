@@ -16,11 +16,7 @@ class FabEdgeTreatment(
     private val radius = fabDiameter / 2.0f + fabMargin
 
     override fun getEdgePath(length: Float, center: Float, interpolation: Float, shapePath: ShapePath) {
-
-        // до первой арки вниз
         shapePath.lineTo(center - radius - centerCornersRadius, 0f)
-
-        // первая маленькая арка вниз
         shapePath.addArc(
             center - radius - centerCornersRadius * 2,
             0f,
@@ -29,8 +25,6 @@ class FabEdgeTreatment(
             270f,
             90f
         )
-
-        // большой полугруг вниз
         shapePath.addArc(
             center - radius,
             centerCornersRadius - radius,
@@ -39,8 +33,6 @@ class FabEdgeTreatment(
             180f,
             -180f,
         )
-
-        // маленькая арка вверх
         shapePath.addArc(
             center + radius,
             0f,
@@ -49,8 +41,6 @@ class FabEdgeTreatment(
             180f,
             90f,
         )
-
-        // замыкающая линия
         shapePath.lineTo(length, 0f)
     }
 }

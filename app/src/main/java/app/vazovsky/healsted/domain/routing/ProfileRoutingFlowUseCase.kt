@@ -11,6 +11,7 @@ class ProfileRoutingFlowUseCase @Inject constructor() : UseCaseUnary<UseCase.Non
     }
 }
 
+/** Варианты роутинга профиля */
 enum class ProfileRoutingResult {
     PROFILE,
     AUTH,

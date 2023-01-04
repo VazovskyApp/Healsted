@@ -32,7 +32,6 @@ class HealthRepositoryImpl @Inject constructor() : HealthRepository {
         ),
     )
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun getHealthMonitoring(): List<MonitoringAttribute> {
         return listOfHealthMonitoring
     }

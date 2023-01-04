@@ -1,5 +1,6 @@
 package app.vazovsky.healsted.data.model
 
+/** Тип настроек */
 enum class SettingType(private val friendlyName: String) {
     ACCOUNT("Аккаунт"),
     NOTIFICATION("Уведомления"),
@@ -8,7 +9,5 @@ enum class SettingType(private val friendlyName: String) {
     ABOUT_US("О приложении"),
     LOG_OUT("Выйти");
 
-    override fun toString(): String {
-        return friendlyName
-    }
+    override fun toString() = friendlyName
 }

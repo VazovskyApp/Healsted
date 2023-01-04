@@ -6,7 +6,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class RemoteHelperImpl @Inject constructor(
-    @Named("notificationRemoteService") private val remoteService: RemoteService
+    @Named("notificationRemoteService") private val remoteService: RemoteService,
 ) : RemoteHelper {
     override suspend fun getNotification(
         endPoint: String,

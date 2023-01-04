@@ -1,5 +1,6 @@
 package app.vazovsky.healsted.data.model
 
+/** Вкладка для экрана с лекарствами */
 data class PillsTab(
     /** Имя вкладки */
     val tabName: String,
@@ -9,6 +10,7 @@ data class PillsTab(
     val selected: Boolean,
 )
 
+/** Слот для вкладки */
 enum class PillsTabSlot {
     ALL,
     ACTIVE,

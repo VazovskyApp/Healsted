@@ -11,6 +11,7 @@ class RoutingFlowUseCase @Inject constructor() : UseCaseUnary<UseCase.None, Rout
     }
 }
 
+/** Варианты главного роутинга */
 enum class RoutingResult {
     ONBOARDING,
     DASHBOARD,

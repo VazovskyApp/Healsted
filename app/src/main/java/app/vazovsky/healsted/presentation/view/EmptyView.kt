@@ -20,23 +20,15 @@ import app.vazovsky.healsted.extensions.getColorFromAttribute
 import timber.log.Timber
 import com.google.android.material.R as MaterialR
 
-class EmptyView : ConstraintLayout {
+class EmptyView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     private val binding: ViewStateEmptyBinding = ViewStateEmptyBinding.inflate(LayoutInflater.from(context), this)
 
-    constructor(context: Context) : super(context) {
-        init(context, null)
-    }
-
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        init(context, attrs)
-    }
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        init(context, attrs)
-    }
-
-    private fun init(context: Context, attrs: AttributeSet?) {
+    init {
         binding.buttonEmpty.isVisible = false
         val padding = context.resources.getDimensionPixelSize(R.dimen.padding_16)
         setPadding(padding, padding, padding, padding)

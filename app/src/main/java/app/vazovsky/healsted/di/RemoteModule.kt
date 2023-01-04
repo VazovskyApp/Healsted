@@ -12,6 +12,9 @@ import javax.inject.Singleton
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+const val BASE_URL = "https://t.me/healsted/"
+
+/** Модуль для ретрофита */
 @Module
 @InstallIn(SingletonComponent::class)
 object RemoteModule {
@@ -20,7 +23,7 @@ object RemoteModule {
     @Named("notificationRetrofitService")
     fun provideApiService(): Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl("https://automation.basalam.com")
+        .baseUrl(BASE_URL)
         .build()
 
     @Singleton

@@ -13,6 +13,12 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.catch
 import timber.log.Timber
 
+private const val RESPONSE_ID = "id"
+private const val RESPONSE_TITLE = "title"
+private const val RESPONSE_CONTENT = "content"
+private const val RESPONSE_CLICK_REFERRER = "click_referrer"
+private const val RESPONSE_DATA = "data"
+
 @HiltWorker
 class FetchDataWorker @AssistedInject constructor(
     @Assisted appContext: Context,
@@ -37,12 +43,13 @@ class FetchDataWorker @AssistedInject constructor(
         }
 
         val outputData = Data.Builder()
-            .putString(NotificationCore.NOTIFICATION_DATA, "Hi Da")
+            .putString(NotificationCore.NOTIFICATION_DATA, "Notification data")
             .build()
 
         return Result.success(outputData)
     }
 
+    /** Получение данных из запроса */
     private suspend fun getData(
         endPoint: String,
         token: String,
@@ -53,7 +60,7 @@ class FetchDataWorker @AssistedInject constructor(
     ) {
         notificationRepository.getNotification(endPoint, token, deviceId)
             .catch {
-                println("OH DAMN IT, WE GOT ERROR: ${it.message}")
+                Timber.d("OH DAMN IT, WE GOT ERROR (in catch): ${it.message}")
             }
             .collect { notificationRes ->
                 when (notificationRes) {
@@ -62,30 +69,31 @@ class FetchDataWorker @AssistedInject constructor(
                             val response = notificationRes.data?.get(0)?.asJsonObject
 
                             val id: String =
-                                if (response?.has("id") == true)
-                                    response.get("id").toString().replace("\"", "")
+                                if (response?.has(RESPONSE_ID) == true)
+                                    response.get(RESPONSE_ID).toString().replace("\"", "")
                                 else
                                     "1"
 
                             val title: String =
-                                if (response?.has("title") == true)
-                                    response.get("title").toString().replace("\"", "")
+                                if (response?.has(RESPONSE_TITLE) == true)
+                                    response.get(RESPONSE_TITLE).toString().replace("\"", "")
                                 else
-                                    "باسلام"
+                                    "title"
 
                             val content: String =
-                                if (response?.has("content") == true)
-                                    response.get("content").toString().replace("\"", "")
+                                if (response?.has(RESPONSE_CONTENT) == true)
+                                    response.get(RESPONSE_CONTENT).toString().replace("\"", "")
                                 else
-                                    "باسلام"
+                                    "content"
 
                             val clickReferrerEndPoint: String =
-                                if (response?.has("click_referrer") == true)
-                                    response.get("click_referrer").toString().replace("\"", "")
-                                else
+                                if (response?.has(RESPONSE_CLICK_REFERRER) == true) {
+                                    response.get(RESPONSE_CLICK_REFERRER).toString().replace("\"", "")
+                                } else {
+                                    // TODO изменить
                                     "https://automation.basalam.com/api/api_v1.0/notifications/push/read/{notification_id}"
-
-                            val data = response?.getAsJsonObject("data")
+                                }
+                            val data = response?.getAsJsonObject(RESPONSE_DATA)
 
                             notificationCore.sendOnDefaultChannel(
                                 applicationContext,
@@ -99,8 +107,7 @@ class FetchDataWorker @AssistedInject constructor(
                                 clickReferrerEndPoint
                             )
                         } catch (e: Exception) {
-                            Timber.d("LOL OH DAMN IT, WE GOT ERROR: ${e.message}")
-                            println("OH DAMN IT, WE GOT ERROR: ${e.message}")
+                            Timber.d("LOL OH DAMN IT, WE GOT ERROR (in collect catch): ${e.message}")
                         }
                     }
 

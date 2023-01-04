@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.shareIn
 class NotificationViewModel @Inject constructor(
     private val notificationRepository: NotificationRepository
 ) : ViewModel() {
+
+    /** Нажатие на уведомление */
     fun clickedOnNotification(
         endPoint: String,
         token: String,

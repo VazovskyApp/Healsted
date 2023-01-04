@@ -21,8 +21,11 @@ import androidx.core.content.res.ResourcesCompat
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.data.model.MoodType
 
-class EmojiRatingBar @JvmOverloads constructor(context: Context, attributeSet: AttributeSet) :
-    LinearLayout(context, attributeSet) {
+class EmojiRatingBar @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+) : LinearLayout(context, attrs, defStyleAttr) {
 
     private class Smiley(var image: ImageView, var text: TextView, var status: MoodType)
 
@@ -64,7 +67,7 @@ class EmojiRatingBar @JvmOverloads constructor(context: Context, attributeSet: A
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         _view = inflater.inflate(R.layout.item_rate_view, this, true)
         context.theme.obtainStyledAttributes(
-            attributeSet,
+            attrs,
             R.styleable.EmojiRatingBar,
             0, 0
         ).apply {

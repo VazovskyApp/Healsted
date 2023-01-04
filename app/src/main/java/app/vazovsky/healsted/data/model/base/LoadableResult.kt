@@ -4,6 +4,7 @@ typealias Loading<T> = LoadableResult.Loading<T>
 typealias Success<T> = LoadableResult.Success<T>
 typealias Failure<T> = LoadableResult.Failure<T>
 
+/** Результат загрузки данных */
 sealed class LoadableResult<R>(open val payload: R? = null) {
     data class Loading<R>(
         override val payload: R?,

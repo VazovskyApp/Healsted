@@ -7,9 +7,10 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import timber.log.Timber
 
 class NotificationRepositoryImpl @Inject constructor(
-    private val remoteHelper: RemoteHelper
+    private val remoteHelper: RemoteHelper,
 ) : NotificationRepository {
     override fun getNotification(
         endPoint: String,
@@ -32,11 +33,7 @@ class NotificationRepositoryImpl @Inject constructor(
         id: String
     ): Flow<DataState<Boolean>> = flow {
         try {
-            val res = remoteHelper.clickedOnNotification(
-                endPoint,
-                authorization,
-                id
-            )
+            val res = remoteHelper.clickedOnNotification(endPoint, authorization, id)
             emit(DataState.Success(res?.get("result")?.asBoolean!!))
         } catch (e: Exception) {
             emit(DataState.Error(e))

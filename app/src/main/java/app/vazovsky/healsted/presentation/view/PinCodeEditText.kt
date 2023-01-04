@@ -19,11 +19,11 @@ private const val NUMBER_RATION_WIDTH = 28
 private const val NUMBER_RATION_HEIGHT = 44
 private const val HALF_BLOCK_COEF = 0.5f
 
-class PinCodeEditText : AppCompatEditText {
-
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+class PinCodeEditText @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+) : AppCompatEditText(context, attrs, defStyleAttr) {
 
     private val errorTextColor = context.getColorCompat(context.resolveAttribute(MaterialR.attr.colorError))
     private val defaultTextColor = context.getColorCompat(context.resolveAttribute(android.R.attr.textColor))

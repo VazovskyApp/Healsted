@@ -1,15 +1,12 @@
 package app.vazovsky.healsted.data.repository
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.data.model.PillType
 import app.vazovsky.healsted.data.model.PillsTab
 import app.vazovsky.healsted.data.model.PillsTabSlot
-import java.time.LocalDate
+import java.time.OffsetDateTime
 import javax.inject.Inject
 
-@RequiresApi(Build.VERSION_CODES.O)
 class PillsRepositoryImpl @Inject constructor() : PillsRepository {
 
     private val listOfTabs = listOf(
@@ -35,34 +32,34 @@ class PillsRepositoryImpl @Inject constructor() : PillsRepository {
             id = "0",
             name = "Нурофен",
             type = PillType.CAPSULE,
-            dates = null,
+            times = null,
             amount = 1F,
-            startDate = LocalDate.now(),
+            startDate = OffsetDateTime.now(),
         ),
         Pill(
             id = "0",
             name = "Нурофен",
             type = PillType.CAPSULE,
-            dates = null,
+            times = null,
             amount = 1F,
-            startDate = LocalDate.now().minusDays(2),
+            startDate = OffsetDateTime.now().minusDays(2),
         ),
         Pill(
             id = "0",
             name = "Нурофен",
             type = PillType.CAPSULE,
-            dates = null,
+            times = null,
             amount = 1F,
-            startDate = LocalDate.now().minusDays(2),
-            endDate = LocalDate.now().plusDays(20)
+            startDate = OffsetDateTime.now().minusDays(2),
+            endDate = OffsetDateTime.now().plusDays(20)
         )
     )
 
     override fun getTabs() = listOfTabs
 
     override fun getPills(slot: PillsTabSlot?) = when (slot) {
-        PillsTabSlot.ACTIVE -> listOfPills.filter { it.endDate == null || it.endDate > LocalDate.now() }
-        PillsTabSlot.COMPLETED -> listOfPills.filter { it.endDate != null && it.endDate < LocalDate.now() }
+        PillsTabSlot.ACTIVE -> listOfPills.filter { it.endDate == null || it.endDate > OffsetDateTime.now() }
+        PillsTabSlot.COMPLETED -> listOfPills.filter { it.endDate != null && it.endDate < OffsetDateTime.now() }
         PillsTabSlot.ALL -> listOfPills
         else -> listOfPills
     }

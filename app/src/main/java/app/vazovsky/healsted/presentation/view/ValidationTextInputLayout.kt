@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.core.view.updatePaddingRelative
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.extensions.errorCleaner
+import app.vazovsky.healsted.extensions.orDefault
 import com.google.android.material.textfield.TextInputLayout
 
 /**
@@ -15,19 +16,11 @@ import com.google.android.material.textfield.TextInputLayout
  * Поле может быть пустым, если атрибут errorEmpty не выставлен
  * Поле проверяется на правильность, если атрибут validationPattern (регулярное выражение) выставлен
  */
-class ValidationTextInputLayout : TextInputLayout, TextInputValidator {
-
-    constructor(context: Context) : super(context) {
-        init(context, null)
-    }
-
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        init(context, attrs)
-    }
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        init(context, attrs)
-    }
+class ValidationTextInputLayout @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+) : TextInputLayout(context, attrs, defStyleAttr), TextInputValidator {
 
     private var validationPattern: String = ""
     private var isNotMalformed: (String) -> Boolean = {
@@ -50,7 +43,7 @@ class ValidationTextInputLayout : TextInputLayout, TextInputValidator {
     /** Надо ли проверять поле на пустоту */
     private var emptyCheck: Boolean = true
 
-    private fun init(context: Context, attrs: AttributeSet?) {
+    init {
         if (attrs != null) {
             val a = context.theme.obtainStyledAttributes(
                 attrs,
@@ -59,9 +52,9 @@ class ValidationTextInputLayout : TextInputLayout, TextInputValidator {
                 0
             )
             try {
-                emptyError = a.getString(R.styleable.ValidationTextInputLayout_errorEmpty) ?: ""
-                malformedError = a.getString(R.styleable.ValidationTextInputLayout_errorMalformed) ?: ""
-                validationPattern = a.getString(R.styleable.ValidationTextInputLayout_validationPattern) ?: ""
+                emptyError = a.getString(R.styleable.ValidationTextInputLayout_errorEmpty).orDefault()
+                malformedError = a.getString(R.styleable.ValidationTextInputLayout_errorMalformed).orDefault()
+                validationPattern = a.getString(R.styleable.ValidationTextInputLayout_validationPattern).orDefault()
                 emptyCheck = a.getBoolean(R.styleable.ValidationTextInputLayout_emptyCheck, true)
             } finally {
                 a.recycle()
@@ -72,23 +65,6 @@ class ValidationTextInputLayout : TextInputLayout, TextInputValidator {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         errorCleaner()
-    }
-
-    fun setEmptyError(error: String) {
-        emptyError = error
-    }
-
-    fun setValidationData(pattern: String, error: String) {
-        validationPattern = pattern
-        malformedError = error
-    }
-
-    fun noErrorPadding() {
-        val errorParent = getChildAt(1) as ViewGroup?
-
-        errorParent?.updatePaddingRelative(
-            end = 0,
-        )
     }
 
     override fun validate(): Boolean {
@@ -103,11 +79,26 @@ class ValidationTextInputLayout : TextInputLayout, TextInputValidator {
         return true
     }
 
-    override fun getText(): String {
-        return editText?.text?.trim()?.toString().orEmpty()
+    override fun getText() = editText?.text?.trim()?.toString().orEmpty()
+
+    override fun getLayoutId() = id
+
+    /** Установка текста ошибки */
+    fun setEmptyError(error: String) {
+        emptyError = error
     }
 
-    override fun getLayoutId(): Int {
-        return id
+    /** Установка данных для валидации */
+    fun setValidationData(pattern: String, error: String) {
+        validationPattern = pattern
+        malformedError = error
+    }
+
+    fun noErrorPadding() {
+        val errorParent = getChildAt(1) as ViewGroup?
+
+        errorParent?.updatePaddingRelative(
+            end = 0,
+        )
     }
 }

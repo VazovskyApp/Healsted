@@ -59,8 +59,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         datePickerTimeline.setInitialDate(2023, 0, 1)
         datePickerTimeline.setActiveDate(Calendar.getInstance())
         datePickerTimeline.setOnDateSelectedListener(object : OnDateSelectedListener {
-            //TODO поправить
-            @RequiresApi(Build.VERSION_CODES.O)
+
             override fun onDateSelected(year: Int, month: Int, day: Int, dayOfWeek: Int) {
                 textViewTitle.text = when (LocalDate.of(year, month + 1, day)) {
                     LocalDate.now() -> "Сегодня"
