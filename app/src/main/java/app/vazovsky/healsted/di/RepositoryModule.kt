@@ -1,5 +1,7 @@
 package app.vazovsky.healsted.di
 
+import app.vazovsky.healsted.data.firebase.FirebaseRepository
+import app.vazovsky.healsted.data.firebase.FirebaseRepositoryImpl
 import app.vazovsky.healsted.data.repository.DashboardRepository
 import app.vazovsky.healsted.data.repository.DashboardRepositoryImpl
 import app.vazovsky.healsted.data.repository.HealthRepository
@@ -33,4 +35,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindSettingsRepository(settingsRepository: SettingsRepositoryImpl): SettingsRepository
+
+    @Binds
+    abstract fun bindFirebaseRepository(firebaseRepository: FirebaseRepositoryImpl): FirebaseRepository
 }
