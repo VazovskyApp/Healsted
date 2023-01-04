@@ -2,8 +2,8 @@
     <string name="app_name">Healsted</string>
 
     <!-- Notification -->
-    <string name="channel_name">Pills</string>
-    <string name="channel_description">PillsTracker</string>
+    <string name="channel_name">Healsted</string>
+    <string name="channel_description">Healsted</string>
 
     <!-- Menu -->
     <string name="menu_profile_label">Профиль</string>
@@ -23,7 +23,6 @@
     <string name="sign_in_phone">Номер телефона</string>
     <string name="sign_in_get_code">Получить код</string>
     <string name="sign_in_phone_code">+7</string>
-    <string name="sign_up_vk_label">Создать аккаунт</string>
 
     <!-- Pill Editor -->
     <string name="pill_editor_title_add_pill">Добавить лекарство</string>
@@ -43,37 +42,5 @@
     <string name="health_attribute_current_value">Текущее:</string>
     <string name="health_attribute_switch_remind_to_measure">Напоминать об измерении</string>
     <string name="health_attribute_history">История</string>
-
-    <!-- Settings Account -->
-    <string name="settings_account_title">Редактировать аккаунт</string>
-    <string name="settings_account_save">Сохранить</string>
-    <string name="settings_account_birthday">День рождения</string>
-    <string name="settings_account_phone">Номер телефона</string>
-    <string name="settings_account_nickname">Никнейм</string>
-
-    <!-- Settings About us -->
-    <string name="settings_about_us_title">О приложении</string>
-    <string name="settings_about_us_version">Версия 1.0.0</string>
-    <string name="settings_about_us_issue_date">Выпущено 01.01.2023</string>
-    <string name="settings_about_us_description">Приложение для отслеживания принятия лекарств. Если вам нужно принять лекарства, а вы забыли это сделать, то приложение поможет вам не забыть это сделать вовремя.</string>
-    <string name="settings_about_us_share">Поделиться приложением</string>
-    <string name="settings_about_us_telegram">Telegram Channel</string>
-    <string name="settings_about_us_developed_prev">Developed by</string>
-    <string name="settings_about_us_developed_link">VazovskyApp</string>
-
-    <!-- Settings Send feedback -->
-    <string name="settings_send_feedback_title">Написать разработчику</string>
-    <string name="settings_send_feedback_menu_send">Отправить</string>
-    <string name="settings_send_feedback_description">Мы всегда рады вашим отзывам :)</string>
-
-    <!-- Settings Notification -->
-    <string name="settings_notifications_title">Уведомления</string>
-
-    <!-- Settings Report bug -->
-    <string name="settings_report_bug_title">Нам правда очень жаль,\nРасскажите, что не так?</string>
-    <string name="settings_report_bug_description">Мы постараемся стать лучше</string>
-    <string name="settings_report_bug_hint">Что стоит исправить?</string>
-    <string name="settings_report_bug_send">Отправить</string>
-    <string name="dashboard_today_pill_completed">Завершено</string>
 
 </resources>
