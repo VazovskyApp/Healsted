@@ -1,11 +1,13 @@
 package app.vazovsky.healsted.data.firebase
 
 import app.vazovsky.healsted.data.model.Account
+import app.vazovsky.healsted.data.model.AccountLevel
 import app.vazovsky.healsted.data.model.User
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import java.time.LocalDate
 import javax.inject.Inject
 
 class FirebaseServiceImpl @Inject constructor(
@@ -28,20 +30,33 @@ class FirebaseServiceImpl @Inject constructor(
 
     override fun saveUser(
         email: String,
+        phoneNumber: String,
     ) = firestore.collection("users").document(email).set(
         User(
             email = email,
-            phoneNumber = "",
+            phoneNumber = phoneNumber,
         )
     )
 
     override fun saveAccount(
         accountHolder: User,
         nickname: String,
+        name: String,
+        surname: String,
+        patronymic: String,
+        birthday: LocalDate?,
+        avatar: String?,
+        level: AccountLevel,
     ) = firestore.collection("accounts").document(accountHolder.email).set(
         Account(
             accountHolder = accountHolder,
             nickname = nickname,
+            name = name,
+            surname = surname,
+            patronymic = patronymic,
+            birthday = birthday,
+            avatar = avatar,
+            level = level,
         )
     )
 

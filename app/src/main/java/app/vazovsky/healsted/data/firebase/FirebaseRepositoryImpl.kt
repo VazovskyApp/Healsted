@@ -1,7 +1,9 @@
 package app.vazovsky.healsted.data.firebase
 
+import app.vazovsky.healsted.data.model.AccountLevel
 import app.vazovsky.healsted.data.model.User
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import java.time.LocalDate
 import javax.inject.Inject
 
 class FirebaseRepositoryImpl @Inject constructor(
@@ -23,12 +25,28 @@ class FirebaseRepositoryImpl @Inject constructor(
 
     override fun saveUser(
         email: String,
-    ) = firebaseService.saveUser(email)
+        phoneNumber: String,
+    ) = firebaseService.saveUser(email, phoneNumber)
 
     override fun saveAccount(
         accountHolder: User,
-        nickname: String
-    ) = firebaseService.saveAccount(accountHolder, nickname)
+        nickname: String,
+        name: String,
+        surname: String,
+        patronymic: String,
+        birthday: LocalDate?,
+        avatar: String?,
+        level: AccountLevel,
+    ) = firebaseService.saveAccount(
+        accountHolder = accountHolder,
+        nickname = nickname,
+        name = name,
+        surname = surname,
+        patronymic = patronymic,
+        birthday = birthday,
+        avatar = avatar,
+        level = level
+    )
 
     override fun fetchUser() = firebaseService.fetchUser()
 

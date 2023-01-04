@@ -3,7 +3,9 @@ package app.vazovsky.healsted.presentation.auth.signup
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import app.vazovsky.healsted.R
+import app.vazovsky.healsted.data.model.User
 import app.vazovsky.healsted.databinding.FragmentSignUpBinding
+import app.vazovsky.healsted.extensions.fitKeyboardInsetsWithPadding
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.extensions.showErrorSnackbar
 import app.vazovsky.healsted.presentation.base.BaseFragment
@@ -28,13 +30,19 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
 
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
-        signUpResultLiveData.observe { result->
-            result.doOnSuccess {task->
-                task.addOnSuccessListener { authResult->
+        signUpResultLiveData.observe { result ->
+            result.doOnSuccess { task ->
+                task.addOnSuccessListener { authResult ->
                     Timber.d(authResult.user?.email)
+                    authResult.user?.let { user ->
+                        saveAccount(
+                            accountHolder = User(email = user.email.toString(), ""),
+                            nickname = binding.editTextNickname.text.toString(),
+                        )
+                    }
                     viewModel.openDashboard()
                 }
-                task.addOnFailureListener { exception->
+                task.addOnFailureListener { exception ->
                     when (exception) {
                         is FirebaseAuthInvalidUserException -> Timber.d("Нет пользователя с таким email. Зарегистрируйтесь.")
                         is FirebaseAuthEmailException -> Timber.d("Я ошибка FirebaseAuthEmailException")
@@ -51,10 +59,23 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                 Timber.d(it.message)
             }
         }
+        saveAccountLiveData.observe { result ->
+            result.doOnSuccess { task ->
+                task.addOnSuccessListener {
+                    viewModel.openDashboard()
+                }
+                task.addOnFailureListener { exception ->
+                    Timber.d(exception.localizedMessage)
+                }
+            }
+            result.doOnFailure {
+                Timber.d(it.message)
+            }
+        }
     }
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
-        root.fitTopInsetsWithPadding()
+        root.fitKeyboardInsetsWithPadding()
 
         setupToolbar()
         setupSignUp()
