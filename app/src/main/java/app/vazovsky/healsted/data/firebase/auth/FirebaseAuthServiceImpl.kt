@@ -1,4 +1,4 @@
-package app.vazovsky.healsted.data.firebase
+package app.vazovsky.healsted.data.firebase.auth
 
 import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.AccountLevel
@@ -10,10 +10,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.time.LocalDate
 import javax.inject.Inject
 
-class FirebaseServiceImpl @Inject constructor(
+class FirebaseAuthServiceImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
-) : FirebaseService {
+) : FirebaseAuthService {
     override fun signUpUser(
         email: String, password: String, nickname: String
     ) = firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -30,7 +30,7 @@ class FirebaseServiceImpl @Inject constructor(
 
     override fun saveUser(
         email: String,
-        phoneNumber: String,
+        phoneNumber: String?,
     ) = firestore.collection("users").document(email).set(
         User(
             email = email,

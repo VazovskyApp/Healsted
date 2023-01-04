@@ -1,4 +1,4 @@
-package app.vazovsky.healsted.data.firebase
+package app.vazovsky.healsted.data.firebase.auth
 
 import app.vazovsky.healsted.data.model.AccountLevel
 import app.vazovsky.healsted.data.model.User
@@ -6,27 +6,27 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import java.time.LocalDate
 import javax.inject.Inject
 
-class FirebaseRepositoryImpl @Inject constructor(
-    private val firebaseService: FirebaseService
-) : FirebaseRepository {
+class FirebaseAuthRepositoryImpl @Inject constructor(
+    private val firebaseAuthService: FirebaseAuthService
+) : FirebaseAuthRepository {
 
     override fun signUpUser(
         email: String,
         password: String,
         nickname: String
-    ) = firebaseService.signUpUser(email, password, nickname)
+    ) = firebaseAuthService.signUpUser(email, password, nickname)
 
     override fun signInUser(
         email: String,
         password: String
-    ) = firebaseService.signInUser(email, password)
+    ) = firebaseAuthService.signInUser(email, password)
 
-    override fun signInWithGoogle(account: GoogleSignInAccount) = firebaseService.signInWithGoogle(account)
+    override fun signInWithGoogle(account: GoogleSignInAccount) = firebaseAuthService.signInWithGoogle(account)
 
     override fun saveUser(
         email: String,
-        phoneNumber: String,
-    ) = firebaseService.saveUser(email, phoneNumber)
+        phoneNumber: String?,
+    ) = firebaseAuthService.saveUser(email, phoneNumber)
 
     override fun saveAccount(
         accountHolder: User,
@@ -37,7 +37,7 @@ class FirebaseRepositoryImpl @Inject constructor(
         birthday: LocalDate?,
         avatar: String?,
         level: AccountLevel,
-    ) = firebaseService.saveAccount(
+    ) = firebaseAuthService.saveAccount(
         accountHolder = accountHolder,
         nickname = nickname,
         name = name,
@@ -48,9 +48,9 @@ class FirebaseRepositoryImpl @Inject constructor(
         level = level
     )
 
-    override fun fetchUser() = firebaseService.fetchUser()
+    override fun fetchUser() = firebaseAuthService.fetchUser()
 
-    override fun fetchAccount() = firebaseService.fetchAccount()
+    override fun fetchAccount() = firebaseAuthService.fetchAccount()
 
-    override fun sendForgotPassword(email: String) = firebaseService.sendForgotPassword(email)
+    override fun sendForgotPassword(email: String) = firebaseAuthService.sendForgotPassword(email)
 }

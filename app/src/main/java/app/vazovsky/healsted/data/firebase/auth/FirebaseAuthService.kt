@@ -1,4 +1,4 @@
-package app.vazovsky.healsted.data.firebase
+package app.vazovsky.healsted.data.firebase.auth
 
 import app.vazovsky.healsted.data.model.AccountLevel
 import app.vazovsky.healsted.data.model.User
@@ -7,9 +7,8 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.firestore.QuerySnapshot
 import java.time.LocalDate
-import java.time.LocalTime
 
-interface FirebaseService {
+interface FirebaseAuthService {
 
     fun signUpUser(
         email: String,
@@ -28,7 +27,7 @@ interface FirebaseService {
 
     fun saveUser(
         email: String,
-        phoneNumber: String,
+        phoneNumber: String? = null,
     ): Task<Void>
 
     fun saveAccount(

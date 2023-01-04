@@ -6,6 +6,7 @@ import app.vazovsky.healsted.data.model.AccountLevel
 import app.vazovsky.healsted.data.model.User
 import app.vazovsky.healsted.data.model.base.LoadableResult
 import app.vazovsky.healsted.domain.auth.SaveAccountUseCase
+import app.vazovsky.healsted.domain.auth.SaveUserUseCase
 import app.vazovsky.healsted.domain.auth.SignUpUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import com.google.android.gms.tasks.Task
@@ -19,13 +20,18 @@ class SignUpViewModel @Inject constructor(
     private val destinations: SignUpDestinations,
     private val signUpUseCase: SignUpUseCase,
     private val saveAccountUseCase: SaveAccountUseCase,
+    private val saveUserUseCase: SaveUserUseCase,
 ) : BaseViewModel() {
 
     /** Получение результата регистрации */
     private val _signUpResultLiveData = MutableLiveData<LoadableResult<Task<AuthResult>>>()
     val signUpResultLiveData: LiveData<LoadableResult<Task<AuthResult>>> = _signUpResultLiveData
 
-    /** Сохранение аккаунта */
+    /** Сохранение пользователя в FireStore */
+    private val _saveUserLiveData = MutableLiveData<LoadableResult<SaveUserUseCase.Result>>()
+    val saveUserLiveData: LiveData<LoadableResult<SaveUserUseCase.Result>> = _saveUserLiveData
+
+    /** Сохранение аккаунта в FireStore */
     private val _saveAccountLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
     val saveAccountLiveData: LiveData<LoadableResult<Task<Void>>> = _saveAccountLiveData
 
@@ -42,6 +48,18 @@ class SignUpViewModel @Inject constructor(
         )
     }
 
+    /** Сохранить пользователя в FireStore */
+    fun saveUser(email: String) {
+        _saveUserLiveData.launchLoadData(
+            saveUserUseCase.executeFlow(
+                SaveUserUseCase.Params(
+                    email = email
+                )
+            )
+        )
+    }
+
+    /** Сохранить аккаунт в FireStore */
     fun saveAccount(
         accountHolder: User,
         nickname: String,
