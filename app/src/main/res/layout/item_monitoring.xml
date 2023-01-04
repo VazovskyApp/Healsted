@@ -46,7 +46,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="@dimen/margin_16"
             android:text="@string/health_update"
-            android:textAppearance="@style/Font.Body_1.Light"
+            android:textAppearance="@style/Font.Body_1.Medium"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textViewValue" />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Достижения"
-        android:textAppearance="@style/Font.Body_1.Light"
+        android:textAppearance="@style/Font.Body_1.Medium"
         android:textSize="14sp" />
 
     <TextView
