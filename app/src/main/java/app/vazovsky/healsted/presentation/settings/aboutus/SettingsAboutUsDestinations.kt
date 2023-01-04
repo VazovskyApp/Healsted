@@ -6,7 +6,7 @@ import app.vazovsky.healsted.presentation.base.NavigationCommand
 import javax.inject.Inject
 
 private const val TELEGRAM_CHANNEL_URL = "tg://resolve?domain=healsted"
-private const val TELEGRAM_VAZOVSKY_URL = "tg://resolve?domain=vazovsky_17"
+private const val TELEGRAM_VAZOVSKY_URL = "tg://resolve?domain=vazovsky_app"
 private const val SHARE_URL = "https://www.t.me/healsted"
 private const val DEFAULT_SHARE_TYPE = "text/plain"
 
