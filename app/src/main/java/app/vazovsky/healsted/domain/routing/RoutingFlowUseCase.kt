@@ -7,7 +7,7 @@ import javax.inject.Inject
 /** Роутинг для главного графа */
 class RoutingFlowUseCase @Inject constructor() : UseCaseUnary<UseCase.None, RoutingResult>() {
     override suspend fun execute(params: UseCase.None): RoutingResult {
-        return RoutingResult.DASHBOARD
+        return RoutingResult.AUTH
     }
 }
 

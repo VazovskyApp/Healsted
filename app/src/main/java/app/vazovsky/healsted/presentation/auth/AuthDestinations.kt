@@ -4,7 +4,11 @@ import app.vazovsky.healsted.presentation.base.NavigationCommand
 import javax.inject.Inject
 
 class AuthDestinations @Inject constructor() {
-    fun verification() = NavigationCommand.To(
-        AuthFragmentDirections.actionAuthFragmentToVerificationFragment()
+    fun logIn() = NavigationCommand.To(
+        AuthFragmentDirections.actionAuthFragmentToLogInFragment()
+    )
+
+    fun signUp() = NavigationCommand.To(
+        AuthFragmentDirections.actionAuthFragmentToSignUpFragment()
     )
 }

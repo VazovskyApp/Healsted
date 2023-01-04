@@ -8,7 +8,14 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val destinations: AuthDestinations,
 ) : BaseViewModel() {
-    fun openVerification() {
-        navigate(destinations.verification())
+
+    /** Открыть авторизацию */
+    fun openLogIn() {
+        navigate(destinations.logIn())
+    }
+
+    /** Открыть регистрацию */
+    fun openSignUp() {
+        navigate(destinations.signUp())
     }
 }
