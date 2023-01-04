@@ -2,37 +2,67 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_shape_gradient">
 
     <TextView
-        android:id="@+id/textViewTitle"
+        android:id="@+id/textViewStart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="60dp"
-        android:text="Вход или регистрация"
-        android:textAppearance="@style/Font.Heading_1.Black"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/auth_start"
+        android:textAlignment="center"
+        android:textAppearance="@style/Font.Heading_2.Medium"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <include
-        android:id="@+id/contentPhoneNumber"
-        layout="@layout/content_phone_field"
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/buttonSignUp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewStart"
+        app:srcCompat="@drawable/ic_logo_red" />
+
+    <TextView
+        android:id="@+id/textViewAppName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/textViewTitle" />
+        android:layout_marginTop="8dp"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textAppearance="@style/Font.Heading_1"
+        app:layout_constraintTop_toBottomOf="@id/imageViewLogo" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonSendCode"
+        android:id="@+id/buttonSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
-        android:paddingVertical="@dimen/padding_16"
-        android:text="Получить код"
-        android:textAppearance="@style/Font.Body_1.Bold"
-        android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/contentPhoneNumber" />
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/pillsCardRed"
+        android:padding="16dp"
+        android:text="@string/auth_sign_up"
+        android:textAllCaps="true"
+        android:textAppearance="@style/Font.Body_1.Medium"
+        app:cornerRadius="16dp"
+        app:layout_constraintBottom_toTopOf="@id/textViewLogIn" />
+
+    <TextView
+        android:id="@+id/textViewLogIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="40dp"
+        android:background="?selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="@dimen/padding_8"
+        android:text="@string/auth_log_in"
+        android:textAlignment="center"
+        android:textAppearance="@style/Font.Body_1.Medium"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

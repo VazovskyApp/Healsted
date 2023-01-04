@@ -15,9 +15,7 @@ class AuthFragment : BaseFragment(R.layout.fragment_auth) {
     private val binding by viewBinding(FragmentAuthBinding::bind)
     private val viewModel: AuthViewModel by viewModels()
 
-    override fun callOperations() {
-
-    }
+    override fun callOperations() = Unit
 
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
@@ -25,5 +23,12 @@ class AuthFragment : BaseFragment(R.layout.fragment_auth) {
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitTopInsetsWithPadding()
+
+        setupClickListeners()
+    }
+
+    private fun setupClickListeners() = with(binding) {
+        textViewLogIn.setOnClickListener { viewModel.openLogIn() }
+        buttonSignUp.setOnClickListener { viewModel.openSignUp() }
     }
 }
