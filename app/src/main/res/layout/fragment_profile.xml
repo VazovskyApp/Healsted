@@ -68,31 +68,33 @@
                 app:layout_constraintTop_toBottomOf="@id/textViewNickname"
                 tools:text="Начинающий" />
 
-            <ProgressBar
-                android:id="@+id/progressIndicatorAccountProgress"
-                style="@style/Widget.Material3.LinearProgressIndicator"
-                android:layout_width="200dp"
-                android:layout_height="10dp"
-                app:layout_constraintEnd_toEndOf="@id/textViewLevel"
-                app:layout_constraintStart_toStartOf="@id/textViewLevel"
-                app:layout_constraintTop_toBottomOf="@id/textViewLevel" />
-
             <TextView
                 android:id="@+id/textViewAccountProgress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:gravity="center"
-                android:text="0 / 100 xp"
+                android:text="50 / 100 xp"
                 android:textAppearance="@style/Font.Body_1.Bold"
                 app:layout_constraintTop_toBottomOf="@id/textViewLevel" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <ProgressBar
+                android:id="@+id/progressIndicatorAccountProgress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="200dp"
+                android:layout_height="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="24dp"
+                android:max="100"
+                android:min="0"
+                android:progress="50"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/textViewAccountProgress"
+                app:layout_constraintStart_toStartOf="@id/textViewAccountProgress"
+                app:layout_constraintTop_toBottomOf="@id/textViewAccountProgress"
+                tools:ignore="UnusedAttribute" />
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

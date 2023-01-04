@@ -49,5 +49,9 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     private fun bindProfile(profile: Account) = with(binding) {
         textViewNickname.text = profile.nickname
         textViewLevel.text = profile.level.toString()
+        textViewAccountProgress.text = "0 / ${profile.level.getXPCount()}"
+        //TODO сделать норм прогресс
+        progressIndicatorAccountProgress.progress = 0
+        progressIndicatorAccountProgress.max = profile.level.getXPCount()
     }
 }
