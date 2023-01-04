@@ -24,6 +24,14 @@ class DashboardRepositoryImpl @Inject constructor() : DashboardRepository {
                 dates = null,
                 amount = 1F,
                 startDate = LocalDate.now(),
+            ),
+            Pill(
+                id = "0",
+                name = "Нурофен",
+                type = PillType.CAPSULE,
+                dates = null,
+                amount = 1F,
+                startDate = LocalDate.now(),
             )
         )
     }

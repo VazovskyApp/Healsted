@@ -69,6 +69,10 @@ class HealthAttributeFragment : BaseFragment(R.layout.fragment_health_attribute)
 
     private fun setupRecyclerView() = with(binding) {
         recyclerViewHistory.adapter = healthAttributeHistoryAdapter
-        recyclerViewHistory.addLinearSpaceItemDecoration(R.dimen.padding_16)
+        recyclerViewHistory.addLinearSpaceItemDecoration(
+            spacing = R.dimen.padding_16,
+            showFirstVerticalDivider = true,
+            showLastVerticalDivider = true,
+        )
     }
 }

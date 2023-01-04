@@ -74,5 +74,6 @@
     <string name="settings_report_bug_description">Мы постараемся стать лучше</string>
     <string name="settings_report_bug_hint">Что стоит исправить?</string>
     <string name="settings_report_bug_send">Отправить</string>
+    <string name="dashboard_today_pill_completed">Завершено</string>
 
 </resources>
