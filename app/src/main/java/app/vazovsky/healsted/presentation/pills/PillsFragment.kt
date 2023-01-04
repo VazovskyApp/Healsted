@@ -74,7 +74,9 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
 
     private fun setupPills() = with(binding) {
         recyclerViewPills.adapter = pillsAdapter.apply {
-            onItemClick = {}
+            onItemClick = { pill ->
+                viewModel.openEditPill(pill)
+            }
         }
         recyclerViewPills.layoutManager = GridLayoutManager(requireContext(), 2)
         recyclerViewPills.addDefaultGridSpaceItemDecoration(

@@ -22,11 +22,12 @@ class HealthAttributeFragment : BaseFragment(R.layout.fragment_health_attribute)
 
     override val showBottomNavigationView = true
 
+    private val binding by viewBinding(FragmentHealthAttributeBinding::bind)
+    private val viewModel: HealthAttributeViewModel by viewModels()
+
     private val args: HealthAttributeFragmentArgs by navArgs()
     private val monitoring by lazy { args.healthMonitoring }
 
-    private val binding by viewBinding(FragmentHealthAttributeBinding::bind)
-    private val viewModel: HealthAttributeViewModel by viewModels()
     @Inject lateinit var healthAttributeHistoryAdapter: HealthAttributeHistoryAdapter
 
     override fun callOperations() {

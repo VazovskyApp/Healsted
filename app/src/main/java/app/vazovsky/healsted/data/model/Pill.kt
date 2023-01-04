@@ -1,8 +1,11 @@
 package app.vazovsky.healsted.data.model
 
+import android.os.Parcelable
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Pill(
     val id: String,
     val name: String = "",
@@ -14,4 +17,4 @@ data class Pill(
     val startDate: LocalDate,
     val endDate: LocalDate? = null,
     val amount: Float = 1F,
-)
+) : Parcelable

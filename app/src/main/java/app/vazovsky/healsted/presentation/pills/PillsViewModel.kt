@@ -47,6 +47,11 @@ class PillsViewModel @Inject constructor(
         navigate(destinations.addPill())
     }
 
+    /** Открыть редактирование лекарства */
+    fun openEditPill(pill: Pill) {
+        navigate(destinations.editPill(pill))
+    }
+
     /** Нажатие на таб */
     fun onTabClick(tab: PillsTab) {
         val tabs = tabsLiveData.value?.getOrNull().orEmpty()

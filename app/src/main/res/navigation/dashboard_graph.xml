@@ -5,15 +5,23 @@
     android:id="@+id/dashboard_graph"
     app:startDestination="@id/dashboardFragment">
 
-    <include app:graph="@navigation/add_pill_graph" />
+    <include app:graph="@navigation/pill_editor_graph" />
 
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="app.vazovsky.healsted.presentation.dashboard.DashboardFragment"
         android:label="DashboardFragment"
         tools:layout="@layout/fragment_dashboard">
+
         <action
-            android:id="@+id/action_dashboardFragment_to_add_pill"
-            app:destination="@id/add_pill" />
+            android:id="@+id/action_dashboardFragment_to_pill_editor_graph"
+            app:destination="@id/pill_editor_graph">
+
+            <argument
+                android:name="pill"
+                android:defaultValue="@null"
+                app:argType="app.vazovsky.healsted.data.model.Pill"
+                app:nullable="true" />
+        </action>
     </fragment>
 </navigation>
