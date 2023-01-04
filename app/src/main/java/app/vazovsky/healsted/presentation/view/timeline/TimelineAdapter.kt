@@ -33,7 +33,7 @@ class TimelineAdapter(private val timelineView: TimelineView, private var select
         holder.rootView.setOnClickListener { v ->
             selectedView?.background = null
             if (!isDisabled) {
-                v.background = timelineView.resources.getDrawable(R.drawable.background_shape)
+                v.background = timelineView.resources.getDrawable(R.drawable.bg_shape)
                 selectedPosition = position
                 selectedView = v
                 if (listener != null) listener!!.onDateSelected(year, month, day, dayOfWeek)
@@ -90,7 +90,7 @@ class TimelineAdapter(private val timelineView: TimelineView, private var select
             monthView.text = MONTH_NAME[month].uppercase(Locale.US)
             dateView.text = day.toString()
             if (selectedPosition == position) {
-                rootView.background = timelineView.resources.getDrawable(R.drawable.background_shape)
+                rootView.background = timelineView.resources.getDrawable(R.drawable.bg_shape)
                 selectedView = rootView
             } else {
                 rootView.setBackground(null)
