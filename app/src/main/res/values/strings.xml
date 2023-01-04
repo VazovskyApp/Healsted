@@ -30,6 +30,7 @@
     <string name="auth_nickname_hint">твой никнейм</string>
     <string name="auth_password">Пароль</string>
     <string name="auth_password_hint">твой пароль</string>
+    <string name="auth_empty_data">Пожалуйста, введите данные!</string>
 
     <!-- Sign Up -->
     <string name="sign_up_title">Регистрация</string>
