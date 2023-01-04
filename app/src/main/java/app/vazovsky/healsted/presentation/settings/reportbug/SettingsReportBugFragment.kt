@@ -12,8 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SettingsReportBugFragment : BaseFragment(R.layout.fragment_settings_report_bug) {
 
-    override val showBottomNavigationView: Boolean
-        get() = true
+    override val showBottomNavigationView = true
 
     private val binding by viewBinding(FragmentSettingsReportBugBinding::bind)
     private val viewModel: SettingsReportBugViewModel by viewModels()

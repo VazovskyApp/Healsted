@@ -12,8 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SettingsNotificationFragment : BaseFragment(R.layout.fragment_settings_notification) {
 
-    override val showBottomNavigationView: Boolean
-        get() = true
+    override val showBottomNavigationView = true
 
     private val binding by viewBinding(FragmentSettingsNotificationBinding::bind)
     private val viewModel: SettingsNotificationViewModel by viewModels()

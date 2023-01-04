@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileRoutingViewModel @Inject constructor(
-    private val profileRoutingDestinations: ProfileRoutingDestinations,
+    private val destinations: ProfileRoutingDestinations,
     private val profileRoutingFlowUseCase: ProfileRoutingFlowUseCase,
 ) : BaseViewModel() {
 
@@ -27,8 +27,8 @@ class ProfileRoutingViewModel @Inject constructor(
 
     fun navigateToResult(result: ProfileRoutingResult) {
         val destination = when (result) {
-            ProfileRoutingResult.AUTH -> profileRoutingDestinations.auth()
-            ProfileRoutingResult.PROFILE -> profileRoutingDestinations.profile()
+            ProfileRoutingResult.AUTH -> destinations.auth()
+            ProfileRoutingResult.PROFILE -> destinations.profile()
         }
         navigate(destination)
     }

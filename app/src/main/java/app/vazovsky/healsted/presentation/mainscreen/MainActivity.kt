@@ -63,13 +63,19 @@ class MainActivity : BaseActivity(), BottomNavigationViewManager {
         setupBottomNavigation()
     }
 
-    private fun getToken(): String {
-        return "**"
-    }
-
     override fun onResume() {
         super.onResume()
         checkIntent(intent)
+    }
+
+    override fun setNavigationViewVisibility(isVisible: Boolean) {
+        binding.bottomNavigationViewContainer.isVisible = isVisible
+    }
+
+    override fun getNavigationView() = binding.bottomNavigationViewContainer
+
+    private fun getToken(): String {
+        return "**"
     }
 
     private fun checkIntent(intent: Intent?) {
@@ -89,12 +95,6 @@ class MainActivity : BaseActivity(), BottomNavigationViewManager {
             }
         }
     }
-
-    override fun setNavigationViewVisibility(isVisible: Boolean) {
-        binding.bottomNavigationViewContainer.isVisible = isVisible
-    }
-
-    override fun getNavigationView() = binding.bottomNavigationViewContainer
 
     private fun setupBottomNavigation() {
         binding.bottomNavigationView.apply {

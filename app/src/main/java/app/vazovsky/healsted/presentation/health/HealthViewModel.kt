@@ -12,19 +12,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HealthViewModel @Inject constructor(
+    private val destinations: HealthDestinations,
     private val getHealthMonitoringUseCase: GetHealthMonitoringUseCase,
-    private val healthDestinations: HealthDestinations,
 ) : BaseViewModel() {
 
     /** Информация о мониторинге здоровья */
     private val _healthLiveData = MutableLiveData<LoadableResult<List<MonitoringAttribute>>>()
     val healthLiveData: LiveData<LoadableResult<List<MonitoringAttribute>>> = _healthLiveData
 
+    /** Получить данные о здоровье */
     fun getHealth() {
         _healthLiveData.launchLoadData(getHealthMonitoringUseCase.executeFlow(UseCase.None))
     }
 
+    /** Открыть данные об атрибуте здоровья */
     fun openAttribute(healthMonitoring: MonitoringAttribute) {
-        navigate(healthDestinations.attribute(healthMonitoring))
+        navigate(destinations.attribute(healthMonitoring))
     }
 }

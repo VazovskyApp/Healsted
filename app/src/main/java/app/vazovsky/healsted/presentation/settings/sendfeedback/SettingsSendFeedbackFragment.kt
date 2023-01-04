@@ -12,8 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SettingsSendFeedbackFragment : BaseFragment(R.layout.fragment_settings_send_feedback) {
 
-    override val showBottomNavigationView: Boolean
-        get() = true
+    override val showBottomNavigationView = true
 
     private val binding by viewBinding(FragmentSettingsSendFeedbackBinding::bind)
     private val viewModel: SettingsSendFeedbackViewModel by viewModels()

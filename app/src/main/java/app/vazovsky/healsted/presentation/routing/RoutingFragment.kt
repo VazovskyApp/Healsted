@@ -12,8 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class RoutingFragment : BaseFragment(R.layout.fragment_routing) {
 
-    override val showBottomNavigationView: Boolean
-        get() = true
+    override val showBottomNavigationView = true
 
     private val binding by viewBinding(FragmentRoutingBinding::bind)
     private val viewModel: RoutingViewModel by viewModels()

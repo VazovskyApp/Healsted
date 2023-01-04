@@ -16,8 +16,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
-    override val showBottomNavigationView: Boolean
-        get() = true
+    override val showBottomNavigationView = true
 
     private val binding by viewBinding(FragmentSettingsBinding::bind)
     private val viewModel: SettingsViewModel by viewModels()

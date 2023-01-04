@@ -6,9 +6,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val authDestinations: AuthDestinations,
+    private val destinations: AuthDestinations,
 ) : BaseViewModel() {
     fun openVerification() {
-        navigate(authDestinations.verification())
+        navigate(destinations.verification())
     }
 }

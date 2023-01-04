@@ -16,8 +16,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HealthFragment : BaseFragment(R.layout.fragment_health) {
-    override val showBottomNavigationView: Boolean
-        get() = true
+
+    override val showBottomNavigationView = true
 
     private val binding by viewBinding(FragmentHealthBinding::bind)
     private val viewModel: HealthViewModel by viewModels()

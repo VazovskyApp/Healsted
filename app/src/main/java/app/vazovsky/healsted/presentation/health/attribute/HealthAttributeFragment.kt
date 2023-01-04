@@ -20,8 +20,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HealthAttributeFragment : BaseFragment(R.layout.fragment_health_attribute) {
 
-    override val showBottomNavigationView: Boolean
-        get() = true
+    override val showBottomNavigationView = true
 
     private val args: HealthAttributeFragmentArgs by navArgs()
     private val monitoring by lazy { args.healthMonitoring }

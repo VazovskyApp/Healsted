@@ -12,8 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account) {
 
-    override val showBottomNavigationView: Boolean
-        get() = true
+    override val showBottomNavigationView = true
 
     private val binding by viewBinding(FragmentSettingsAccountBinding::bind)
     private val viewModel: SettingsAccountViewModel by viewModels()

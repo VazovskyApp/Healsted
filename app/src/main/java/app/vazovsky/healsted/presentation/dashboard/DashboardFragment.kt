@@ -19,8 +19,7 @@ import java.util.*
 @AndroidEntryPoint
 class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
-    override val showBottomNavigationView: Boolean
-        get() = true
+    override val showBottomNavigationView = true
 
     private val binding by viewBinding(FragmentDashboardBinding::bind)
     private val viewModel: DashboardViewModel by viewModels()

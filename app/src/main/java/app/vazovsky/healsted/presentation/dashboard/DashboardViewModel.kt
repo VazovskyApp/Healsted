@@ -6,9 +6,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    private val dashboardDestinations: DashboardDestinations,
+    private val destinations: DashboardDestinations,
 ) : BaseViewModel() {
+
+    /** Открыть добавление лекарства */
     fun openAddPill() {
-        navigate(dashboardDestinations.addPill())
+        navigate(destinations.addPill())
     }
 }

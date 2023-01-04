@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RoutingViewModel @Inject constructor(
-    private val routingDestinations: RoutingDestinations,
+    private val destinations: RoutingDestinations,
     private val routingFlowUseCase: RoutingFlowUseCase,
 ) : BaseViewModel() {
 
@@ -27,9 +27,9 @@ class RoutingViewModel @Inject constructor(
 
     fun navigateToResult(result: RoutingResult) {
         val destination = when (result) {
-            RoutingResult.ONBOARDING -> routingDestinations.onboarding()
-            RoutingResult.DASHBOARD -> routingDestinations.dashboard()
-            RoutingResult.AUTH -> routingDestinations.auth()
+            RoutingResult.ONBOARDING -> destinations.onboarding()
+            RoutingResult.DASHBOARD -> destinations.dashboard()
+            RoutingResult.AUTH -> destinations.auth()
         }
         navigate(destination)
     }

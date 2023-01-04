@@ -14,15 +14,12 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 
 class AddPillFragment : BaseFragment(R.layout.fragment_add_pill) {
 
-    override val showBottomNavigationView: Boolean
-        get() = true
+    override val showBottomNavigationView = true
 
     private val binding by viewBinding(FragmentAddPillBinding::bind)
     private val viewModel: AddPillViewModel by viewModels()
 
-    override fun callOperations() {
-
-    }
+    override fun callOperations() = Unit
 
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
@@ -48,7 +45,7 @@ class AddPillFragment : BaseFragment(R.layout.fragment_add_pill) {
     private fun setTimeNotification() = with(binding) {
         timePickerTimeNotification.setIs24HourView(true)
         buttonAddTime.setOnClickListener {
-            /** Придумать добавление и enabled кнопки */
+            /** TODO Придумать добавление и enabled кнопки */
         }
     }
 

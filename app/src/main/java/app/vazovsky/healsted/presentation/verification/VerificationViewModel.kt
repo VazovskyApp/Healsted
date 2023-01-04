@@ -6,9 +6,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class VerificationViewModel @Inject constructor(
-    private val verificationDestinations: VerificationDestinations,
+    private val destinations: VerificationDestinations,
 ) : BaseViewModel() {
+
+    /** Открытие дашборда */
     fun openDashboard() {
-        navigate(verificationDestinations.dashboard())
+        navigate(destinations.dashboard())
     }
 }

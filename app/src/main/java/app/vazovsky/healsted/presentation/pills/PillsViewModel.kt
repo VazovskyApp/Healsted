@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PillsViewModel @Inject constructor(
-    private val pillsDestinations: PillsDestinations,
+    private val destinations: PillsDestinations,
     private val getTabsUseCase: GetTabsUseCase,
     private val getPillsUseCase: GetPillsUseCase,
 ) : BaseViewModel() {
@@ -42,10 +42,12 @@ class PillsViewModel @Inject constructor(
         )
     }
 
+    /** Открыть добавление лекарства */
     fun openAddPill() {
-        navigate(pillsDestinations.addPill())
+        navigate(destinations.addPill())
     }
 
+    /** Нажатие на таб */
     fun onTabClick(tab: PillsTab) {
         val tabs = tabsLiveData.value?.getOrNull().orEmpty()
         if (tab.selected) {

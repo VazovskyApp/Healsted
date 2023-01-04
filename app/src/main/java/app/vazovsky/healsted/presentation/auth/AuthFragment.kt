@@ -19,14 +19,14 @@ class AuthFragment : BaseFragment(R.layout.fragment_auth) {
 
     }
 
+    override fun onBindViewModel() = with(viewModel) {
+        observeNavigationCommands()
+    }
+
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitTopInsetsWithPadding()
         buttonSendCode.setOnClickListener {
             viewModel.openVerification()
         }
-    }
-
-    override fun onBindViewModel() = with(viewModel) {
-        observeNavigationCommands()
     }
 }
