@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -43,28 +44,47 @@
                 android:layout_marginHorizontal="@dimen/margin_16"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:text="Vazovsky"
                 android:textAppearance="@style/Font.Heading_1.Black"
-                app:layout_constraintTop_toBottomOf="@id/imageViewAvatarContainer" />
+                app:layout_constraintTop_toBottomOf="@id/imageViewAvatarContainer"
+                tools:text="Vazovsky" />
 
             <TextView
                 android:id="@+id/textViewLevel"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_16"
                 android:layout_marginTop="4dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:drawablePadding="@dimen/padding_8"
+                android:focusable="true"
                 android:gravity="center"
-                android:text="Начинающий"
+                android:padding="10dp"
                 android:textAppearance="@style/Font.Body_1.Bold"
-                app:layout_constraintTop_toBottomOf="@id/textViewNickname" />
+                app:drawableEndCompat="@drawable/ic_info"
+                app:drawableTint="?colorOnPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewNickname"
+                tools:text="Начинающий" />
+
+            <ProgressBar
+                android:id="@+id/progressIndicatorAccountProgress"
+                style="@style/Widget.Material3.LinearProgressIndicator"
+                android:layout_width="200dp"
+                android:layout_height="10dp"
+                app:layout_constraintEnd_toEndOf="@id/textViewLevel"
+                app:layout_constraintStart_toStartOf="@id/textViewLevel"
+                app:layout_constraintTop_toBottomOf="@id/textViewLevel" />
 
             <TextView
-                android:id="@+id/progressBarAccountProgress"
+                android:id="@+id/textViewAccountProgress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:gravity="center"
-                android:text="Прогресс аккаунта"
+                android:text="0 / 100 xp"
+                android:textAppearance="@style/Font.Body_1.Bold"
                 app:layout_constraintTop_toBottomOf="@id/textViewLevel" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
