@@ -24,6 +24,20 @@
     <string name="auth_start">Давайте следить за здоровьем вместе</string>
     <string name="auth_sign_up">Зарегистрироваться</string>
     <string name="auth_log_in">Уже зарегистрированы? Войти</string>
+    <string name="auth_email">Email</string>
+    <string name="auth_email_hint">youremail@email.com</string>
+    <string name="auth_nickname">Никнейм</string>
+    <string name="auth_nickname_hint">твой никнейм</string>
+    <string name="auth_password">Пароль</string>
+    <string name="auth_password_hint">твой пароль</string>
+
+    <!-- Sign Up -->
+    <string name="sign_up_title">Регистрация</string>
+    <string name="sign_up_confirm">Зарегистрироваться</string>
+
+    <!-- Log In -->
+    <string name="log_in_title">Авторизация</string>
+    <string name="log_in_confirm">Войти</string>
 
     <!-- Pill Editor -->
     <string name="pill_editor_title_add_pill">Добавить лекарство</string>
@@ -43,5 +57,4 @@
     <string name="health_attribute_current_value">Текущее:</string>
     <string name="health_attribute_switch_remind_to_measure">Напоминать об измерении</string>
     <string name="health_attribute_history">История</string>
-
 </resources>

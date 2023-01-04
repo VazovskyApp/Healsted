@@ -15,15 +15,19 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
     private val binding by viewBinding(FragmentLogInBinding::bind)
     private val viewModel: LogInViewModel by viewModels()
 
-    override fun callOperations() {
-
-    }
-
+    override fun callOperations() = Unit
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
     }
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitTopInsetsWithPadding()
+
+        setupClickListeners()
+    }
+
+    private fun setupClickListeners() = with(binding) {
+        toolbar.setNavigationOnClickListener { viewModel.navigateBack() }
+        buttonConfirm.setOnClickListener { viewModel.openDashboard() }
     }
 }
