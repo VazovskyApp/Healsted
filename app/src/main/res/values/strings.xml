@@ -50,5 +50,9 @@
     <string name="settings_report_bug_hint">Что стоит исправить?</string>
     <string name="settings_report_bug_send">Отправить</string>
     <string name="settings_send_feedback_description">Мы всегда рады вашим отзывам :)</string>
+    <string name="health_attribute_add_value">Добавить значение</string>
+    <string name="health_attribute_current_value">Текущее:</string>
+    <string name="health_attribute_switch_remind_to_measure">Напоминать об измерении</string>
+    <string name="health_attribute_history">История</string>
 
 </resources>
