@@ -51,7 +51,7 @@ class HealthAttributeFragment : BaseFragment(R.layout.fragment_health_attribute)
     }
 
     override fun applyBottomNavigationViewPadding(view: View, bottomNavigationViewHeight: Int) = with(binding) {
-        constraintLayout.updatePadding(bottom = bottomNavigationViewHeight)
+        linearLayoutEditValue.updatePadding(bottom = bottomNavigationViewHeight)
     }
 
     private fun bindHistory(history: List<MonitoringAttribute>) {
