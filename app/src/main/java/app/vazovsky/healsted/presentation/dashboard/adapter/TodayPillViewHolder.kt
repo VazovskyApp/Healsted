@@ -5,8 +5,8 @@ import androidx.recyclerview.widget.RecyclerView
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.databinding.ItemTodayPillBinding
+import app.vazovsky.healsted.extensions.getColorIdFromPosition
 import app.vazovsky.healsted.extensions.inflate
-import app.vazovsky.healsted.extensions.orDefault
 import by.kirich1409.viewbindingdelegate.viewBinding
 
 class TodayPillViewHolder(
@@ -18,17 +18,7 @@ class TodayPillViewHolder(
     fun bind(item: Pill, position: Int) = with(binding) {
         root.apply {
             setOnClickListener { onItemClick(item) }
-            /** TODO сделать ext типа рандомный цвет */
-            val backgroundColorId = when (position % 5) {
-                0 -> R.color.pillsCardBlue
-                1 -> R.color.pillsCardOrange
-                2 -> R.color.pillsCardRed
-                3 -> R.color.pillsCardViolet
-                else -> R.color.pillsCardGreen
-            }
-            setCardBackgroundColor(
-                context.getColor(backgroundColorId)
-            )
+            setCardBackgroundColor(context.getColor(position.getColorIdFromPosition()))
         }
 
         textViewName.text = item.name
