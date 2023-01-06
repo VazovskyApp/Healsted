@@ -22,10 +22,6 @@
         <attr name="emptyCheck" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="PhoneEditText">
-        <attr name="countryCode" format="integer" />
-    </declare-styleable>
-
     <declare-styleable name="DatePickerTimeline">
         <attr name="monthTextColor" format="color" />
         <attr name="dateTextColor" format="color" />

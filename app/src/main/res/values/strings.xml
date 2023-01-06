@@ -19,8 +19,6 @@
     <string name="welcome_string_night">Доброй ночи, %s!</string>
 
     <!-- Auth -->
-    <string name="sign_in_phone">Номер телефона</string>
-    <string name="sign_in_phone_code">+7</string>
     <string name="auth_start">Давайте следить за здоровьем вместе</string>
     <string name="auth_sign_up">Зарегистрироваться</string>
     <string name="auth_log_in">Уже зарегистрированы? Войти</string>

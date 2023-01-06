@@ -41,13 +41,6 @@
     <dimen name="bottom_navigation_fab_margin">4dp</dimen>
     <dimen name="bottom_navigation_small_corner_size">10dp</dimen>
 
-    <dimen name="text_input_stroke_width">1dp</dimen>
-
-    <!-- Pin Code -->
-    <dimen name="pin_code_space">10dp</dimen>
-    <dimen name="pin_code_min_height">44dp</dimen>
-    <dimen name="pin_code_placeholder_radius">4dp</dimen>
-
     <!-- Timeline -->
     <dimen name="monthTextSize">13sp</dimen>
     <dimen name="dateTextSize">25sp</dimen>
