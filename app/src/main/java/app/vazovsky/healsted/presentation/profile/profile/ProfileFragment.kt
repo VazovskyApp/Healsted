@@ -48,11 +48,11 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     private fun bindProfile(profile: Account) = with(binding) {
         textViewNickname.text = profile.nickname
-        textViewLevel.text = profile.level.toString()
-        /** TODO сделать пункт value. Нужна будет таблица в FireStore со всеми пунктами */
-        textViewAccountProgress.text = "0 / ${profile.level.xpCount}"
-        //TODO сделать норм прогресс
-        progressIndicatorAccountProgress.progress = 0
-        progressIndicatorAccountProgress.max = profile.level.xpCount
+//        textViewLevel.text = profile.level.toString()
+//        /** TODO сделать пункт value. Нужна будет таблица в FireStore со всеми пунктами */
+//        textViewAccountProgress.text = "0 / ${profile.level.xpCount}"
+//        //TODO сделать норм прогресс
+//        progressIndicatorAccountProgress.progress = 0
+//        progressIndicatorAccountProgress.max = profile.level.xpCount
     }
 }

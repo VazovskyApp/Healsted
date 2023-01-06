@@ -1,6 +1,8 @@
 package app.vazovsky.healsted.data.firebase.auth
 
+import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.AccountLevel
+import app.vazovsky.healsted.data.model.LoyaltyProgress
 import app.vazovsky.healsted.data.model.User
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
@@ -39,7 +41,6 @@ interface FirebaseAuthService {
         patronymic: String = "",
         birthday: LocalDate?,
         avatar: String?,
-        level: AccountLevel = AccountLevel.BACTERIA,
     ): Task<Void>
 
     fun fetchAccount(email: String): Task<DocumentSnapshot>
@@ -47,6 +48,8 @@ interface FirebaseAuthService {
     fun fetchUsers(): Task<QuerySnapshot>
 
     fun fetchAccounts(): Task<QuerySnapshot>
+
+    fun editAccount(account: Account): Task<Void>
 
     fun sendForgotPassword(email: String): Task<Void>
 }

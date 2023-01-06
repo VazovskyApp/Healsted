@@ -68,7 +68,6 @@ class SignUpViewModel @Inject constructor(
         patronymic: String = "",
         birthday: LocalDate? = null,
         avatar: String? = null,
-        level: AccountLevel = AccountLevel.BACTERIA,
     ) {
         _saveAccountLiveData.launchLoadData(
             saveAccountUseCase.executeFlow(
@@ -80,7 +79,6 @@ class SignUpViewModel @Inject constructor(
                     patronymic = patronymic,
                     birthday = birthday,
                     avatar = avatar,
-                    level = level,
                 )
             )
         )

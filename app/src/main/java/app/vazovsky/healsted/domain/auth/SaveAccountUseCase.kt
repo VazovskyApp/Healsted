@@ -22,7 +22,6 @@ class SaveAccountUseCase @Inject constructor(
             params.patronymic,
             params.birthday,
             params.avatar,
-            params.level,
         )
     }
 
@@ -34,6 +33,5 @@ class SaveAccountUseCase @Inject constructor(
         val patronymic: String,
         val birthday: LocalDate?,
         val avatar: String?,
-        val level: AccountLevel,
     )
 }

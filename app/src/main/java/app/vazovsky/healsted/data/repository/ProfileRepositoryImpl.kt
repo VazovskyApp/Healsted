@@ -16,7 +16,6 @@ class ProfileRepositoryImpl @Inject constructor() : ProfileRepository {
             accountHolder = User(email = "", phoneNumber = ""),
             nickname = "Vazovsky",
             birthday = LocalDate.of(1999, 2, 17),
-            level = AccountLevel.GOD,
         )
     }
 }

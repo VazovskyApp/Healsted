@@ -49,7 +49,6 @@ class FirebaseAuthServiceImpl @Inject constructor(
         patronymic: String,
         birthday: LocalDate?,
         avatar: String?,
-        level: AccountLevel,
     ) = firestore.collection(ACCOUNTS_COLLECTION).document(accountHolder.email).set(
         Account(
             accountHolder = accountHolder,
@@ -59,15 +58,22 @@ class FirebaseAuthServiceImpl @Inject constructor(
             patronymic = patronymic,
             birthday = birthday,
             avatar = avatar,
-            level = level,
         )
     )
 
-    override fun fetchAccount(email: String) = firestore.collection(ACCOUNTS_COLLECTION).document(email).get()
+    override fun fetchAccount(
+        email: String
+    ) = firestore.collection(ACCOUNTS_COLLECTION).document(email).get()
 
     override fun fetchUsers() = firestore.collection(USERS_COLLECTION).get()
 
     override fun fetchAccounts() = firestore.collection(ACCOUNTS_COLLECTION).get()
+
+    /** Тут скорей всего update */
+    override fun editAccount(account: Account) = firestore
+        .collection(ACCOUNTS_COLLECTION)
+        .document(account.accountHolder.email)
+        .set(account)
 
     override fun sendForgotPassword(email: String) = firebaseAuth.sendPasswordResetEmail(email)
 }
