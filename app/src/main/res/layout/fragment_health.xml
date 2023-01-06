@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            app:title="Мое здоровье" />
+            app:title="@string/health_title" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
@@ -24,7 +24,7 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <app.vazovsky.healsted.presentation.view.EmptyRecyclerView
             android:id="@+id/recyclerViewHealthMonitoring"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

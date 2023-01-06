@@ -5,6 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+/** Декоратор для GridLayoutManager */
 class GridSpaceItemDecoration(
     private val spanCount: Int,
     private val spacing: Int,

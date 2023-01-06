@@ -12,6 +12,7 @@ import app.vazovsky.healsted.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+/** Экран с информацией об аккаунте */
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
@@ -48,6 +49,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     private fun bindProfile(profile: Account) = with(binding) {
         textViewNickname.text = profile.nickname
         textViewLevel.text = profile.level.toString()
+        /** TODO сделать пункт value. Нужна будет таблица в FireStore со всеми пунктами */
         textViewAccountProgress.text = "0 / ${profile.level.xpCount}"
         //TODO сделать норм прогресс
         progressIndicatorAccountProgress.progress = 0

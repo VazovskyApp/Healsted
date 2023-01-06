@@ -27,7 +27,7 @@ class DashboardViewModel @Inject constructor(
         )
     }
 
-    /** Открыть добавление лекарства */
+    /** Открыть добавление лекарства TODO не факт, что это нужно на данном экране */
     fun openAddPill() {
         navigate(destinations.addPill())
     }

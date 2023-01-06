@@ -1,23 +1,6 @@
 <resources>
     <string name="app_name">Healsted</string>
 
-    <!-- Notification -->
-    <string name="channel_name">Healsted</string>
-    <string name="channel_description">Healsted</string>
-
-    <!-- Menu -->
-    <string name="menu_profile_label">Профиль</string>
-    <string name="menu_pills_label">Медикаменты</string>
-    <string name="menu_dashboard_label">Главная</string>
-    <string name="menu_health_label">Здоровье</string>
-    <string name="menu_settings_label">Настройки</string>
-
-    <!-- Welcome Strings -->
-    <string name="welcome_string_morning">Доброе утро, %s!</string>
-    <string name="welcome_string_afternoon">Добрый день, %s!</string>
-    <string name="welcome_string_evening">Добрый вечер, %s!</string>
-    <string name="welcome_string_night">Доброй ночи, %s!</string>
-
     <!-- Auth -->
     <string name="auth_start">Давайте следить за здоровьем вместе</string>
     <string name="auth_sign_up">Зарегистрироваться</string>
@@ -38,20 +21,55 @@
     <string name="log_in_title">Авторизация</string>
     <string name="log_in_confirm">Войти</string>
 
-    <!-- Pill Editor -->
-    <string name="pill_editor_title_add_pill">Добавить лекарство</string>
-    <string name="pill_editor_title_edit_pill">Редактировать лекарство</string>
-    <string name="pill_editor_time_notification">Время уведомления</string>
-    <string name="pill_editor_end_date_enabled">Есть конечная дата</string>
+    <!-- Notification -->
+    <string name="channel_name">Healsted</string>
+    <string name="channel_description">Healsted</string>
+    <string name="notification_title_pill">Не забудьте принять лекарство</string>
+    <string name="notification_title_health_monitoring">Не забудьте отметить данные о</string>
+
+    <!-- Menu -->
+    <string name="menu_profile_label">Профиль</string>
+    <string name="menu_pills_label">Медикаменты</string>
+    <string name="menu_dashboard_label">Главная</string>
+    <string name="menu_health_label">Здоровье</string>
+    <string name="menu_settings_label">Настройки</string>
+
+    <!-- Welcome Strings -->
+    <string name="welcome_string_morning">Доброе утро, %s!</string>
+    <string name="welcome_string_afternoon">Добрый день, %s!</string>
+    <string name="welcome_string_evening">Добрый вечер, %s!</string>
+    <string name="welcome_string_night">Доброй ночи, %s!</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_mood">Как настроение сегодня?</string>
+    <string name="dashboard_date_today">Сегодня</string>
+    <string name="dashboard_date_early">Ранее</string>
+    <string name="dashboard_date_later">Позже</string>
+    <string name="dashboard_date_unknown">Неизвестно</string>
 
     <!-- Pills -->
     <string name="pills_active_tab_title">Активные</string>
     <string name="pills_completed_tab_title">Завершенные</string>
 
+    <!-- Pill Editor -->
+    <string name="pill_editor_title_add_pill">Добавить лекарство</string>
+    <string name="pill_editor_title_edit_pill">Редактировать лекарство</string>
+    <string name="pill_editor_time_notification">Время уведомления</string>
+    <string name="pill_editor_end_date_enabled">Есть конечная дата</string>
+    <string name="pill_editor_end_date">Дата окончания приема</string>
+    <string name="pill_editor_start_date">Дата начала приема</string>
+    <string name="pill_editor_add_time">Добавить время</string>
+    <string name="pill_editor_comment_hint">Комментарий</string>
+    <string name="pill_editor_dosage_hint">Дозировка</string>
+    <string name="pill_editor_name_hint">Название</string>
+    <string name="pill_editor_confirm">Подтвердить</string>
+
     <!-- Health -->
+    <string name="health_title">Мое здоровье</string>
     <string name="health_update">Обновить</string>
 
     <!-- Health Attribute -->
+    <!-- TODO сделать строки для атрибутов мониторинга относительно кол-ва -->
     <string name="health_attribute_add_value">Добавить значение</string>
     <string name="health_attribute_current_value">Текущее:</string>
     <string name="health_attribute_switch_remind_to_measure">Напоминать об измерении</string>

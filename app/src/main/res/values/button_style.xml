@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- TODO поправить, добавить, начать использовать -->
     <style name="ButtonStyle" parent="Widget.MaterialComponents.Button">
         <item name="android:singleLine">true</item>
         <item name="android:letterSpacing">0</item>

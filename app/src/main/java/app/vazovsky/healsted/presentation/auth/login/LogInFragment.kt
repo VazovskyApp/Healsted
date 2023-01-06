@@ -12,18 +12,13 @@ import app.vazovsky.healsted.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuthActionCodeException
-import com.google.firebase.auth.FirebaseAuthEmailException
 import com.google.firebase.auth.FirebaseAuthException
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.auth.FirebaseAuthMultiFactorException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import timber.log.Timber
 
+/** Экран авторизации */
 @AndroidEntryPoint
 class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
 
@@ -65,7 +60,6 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
                     exception.localizedMessage
                 }
             )
-            Timber.d(exception.localizedMessage)
         }
     }
 
@@ -83,6 +77,7 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
                         resources.getString(R.string.error_something_wrong_title)
                     )
                 } finally {
+                    /** Сделать сохарнение аккаунта в само приложение */
                     Timber.d("Account: $account")
                 }
             }

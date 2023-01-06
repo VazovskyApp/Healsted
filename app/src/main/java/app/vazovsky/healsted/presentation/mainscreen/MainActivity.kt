@@ -19,7 +19,6 @@ import app.vazovsky.healsted.presentation.base.BaseActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity(), BottomNavigationViewManager {
@@ -53,8 +52,8 @@ class MainActivity : BaseActivity(), BottomNavigationViewManager {
             notificationId = "0",
             notificationImage = R.drawable.ic_menu_health,
             data = null,
-            notificationTitle = "Так, а тут вроде с воркером",
-            notificationContent = "Ура, я продвигаюсь чуток",
+            notificationTitle = getString(R.string.notification_title_pill),
+            notificationContent = "Нурофен, 1 капсула. 12:00",
             notificationPackageName = packageName,
             notificationClassPackageName = MainActivity::class.java.toString(),
             clickReferrerEndPoint = "Healsted",
@@ -79,7 +78,6 @@ class MainActivity : BaseActivity(), BottomNavigationViewManager {
     }
 
     private fun checkIntent(intent: Intent?) {
-        Timber.d("LOL check intent")
         intent?.let {
             if (it.hasExtra(NOTIFICATION_EXTRA)) {
                 val endPoint = it.getStringExtra(NOTIFICATION_CLICK_ENDPOINT)
@@ -96,12 +94,12 @@ class MainActivity : BaseActivity(), BottomNavigationViewManager {
         }
     }
 
+    /** Настройка нижнего меню навигации */
     private fun setupBottomNavigation() {
         binding.bottomNavigationView.apply {
             setupWithNavController(
                 getNavHostFragment().navController.apply {
                     attachNavController(this)
-
                 }
             )
         }
@@ -117,9 +115,8 @@ class MainActivity : BaseActivity(), BottomNavigationViewManager {
         }
     }
 
+    /** Поиск контейнера для фрагментов */
     private fun getNavHostFragment(): NavHostFragment {
         return (supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment)
     }
-
-
 }

@@ -33,6 +33,7 @@
         android:lineSpacingExtra="5sp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
+        android:textAppearance="@style/Font.Heading_4.Medium"
         app:layout_constraintBottom_toTopOf="@id/textErrorDescription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +50,8 @@
         android:gravity="center"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:textColor="?android:textColorSecondary"
+        android:textAppearance="@style/Font.Body_2.Regular"
+        android:textColor="?android:textColor"
         app:layout_constraintBottom_toTopOf="@id/buttonError"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,6 +59,7 @@
         app:layout_goneMarginTop="24dp"
         tools:text="@string/error_internet_message" />
 
+    <!-- TODO сделать стиль кнопки -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonError"
         android:layout_width="wrap_content"
@@ -67,6 +70,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textErrorDescription"
-        tools:text="Обновить"
         tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

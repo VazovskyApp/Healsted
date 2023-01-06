@@ -54,6 +54,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textEmptyTitle"
         tools:text="Но скоро появится" />
 
+    <!-- TODO сделать стиль кнопки -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonEmpty"
         android:layout_width="wrap_content"

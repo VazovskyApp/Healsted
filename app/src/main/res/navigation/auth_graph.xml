@@ -11,7 +11,7 @@
         android:id="@+id/authFragment"
         android:name="app.vazovsky.healsted.presentation.auth.AuthFragment"
         android:label="AuthFragment"
-        tools:layout="@layout/fragment_auth" >
+        tools:layout="@layout/fragment_auth">
         <action
             android:id="@+id/action_authFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
@@ -22,7 +22,8 @@
     <fragment
         android:id="@+id/logInFragment"
         android:name="app.vazovsky.healsted.presentation.auth.login.LogInFragment"
-        android:label="LogInFragment" >
+        android:label="LogInFragment"
+        tools:layout="@layout/fragment_log_in">
         <action
             android:id="@+id/action_logInFragment_to_dashboard_graph"
             app:destination="@id/dashboard_graph" />
@@ -30,7 +31,8 @@
     <fragment
         android:id="@+id/signUpFragment"
         android:name="app.vazovsky.healsted.presentation.auth.signup.SignUpFragment"
-        android:label="SignUpFragment" >
+        android:label="SignUpFragment"
+        tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_signUpFragment_to_dashboard_graph"
             app:destination="@id/dashboard_graph" />

@@ -4,9 +4,7 @@ import androidx.annotation.Px
 import com.google.android.material.shape.EdgeTreatment
 import com.google.android.material.shape.ShapePath
 
-/**
- * Добавляет вырез под FAB на сторону
- */
+/** Добавление выреза под FAB на сторону */
 class FabEdgeTreatment(
     @Px private val fabDiameter: Float,
     @Px private val fabMargin: Float,
@@ -16,31 +14,37 @@ class FabEdgeTreatment(
     private val radius = fabDiameter / 2.0f + fabMargin
 
     override fun getEdgePath(length: Float, center: Float, interpolation: Float, shapePath: ShapePath) {
-        shapePath.lineTo(center - radius - centerCornersRadius, 0f)
-        shapePath.addArc(
-            center - radius - centerCornersRadius * 2,
-            0f,
-            center - radius,
-            centerCornersRadius * 2,
-            270f,
-            90f
+        shapePath.lineTo(
+            /* x = */ center - radius - centerCornersRadius,
+            /* y = */ 0f,
         )
         shapePath.addArc(
-            center - radius,
-            centerCornersRadius - radius,
-            center + radius,
-            centerCornersRadius + radius,
-            180f,
-            -180f,
+            /* left = */ center - radius - centerCornersRadius * 2,
+            /* top = */ 0f,
+            /* right = */ center - radius,
+            /* bottom = */ centerCornersRadius * 2,
+            /* startAngle = */ 270f,
+            /* sweepAngle = */ 90f,
         )
         shapePath.addArc(
-            center + radius,
-            0f,
-            center + radius + centerCornersRadius * 2,
-            centerCornersRadius * 2,
-            180f,
-            90f,
+            /* left = */ center - radius,
+            /* top = */ centerCornersRadius - radius,
+            /* right = */ center + radius,
+            /* bottom = */ centerCornersRadius + radius,
+            /* startAngle = */ 180f,
+            /* sweepAngle = */ -180f,
         )
-        shapePath.lineTo(length, 0f)
+        shapePath.addArc(
+            /* left = */ center + radius,
+            /* top = */ 0f,
+            /* right = */ center + radius + centerCornersRadius * 2,
+            /* bottom = */ centerCornersRadius * 2,
+            /* startAngle = */ 180f,
+            /* sweepAngle = */ 90f,
+        )
+        shapePath.lineTo(
+            /* x = */ length,
+            /* y = */ 0f,
+        )
     }
 }

@@ -6,6 +6,7 @@ package app.vazovsky.healsted.presentation.view
 interface TextInputValidator {
     fun validate(): Boolean
     fun getText(): String
+
     /** Получение ID Til's для скролла к некорректным полям */
     fun getLayoutId(): Int
 }

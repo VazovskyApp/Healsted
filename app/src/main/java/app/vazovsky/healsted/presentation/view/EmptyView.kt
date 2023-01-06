@@ -174,7 +174,6 @@ class EmptyView @JvmOverloads constructor(
     }
 
     private fun stopEmptyAnimation() = with(binding) {
-        // каким то образом на android 5.1 onVisibilityChanged вызывается раньше, чем констуктор
         try {
             animationViewEmpty.cancelAnimation()
         } catch (e: Exception) {
@@ -182,7 +181,7 @@ class EmptyView @JvmOverloads constructor(
         }
     }
 
-    /** На некоторых экранах необходимо прибить пустое вью в верхнюю часть экрана */
+    /** Прибить пустое вью в верхнюю часть экрана */
     fun collapseEmptyViewToTop() = with(binding) {
         animationViewEmpty.updateLayoutParams<LayoutParams> {
             verticalBias = 0f

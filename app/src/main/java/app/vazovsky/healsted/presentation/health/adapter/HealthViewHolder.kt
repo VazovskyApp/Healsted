@@ -17,6 +17,7 @@ class HealthViewHolder(
 
     fun bind(item: MonitoringAttribute, position: Int) = with(binding) {
         root.setOnClickListener { onItemClick.invoke(item) }
+        /** TODO сделать ext типа рандомный цвет */
         val backgroundColorId = when (position % 5) {
             0 -> R.color.pillsCardBlue
             1 -> R.color.pillsCardOrange
@@ -29,9 +30,10 @@ class HealthViewHolder(
         )
 
         textViewTitle.text = item.type.toString()
-        /** Добавить форматирование */
+        /** TODO Добавить форматирование */
         textViewValue.text = item.value
 
+        /** TODO добавить картинку */
         //imageViewBackground.load()
     }
 }

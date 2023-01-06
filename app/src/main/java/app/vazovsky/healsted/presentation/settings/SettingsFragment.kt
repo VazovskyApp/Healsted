@@ -13,6 +13,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/** Экран настроек */
 @AndroidEntryPoint
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
@@ -56,7 +57,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                 SettingType.SEND_FEEDBACK -> viewModel.openSendFeedback()
                 SettingType.ABOUT_US -> viewModel.openAboutUs()
                 SettingType.LOG_OUT -> {
-                    /** TODO сделать выход из профиля реально / почему-то после этого settings это dashboard */
+                    /** TODO сделать выход из профиля реально / почему-то после этого вкладка settings - это dashboard */
                     viewModel.openAuth()
                 }
             }

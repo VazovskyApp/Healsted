@@ -2,6 +2,9 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- TODO сделать адекватный merge -->
+    <!-- TODO сделать русские обозначения -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,6 +29,7 @@
                 android:layout_margin="@dimen/_4sdp"
                 android:contentDescription="@string/awful"
                 app:srcCompat="@drawable/ic_awful_inactive" />
+
             <TextView
                 android:id="@+id/tv_awful"
                 android:layout_width="match_parent"

@@ -14,6 +14,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/** Экран мониторинга здоровья */
 @AndroidEntryPoint
 class HealthFragment : BaseFragment(R.layout.fragment_health) {
 

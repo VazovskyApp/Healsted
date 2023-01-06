@@ -17,6 +17,7 @@ import app.vazovsky.healsted.data.model.base.NetworkError
 import app.vazovsky.healsted.data.model.base.ParsedError
 import com.airbnb.lottie.LottieAnimationView
 
+/** Флиппер с состоянием */
 class StateViewFlipper @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -78,7 +79,7 @@ class StateViewFlipper @JvmOverloads constructor(
 
     fun currentState() = state
 
-    /** Метод деактивирует определенное состояние и не обрабатывает его в changeState() */
+    /** Деактивация определенного состояние и не обработка его в changeState() */
     fun disableState(vararg states: State) {
         for (state in states) {
             if (stateIsDisabled(state)) continue

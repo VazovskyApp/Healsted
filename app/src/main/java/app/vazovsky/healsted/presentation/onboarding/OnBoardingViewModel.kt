@@ -5,5 +5,4 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class OnBoardingViewModel @Inject constructor() : BaseViewModel() {
-}
+class OnBoardingViewModel @Inject constructor() : BaseViewModel()

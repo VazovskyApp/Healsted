@@ -12,11 +12,11 @@ import app.vazovsky.healsted.extensions.addLinearSpaceItemDecoration
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import app.vazovsky.healsted.presentation.health.attribute.adapter.HealthAttributeHistoryAdapter
-import app.vazovsky.healsted.presentation.view.LinearSpaceItemDecoration
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/** Экран с информацией об одном из атрибутов здоровья */
 @AndroidEntryPoint
 class HealthAttributeFragment : BaseFragment(R.layout.fragment_health_attribute) {
 

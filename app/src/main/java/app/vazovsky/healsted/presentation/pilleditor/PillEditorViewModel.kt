@@ -6,5 +6,4 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PillEditorViewModel @Inject constructor(
-) : BaseViewModel() {
-}
+) : BaseViewModel()

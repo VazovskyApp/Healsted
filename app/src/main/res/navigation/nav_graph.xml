@@ -24,7 +24,8 @@
     <fragment
         android:id="@+id/onBoardingFragment"
         android:name="app.vazovsky.healsted.presentation.onboarding.OnBoardingFragment"
-        android:label="OnBoardingFragment" >
+        android:label="OnBoardingFragment"
+        tools:layout="@layout/fragment_onboarding">
         <action
             android:id="@+id/action_onBoardingFragment_to_dashboard_graph"
             app:destination="@id/dashboard_graph" />

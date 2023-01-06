@@ -27,6 +27,7 @@
             android:id="@+id/textViewName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="@dimen/margin_8"
             android:textAppearance="@style/Font.Body_1.Bold"
             app:layout_constraintStart_toEndOf="@id/imageViewIcon"
@@ -37,6 +38,7 @@
             android:id="@+id/textViewCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="@dimen/margin_8"
             android:textAppearance="@style/Font.Body_1.Medium"
@@ -57,6 +59,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="11:11" />
 
+        <!-- TODO сделать цвет или наличие галочки или изменение текста так же -->
         <TextView
             android:id="@+id/textViewCompleted"
             android:layout_width="wrap_content"

@@ -34,7 +34,7 @@
         android:textColor="@android:color/black"
         android:textSize="@dimen/dateTextSize"
         android:textStyle="bold"
-        tools:text="23" />
+        tools:text="17" />
 
     <TextView
         android:id="@+id/dayView"
@@ -49,5 +49,5 @@
         android:textAppearance="@style/Font.Body_1.Bold"
         android:textColor="@android:color/black"
         android:textSize="@dimen/dayTextSize"
-        tools:text="TUE" />
+        tools:text="ср" />
 </LinearLayout>

@@ -9,6 +9,7 @@ import app.vazovsky.healsted.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+/** Экран для отправки фидбека */
 @AndroidEntryPoint
 class SettingsSendFeedbackFragment : BaseFragment(R.layout.fragment_settings_send_feedback) {
 
@@ -29,6 +30,7 @@ class SettingsSendFeedbackFragment : BaseFragment(R.layout.fragment_settings_sen
 
     private fun setupToolbar() = with(binding) {
         toolbar.setNavigationOnClickListener { viewModel.navigateBack() }
+        /** TODO сделать слушатель в зависимости от заполнения editTextFeedback. Нужно ограничение, что принимаются сообщения от 50 символов */
         toolbar.menu.findItem(R.id.menuSend).isEnabled = !editTextFeedback.text.isNullOrBlank()
     }
 

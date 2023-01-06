@@ -18,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import timber.log.Timber
 
+/** Экран регистрации */
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
 
@@ -77,13 +78,13 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                     exception.localizedMessage
                 }
             )
-            Timber.d(exception.localizedMessage)
         }
     }
 
     private fun setSaveUserTask(saveUserResult: SaveUserUseCase.Result) {
         saveUserResult.task.apply {
             addOnSuccessListener {
+                /** TODO сделать сохранение аккаунта в самом приложении */
                 viewModel.saveAccount(
                     accountHolder = User(email = saveUserResult.email, ""),
                     nickname = binding.editTextNickname.text.toString(),

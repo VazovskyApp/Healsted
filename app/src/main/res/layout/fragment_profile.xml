@@ -66,7 +66,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewNickname"
-                tools:text="Начинающий" />
+                tools:text="Бактерия" />
 
             <TextView
                 android:id="@+id/textViewAccountProgress"
@@ -74,10 +74,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:gravity="center"
-                android:text="50 / 100 xp"
                 android:textAppearance="@style/Font.Body_1.Bold"
-                app:layout_constraintTop_toBottomOf="@id/textViewLevel" />
+                app:layout_constraintTop_toBottomOf="@id/textViewLevel"
+                tools:text="50 / 100 xp" />
 
+            <!-- TODO Сделать адекватный прогресс бар -->
             <ProgressBar
                 android:id="@+id/progressIndicatorAccountProgress"
                 style="?android:attr/progressBarStyleHorizontal"
@@ -103,6 +104,8 @@
         android:layout_height="match_parent"
         android:background="@drawable/bg_round_sheet"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!-- TODO Подумать над заполнением профиля -->
 
         <TextView
             android:id="@+id/textViewTitle"

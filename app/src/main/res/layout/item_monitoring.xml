@@ -13,10 +13,16 @@
         android:layout_height="match_parent"
         android:background="@drawable/bg_shape_gradient">
 
+        <!-- TODO сделать картинку и размеры -->
         <ImageView
             android:id="@+id/imageViewBackground"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textViewTitle"

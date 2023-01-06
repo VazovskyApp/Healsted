@@ -8,6 +8,8 @@
     android:layout_marginVertical="@dimen/margin_8"
     app:cardCornerRadius="10dp">
 
+    <!-- TODO сделать возможность редактирования/удаления по свайпу (после диплома) -->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -36,5 +38,4 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="28 Декабря, 2023" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </com.google.android.material.card.MaterialCardView>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- TODO сделать норм цвета -->
     <color name="ic_launcher_background">#FFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
@@ -28,6 +29,7 @@
     <color name="rate_color_great">#5F9868</color>
     <color name="some_random_color">#FF00FF</color>
 
+    <!-- TODO переименовать, используется много где -->
     <color name="pillsCardBlue">#585CE5</color>
     <color name="pillsCardOrange">#E79F5B</color>
     <color name="pillsCardRed">#E65A81</color>

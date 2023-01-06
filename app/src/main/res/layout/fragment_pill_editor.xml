@@ -22,18 +22,18 @@
             tools:title="Добавить лекарство" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <!-- Todo сделать все адекватным -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.recyclerview.widget.RecyclerView
+            <app.vazovsky.healsted.presentation.view.EmptyRecyclerView
                 android:id="@+id/recyclerViewPillType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_16"
                 android:layout_marginTop="16dp"
-                android:hint="Название"
+                android:hint="@string/pill_editor_name_hint"
                 app:layout_constraintTop_toBottomOf="@id/recyclerViewPillType" />
 
             <EditText
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_16"
                 android:layout_marginTop="16dp"
-                android:hint="Дозировка"
+                android:hint="@string/pill_editor_dosage_hint"
                 app:layout_constraintTop_toBottomOf="@id/editTextName" />
 
             <Spinner
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_16"
                 android:layout_marginTop="16dp"
-                android:hint="Комментарий"
+                android:hint="@string/pill_editor_comment_hint"
                 app:layout_constraintTop_toBottomOf="@id/spinnerDatesTakenType" />
 
             <TextView
@@ -118,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_16"
                 android:layout_marginTop="8dp"
-                android:text="Добавить время"
+                android:text="@string/pill_editor_add_time"
                 app:layout_constraintTop_toBottomOf="@id/timePickerTimeNotification" />
 
             <LinearLayout
@@ -134,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_16"
                     android:layout_marginTop="8dp"
-                    android:text="Старт"
+                    android:text="@string/pill_editor_start_date"
                     android:textAppearance="@style/Font.Body_1.Bold" />
 
                 <DatePicker
@@ -171,7 +171,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_16"
                     android:layout_marginTop="8dp"
-                    android:text="Конец"
+                    android:text="@string/pill_editor_end_date"
                     android:textAppearance="@style/Font.Body_1.Bold" />
 
                 <DatePicker
@@ -184,14 +184,13 @@
                     android:datePickerMode="spinner" />
             </LinearLayout>
 
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonConfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_16"
                 android:layout_marginBottom="@dimen/margin_16"
-                android:text="Подтвердить"
+                android:text="@string/pill_editor_confirm"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/linearLayoutEndDateNotification" />
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,7 @@ import app.vazovsky.healsted.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+/** Экран входа в аккаунт */
 @AndroidEntryPoint
 class AuthFragment : BaseFragment(R.layout.fragment_auth) {
 

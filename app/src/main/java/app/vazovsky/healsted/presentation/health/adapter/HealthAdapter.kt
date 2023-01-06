@@ -10,10 +10,7 @@ class HealthAdapter @Inject constructor() : BaseAdapter<MonitoringAttribute, Hea
     lateinit var onItemClick: (MonitoringAttribute) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HealthViewHolder {
-        return HealthViewHolder(
-            parent = parent,
-            onItemClick = onItemClick
-        )
+        return HealthViewHolder(parent, onItemClick)
     }
 
     override fun onBindViewHolder(holder: HealthViewHolder, position: Int) {

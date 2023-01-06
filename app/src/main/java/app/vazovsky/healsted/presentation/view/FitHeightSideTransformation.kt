@@ -9,7 +9,8 @@ import java.nio.charset.Charset
 import java.security.MessageDigest
 
 /**
- * Вписывает картинку по высоте и прибивает к правому краю, все что слева - обрезается
+ * Вписывание картинки по высоте и прибивает к правому краю
+ * Все что слева - обрезается
  */
 class FitHeightSideTransformation(private val align: Align = Align.FIT_END) : BitmapTransformation() {
 

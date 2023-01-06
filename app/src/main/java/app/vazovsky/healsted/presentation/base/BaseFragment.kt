@@ -17,7 +17,6 @@ import app.vazovsky.healsted.extensions.showErrorSnackbar
 import app.vazovsky.healsted.managers.BottomNavigationViewManager
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 abstract class BaseFragment(@LayoutRes layout: Int) : Fragment(layout) {
 
     open val showBottomNavigationView: Boolean
@@ -113,7 +112,7 @@ abstract class BaseFragment(@LayoutRes layout: Int) : Fragment(layout) {
     }
 
     /**
-     * Нижний отступ контента над нижнем меню
+     * Нижний отступ контента над нижним меню
      */
     fun getMenuMarginBottom(): Int {
         return bottomNavigationViewManager?.getMenuMarginBottom() ?: 0

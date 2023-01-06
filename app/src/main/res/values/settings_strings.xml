@@ -15,7 +15,7 @@
     <string name="settings_about_us_share">Поделиться приложением</string>
     <string name="settings_about_us_telegram">Telegram Channel</string>
     <string name="settings_about_us_developed_prev">Developed by</string>
-    <string name="settings_about_us_developed_link">VazovskyApp</string>
+    <string name="settings_about_us_developed_vazovsky">VazovskyApp</string>
 
     <!-- Settings Send feedback -->
     <string name="settings_send_feedback_title">Написать разработчику</string>

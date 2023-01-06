@@ -9,6 +9,7 @@ import app.vazovsky.healsted.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+/** Экран для отправки данных о баге */
 @AndroidEntryPoint
 class SettingsReportBugFragment : BaseFragment(R.layout.fragment_settings_report_bug) {
 

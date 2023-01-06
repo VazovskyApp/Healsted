@@ -25,5 +25,4 @@ class HealthAttributeViewModel @Inject constructor(
             getHealthMonitoringHistoryUseCase.executeFlow(GetHealthMonitoringHistoryUseCase.Params(type))
         )
     }
-
 }

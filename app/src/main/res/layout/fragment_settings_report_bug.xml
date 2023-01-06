@@ -22,6 +22,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <!-- TODO сделать нормальный смайл или в принципе найти другую картинку -->
         <ImageView
             android:id="@+id/imageViewSmileBad"
             android:layout_width="150dp"
@@ -31,7 +32,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_bad" />
-
+        <!-- TODO продумать тексты -->
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="match_parent"
@@ -54,6 +55,7 @@
             android:textAppearance="@style/Font.Body_1.Bold"
             app:layout_constraintTop_toBottomOf="@id/textViewTitle" />
 
+        <!-- TODO сделать стили -->
         <EditText
             android:id="@+id/editTextReportBug"
             android:layout_width="match_parent"

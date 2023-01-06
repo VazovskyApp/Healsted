@@ -15,8 +15,7 @@ class PillsViewHolder(
     private val binding by viewBinding(ItemPillBinding::bind)
 
     fun bind(item: Pill, position: Int) = with(binding) {
-        textViewName.text = item.name
-        textViewDates.text = "${item.startDate} - ${item.endDate}"
+        /** TODO ext random color */
         val backgroundColorId = when (position % 5) {
             0 -> R.color.pillsCardBlue
             1 -> R.color.pillsCardOrange
@@ -24,11 +23,13 @@ class PillsViewHolder(
             3 -> R.color.pillsCardViolet
             else -> R.color.pillsCardGreen
         }
-        root.setCardBackgroundColor(
-            root.context.getColor(backgroundColorId)
-        )
-        root.setOnClickListener {
-            onItemClick(item)
+        root.apply {
+            setCardBackgroundColor(context.getColor(backgroundColorId))
+            setOnClickListener { onItemClick(item) }
         }
+
+        textViewName.text = item.name
+        /** TODO Форматирование */
+        textViewDates.text = "${item.startDate} - ${item.endDate}"
     }
 }

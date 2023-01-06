@@ -22,8 +22,8 @@ open class EmptyRecyclerView @JvmOverloads constructor(
      * Слушатель изменения видимости [EmptyRecyclerView.emptyView].
      * Вызывается, когда видимость [EmptyRecyclerView.emptyView] меняется.
      *
-     * @param emptyViewVisibility - значение видимости [EmptyRecyclerView.emptyView]. Может быть либо [View.VISIBLE]
-     * либо [View.GONE]
+     * @param emptyViewVisibility - значение видимости [EmptyRecyclerView.emptyView].
+     * Может быть либо [View.VISIBLE] либо [View.GONE]
      */
     var onEmptyViewStateChangeListener: (emptyViewVisibility: Int) -> Unit = {}
 

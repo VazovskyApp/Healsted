@@ -16,6 +16,7 @@ class TodayPillViewHolder(
 
     fun bind(item: Pill, position: Int) = with(binding) {
         root.setOnClickListener { onItemClick(item) }
+        /** TODO сделать ext типа рандомный цвет */
         val backgroundColorId = when (position % 5) {
             0 -> R.color.pillsCardBlue
             1 -> R.color.pillsCardOrange

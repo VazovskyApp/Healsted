@@ -1,9 +1,7 @@
 package app.vazovsky.healsted.presentation.dashboard
 
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import app.vazovsky.healsted.R
@@ -18,8 +16,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
-import timber.log.Timber
 
+/** Экран дашборда */
 @AndroidEntryPoint
 class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
@@ -38,7 +36,6 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         observeNavigationCommands()
         todayPillsLiveData.observe { result ->
             result.doOnSuccess { pills ->
-                Timber.d("LOL $pills")
                 todayPillsAdapter.submitList(pills)
             }
         }
@@ -61,24 +58,27 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         datePickerTimeline.setOnDateSelectedListener(object : OnDateSelectedListener {
 
             override fun onDateSelected(year: Int, month: Int, day: Int, dayOfWeek: Int) {
-                textViewTitle.text = when (LocalDate.of(year, month + 1, day)) {
-                    LocalDate.now() -> "Сегодня"
-                    in LocalDate.MIN..LocalDate.now() -> "Ранее"
-                    in LocalDate.now()..LocalDate.MAX -> "Позже"
-                    else -> "Странно"
-                }
+                textViewTitle.text = requireContext().getString(
+                    when (LocalDate.of(year, month + 1, day)) {
+                        //TODO Сделать ext либо еще как-то исправить, потому что не оч красиво
+                        LocalDate.now() -> R.string.dashboard_date_today
+                        in LocalDate.MIN..LocalDate.now() -> R.string.dashboard_date_early
+                        in LocalDate.now()..LocalDate.MAX -> R.string.dashboard_date_later
+                        // Маловероятный сценарий
+                        else -> R.string.dashboard_date_unknown
+                    }
+                )
+                // TODO сделать форматирование
                 textViewDate.text = "$day $month, $dayOfWeek"
             }
 
-            override fun onDisabledDateSelected(year: Int, month: Int, day: Int, dayOfWeek: Int, isDisabled: Boolean) {
-
-            }
+            override fun onDisabledDateSelected(year: Int, month: Int, day: Int, dayOfWeek: Int, isDisabled: Boolean) = Unit
         })
     }
 
     private fun setupRecyclerView() = with(binding) {
         recyclerViewTodayPills.adapter = todayPillsAdapter.apply {
-            onItemClick = { pill -> viewModel.openEditPill(pill) }
+            onItemClick = { viewModel.openEditPill(it) }
         }
         recyclerViewTodayPills.addLinearSpaceItemDecoration(R.dimen.padding_8)
     }

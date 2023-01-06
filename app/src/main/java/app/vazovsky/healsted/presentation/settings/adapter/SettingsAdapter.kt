@@ -10,10 +10,7 @@ class SettingsAdapter @Inject constructor() : BaseAdapter<SettingsItem, Settings
     lateinit var onItemClick: (SettingsItem) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SettingsViewHolder {
-        return SettingsViewHolder(
-            parent = parent,
-            onItemClick = onItemClick
-        )
+        return SettingsViewHolder(parent, onItemClick)
     }
 
     override fun onBindViewHolder(holder: SettingsViewHolder, position: Int) {

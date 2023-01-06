@@ -13,6 +13,8 @@
         android:layout_height="match_parent"
         android:background="@drawable/bg_shape_gradient">
 
+        <!-- TODO сделать иконки для каждого типа лекарств и добавлять сюда-->
+
         <TextView
             android:id="@+id/textViewName"
             android:layout_width="match_parent"

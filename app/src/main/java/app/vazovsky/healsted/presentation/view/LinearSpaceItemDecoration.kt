@@ -6,6 +6,7 @@ import androidx.annotation.Px
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+/** Декоратор для LinearLayoutManager */
 class LinearSpaceItemDecoration(
     @Px private val space: Int,
     private val showFirstVerticalDivider: Boolean = false,

@@ -12,7 +12,11 @@ import app.vazovsky.healsted.databinding.FragmentPillEditorBinding
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
+import android.R as AndroidR
 
+/** Экран редактирования или добавления лекарства */
+@AndroidEntryPoint
 class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
 
     override val showBottomNavigationView = true
@@ -46,12 +50,19 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     }
 
     private fun setDatesTakenType() = with(binding) {
-        spinnerDatesTakenType.adapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, DatesTakenType.values())
+        spinnerDatesTakenType.adapter = ArrayAdapter(
+            requireContext(),
+            AndroidR.layout.simple_spinner_item,
+            DatesTakenType.values()
+        )
     }
 
     private fun setTakePillType() = with(binding) {
-        spinnerTakePillType.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, TakePillType.values())
+        spinnerTakePillType.adapter = ArrayAdapter(
+            requireContext(),
+            AndroidR.layout.simple_spinner_item,
+            TakePillType.values()
+        )
     }
 
     private fun setTimeNotification() = with(binding) {

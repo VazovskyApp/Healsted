@@ -7,7 +7,10 @@ import app.vazovsky.healsted.databinding.FragmentProfileRoutingBinding
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+/** Экран роутинга профиля, TODO вообще, если честно, не факт, что он нужен сейчас(!) */
+@AndroidEntryPoint
 class ProfileRoutingFragment : BaseFragment(R.layout.fragment_profile_routing) {
 
     private val binding by viewBinding(FragmentProfileRoutingBinding::bind)

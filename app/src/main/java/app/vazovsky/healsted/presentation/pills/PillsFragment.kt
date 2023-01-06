@@ -17,6 +17,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/** Экран со списками всех лекарств */
 @AndroidEntryPoint
 class PillsFragment : BaseFragment(R.layout.fragment_pills) {
 
