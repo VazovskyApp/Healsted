@@ -25,7 +25,7 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
 
     override fun saveUser(
         email: String,
-        phoneNumber: String?,
+        phoneNumber: String,
     ) = firebaseAuthService.saveUser(email, phoneNumber)
 
     override fun saveAccount(
@@ -48,9 +48,11 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
         level = level
     )
 
-    override fun fetchUser() = firebaseAuthService.fetchUser()
+    override fun fetchAccount(email: String) = firebaseAuthService.fetchAccount(email)
 
-    override fun fetchAccount() = firebaseAuthService.fetchAccount()
+    override fun fetchUsers() = firebaseAuthService.fetchUsers()
+
+    override fun fetchAccounts() = firebaseAuthService.fetchAccounts()
 
     override fun sendForgotPassword(email: String) = firebaseAuthService.sendForgotPassword(email)
 }

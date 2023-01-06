@@ -9,7 +9,11 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TimelineView : RecyclerView {
+class TimelineView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0,
+) : RecyclerView(context, attrs, defStyle) {
     private var adapter: TimelineAdapter? = null
     var monthTextColor = 0
     var dateTextColor = 0
@@ -17,7 +21,6 @@ class TimelineView : RecyclerView {
     var selectedColor = 0
     var disabledDateColor = 0
 
-    //    private float monthTextSize, dateTextSize, dayTextSize;
     var year = 0
         private set
     var month = 0
@@ -25,19 +28,7 @@ class TimelineView : RecyclerView {
     var date = 0
         private set
 
-    constructor(context: Context) : super(context) {
-        init()
-    }
-
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        init()
-    }
-
-    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
-        init()
-    }
-
-    fun init() {
+    init {
         year = 1970
         month = 0
         date = 1

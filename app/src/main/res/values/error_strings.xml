@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- ОБЩИЕ ТЕКСТЫ -->
-    <string name="loading_dialog_text">Подождите, пожалуйста…</string>
+    <!-- Common -->
+    <string name="loading_dialog_text">Подождите, пожалуйста… </string>
 
-    <!-- НЕТ ИНТЕРНЕТА -->
-    <string name="error_no_network_title">Нет подключения к сети</string>
-    <string name="error_no_network_description">Проверьте мобильное соединение или подключение Wi-Fi</string>
-
-    <!-- ЧТО-ТО НЕ ТАК -->
-    <string name="error_something_wrong_title">Что-то пошло не так</string>
-    <string name="error_something_wrong_description">Попробуйте обновить страницу</string>
-
-    <!-- ОБЩИЕ ОШИБКИ -->
     <string name="error_retry">Повторить</string>
     <string name="error_internet_message">Не удалось получить данные, попробуйте позже</string>
     <string name="error_auth_401">Что-то пошло не так. Необходимо авторизоваться повторно</string>
     <string name="error_button_label">Обновить</string>
     <string name="error_paging">Ошибка. Попробуйте обновить</string>
 
-    <!-- ПУСТАЯ VIEW -->
+    <!-- Network -->
+    <string name="error_no_network_title">Нет подключения к сети</string>
+    <string name="error_no_network_description">Проверьте мобильное соединение или подключение Wi-Fi</string>
+
+    <!-- Something wrong -->
+    <string name="error_something_wrong_title">Что-то пошло не так</string>
+    <string name="error_something_wrong_description">Попробуйте обновить страницу</string>
+
+    <!-- Empty View -->
     <string name="empty_default_title">Здесь пока ничего нет</string>
     <string name="empty_default_message">Но скоро обязательно появится</string>
+
+    <!-- Firebase Auth Exception -->
+    <string name="firebase_auth_invalid_user_exception_message">Нет пользователя с таким email. Зарегистрируйтесь.</string>
+    <string name="firebase_auth_email_exception_message">Я ошибка FirebaseAuthEmailException.</string>
+    <string name="firebase_auth_action_code_exception_message">Я ошибка FirebaseAuthActionCodeException.</string>
+    <string name="firebase_auth_multi_factor_exception_message">Я ошибка FirebaseAuthMultiFactorException.</string>
+    <string name="firebase_auth_user_collision_exception_message">Аккаунт с таким email уже существует.</string>
+    <string name="firebase_auth_invalid_credentials_exception_message">Неверный логин/пароль. Также может быть неверный формат адреса.</string>
+    <string name="firebase_auth_exception_message">Я ошибка FirebaseAuthException.</string>
 </resources>

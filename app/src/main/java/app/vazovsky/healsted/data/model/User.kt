@@ -1,10 +1,12 @@
 package app.vazovsky.healsted.data.model
 
+import com.google.firebase.firestore.PropertyName
+
 /** Пользователь */
 data class User(
     /** Почта */
-    val email: String,
+    @PropertyName("email") val email: String = "",
 
     /** Номер телефона */
-    var phoneNumber: String?,
+    @PropertyName("phoneNumber") var phoneNumber: String = "",
 )

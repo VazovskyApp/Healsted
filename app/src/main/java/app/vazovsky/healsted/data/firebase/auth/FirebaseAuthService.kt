@@ -5,6 +5,7 @@ import app.vazovsky.healsted.data.model.User
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import java.time.LocalDate
 
@@ -27,7 +28,7 @@ interface FirebaseAuthService {
 
     fun saveUser(
         email: String,
-        phoneNumber: String? = null,
+        phoneNumber: String,
     ): Task<Void>
 
     fun saveAccount(
@@ -41,9 +42,11 @@ interface FirebaseAuthService {
         level: AccountLevel = AccountLevel.BACTERIA,
     ): Task<Void>
 
-    fun fetchUser(): Task<QuerySnapshot>
+    fun fetchAccount(email: String): Task<DocumentSnapshot>
 
-    fun fetchAccount(): Task<QuerySnapshot>
+    fun fetchUsers(): Task<QuerySnapshot>
+
+    fun fetchAccounts(): Task<QuerySnapshot>
 
     fun sendForgotPassword(email: String): Task<Void>
 }

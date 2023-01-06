@@ -3,7 +3,7 @@ package app.vazovsky.healsted.data.model
 /** Уровень аккаунта */
 enum class AccountLevel(
     private val friendlyName: String,
-    private val xpCount: Int,
+    val xpCount: Int,
 ) {
     BACTERIA("Бактерия", 100),
     VIRUS("Вирус", 200),
@@ -13,6 +13,4 @@ enum class AccountLevel(
     GOD("БОГ", 5000);
 
     override fun toString() = friendlyName
-
-    fun getXPCount() = xpCount
 }

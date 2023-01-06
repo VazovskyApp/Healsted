@@ -40,7 +40,6 @@ class EmojiRatingBar @JvmOverloads constructor(
     private lateinit var btnGood: LinearLayout
     private lateinit var btnGreat: LinearLayout
 
-
     private lateinit var ivAwful: ImageView
     private lateinit var ivBad: ImageView
     private lateinit var ivOkay: ImageView
@@ -52,7 +51,6 @@ class EmojiRatingBar @JvmOverloads constructor(
     private lateinit var tvOkay: TextView
     private lateinit var tvGood: TextView
     private lateinit var tvGreat: TextView
-
 
     private var showText: Boolean = true
     private var showAllText: Boolean = false
@@ -162,7 +160,6 @@ class EmojiRatingBar @JvmOverloads constructor(
             setCurrentRateStatus(MoodType.GREAT)
         }
     }
-
 
     fun setRateChangeListener(listener: OnRateChangeListener) {
         ratingChangeListener = listener

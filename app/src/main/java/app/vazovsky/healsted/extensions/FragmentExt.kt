@@ -28,7 +28,7 @@ fun Fragment.showErrorSnackbar(
     actionText: String? = null,
     @Px marginBottom: Int = 0,
     textMaxLines: Int = DEFAULT_SNACK_BAR_TEXT_MAX_LINES,
-    action: () -> Unit,
+    action: () -> Unit = {},
 ) {
     showCustomSnackbar(
         if (this is BottomSheetDialogFragment) dialog?.window?.decorView else view,

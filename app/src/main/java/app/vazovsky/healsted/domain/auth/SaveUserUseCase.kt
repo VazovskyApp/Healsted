@@ -22,7 +22,7 @@ class SaveUserUseCase @Inject constructor(
         val email: String,
 
         /** Номер телефона */
-        val phoneNumber: String? = null,
+        val phoneNumber: String = "",
     )
 
     data class Result(

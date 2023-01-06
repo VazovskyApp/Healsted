@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -24,6 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_16"
             android:layout_marginTop="@dimen/margin_16"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textAppearance="@style/Font.Body_1.Bold"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Вес" />
@@ -34,6 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_16"
             android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textAppearance="@style/Font.Body_1"
             app:layout_constraintTop_toBottomOf="@id/textViewTitle"
             tools:text="45 кг" />
@@ -45,9 +49,11 @@
             android:layout_marginHorizontal="@dimen/margin_16"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="@dimen/margin_16"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="@string/health_update"
             android:textAppearance="@style/Font.Body_1.Medium"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textViewValue" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
