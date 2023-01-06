@@ -8,6 +8,7 @@ import app.vazovsky.healsted.R
 import app.vazovsky.healsted.databinding.FragmentDashboardBinding
 import app.vazovsky.healsted.extensions.addLinearSpaceItemDecoration
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
+import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import app.vazovsky.healsted.presentation.dashboard.adapter.TodayPillsAdapter
 import app.vazovsky.healsted.presentation.view.timeline.OnDateSelectedListener
@@ -26,6 +27,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     private val binding by viewBinding(FragmentDashboardBinding::bind)
     private val viewModel: DashboardViewModel by viewModels()
 
+    @Inject lateinit var dateFormatter: DateFormatter
     @Inject lateinit var todayPillsAdapter: TodayPillsAdapter
 
     override fun callOperations() {
@@ -55,21 +57,12 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     private fun setupTimeline() = with(binding) {
         datePickerTimeline.setInitialDate(2023, 0, 1)
         datePickerTimeline.setActiveDate(Calendar.getInstance())
+        textViewTitle.text = dateFormatter.getDisplayDifferentDates(LocalDate.now(), LocalDate.now())
         datePickerTimeline.setOnDateSelectedListener(object : OnDateSelectedListener {
-
             override fun onDateSelected(year: Int, month: Int, day: Int, dayOfWeek: Int) {
-                textViewTitle.text = requireContext().getString(
-                    when (LocalDate.of(year, month + 1, day)) {
-                        //TODO Сделать ext либо еще как-то исправить, потому что не оч красиво
-                        LocalDate.now() -> R.string.dashboard_date_today
-                        in LocalDate.MIN..LocalDate.now() -> R.string.dashboard_date_early
-                        in LocalDate.now()..LocalDate.MAX -> R.string.dashboard_date_later
-                        // Маловероятный сценарий
-                        else -> R.string.dashboard_date_unknown
-                    }
-                )
-                // TODO сделать форматирование
-                textViewDate.text = "$day $month, $dayOfWeek"
+                val selectedDate = LocalDate.of(year, month + 1, day)
+                textViewTitle.text = dateFormatter.getDisplayDifferentDates(LocalDate.now(), selectedDate)
+                textViewDate.text = dateFormatter.formatDateWithDayOfWeek(selectedDate)
             }
 
             override fun onDisabledDateSelected(year: Int, month: Int, day: Int, dayOfWeek: Int, isDisabled: Boolean) = Unit

@@ -14,5 +14,5 @@ data class PillsTab(
 enum class PillsTabSlot {
     ALL,
     ACTIVE,
-    COMPLETED
+    COMPLETED;
 }

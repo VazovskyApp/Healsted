@@ -1,7 +1,7 @@
 package app.vazovsky.healsted.data.model
 
 import android.os.Parcelable
-import java.time.LocalDate
+import java.time.OffsetDateTime
 import kotlinx.parcelize.Parcelize
 
 /** Атрибут мониторинга здоровья */
@@ -14,5 +14,5 @@ data class MonitoringAttribute(
     val type: MonitoringType,
 
     /** Дата отметки значения */
-    val date: LocalDate,
+    val date: OffsetDateTime,
 ) : Parcelable

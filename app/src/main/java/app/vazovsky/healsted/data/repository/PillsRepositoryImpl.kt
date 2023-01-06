@@ -51,7 +51,7 @@ class PillsRepositoryImpl @Inject constructor() : PillsRepository {
             times = null,
             amount = 1F,
             startDate = OffsetDateTime.now().minusDays(2),
-            endDate = OffsetDateTime.now().plusDays(20)
+            endDate = OffsetDateTime.now().plusDays(20),
         )
     )
 

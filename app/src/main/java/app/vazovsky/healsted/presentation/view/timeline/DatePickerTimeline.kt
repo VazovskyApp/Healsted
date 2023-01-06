@@ -1,100 +1,90 @@
 package app.vazovsky.healsted.presentation.view.timeline
 
-import android.annotation.TargetApi
 import android.content.Context
 import android.content.res.TypedArray
-import android.os.Build
 import android.util.AttributeSet
-import android.view.View
+import android.view.LayoutInflater
 import android.widget.LinearLayout
-import androidx.annotation.Nullable
 import app.vazovsky.healsted.R
+import app.vazovsky.healsted.databinding.DatePickerTimelineBinding
+import app.vazovsky.healsted.extensions.getColorFromAttribute
 import java.util.*
+import com.google.android.material.R as MaterialR
 
+class DatePickerTimeline @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0,
+) : LinearLayout(context, attrs, defStyle) {
+    private val binding = DatePickerTimelineBinding.inflate(LayoutInflater.from(context), this)
 
-class DatePickerTimeline : LinearLayout {
-    private var timelineView: TimelineView? = null
+    init {
+        val a: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.DatePickerTimeline, defStyle, 0)
 
-    constructor(context: Context?) : super(context) {}
-    constructor(context: Context?, @Nullable attrs: AttributeSet?) : super(context, attrs) {
-        init(attrs, 0)
-    }
+        setColors(a)
 
-    constructor(context: Context?, @Nullable attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        init(attrs, defStyleAttr)
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(
-        context,
-        attrs,
-        defStyleAttr,
-        defStyleRes
-    ) {
-        init(attrs, defStyleAttr)
-    }
-
-    fun init(attrs: AttributeSet?, defStyleAttr: Int) {
-        val view: View = inflate(context, R.layout.date_picker_timeline, this)
-        timelineView = view.findViewById(R.id.timelineView)
-
-        // load Default values
-        val a: TypedArray = context.obtainStyledAttributes(
-            attrs,
-            R.styleable.DatePickerTimeline, defStyleAttr, 0
-        )
-        timelineView!!.dayTextColor =
-            a.getColor(R.styleable.DatePickerTimeline_dayTextColor, resources.getColor(R.color.black))
-        timelineView!!.dateTextColor =
-            a.getColor(R.styleable.DatePickerTimeline_dateTextColor, resources.getColor(R.color.black))
-        timelineView!!.monthTextColor =
-            a.getColor(R.styleable.DatePickerTimeline_monthTextColor, resources.getColor(R.color.black))
-        timelineView!!.disabledDateColor =
-            a.getColor(R.styleable.DatePickerTimeline_disabledColor, resources.getColor(R.color.grey))
-
-        timelineView?.deactivateDates(listOf())
+        binding.timelineView.deactivateDates(listOf())
         a.recycle()
-        timelineView!!.invalidate()
+        binding.timelineView.invalidate()
+    }
+
+    private fun setColors(a: TypedArray) = with(binding.timelineView) {
+        dayTextColor = a.getColor(
+            R.styleable.DatePickerTimeline_dayTextColor,
+            context.getColorFromAttribute(MaterialR.attr.colorOnBackground)
+        )
+        dateTextColor = a.getColor(
+            R.styleable.DatePickerTimeline_dateTextColor,
+            context.getColorFromAttribute(MaterialR.attr.colorOnBackground)
+        )
+        monthTextColor = a.getColor(
+            R.styleable.DatePickerTimeline_monthTextColor,
+            context.getColorFromAttribute(MaterialR.attr.colorOnBackground)
+        )
+        disabledDateColor = a.getColor(
+            R.styleable.DatePickerTimeline_disabledColor,
+            context.getColorFromAttribute(MaterialR.attr.colorOnBackground)
+        )
     }
 
     /**
      * Sets the color for date text
      * @param color the color of the date text
      */
-    fun setDateTextColor(color: Int) {
-        timelineView!!.dateTextColor = color
+    fun setDateTextColor(color: Int) = with(binding) {
+        timelineView.dateTextColor = color
     }
 
     /**
      * Sets the color for day text
      * @param color the color of the day text
      */
-    fun setDayTextColor(color: Int) {
-        timelineView!!.dayTextColor = color
+    fun setDayTextColor(color: Int) = with(binding) {
+        timelineView.dayTextColor = color
     }
 
     /**
      * Sets the color for month
      * @param color the color of the month text
      */
-    fun setMonthTextColor(color: Int) {
-        timelineView!!.monthTextColor = color
+    fun setMonthTextColor(color: Int) = with(binding) {
+        timelineView.monthTextColor = color
     }
 
     /**
      * Sets the color for disabled dates
      * @param color the color of the date
      */
-    fun setDisabledDateColor(color: Int) {
-        timelineView!!.disabledDateColor = color
+    fun setDisabledDateColor(color: Int) = with(binding) {
+        timelineView.disabledDateColor = color
     }
 
     /**
      * Register a callback to be invoked when a date is selected.
      * @param listener the callback that will run
      */
-    fun setOnDateSelectedListener(listener: OnDateSelectedListener?) {
-        timelineView!!.setOnDateSelectedListener(listener)
+    fun setOnDateSelectedListener(listener: OnDateSelectedListener?) = with(binding) {
+        timelineView.setOnDateSelectedListener(listener)
     }
 
     /**
@@ -103,18 +93,22 @@ class DatePickerTimeline : LinearLayout {
      * @param month start month
      * @param date start date
      */
-    fun setInitialDate(year: Int, month: Int, date: Int) {
-        timelineView!!.setInitialDate(year, month, date)
+    fun setInitialDate(year: Int, month: Int, date: Int) = with(binding) {
+        timelineView.setInitialDate(year, month, date)
     }
 
     /**
      * Set selected background to active date
      * @param date Active Date
      */
-    fun setActiveDate(date: Calendar?) {
+    fun setActiveDate(date: Calendar?) = with(binding) {
         if (date != null) {
-            timelineView!!.setActiveDate(date)
+            timelineView.setActiveDate(date)
         }
+    }
+
+    fun getActiveDate() = with(binding) {
+        timelineView.date
     }
 
     /**
@@ -122,7 +116,7 @@ class DatePickerTimeline : LinearLayout {
      * the deactivated date.
      * @param dates Array of Dates
      */
-    fun deactivateDates(dates: List<Date>) {
-        timelineView!!.deactivateDates(dates)
+    fun deactivateDates(dates: List<Date>) = with(binding) {
+        timelineView.deactivateDates(dates)
     }
 }

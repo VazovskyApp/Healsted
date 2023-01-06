@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- TODO понадобавлять плюралсов -->
+    <plurals name="steps">
+        <item quantity="zero">шагов</item>
+        <item quantity="one">шаг</item>
+        <item quantity="two">шага</item>
+        <item quantity="few">шага</item>
+        <item quantity="many">шагов</item>
+        <item quantity="other">шагов</item>
+    </plurals>
+</resources>

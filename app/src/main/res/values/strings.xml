@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Healsted</string>
 
+    <!-- Mnemocodes -->
+    <string name="mnemocode_endless">&#8734;</string>
+
     <!-- Auth -->
     <string name="auth_start">Давайте следить за здоровьем вместе</string>
     <string name="auth_sign_up">Зарегистрироваться</string>

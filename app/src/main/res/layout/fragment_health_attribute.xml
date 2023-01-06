@@ -95,6 +95,8 @@
                 android:textAppearance="@style/Font.Heading_1.Black"
                 android:textColor="?colorOnBackground" />
 
+            <!-- TODO сделать названия столбцов Value и Date -->
+
             <app.vazovsky.healsted.presentation.view.EmptyRecyclerView
                 android:id="@+id/recyclerViewHistory"
                 android:layout_width="match_parent"
