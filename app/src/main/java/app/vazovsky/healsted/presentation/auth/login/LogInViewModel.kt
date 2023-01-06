@@ -35,9 +35,9 @@ class LogInViewModel @Inject constructor(
     }
 
     /** Получение аккаунта */
-    fun getAccount(email: String) {
+    fun getAccount(uid: String) {
         _accountLiveData.launchLoadData(
-            getAccountUseCase.executeFlow(GetAccountUseCase.Params(email))
+            getAccountUseCase.executeFlow(GetAccountUseCase.Params(uid))
         )
     }
 

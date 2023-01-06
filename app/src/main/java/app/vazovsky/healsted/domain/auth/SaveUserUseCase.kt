@@ -12,12 +12,16 @@ class SaveUserUseCase @Inject constructor(
 
     override suspend fun execute(params: Params): Result {
         return Result(
-            task = firebaseAuthRepository.saveUser(params.email, params.phoneNumber),
-            email = params.email,
+            task = firebaseAuthRepository.saveUser(params.uid, params.email, params.phoneNumber),
+            params.uid,
+            params.email,
         )
     }
 
     data class Params(
+        /** UID текущего пользователя */
+        val uid: String,
+
         /** Email, указанный при регистрации */
         val email: String,
 
@@ -29,7 +33,10 @@ class SaveUserUseCase @Inject constructor(
         /** Результат сохранения пользователя */
         val task: Task<Void>,
 
-        /** Указанный Email */
+        /** UID текущего пользователя  */
+        val uid: String,
+
+        /** Email, указанный при регистрации */
         val email: String,
     )
 }

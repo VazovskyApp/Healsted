@@ -1,15 +1,16 @@
-package app.vazovsky.healsted.data.preferences
+package app.vazovsky.healsted.data.preferences.base
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.WorkerThread
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 /** Базовые преференсы */
 abstract class BasePreferencesStorage constructor(
-    protected val context: Context,
+    @ApplicationContext protected val context: Context,
 ) {
 
     private val pref: SharedPreferences by lazy { createPreferences() }

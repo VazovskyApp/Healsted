@@ -1,7 +1,6 @@
 package app.vazovsky.healsted.domain.auth
 
 import app.vazovsky.healsted.data.firebase.auth.FirebaseAuthRepository
-import app.vazovsky.healsted.data.model.AccountLevel
 import app.vazovsky.healsted.data.model.User
 import app.vazovsky.healsted.domain.base.UseCaseUnary
 import com.google.android.gms.tasks.Task
@@ -15,17 +14,19 @@ class SaveAccountUseCase @Inject constructor(
 
     override suspend fun execute(params: Params): Task<Void> {
         return firebaseAuthRepository.saveAccount(
-            params.accountHolder,
-            params.nickname,
-            params.name,
-            params.surname,
-            params.patronymic,
-            params.birthday,
-            params.avatar,
+            uid = params.uid,
+            accountHolder = params.accountHolder,
+            nickname = params.nickname,
+            name = params.name,
+            surname = params.surname,
+            patronymic = params.patronymic,
+            birthday = params.birthday,
+            avatar = params.avatar,
         )
     }
 
     data class Params(
+        val uid: String,
         val accountHolder: User,
         val nickname: String,
         val name: String,

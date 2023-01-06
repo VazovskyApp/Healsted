@@ -65,9 +65,8 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
 
     private fun setSignUpTask(task: Task<AuthResult>) {
         task.addOnSuccessListener { authResult ->
-            Timber.d(authResult.user?.email)
             authResult.user?.let { user ->
-                viewModel.saveUser(email = user.email.toString())
+                viewModel.saveUser(uid = user.uid, email = user.email.toString())
             }
         }
         task.addOnFailureListener { exception ->
@@ -84,8 +83,8 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     private fun setSaveUserTask(saveUserResult: SaveUserUseCase.Result) {
         saveUserResult.task.apply {
             addOnSuccessListener {
-                /** TODO сделать сохранение аккаунта в самом приложении */
                 viewModel.saveAccount(
+                    uid = saveUserResult.uid,
                     accountHolder = User(email = saveUserResult.email, ""),
                     nickname = binding.editTextNickname.text.toString(),
                 )
@@ -120,7 +119,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
             if (nickname.isBlank() || email.isBlank() || password.isBlank()) {
                 showErrorSnackbar(message = requireContext().getString(R.string.auth_empty_data))
             } else {
-                viewModel.signUp(nickname, email, password)
+                viewModel.signUp(email, password)
             }
         }
     }

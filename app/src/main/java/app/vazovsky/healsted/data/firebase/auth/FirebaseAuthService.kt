@@ -16,7 +16,6 @@ interface FirebaseAuthService {
     fun signUpUser(
         email: String,
         password: String,
-        nickname: String,
     ): Task<AuthResult>
 
     fun signInUser(
@@ -29,11 +28,13 @@ interface FirebaseAuthService {
     ): Task<AuthResult>
 
     fun saveUser(
+        uid: String,
         email: String,
         phoneNumber: String,
     ): Task<Void>
 
     fun saveAccount(
+        uid: String,
         accountHolder: User,
         nickname: String,
         name: String = "",
@@ -43,7 +44,7 @@ interface FirebaseAuthService {
         avatar: String?,
     ): Task<Void>
 
-    fun fetchAccount(email: String): Task<DocumentSnapshot>
+    fun fetchAccount(uid: String): Task<DocumentSnapshot>
 
     fun fetchUsers(): Task<QuerySnapshot>
 

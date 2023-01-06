@@ -1,7 +1,6 @@
 package app.vazovsky.healsted.data.firebase.auth
 
 import app.vazovsky.healsted.data.model.Account
-import app.vazovsky.healsted.data.model.AccountLevel
 import app.vazovsky.healsted.data.model.User
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
@@ -11,10 +10,10 @@ import com.google.firebase.firestore.QuerySnapshot
 import java.time.LocalDate
 
 interface FirebaseAuthRepository {
+
     fun signUpUser(
         email: String,
         password: String,
-        nickname: String,
     ): Task<AuthResult>
 
     fun signInUser(
@@ -27,11 +26,13 @@ interface FirebaseAuthRepository {
     ): Task<AuthResult>
 
     fun saveUser(
+        uid: String,
         email: String,
         phoneNumber: String,
     ): Task<Void>
 
     fun saveAccount(
+        uid: String,
         accountHolder: User,
         nickname: String,
         name: String = "",
@@ -41,7 +42,7 @@ interface FirebaseAuthRepository {
         avatar: String?,
     ): Task<Void>
 
-    fun fetchAccount(email: String): Task<DocumentSnapshot>
+    fun fetchAccount(uid: String): Task<DocumentSnapshot>
 
     fun fetchUsers(): Task<QuerySnapshot>
 

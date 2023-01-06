@@ -12,6 +12,7 @@ import app.vazovsky.healsted.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,7 +51,7 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
 
     private fun setLogInTask(task: Task<AuthResult>) {
         task.addOnSuccessListener { authResult ->
-            authResult.user?.email?.let { viewModel.getAccount(it) }
+            authResult.user?.uid?.let { viewModel.getAccount(it) }
         }
         task.addOnFailureListener { exception ->
             showErrorSnackbar(
@@ -67,19 +68,6 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
         task.apply {
             addOnSuccessListener {
                 viewModel.openDashboard()
-                var account: Account? = null
-                try {
-                    account = it.toObject(Account::class.java)
-                    viewModel.openDashboard()
-                } catch (e: Exception) {
-                    Timber.d(e.localizedMessage)
-                    showErrorSnackbar(
-                        resources.getString(R.string.error_something_wrong_title)
-                    )
-                } finally {
-                    /** Сделать сохарнение аккаунта в само приложение */
-                    Timber.d("Account: $account")
-                }
             }
             addOnFailureListener { exception ->
                 Timber.d(exception.localizedMessage)

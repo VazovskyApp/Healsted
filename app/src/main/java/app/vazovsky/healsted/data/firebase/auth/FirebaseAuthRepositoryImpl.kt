@@ -1,8 +1,6 @@
 package app.vazovsky.healsted.data.firebase.auth
 
 import app.vazovsky.healsted.data.model.Account
-import app.vazovsky.healsted.data.model.AccountLevel
-import app.vazovsky.healsted.data.model.LoyaltyProgress
 import app.vazovsky.healsted.data.model.User
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
@@ -16,8 +14,7 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
     override fun signUpUser(
         email: String,
         password: String,
-        nickname: String
-    ) = firebaseAuthService.signUpUser(email, password, nickname)
+    ) = firebaseAuthService.signUpUser(email, password)
 
     override fun signInUser(
         email: String,
@@ -27,11 +24,13 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
     override fun signInWithGoogle(account: GoogleSignInAccount) = firebaseAuthService.signInWithGoogle(account)
 
     override fun saveUser(
+        uid: String,
         email: String,
         phoneNumber: String,
-    ) = firebaseAuthService.saveUser(email, phoneNumber)
+    ) = firebaseAuthService.saveUser(uid, email, phoneNumber)
 
     override fun saveAccount(
+        uid: String,
         accountHolder: User,
         nickname: String,
         name: String,
@@ -40,6 +39,7 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
         birthday: LocalDate?,
         avatar: String?,
     ) = firebaseAuthService.saveAccount(
+        uid = uid,
         accountHolder = accountHolder,
         nickname = nickname,
         name = name,
@@ -49,7 +49,7 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
         avatar = avatar,
     )
 
-    override fun fetchAccount(email: String) = firebaseAuthService.fetchAccount(email)
+    override fun fetchAccount(uid: String) = firebaseAuthService.fetchAccount(uid)
 
     override fun fetchUsers() = firebaseAuthService.fetchUsers()
 

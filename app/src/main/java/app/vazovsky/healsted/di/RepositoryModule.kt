@@ -4,6 +4,8 @@ import app.vazovsky.healsted.data.firebase.auth.FirebaseAuthRepository
 import app.vazovsky.healsted.data.firebase.auth.FirebaseAuthRepositoryImpl
 import app.vazovsky.healsted.data.firebase.profile.FirebaseProfileRepository
 import app.vazovsky.healsted.data.firebase.profile.FirebaseProfileRepositoryImpl
+import app.vazovsky.healsted.data.repository.AuthRepository
+import app.vazovsky.healsted.data.repository.AuthRepositoryImpl
 import app.vazovsky.healsted.data.repository.DashboardRepository
 import app.vazovsky.healsted.data.repository.DashboardRepositoryImpl
 import app.vazovsky.healsted.data.repository.HealthRepository
@@ -23,24 +25,44 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
-    @Binds
-    abstract fun bindProfileRepository(profileRepository: ProfileRepositoryImpl): ProfileRepository
 
     @Binds
-    abstract fun bindPillsRepository(pillsRepository: PillsRepositoryImpl): PillsRepository
+    abstract fun bindAuthRepository(
+        authRepository: AuthRepositoryImpl
+    ): AuthRepository
 
     @Binds
-    abstract fun bindDashboardRepository(dashboardRepository: DashboardRepositoryImpl): DashboardRepository
+    abstract fun bindProfileRepository(
+        profileRepository: ProfileRepositoryImpl
+    ): ProfileRepository
 
     @Binds
-    abstract fun bindHealthRepository(healthRepository: HealthRepositoryImpl): HealthRepository
+    abstract fun bindPillsRepository(
+        pillsRepository: PillsRepositoryImpl
+    ): PillsRepository
 
     @Binds
-    abstract fun bindSettingsRepository(settingsRepository: SettingsRepositoryImpl): SettingsRepository
+    abstract fun bindDashboardRepository(
+        dashboardRepository: DashboardRepositoryImpl
+    ): DashboardRepository
 
     @Binds
-    abstract fun bindFirebaseAuthRepository(firebaseAuthRepository: FirebaseAuthRepositoryImpl): FirebaseAuthRepository
+    abstract fun bindHealthRepository(
+        healthRepository: HealthRepositoryImpl
+    ): HealthRepository
 
     @Binds
-    abstract fun bindFirebaseProfileRepository(firebaseProfileRepository: FirebaseProfileRepositoryImpl): FirebaseProfileRepository
+    abstract fun bindSettingsRepository(
+        settingsRepository: SettingsRepositoryImpl
+    ): SettingsRepository
+
+    @Binds
+    abstract fun bindFirebaseAuthRepository(
+        firebaseAuthRepository: FirebaseAuthRepositoryImpl
+    ): FirebaseAuthRepository
+
+    @Binds
+    abstract fun bindFirebaseProfileRepository(
+        firebaseProfileRepository: FirebaseProfileRepositoryImpl
+    ): FirebaseProfileRepository
 }

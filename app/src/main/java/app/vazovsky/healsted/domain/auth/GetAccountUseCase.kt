@@ -12,10 +12,10 @@ class GetAccountUseCase @Inject constructor(
 ) : UseCaseUnary<GetAccountUseCase.Params, Task<DocumentSnapshot>>() {
 
     override suspend fun execute(params: Params): Task<DocumentSnapshot> {
-        return firebaseAuthRepository.fetchAccount(params.email)
+        return firebaseAuthRepository.fetchAccount(params.uid)
     }
 
     data class Params(
-        val email: String,
+        val uid: String,
     )
 }

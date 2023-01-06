@@ -2,7 +2,6 @@ package app.vazovsky.healsted.presentation.auth.signup
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import app.vazovsky.healsted.data.model.AccountLevel
 import app.vazovsky.healsted.data.model.User
 import app.vazovsky.healsted.data.model.base.LoadableResult
 import app.vazovsky.healsted.domain.auth.SaveAccountUseCase
@@ -36,11 +35,10 @@ class SignUpViewModel @Inject constructor(
     val saveAccountLiveData: LiveData<LoadableResult<Task<Void>>> = _saveAccountLiveData
 
     /** Зарегистрироваться */
-    fun signUp(nickname: String, email: String, password: String) {
+    fun signUp(email: String, password: String) {
         _signUpResultLiveData.launchLoadData(
             signUpUseCase.executeFlow(
                 SignUpUseCase.Params(
-                    nickname = nickname,
                     email = email,
                     password = password,
                 )
@@ -49,11 +47,13 @@ class SignUpViewModel @Inject constructor(
     }
 
     /** Сохранить пользователя в FireStore */
-    fun saveUser(email: String) {
+    fun saveUser(uid: String, email: String, phoneNumber: String = "") {
         _saveUserLiveData.launchLoadData(
             saveUserUseCase.executeFlow(
                 SaveUserUseCase.Params(
-                    email = email
+                    uid = uid,
+                    email = email,
+                    phoneNumber = phoneNumber,
                 )
             )
         )
@@ -61,6 +61,7 @@ class SignUpViewModel @Inject constructor(
 
     /** Сохранить аккаунт в FireStore */
     fun saveAccount(
+        uid: String,
         accountHolder: User,
         nickname: String,
         name: String = "",
@@ -72,6 +73,7 @@ class SignUpViewModel @Inject constructor(
         _saveAccountLiveData.launchLoadData(
             saveAccountUseCase.executeFlow(
                 SaveAccountUseCase.Params(
+                    uid = uid,
                     accountHolder = accountHolder,
                     nickname = nickname,
                     name = name,

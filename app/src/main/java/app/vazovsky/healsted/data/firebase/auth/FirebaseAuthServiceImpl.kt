@@ -1,7 +1,6 @@
 package app.vazovsky.healsted.data.firebase.auth
 
 import app.vazovsky.healsted.data.model.Account
-import app.vazovsky.healsted.data.model.AccountLevel
 import app.vazovsky.healsted.data.model.User
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseAuth
@@ -18,7 +17,7 @@ class FirebaseAuthServiceImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
 ) : FirebaseAuthService {
     override fun signUpUser(
-        email: String, password: String, nickname: String
+        email: String, password: String
     ) = firebaseAuth.createUserWithEmailAndPassword(email, password)
 
 
@@ -32,9 +31,10 @@ class FirebaseAuthServiceImpl @Inject constructor(
 
 
     override fun saveUser(
+        uid: String,
         email: String,
         phoneNumber: String,
-    ) = firestore.collection(USERS_COLLECTION).document(email).set(
+    ) = firestore.collection(USERS_COLLECTION).document(uid).set(
         User(
             email = email,
             phoneNumber = phoneNumber,
@@ -42,6 +42,7 @@ class FirebaseAuthServiceImpl @Inject constructor(
     )
 
     override fun saveAccount(
+        uid: String,
         accountHolder: User,
         nickname: String,
         name: String,
@@ -49,7 +50,7 @@ class FirebaseAuthServiceImpl @Inject constructor(
         patronymic: String,
         birthday: LocalDate?,
         avatar: String?,
-    ) = firestore.collection(ACCOUNTS_COLLECTION).document(accountHolder.email).set(
+    ) = firestore.collection(ACCOUNTS_COLLECTION).document(uid).set(
         Account(
             accountHolder = accountHolder,
             nickname = nickname,
@@ -62,8 +63,8 @@ class FirebaseAuthServiceImpl @Inject constructor(
     )
 
     override fun fetchAccount(
-        email: String
-    ) = firestore.collection(ACCOUNTS_COLLECTION).document(email).get()
+        uid: String
+    ) = firestore.collection(ACCOUNTS_COLLECTION).document(uid).get()
 
     override fun fetchUsers() = firestore.collection(USERS_COLLECTION).get()
 
