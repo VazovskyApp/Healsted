@@ -12,8 +12,6 @@ import app.vazovsky.healsted.data.repository.HealthRepository
 import app.vazovsky.healsted.data.repository.HealthRepositoryImpl
 import app.vazovsky.healsted.data.repository.PillsRepository
 import app.vazovsky.healsted.data.repository.PillsRepositoryImpl
-import app.vazovsky.healsted.data.repository.ProfileRepository
-import app.vazovsky.healsted.data.repository.ProfileRepositoryImpl
 import app.vazovsky.healsted.data.repository.SettingsRepository
 import app.vazovsky.healsted.data.repository.SettingsRepositoryImpl
 import dagger.Binds
@@ -30,11 +28,6 @@ abstract class RepositoryModule {
     abstract fun bindAuthRepository(
         authRepository: AuthRepositoryImpl
     ): AuthRepository
-
-    @Binds
-    abstract fun bindProfileRepository(
-        profileRepository: ProfileRepositoryImpl
-    ): ProfileRepository
 
     @Binds
     abstract fun bindPillsRepository(

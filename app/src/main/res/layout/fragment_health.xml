@@ -24,11 +24,17 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <app.vazovsky.healsted.presentation.view.EmptyRecyclerView
-            android:id="@+id/recyclerViewHealthMonitoring"
+        <app.vazovsky.healsted.presentation.view.StateViewFlipper
+            android:id="@+id/stateViewFlipper"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/item_monitoring" />
+            android:layout_height="match_parent">
 
+            <app.vazovsky.healsted.presentation.view.EmptyRecyclerView
+                android:id="@+id/recyclerViewHealthMonitoring"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/item_monitoring" />
+
+        </app.vazovsky.healsted.presentation.view.StateViewFlipper>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

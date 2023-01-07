@@ -31,6 +31,8 @@ class HealthFragment : BaseFragment(R.layout.fragment_health) {
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitTopInsetsWithPadding()
+        binding.stateViewFlipper.setRetryMethod { viewModel.getHealth() }
+
         setupRecyclerView()
     }
 
@@ -51,6 +53,7 @@ class HealthFragment : BaseFragment(R.layout.fragment_health) {
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
         healthLiveData.observe { result ->
+            binding.stateViewFlipper.setStateFromResult(result)
             result.doOnSuccess { healthMonitoring ->
                 bindHealthMonitoring(healthMonitoring)
             }

@@ -15,6 +15,7 @@ import app.vazovsky.healsted.presentation.view.timeline.OnDateSelectedListener
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
+import java.time.LocalTime
 import java.util.*
 import javax.inject.Inject
 
@@ -37,6 +38,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
         todayPillsLiveData.observe { result ->
+            binding.stateViewFlipper.setStateFromResult(result)
             result.doOnSuccess { pills ->
                 todayPillsAdapter.submitList(pills)
             }
@@ -49,9 +51,23 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitTopInsetsWithPadding()
+        binding.stateViewFlipper.setRetryMethod { viewModel.getTodayPills() }
 
+        setupToolbar()
         setupTimeline()
         setupRecyclerView()
+    }
+
+    private fun setupToolbar() = with(binding.toolbar) {
+        val currentHour = LocalTime.now().hour
+        title = resources.getString(
+            when (currentHour) {
+                in 6..11 -> R.string.welcome_string_morning
+                in 12..16 -> R.string.welcome_string_afternoon
+                in 17..21 -> R.string.welcome_string_evening
+                else -> R.string.welcome_string_night
+            }
+        )
     }
 
     private fun setupTimeline() = with(binding) {

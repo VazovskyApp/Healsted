@@ -26,15 +26,16 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     override fun callOperations() {
         viewModel.getProfile()
-        viewModel.getLoyalty()
     }
 
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
         profileLiveData.observe { result ->
+            binding.stateViewFlipper.setStateFromResult(result)
             result.doOnSuccess { task ->
                 task.addOnSuccessListener {
                     bindProfile(it)
+                    viewModel.getLoyalty()
                 }
                 task.addOnFailureListener {
                     Timber.d(it.localizedMessage)
@@ -45,6 +46,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             }
         }
         loyaltyLiveData.observe { result ->
+            binding.stateViewFlipper.setStateFromResult(result)
             result.doOnSuccess { task ->
                 task.addOnSuccessListener {
                     bindLoyalty(it)
@@ -61,6 +63,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitTopInsetsWithPadding()
+        stateViewFlipper.setRetryMethod { viewModel.getProfile() }
 
         textViewLevel.setOnClickListener {
             //TODO сделать открытие BottomSheet с инфой об уровнях

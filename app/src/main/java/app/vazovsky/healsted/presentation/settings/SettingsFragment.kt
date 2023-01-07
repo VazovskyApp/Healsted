@@ -31,6 +31,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
         settingsLiveData.observe { result ->
+            binding.stateViewFlipper.setStateFromResult(result)
             result.doOnSuccess { settings ->
                 bindSettings(settings)
             }
@@ -43,6 +44,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitTopInsetsWithPadding()
+        stateViewFlipper.setRetryMethod { viewModel.getSettings() }
 
         setupRecyclerView()
     }

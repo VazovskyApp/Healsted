@@ -1,122 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<app.vazovsky.healsted.presentation.view.StateViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinator"
+    android:id="@+id/stateViewFlipper"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbarLayout"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imageViewAvatarContainer"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginTop="80dp"
-                android:background="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/CircleShape" />
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imageViewAvatar"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
-                android:background="@color/blackAlienWare"
-                app:layout_constraintBottom_toBottomOf="@id/imageViewAvatarContainer"
-                app:layout_constraintEnd_toEndOf="@id/imageViewAvatarContainer"
-                app:layout_constraintStart_toStartOf="@id/imageViewAvatarContainer"
-                app:layout_constraintTop_toTopOf="@id/imageViewAvatarContainer"
-                app:shapeAppearanceOverlay="@style/CircleShape" />
-
-            <TextView
-                android:id="@+id/textViewNickname"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_16"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:textAppearance="@style/Font.Heading_1.Black"
-                app:layout_constraintTop_toBottomOf="@id/imageViewAvatarContainer"
-                tools:text="Vazovsky" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/textViewLevel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_16"
-                android:layout_marginTop="4dp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:drawablePadding="@dimen/padding_8"
-                android:focusable="true"
-                android:gravity="center"
-                android:padding="10dp"
-                android:textAppearance="@style/Font.Body_1.Bold"
-                app:drawableEndCompat="@drawable/ic_info"
-                app:drawableTint="?colorOnPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewNickname"
-                tools:text="Бактерия" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imageViewAvatarContainer"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="80dp"
+                    android:background="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/CircleShape" />
 
-            <TextView
-                android:id="@+id/textViewAccountProgress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:textAppearance="@style/Font.Body_1.Bold"
-                app:layout_constraintTop_toBottomOf="@id/textViewLevel"
-                tools:text="50 / 100 xp" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imageViewAvatar"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:background="@color/blackAlienWare"
+                    app:layout_constraintBottom_toBottomOf="@id/imageViewAvatarContainer"
+                    app:layout_constraintEnd_toEndOf="@id/imageViewAvatarContainer"
+                    app:layout_constraintStart_toStartOf="@id/imageViewAvatarContainer"
+                    app:layout_constraintTop_toTopOf="@id/imageViewAvatarContainer"
+                    app:shapeAppearanceOverlay="@style/CircleShape" />
 
-            <!-- TODO Сделать адекватный прогресс бар -->
-            <ProgressBar
-                android:id="@+id/progressIndicatorAccountProgress"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="200dp"
-                android:layout_height="10dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="24dp"
-                android:max="100"
-                android:min="0"
-                android:progress="50"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/textViewAccountProgress"
-                app:layout_constraintStart_toStartOf="@id/textViewAccountProgress"
-                app:layout_constraintTop_toBottomOf="@id/textViewAccountProgress"
-                tools:ignore="UnusedAttribute" />
+                <TextView
+                    android:id="@+id/textViewNickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:textAppearance="@style/Font.Heading_1.Black"
+                    app:layout_constraintTop_toBottomOf="@id/imageViewAvatarContainer"
+                    tools:text="Vazovsky" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+                <TextView
+                    android:id="@+id/textViewLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="4dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:drawablePadding="@dimen/padding_8"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:textAppearance="@style/Font.Body_1.Bold"
+                    app:drawableEndCompat="@drawable/ic_info"
+                    app:drawableTint="?colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewNickname"
+                    tools:text="Бактерия" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_round_sheet"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                <TextView
+                    android:id="@+id/textViewAccountProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:textAppearance="@style/Font.Body_1.Bold"
+                    app:layout_constraintTop_toBottomOf="@id/textViewLevel"
+                    tools:text="50 / 100 xp" />
 
-        <!-- TODO Подумать над заполнением профиля -->
+                <!-- TODO Сделать адекватный прогресс бар -->
+                <ProgressBar
+                    android:id="@+id/progressIndicatorAccountProgress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="200dp"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="24dp"
+                    android:max="100"
+                    android:min="0"
+                    android:progress="50"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/textViewAccountProgress"
+                    app:layout_constraintStart_toStartOf="@id/textViewAccountProgress"
+                    app:layout_constraintTop_toBottomOf="@id/textViewAccountProgress"
+                    tools:ignore="UnusedAttribute" />
 
-        <TextView
-            android:id="@+id/textViewTitle"
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="@dimen/margin_16"
-            android:gravity="center"
-            android:text="Что-то о профиле"
-            android:textAppearance="@style/Font.Heading_1.Black"
-            android:textColor="@color/blackAlienWare"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_round_sheet"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <!-- TODO Подумать над заполнением профиля -->
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="@dimen/margin_16"
+                android:gravity="center"
+                android:text="Что-то о профиле"
+                android:textAppearance="@style/Font.Heading_1.Black"
+                android:textColor="@color/blackAlienWare"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</app.vazovsky.healsted.presentation.view.StateViewFlipper>
