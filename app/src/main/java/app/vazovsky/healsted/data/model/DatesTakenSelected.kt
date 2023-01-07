@@ -10,3 +10,5 @@ enum class DatesTakenSelected {
     SATURDAY,
     SUNDAY,
 }
+
+fun String.convertDatesTakenSelectedFromString() = DatesTakenSelected.valueOf(this)

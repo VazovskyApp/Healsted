@@ -6,11 +6,14 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.data.model.Account
+import app.vazovsky.healsted.data.model.LoyaltyProgress
 import app.vazovsky.healsted.databinding.FragmentProfileBinding
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 /** Экран с информацией об аккаунте */
 @AndroidEntryPoint
@@ -23,13 +26,35 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     override fun callOperations() {
         viewModel.getProfile()
+        viewModel.getLoyalty()
     }
 
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
         profileLiveData.observe { result ->
-            result.doOnSuccess { profile ->
-                bindProfile(profile)
+            result.doOnSuccess { task ->
+                task.addOnSuccessListener {
+                    bindProfile(it)
+                }
+                task.addOnFailureListener {
+                    Timber.d(it.localizedMessage)
+                }
+            }
+            result.doOnFailure {
+                Timber.d(it.message)
+            }
+        }
+        loyaltyLiveData.observe { result ->
+            result.doOnSuccess { task ->
+                task.addOnSuccessListener {
+                    bindLoyalty(it)
+                }
+                task.addOnFailureListener {
+                    Timber.d(it.localizedMessage)
+                }
+            }
+            result.doOnFailure {
+                Timber.d(it.message)
             }
         }
     }
@@ -46,13 +71,27 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         constraintLayout.updatePadding(bottom = bottomNavigationViewHeight)
     }
 
-    private fun bindProfile(profile: Account) = with(binding) {
-        textViewNickname.text = profile.nickname
-//        textViewLevel.text = profile.level.toString()
-//        /** TODO сделать пункт value. Нужна будет таблица в FireStore со всеми пунктами */
-//        textViewAccountProgress.text = "0 / ${profile.level.xpCount}"
-//        //TODO сделать норм прогресс
-//        progressIndicatorAccountProgress.progress = 0
-//        progressIndicatorAccountProgress.max = profile.level.xpCount
+    private fun bindProfile(it: DocumentSnapshot?) = with(binding) {
+        val profile = it?.toObject(Account::class.java)
+        profile?.let { account ->
+            textViewNickname.text = account.nickname
+        }
+    }
+
+    private fun bindLoyalty(it: DocumentSnapshot?) = with(binding) {
+        // TODO сделать так, чтоб все превращалось в объекты уже в use case
+        val loyalty = it?.toObject(LoyaltyProgress::class.java)
+        loyalty?.let { loyaltyProgress ->
+            textViewLevel.text = loyaltyProgress.level.toString()
+
+            textViewAccountProgress.text = buildString {
+                append(loyaltyProgress.currentValue)
+                append(" / ")
+                append(loyaltyProgress.level.xpCount)
+            }
+
+            progressIndicatorAccountProgress.progress = loyaltyProgress.currentValue
+            progressIndicatorAccountProgress.max = loyaltyProgress.level.xpCount
+        }
     }
 }

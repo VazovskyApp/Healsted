@@ -16,6 +16,9 @@ class FirebaseAuthServiceImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
 ) : FirebaseAuthService {
+    override fun getCurrentUserUid() = firebaseAuth.currentUser?.uid
+
+
     override fun signUpUser(
         email: String, password: String
     ) = firebaseAuth.createUserWithEmailAndPassword(email, password)

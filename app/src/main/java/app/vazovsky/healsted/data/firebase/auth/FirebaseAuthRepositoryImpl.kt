@@ -10,6 +10,7 @@ import javax.inject.Inject
 class FirebaseAuthRepositoryImpl @Inject constructor(
     private val firebaseAuthService: FirebaseAuthService
 ) : FirebaseAuthRepository {
+    override fun getCurrentUserUid() = firebaseAuthService.getCurrentUserUid()
 
     override fun signUpUser(
         email: String,

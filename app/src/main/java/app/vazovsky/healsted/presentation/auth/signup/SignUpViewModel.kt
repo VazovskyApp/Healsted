@@ -5,8 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import app.vazovsky.healsted.data.model.User
 import app.vazovsky.healsted.data.model.base.LoadableResult
 import app.vazovsky.healsted.domain.auth.SaveAccountUseCase
+import app.vazovsky.healsted.domain.auth.SaveLoyaltyUseCase
+import app.vazovsky.healsted.domain.auth.SavePillsUseCase
 import app.vazovsky.healsted.domain.auth.SaveUserUseCase
 import app.vazovsky.healsted.domain.auth.SignUpUseCase
+import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -20,6 +23,8 @@ class SignUpViewModel @Inject constructor(
     private val signUpUseCase: SignUpUseCase,
     private val saveAccountUseCase: SaveAccountUseCase,
     private val saveUserUseCase: SaveUserUseCase,
+    private val saveLoyaltyUseCase: SaveLoyaltyUseCase,
+    private val savePillsUseCase: SavePillsUseCase,
 ) : BaseViewModel() {
 
     /** Получение результата регистрации */
@@ -33,6 +38,14 @@ class SignUpViewModel @Inject constructor(
     /** Сохранение аккаунта в FireStore */
     private val _saveAccountLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
     val saveAccountLiveData: LiveData<LoadableResult<Task<Void>>> = _saveAccountLiveData
+
+    /** Добавление аккаунта в программу лояльности */
+    private val _saveLoyaltyLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
+    val saveLoyaltyLiveData: LiveData<LoadableResult<Task<Void>>> = _saveLoyaltyLiveData
+
+    /** Добавление пустого списка таблеток для аккаунта */
+    private val _savePillsLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
+    val savePillsLiveData: LiveData<LoadableResult<Task<Void>>> = _savePillsLiveData
 
     /** Зарегистрироваться */
     fun signUp(email: String, password: String) {
@@ -83,6 +96,20 @@ class SignUpViewModel @Inject constructor(
                     avatar = avatar,
                 )
             )
+        )
+    }
+
+    /** Добавить аккаунт в программу лояльности */
+    fun saveLoyalty() {
+        _saveLoyaltyLiveData.launchLoadData(
+            saveLoyaltyUseCase.executeFlow(UseCase.None)
+        )
+    }
+
+    /** Добавить пустой список таблеток */
+    fun savePills() {
+        _savePillsLiveData.launchLoadData(
+            savePillsUseCase.executeFlow(UseCase.None)
         )
     }
 

@@ -1,6 +1,7 @@
 package app.vazovsky.healsted.data.model
 
 import android.os.Parcelable
+import com.google.firebase.firestore.PropertyName
 import java.time.OffsetDateTime
 import java.time.OffsetTime
 import kotlinx.parcelize.Parcelize
@@ -9,32 +10,32 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Pill(
     /** ID лекарства */
-    val id: String,
+    @PropertyName("id") val id: String = "",
 
     /** Название лекарства */
-    val name: String = "",
+    @PropertyName("name") val name: String = "",
 
     /** Тип лекарства */
-    val type: PillType,
+    @PropertyName("type") val type: PillType,
 
     /** Тип принятия лекарства в зависимости от еды */
-    val takePillType: TakePillType? = TakePillType.NEVERMIND,
+    @PropertyName("takePillType") val takePillType: TakePillType? = TakePillType.NEVERMIND,
 
     /** Список времени уведомлений */
-    val times: List<OffsetTime>? = null,
+    @PropertyName("times") val times: List<OffsetTime>? = null,
 
     /** Регулярность приема лекарств */
-    val datesTaken: DatesTakenType = DatesTakenType.EVERYDAY,
+    @PropertyName("datesTaken") val datesTaken: DatesTakenType = DatesTakenType.EVERYDAY,
 
     /** Выбранные дни недели для уведомлений */
-    val datesTakenSelected: List<DatesTakenSelected> = listOf(),
+    @PropertyName("datesTakenSelected") val datesTakenSelected: List<DatesTakenSelected> = listOf(),
 
     /** Начальная дата принятия лекарств */
-    val startDate: OffsetDateTime,
+    @PropertyName("startDate") val startDate: OffsetDateTime,
 
     /** Конечная дата принятия лекарств, если есть */
-    val endDate: OffsetDateTime? = null,
+    @PropertyName("endDate") val endDate: OffsetDateTime? = null,
 
     /** Дозировка лекарства */
-    val amount: Float = 1F,
+    @PropertyName("amount") val amount: Float = 1F,
 ) : Parcelable

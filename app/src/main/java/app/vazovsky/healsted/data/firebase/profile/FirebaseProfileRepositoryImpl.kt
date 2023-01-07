@@ -8,16 +8,16 @@ class FirebaseProfileRepositoryImpl @Inject constructor(
     private val firebaseProfileService: FirebaseProfileService,
 ) : FirebaseProfileRepository {
     override fun addProfileLoyalty(
-        email: String,
-        loyaltyProgress: LoyaltyProgress
-    ) = firebaseProfileService.addProfileLoyalty(email, loyaltyProgress)
+        uid: String,
+        loyaltyProgress: LoyaltyProgress,
+    ) = firebaseProfileService.addProfileLoyalty(uid, loyaltyProgress)
 
     override fun addProfilePills(
-        email: String,
-        listPills: List<Pill>
-    ) = firebaseProfileService.addProfilePills(email, listPills)
+        uid: String,
+        listPills: Map<String, Pill>,
+    ) = firebaseProfileService.addProfilePills(uid, listPills)
 
-    override fun fetchProfileLoyalty(email: String) = firebaseProfileService.fetchProfileLoyalty(email)
+    override fun fetchProfileLoyalty(uid: String) = firebaseProfileService.fetchProfileLoyalty(uid)
 
-    override fun fetchProfilePills(email: String) = firebaseProfileService.fetchProfilePills(email)
+    override fun fetchProfilePills(uid: String) = firebaseProfileService.fetchProfilePills(uid)
 }

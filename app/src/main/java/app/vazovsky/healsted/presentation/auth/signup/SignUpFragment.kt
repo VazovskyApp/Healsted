@@ -54,6 +54,22 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                 Timber.d(it.message)
             }
         }
+        saveLoyaltyLiveData.observe { result ->
+            result.doOnSuccess { task ->
+                setSaveLoyaltyTask(task)
+            }
+            result.doOnFailure {
+                Timber.d(it.message)
+            }
+        }
+        savePillsLiveData.observe { result ->
+            result.doOnSuccess { task ->
+                setSavePillsTask(task)
+            }
+            result.doOnFailure {
+                Timber.d(it.message)
+            }
+        }
     }
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
@@ -96,6 +112,28 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     }
 
     private fun setSaveAccountTask(task: Task<Void>) {
+        task.apply {
+            addOnSuccessListener {
+                viewModel.saveLoyalty()
+            }
+            addOnFailureListener { exception ->
+                Timber.d(exception.localizedMessage)
+            }
+        }
+    }
+
+    private fun setSaveLoyaltyTask(task: Task<Void>) {
+        task.apply {
+            addOnSuccessListener {
+                viewModel.savePills()
+            }
+            addOnFailureListener { exception ->
+                Timber.d(exception.localizedMessage)
+            }
+        }
+    }
+
+    private fun setSavePillsTask(task: Task<Void>) {
         task.apply {
             addOnSuccessListener {
                 viewModel.openDashboard()

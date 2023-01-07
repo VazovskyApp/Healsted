@@ -12,20 +12,20 @@ class FirebaseProfileServiceImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
 ) : FirebaseProfileService {
     override fun addProfileLoyalty(
-        email: String,
-        loyaltyProgress: LoyaltyProgress
-    ) = firestore.collection(LOYALTY_COLLECTION).document(email).set(loyaltyProgress)
+        uid: String,
+        loyaltyProgress: LoyaltyProgress,
+    ) = firestore.collection(LOYALTY_COLLECTION).document(uid).set(loyaltyProgress)
 
     override fun addProfilePills(
-        email: String,
-        listPills: List<Pill>
-    ) = firestore.collection(PILLS_COLLECTION).document(email).set(listPills)
+        uid: String,
+        listPills: Map<String, Pill>,
+    ) = firestore.collection(PILLS_COLLECTION).document(uid).set(listPills)
 
     override fun fetchProfileLoyalty(
-        email: String
-    ) = firestore.collection(LOYALTY_COLLECTION).document(email).get()
+        uid: String,
+    ) = firestore.collection(LOYALTY_COLLECTION).document(uid).get()
 
     override fun fetchProfilePills(
-        email: String
-    ) = firestore.collection(PILLS_COLLECTION).document(email).get()
+        uid: String,
+    ) = firestore.collection(PILLS_COLLECTION).document(uid).get()
 }

@@ -31,7 +31,7 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
 
     override fun callOperations() {
         viewModel.getTabs()
-        viewModel.getPills()
+        viewModel.getPillsDocumentSnapshot()
     }
 
     override fun onBindViewModel() = with(viewModel) {
@@ -39,6 +39,13 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
         tabsLiveData.observe { result ->
             result.doOnSuccess { tabs ->
                 pillsTabsAdapter.submitList(tabs)
+            }
+        }
+        pillsDocumentSnapshotLiveData.observe { result ->
+            result.doOnSuccess { pillsResult ->
+                pillsResult.snapshot.addOnSuccessListener { snapshot ->
+                    viewModel.getPills(snapshot, pillsResult.slot)
+                }
             }
         }
         pillsLiveData.observe { result ->

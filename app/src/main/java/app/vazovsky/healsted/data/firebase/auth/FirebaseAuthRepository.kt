@@ -11,6 +11,8 @@ import java.time.LocalDate
 
 interface FirebaseAuthRepository {
 
+    fun getCurrentUserUid(): String?
+
     fun signUpUser(
         email: String,
         password: String,

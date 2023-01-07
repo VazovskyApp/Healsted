@@ -7,9 +7,11 @@ import app.vazovsky.healsted.data.model.PillsTab
 import app.vazovsky.healsted.data.model.PillsTabSlot
 import app.vazovsky.healsted.data.model.base.LoadableResult
 import app.vazovsky.healsted.domain.base.UseCase
+import app.vazovsky.healsted.domain.pills.FormatPillsUseCase
 import app.vazovsky.healsted.domain.pills.GetPillsUseCase
 import app.vazovsky.healsted.domain.pills.GetTabsUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
+import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -18,11 +20,16 @@ class PillsViewModel @Inject constructor(
     private val destinations: PillsDestinations,
     private val getTabsUseCase: GetTabsUseCase,
     private val getPillsUseCase: GetPillsUseCase,
+    private val formatPillsUseCase: FormatPillsUseCase,
 ) : BaseViewModel() {
 
     /** Табы */
     private val _tabsLiveData = MutableLiveData<LoadableResult<List<PillsTab>>>()
     val tabsLiveData: LiveData<LoadableResult<List<PillsTab>>> = _tabsLiveData
+
+    /** Лекарства как DocumentSnapshot */
+    private val _pillsDocumentSnapshotLiveData = MutableLiveData<LoadableResult<GetPillsUseCase.Result>>()
+    val pillsDocumentSnapshotLiveData: LiveData<LoadableResult<GetPillsUseCase.Result>> = _pillsDocumentSnapshotLiveData
 
     /** Все лекарства */
     private val _pillsLiveData = MutableLiveData<LoadableResult<List<Pill>>>()
@@ -36,9 +43,15 @@ class PillsViewModel @Inject constructor(
     }
 
     /** Получение данных о лекарствах */
-    fun getPills(slot: PillsTabSlot? = null) {
-        _pillsLiveData.launchLoadData(
+    fun getPillsDocumentSnapshot(slot: PillsTabSlot? = null) {
+        _pillsDocumentSnapshotLiveData.launchLoadData(
             getPillsUseCase.executeFlow(GetPillsUseCase.Params(slot))
+        )
+    }
+
+    fun getPills(snapshot: DocumentSnapshot, slot: PillsTabSlot? = null) {
+        _pillsLiveData.launchLoadData(
+            formatPillsUseCase.executeFlow(FormatPillsUseCase.Params(snapshot, slot))
         )
     }
 
@@ -56,10 +69,10 @@ class PillsViewModel @Inject constructor(
     fun onTabClick(tab: PillsTab) {
         val tabs = tabsLiveData.value?.getOrNull().orEmpty()
         if (tab.selected) {
-            getPills()
+            getPillsDocumentSnapshot()
             _tabsLiveData.postValue(LoadableResult.success(tabs.map { it.copy(selected = false) }))
         } else {
-            getPills(tab.slot)
+            getPillsDocumentSnapshot(tab.slot)
             _tabsLiveData.postValue(LoadableResult.success(tabs.map { it.copy(selected = it.slot == tab.slot) }))
         }
     }

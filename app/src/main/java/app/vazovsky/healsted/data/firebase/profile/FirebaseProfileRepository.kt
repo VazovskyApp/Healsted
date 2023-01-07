@@ -6,8 +6,8 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 
 interface FirebaseProfileRepository {
-    fun addProfileLoyalty(email: String, loyaltyProgress: LoyaltyProgress): Task<Void>
-    fun addProfilePills(email: String, listPills: List<Pill>): Task<Void>
-    fun fetchProfileLoyalty(email: String): Task<DocumentSnapshot>
-    fun fetchProfilePills(email: String): Task<DocumentSnapshot>
+    fun addProfileLoyalty(uid: String, loyaltyProgress: LoyaltyProgress): Task<Void>
+    fun addProfilePills(uid: String, listPills: Map<String, Pill>): Task<Void>
+    fun fetchProfileLoyalty(uid: String): Task<DocumentSnapshot>
+    fun fetchProfilePills(uid: String): Task<DocumentSnapshot>
 }
