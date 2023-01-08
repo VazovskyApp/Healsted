@@ -38,7 +38,7 @@ class FirebaseProfileServiceImpl @Inject constructor(
         uid: String,
         mood: Mood,
     ) = firestore.collection(MOODS_COLLECTION).document(uid).collection(MOODS_COLLECTION)
-        .document(mood.date.toLocalDate().toString()).set(mood)
+        .document(mood.date.toString()).set(mood)
 
     override fun fetchProfileMoods(
         uid: String,
@@ -48,7 +48,7 @@ class FirebaseProfileServiceImpl @Inject constructor(
         uid: String,
         monitoringAttribute: MonitoringAttribute,
     ) = firestore.collection(HEALTH_COLLECTION).document(uid).collection(monitoringAttribute.type.toString())
-        .document(monitoringAttribute.date.toLocalDate().toString()).set(monitoringAttribute)
+        .document(monitoringAttribute.date.toString()).set(monitoringAttribute)
 
     override fun fetchProfileWeight(uid: String) =
         firestore.collection(HEALTH_COLLECTION).document(uid).collection(MonitoringType.WEIGHT.toString()).get()

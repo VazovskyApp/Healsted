@@ -27,6 +27,8 @@ interface FirebaseAuthService {
         account: GoogleSignInAccount,
     ): Task<AuthResult>
 
+    fun logOut()
+
     fun saveUser(
         uid: String,
         email: String,

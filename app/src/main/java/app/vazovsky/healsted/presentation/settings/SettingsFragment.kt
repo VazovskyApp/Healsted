@@ -7,6 +7,7 @@ import app.vazovsky.healsted.data.model.SettingType
 import app.vazovsky.healsted.data.model.SettingsItem
 import app.vazovsky.healsted.databinding.FragmentSettingsBinding
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
+import app.vazovsky.healsted.extensions.showErrorSnackbar
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import app.vazovsky.healsted.presentation.settings.adapter.SettingsAdapter
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -36,6 +37,14 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                 bindSettings(settings)
             }
         }
+        signOutLiveEvent.observe { result ->
+            result.doOnSuccess {
+                viewModel.openAuth()
+            }
+            result.doOnFailure {
+                showErrorSnackbar(it.message)
+            }
+        }
     }
 
     private fun bindSettings(settings: List<SettingsItem>) {
@@ -59,8 +68,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                 SettingType.SEND_FEEDBACK -> viewModel.openSendFeedback()
                 SettingType.ABOUT_US -> viewModel.openAboutUs()
                 SettingType.LOG_OUT -> {
-                    /** TODO сделать выход из профиля реально / почему-то после этого вкладка settings - это dashboard */
-                    viewModel.openAuth()
+                    viewModel.signOut()
                 }
             }
         }

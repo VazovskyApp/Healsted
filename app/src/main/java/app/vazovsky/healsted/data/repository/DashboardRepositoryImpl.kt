@@ -34,7 +34,7 @@ class DashboardRepositoryImpl @Inject constructor() : DashboardRepository {
     override fun getTodayMood(): Mood {
         return Mood(
             value = MoodType.EMPTY,
-            date = OffsetDateTime.now(),
+            date = Timestamp.now(),
         )
     }
 }

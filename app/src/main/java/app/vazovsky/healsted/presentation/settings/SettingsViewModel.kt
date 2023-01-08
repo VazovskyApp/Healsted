@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import app.vazovsky.healsted.data.model.SettingsItem
 import app.vazovsky.healsted.data.model.base.LoadableResult
+import app.vazovsky.healsted.domain.auth.SignOutUseCase
 import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.settings.GetSettingsUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
+import app.vazovsky.healsted.presentation.base.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -14,11 +16,15 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     private val destinations: SettingsDestinations,
     private val getSettingsUseCase: GetSettingsUseCase,
+    private val signOutUseCase: SignOutUseCase,
 ) : BaseViewModel() {
 
     /** Настройки */
     private val _settingsLiveData = MutableLiveData<LoadableResult<List<SettingsItem>>>()
     val settingsLiveData: LiveData<LoadableResult<List<SettingsItem>>> = _settingsLiveData
+
+    private val _signOutLiveEvent = SingleLiveEvent<LoadableResult<Unit>>()
+    val signOutLiveEvent: LiveData<LoadableResult<Unit>> = _signOutLiveEvent
 
     /** Получение настроек */
     fun getSettings() {
@@ -55,5 +61,11 @@ class SettingsViewModel @Inject constructor(
     /** Открыть отправку фидбека */
     fun openSendFeedback() {
         navigate(destinations.sendFeedback())
+    }
+
+    fun signOut() {
+        _signOutLiveEvent.launchLoadData(
+            signOutUseCase.executeFlow(UseCase.None)
+        )
     }
 }

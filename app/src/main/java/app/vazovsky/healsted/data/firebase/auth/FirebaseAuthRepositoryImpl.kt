@@ -4,6 +4,7 @@ import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.User
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -23,6 +24,7 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
     ) = firebaseAuthService.signInUser(email, password)
 
     override fun signInWithGoogle(account: GoogleSignInAccount) = firebaseAuthService.signInWithGoogle(account)
+    override fun logOut() = firebaseAuthService.logOut()
 
     override fun saveUser(
         uid: String,

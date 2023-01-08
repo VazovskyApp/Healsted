@@ -9,7 +9,7 @@ import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.base.UseCaseUnary
 import app.vazovsky.healsted.extensions.orDefault
 import com.google.android.gms.tasks.Task
-import java.time.OffsetDateTime
+import com.google.firebase.Timestamp
 import javax.inject.Inject
 
 /** Добавление настроений в аккаунт */
@@ -26,7 +26,7 @@ class SaveMoodUseCase @Inject constructor(
             uid = uid,
             mood = Mood(
                 MoodType.EMPTY,
-                OffsetDateTime.now(),
+                Timestamp.now(),
             ),
         )
     }
