@@ -4,6 +4,8 @@ import android.content.Context
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.extensions.capitalizeFirstChar
 import app.vazovsky.healsted.extensions.toMillis
+import app.vazovsky.healsted.extensions.toOffsetDateTime
+import com.google.firebase.Timestamp
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -193,13 +195,16 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
      * Форматирует даты в период
      * Пример: "17 марта 1999 - 6 января 2023"
      */
-    fun formatPeriod(firstDay: OffsetDateTime, lastDay: OffsetDateTime?): String =
-        when {
-            lastDay == null -> formatEndlessPeriod(firstDay)
-            firstDay.month == lastDay.month -> formatDatesOneMonth(firstDay, lastDay)
-            firstDay.year == lastDay.year -> formatDatesOneYears(firstDay, lastDay)
-            else -> formatDatesOther(firstDay, lastDay)
+    fun formatPeriod(firstDay: Timestamp, lastDay: Timestamp?): String {
+        val firstDayOffset = firstDay.toOffsetDateTime()
+        val lastDayOffset = lastDay?.toOffsetDateTime()
+        return when {
+            lastDayOffset == null -> formatEndlessPeriod(firstDayOffset)
+            firstDayOffset.month == lastDayOffset.month -> formatDatesOneMonth(firstDayOffset, lastDayOffset)
+            firstDayOffset.year == lastDayOffset.year -> formatDatesOneYears(firstDayOffset, lastDayOffset)
+            else -> formatDatesOther(firstDayOffset, lastDayOffset)
         }
+    }
 
     private fun formatEndlessPeriod(firstDay: OffsetDateTime): String = buildString {
         append("${firstDay.dayOfMonth} ${firstDay.month.getDisplayName(TextStyle.FULL, defaultLocale)}")

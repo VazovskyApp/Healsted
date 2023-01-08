@@ -1,15 +1,13 @@
 package app.vazovsky.healsted.data.model
 
-import java.time.OffsetDateTime
+import com.google.firebase.Timestamp
+
 
 /** Данные о настроении на день */
 data class Mood(
-    /** ID настроения */
-    val id: String,
-
     /** Значение настроения */
     val value: MoodType = MoodType.EMPTY,
 
     /** Дата отметки настроения */
-    val date: OffsetDateTime,
+    val date: Timestamp,
 )

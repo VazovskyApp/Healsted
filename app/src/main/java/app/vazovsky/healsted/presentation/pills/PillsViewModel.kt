@@ -12,6 +12,7 @@ import app.vazovsky.healsted.domain.pills.GetPillsUseCase
 import app.vazovsky.healsted.domain.pills.GetTabsUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -49,7 +50,7 @@ class PillsViewModel @Inject constructor(
         )
     }
 
-    fun getPills(snapshot: DocumentSnapshot, slot: PillsTabSlot? = null) {
+    fun getPills(snapshot: QuerySnapshot, slot: PillsTabSlot? = null) {
         _pillsLiveData.launchLoadData(
             formatPillsUseCase.executeFlow(FormatPillsUseCase.Params(snapshot, slot))
         )

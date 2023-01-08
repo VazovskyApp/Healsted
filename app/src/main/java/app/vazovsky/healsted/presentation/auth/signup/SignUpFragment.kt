@@ -70,6 +70,14 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                 Timber.d(it.message)
             }
         }
+        saveMoodsLiveData.observe { result ->
+            result.doOnSuccess { task ->
+                setSaveMoodsTask(task)
+            }
+            result.doOnFailure {
+                Timber.d(it.message)
+            }
+        }
     }
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
@@ -134,6 +142,17 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     }
 
     private fun setSavePillsTask(task: Task<Void>) {
+        task.apply {
+            addOnSuccessListener {
+                viewModel.saveMoods()
+            }
+            addOnFailureListener { exception ->
+                Timber.d(exception.localizedMessage)
+            }
+        }
+    }
+
+    private fun setSaveMoodsTask(task: Task<Void>) {
         task.apply {
             addOnSuccessListener {
                 viewModel.openDashboard()

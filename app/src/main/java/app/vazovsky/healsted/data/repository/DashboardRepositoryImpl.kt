@@ -1,11 +1,10 @@
 package app.vazovsky.healsted.data.repository
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import app.vazovsky.healsted.data.model.Mood
 import app.vazovsky.healsted.data.model.MoodType
 import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.data.model.PillType
+import com.google.firebase.Timestamp
 import java.time.OffsetDateTime
 import javax.inject.Inject
 
@@ -19,7 +18,7 @@ class DashboardRepositoryImpl @Inject constructor() : DashboardRepository {
                 type = PillType.CAPSULE,
                 times = null,
                 amount = 1F,
-                startDate = OffsetDateTime.now(),
+                startDate = Timestamp.now(),
             ),
             Pill(
                 id = "0",
@@ -27,14 +26,13 @@ class DashboardRepositoryImpl @Inject constructor() : DashboardRepository {
                 type = PillType.CAPSULE,
                 times = null,
                 amount = 1F,
-                startDate = OffsetDateTime.now(),
+                startDate = Timestamp.now(),
             ),
         )
     }
 
     override fun getTodayMood(): Mood {
         return Mood(
-            id = "0",
             value = MoodType.EMPTY,
             date = OffsetDateTime.now(),
         )

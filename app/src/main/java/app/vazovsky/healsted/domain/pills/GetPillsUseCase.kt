@@ -8,6 +8,7 @@ import app.vazovsky.healsted.domain.base.UseCaseUnary
 import app.vazovsky.healsted.extensions.orDefault
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 import javax.inject.Inject
 
 /** Получение данных о лекарствах */
@@ -31,7 +32,7 @@ class GetPillsUseCase @Inject constructor(
     )
 
     data class Result(
-        val snapshot: Task<DocumentSnapshot>,
+        val snapshot: Task<QuerySnapshot>,
         val slot: PillsTabSlot?,
     )
 }

@@ -1,6 +1,5 @@
 package app.vazovsky.healsted.extensions
 
-import app.vazovsky.healsted.data.model.Phone
 import java.util.*
 
 fun String.capitalizeFirstChar(locale: Locale): String {

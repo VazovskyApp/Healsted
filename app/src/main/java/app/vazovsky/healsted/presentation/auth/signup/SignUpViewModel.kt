@@ -6,7 +6,8 @@ import app.vazovsky.healsted.data.model.User
 import app.vazovsky.healsted.data.model.base.LoadableResult
 import app.vazovsky.healsted.domain.auth.SaveAccountUseCase
 import app.vazovsky.healsted.domain.auth.SaveLoyaltyUseCase
-import app.vazovsky.healsted.domain.auth.SavePillsUseCase
+import app.vazovsky.healsted.domain.auth.SaveMoodUseCase
+import app.vazovsky.healsted.domain.auth.SavePillUseCase
 import app.vazovsky.healsted.domain.auth.SaveUserUseCase
 import app.vazovsky.healsted.domain.auth.SignUpUseCase
 import app.vazovsky.healsted.domain.base.UseCase
@@ -24,7 +25,8 @@ class SignUpViewModel @Inject constructor(
     private val saveAccountUseCase: SaveAccountUseCase,
     private val saveUserUseCase: SaveUserUseCase,
     private val saveLoyaltyUseCase: SaveLoyaltyUseCase,
-    private val savePillsUseCase: SavePillsUseCase,
+    private val savePillUseCase: SavePillUseCase,
+    private val saveMoodUseCase: SaveMoodUseCase,
 ) : BaseViewModel() {
 
     /** Получение результата регистрации */
@@ -46,6 +48,10 @@ class SignUpViewModel @Inject constructor(
     /** Добавление пустого списка таблеток для аккаунта */
     private val _savePillsLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
     val savePillsLiveData: LiveData<LoadableResult<Task<Void>>> = _savePillsLiveData
+
+    /** Добавление настроений для аккаунта */
+    private val _saveMoodsLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
+    val saveMoodsLiveData: LiveData<LoadableResult<Task<Void>>> = _saveMoodsLiveData
 
     /** Зарегистрироваться */
     fun signUp(email: String, password: String) {
@@ -109,7 +115,14 @@ class SignUpViewModel @Inject constructor(
     /** Добавить пустой список таблеток */
     fun savePills() {
         _savePillsLiveData.launchLoadData(
-            savePillsUseCase.executeFlow(UseCase.None)
+            savePillUseCase.executeFlow(UseCase.None)
+        )
+    }
+
+    /** Добавить пустой список настроений */
+    fun saveMoods() {
+        _saveMoodsLiveData.launchLoadData(
+            saveMoodUseCase.executeFlow(UseCase.None)
         )
     }
 
