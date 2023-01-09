@@ -94,8 +94,9 @@
                             android:text="@string/pill_editor_attributes"
                             android:textAppearance="@style/Font.Heading_3.Medium" />
 
-                        <com.google.android.material.textfield.TextInputLayout
+                        <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
                             android:id="@+id/textInputDosage"
+                            style="@style/TextInputLayoutTheme"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/margin_16"
@@ -108,7 +109,7 @@
                                 android:hint="@string/pill_editor_dosage_hint"
                                 android:imeOptions="actionNext"
                                 android:inputType="numberDecimal" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                        </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
 
                         <LinearLayout
                             android:id="@+id/linearLayoutSpinners"
@@ -158,9 +159,11 @@
                             android:text="@string/pill_editor_time_notification"
                             android:textAppearance="@style/Font.Heading_3.Medium" />
 
-                        <com.google.android.material.textfield.TextInputLayout
+                        <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
                             android:id="@+id/textInputTime"
+                            style="@style/TextInputLayoutTheme"
                             android:layout_width="match_parent"
+                            app:validationPattern=""
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/margin_16"
                             android:layout_marginTop="8dp">
@@ -172,15 +175,7 @@
                                 android:hint="@string/pill_editor_time_hint"
                                 android:imeOptions="actionNext"
                                 android:inputType="time" />
-                        </com.google.android.material.textfield.TextInputLayout>
-                        <!--                        <TimePicker-->
-                        <!--                            android:id="@+id/timePickerTimeNotification"-->
-                        <!--                            android:layout_width="wrap_content"-->
-                        <!--                            android:layout_height="wrap_content"-->
-                        <!--                            android:layout_gravity="center_horizontal"-->
-                        <!--                            android:layout_marginHorizontal="@dimen/margin_16"-->
-                        <!--                            android:layout_marginTop="8dp"-->
-                        <!--                            android:timePickerMode="spinner" />-->
+                        </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/buttonAddTime"
@@ -218,8 +213,9 @@
                             android:text="@string/pill_editor_start_date"
                             android:textAppearance="@style/Font.Heading_3.Medium" />
 
-                        <com.google.android.material.textfield.TextInputLayout
+                        <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
                             android:id="@+id/textInputStartDate"
+                            style="@style/TextInputLayoutTheme"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/margin_16"
@@ -232,16 +228,7 @@
                                 android:hint="@string/pill_editor_start_date_hint"
                                 android:imeOptions="actionNext"
                                 android:inputType="date" />
-                        </com.google.android.material.textfield.TextInputLayout>
-                        <!--                        <DatePicker-->
-                        <!--                            android:id="@+id/datePickerStartDateNotification"-->
-                        <!--                            android:layout_width="wrap_content"-->
-                        <!--                            android:layout_height="wrap_content"-->
-                        <!--                            android:layout_gravity="center_horizontal"-->
-                        <!--                            android:layout_marginHorizontal="@dimen/margin_16"-->
-                        <!--                            android:layout_marginTop="8dp"-->
-                        <!--                            android:calendarViewShown="false"-->
-                        <!--                            android:datePickerMode="spinner" />-->
+                        </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
 
                         <com.google.android.material.switchmaterial.SwitchMaterial
                             android:id="@+id/switchEndDateEnabled"
@@ -279,8 +266,9 @@
                             android:text="@string/pill_editor_end_date"
                             android:textAppearance="@style/Font.Heading_3.Medium" />
 
-                        <com.google.android.material.textfield.TextInputLayout
+                        <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
                             android:id="@+id/textInputEndDate"
+                            style="@style/TextInputLayoutTheme"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/margin_16"
@@ -294,7 +282,7 @@
                                 android:hint="@string/pill_editor_end_date_hint"
                                 android:imeOptions="actionNext"
                                 android:inputType="date" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                        </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
                         <!--                        <DatePicker-->
                         <!--                            android:id="@+id/datePickerEndDateNotification"-->
                         <!--                            android:layout_width="wrap_content"-->

@@ -11,6 +11,7 @@
         <item name="switchStyle">@style/SwitchStyle</item>
         <item name="buttonStyle">@style/ButtonStyle</item>
         <item name="materialButtonStyle">@style/ButtonStyle</item>
+        <item name="textInputStyle">@style/TextInputLayoutTheme</item>
 
         <item name="colorOnError">@color/white</item>
         <item name="colorError">@color/folly</item>

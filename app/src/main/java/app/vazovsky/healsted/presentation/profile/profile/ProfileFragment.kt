@@ -71,7 +71,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     }
 
     override fun applyBottomNavigationViewPadding(view: View, bottomNavigationViewHeight: Int) = with(binding) {
-        constraintLayout.updatePadding(bottom = bottomNavigationViewHeight)
+        linearLayout.updatePadding(bottom = bottomNavigationViewHeight)
     }
 
     private fun bindProfile(account: Account) = with(binding) {

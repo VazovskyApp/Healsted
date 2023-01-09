@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="TextInputLayoutTheme" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="android:minHeight">48dp</item>
 
         <!-- Container attributes -->
         <item name="boxBackgroundColor">?colorOnPrimary</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/text_input_rounded_corner</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/text_input_rounded_corner</item>
         <item name="boxCornerRadiusTopEnd">@dimen/text_input_rounded_corner</item>
         <item name="boxCornerRadiusTopStart">@dimen/text_input_rounded_corner</item>
         <!-- Hint -->

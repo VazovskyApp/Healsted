@@ -4,7 +4,7 @@
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!-- TODO сделать аналогично логину -->
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarLayout"
         android:layout_width="match_parent"
@@ -17,112 +17,125 @@
             app:navigationIcon="@drawable/ic_back" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_shape_gradient"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/linearLayoutParametres"
+        <TextView
+            android:id="@+id/textViewTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_round_sheet"
-            app:layout_constraintBottom_toBottomOf="parent">
+            android:layout_marginHorizontal="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_20"
+            android:text="@string/sign_up_title"
+            android:textAlignment="center"
+            android:textAppearance="@style/Font.Heading_1"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textViewTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_20"
-                android:layout_marginTop="@dimen/margin_20"
-                android:text="@string/sign_up_title"
-                android:textAlignment="center"
-                android:textAppearance="@style/Font.Heading_1"
-                android:textColor="?colorOnBackground"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/textViewEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/auth_email"
+            android:textAppearance="@style/Font.Body_1.Medium"
+            app:layout_constraintTop_toBottomOf="@id/textViewTitle" />
 
-            <TextView
-                android:id="@+id/textViewEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/auth_email"
-                android:textAppearance="@style/Font.Body_1.Medium"
-                android:textColor="?colorOnBackground"
-                app:layout_constraintTop_toBottomOf="@id/textViewTitle" />
+        <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
+            android:id="@+id/textInputLayoutEmail"
+            style="@style/TextInputLayoutTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEmpty="@string/email_validation_error"
+            app:validationPattern="@string/email_validation_pattern">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_20"
                 android:layout_marginTop="4dp"
                 android:hint="@string/auth_email_hint"
-                android:textAppearance="@style/Font.Body_1"
-                app:layout_constraintTop_toBottomOf="@id/textViewEmail" />
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:textAppearance="@style/Font.Body_1" />
+        </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
 
-            <TextView
-                android:id="@+id/textViewNickname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_20"
-                android:layout_marginTop="8dp"
-                android:text="@string/auth_nickname"
-                android:textAppearance="@style/Font.Body_1.Medium"
-                android:textColor="?colorOnBackground"
-                app:layout_constraintTop_toBottomOf="@id/editTextEmail" />
+        <TextView
+            android:id="@+id/textViewNickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_20"
+            android:layout_marginTop="8dp"
+            android:text="@string/auth_nickname"
+            android:textAppearance="@style/Font.Body_1.Medium"
+            app:layout_constraintTop_toBottomOf="@id/editTextEmail" />
 
-            <EditText
+        <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
+            android:id="@+id/textInputLayoutNickname"
+            style="@style/TextInputLayoutTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextNickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_20"
                 android:layout_marginTop="4dp"
                 android:hint="@string/auth_nickname_hint"
+                android:imeOptions="actionNext"
                 android:inputType="text"
                 android:textAppearance="@style/Font.Body_1"
-                app:layout_constraintTop_toBottomOf="@id/textViewNickname" />
+                app:layout_constraintTop_toBottomOf="@id/textViewPassword" />
+        </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
 
-            <TextView
-                android:id="@+id/textViewPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_20"
-                android:layout_marginTop="8dp"
-                android:text="@string/auth_password"
-                android:textAppearance="@style/Font.Body_1.Medium"
-                android:textColor="?colorOnBackground"
-                app:layout_constraintTop_toBottomOf="@id/editTextNickname" />
+        <TextView
+            android:id="@+id/textViewPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_20"
+            android:layout_marginTop="8dp"
+            android:text="@string/auth_password"
+            android:textAppearance="@style/Font.Body_1.Medium"
+            app:layout_constraintTop_toBottomOf="@id/editTextNickname" />
 
-            <EditText
+        <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
+            android:id="@+id/textInputLayoutPassword"
+            style="@style/TextInputLayoutTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_20"
                 android:layout_marginTop="4dp"
-                android:hint="@string/auth_password_hint"
+                android:hint="@string/auth_password"
+                android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:textAppearance="@style/Font.Body_1"
                 app:layout_constraintTop_toBottomOf="@id/textViewPassword" />
-            <!-- TODO сделать стили кнопок-->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonConfirm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_20"
-                android:layout_marginVertical="48dp"
-                android:backgroundTint="@color/pillsCardBlue"
-                android:padding="8dp"
-                android:text="@string/sign_up_confirm"
-                android:textAllCaps="true"
-                android:textAppearance="@style/Font.Body_1.Medium"
-                app:cornerRadius="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/editTextPassword" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_20"
+            android:layout_marginVertical="48dp"
+            android:backgroundTint="@color/pillsCardBlue"
+            android:padding="8dp"
+            android:text="@string/sign_up_confirm"
+            android:textAllCaps="true"
+            android:textAppearance="@style/Font.Body_1.Medium"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextPassword" />
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

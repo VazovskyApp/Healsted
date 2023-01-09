@@ -67,7 +67,7 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
     }
 
     override fun applyBottomNavigationViewPadding(view: View, bottomNavigationViewHeight: Int) = with(binding) {
-        constraintLayout.updatePadding(bottom = bottomNavigationViewHeight)
+        linearLayout.updatePadding(bottom = bottomNavigationViewHeight)
     }
 
     private fun setupTabs() = with(binding) {
@@ -77,7 +77,6 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
             }
         }
         recyclerViewTabs.addLinearSpaceItemDecoration(R.dimen.tabsSpace)
-
     }
 
     private fun setupPills() = with(binding) {
