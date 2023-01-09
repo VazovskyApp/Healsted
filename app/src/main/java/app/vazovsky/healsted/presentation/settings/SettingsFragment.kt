@@ -66,6 +66,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                 SettingType.NOTIFICATION -> viewModel.openNotifications()
                 SettingType.REPORT_A_BAG -> viewModel.openReportBug()
                 SettingType.SEND_FEEDBACK -> viewModel.openSendFeedback()
+                SettingType.FEATURES -> viewModel.openFeatures()
                 SettingType.ABOUT_US -> viewModel.openAboutUs()
                 SettingType.LOG_OUT -> {
                     viewModel.signOut()

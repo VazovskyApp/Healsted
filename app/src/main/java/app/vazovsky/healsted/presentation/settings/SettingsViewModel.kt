@@ -58,11 +58,17 @@ class SettingsViewModel @Inject constructor(
         navigate(destinations.reportBug())
     }
 
+    /** Открыть будущие фичи */
+    fun openFeatures() {
+        navigate(destinations.features())
+    }
+
     /** Открыть отправку фидбека */
     fun openSendFeedback() {
         navigate(destinations.sendFeedback())
     }
 
+    /** Выйти из аккаунта */
     fun signOut() {
         _signOutLiveEvent.launchLoadData(
             signOutUseCase.executeFlow(UseCase.None)

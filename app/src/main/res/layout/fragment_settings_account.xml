@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -59,35 +58,25 @@
             android:textAppearance="@style/Font.Heading_3.Medium"
             app:layout_constraintTop_toBottomOf="@id/imageViewAvatar" />
 
-        <!-- TODO сделать стили для edit text -->
-        <EditText
-            android:id="@+id/editTextNickname"
+        <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
+            android:id="@+id/textInputNickname"
+            style="@style/TextInputLayoutTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_marginTop="8dp"
-            android:textAppearance="@style/Font.Body_1.Bold"
-            app:layout_constraintTop_toBottomOf="@id/textViewNickname"
-            tools:text="sdfs" />
+            app:layout_constraintTop_toBottomOf="@id/textViewNickname">
 
-        <TextView
-            android:id="@+id/textViewPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_marginTop="20dp"
-            android:text="@string/settings_account_phone"
-            android:textAppearance="@style/Font.Heading_3.Medium"
-            app:layout_constraintTop_toBottomOf="@id/editTextNickname" />
-
-        <EditText
-            android:id="@+id/editTextPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_marginTop="8dp"
-            android:textAppearance="@style/Font.Body_1.Bold"
-            app:layout_constraintTop_toBottomOf="@id/textViewPhone" />
+            <EditText
+                android:id="@+id/editTextNickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="8dp"
+                android:hint="@string/auth_nickname_hint"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:textAppearance="@style/Font.Body_1.Bold"
+                app:layout_constraintTop_toBottomOf="@id/textViewNickname" />
+        </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
 
         <TextView
             android:id="@+id/textViewBirthday"
@@ -97,16 +86,27 @@
             android:layout_marginTop="20dp"
             android:text="@string/settings_account_birthday"
             android:textAppearance="@style/Font.Heading_3.Medium"
-            app:layout_constraintTop_toBottomOf="@id/editTextPhone" />
+            app:layout_constraintTop_toBottomOf="@id/textInputNickname" />
 
-        <EditText
-            android:id="@+id/editTextBirthday"
+        <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
+            android:id="@+id/textInputLayoutBirthday"
+            style="@style/TextInputLayoutTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_marginTop="8dp"
-            android:textAppearance="@style/Font.Body_1.Bold"
-            app:layout_constraintTop_toBottomOf="@id/textViewBirthday" />
+            app:layout_constraintTop_toBottomOf="@id/textViewBirthday">
+
+            <EditText
+                android:id="@+id/editTextBirthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="8dp"
+                android:hint="@string/settings_account_birthday_hint"
+                android:imeOptions="actionDone"
+                android:inputType="date"
+                android:textAppearance="@style/Font.Body_1.Bold"
+                app:layout_constraintTop_toBottomOf="@id/textViewBirthday" />
+        </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonSave"

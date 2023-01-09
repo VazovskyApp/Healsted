@@ -30,9 +30,14 @@ class SettingsRepositoryImpl @Inject constructor() : SettingsRepository {
                 group = SettingsGroup.FEEDBACK,
             ),
             SettingsItem(
+                type = SettingType.FEATURES,
+                icon = R.drawable.ic_settings_features,
+                group = SettingsGroup.GENERAL,
+            ),
+            SettingsItem(
                 type = SettingType.ABOUT_US,
                 icon = R.drawable.ic_settings_about_us,
-                group = SettingsGroup.FEEDBACK,
+                group = SettingsGroup.GENERAL,
             ),
             SettingsItem(
                 type = SettingType.LOG_OUT,

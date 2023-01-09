@@ -4,8 +4,10 @@
     <string name="settings_account_title">Редактировать аккаунт</string>
     <string name="settings_account_save">Сохранить</string>
     <string name="settings_account_birthday">День рождения</string>
+    <string name="settings_account_birthday_hint">17.03.1999</string>
     <string name="settings_account_phone">Номер телефона</string>
     <string name="settings_account_nickname">Никнейм</string>
+    <string name="settings_account_nickname_hint">Никнейм</string>
 
     <!-- Settings About us -->
     <string name="settings_about_us_title">О приложении</string>
@@ -31,4 +33,9 @@
     <string name="settings_report_bug_hint">Что стоит исправить?</string>
     <string name="settings_report_bug_send">Отправить</string>
     <string name="dashboard_today_pill_completed">Завершено</string>
+
+    <!-- Settings Features -->
+    <string name="settings_features_title">Будущие фичи</string>
+    <string name="settings_features_description">Приложение находится в стадии разработки</string>
+    <string name="settings_features_list_title">В будущем станут доступны функции:</string>
 </resources>

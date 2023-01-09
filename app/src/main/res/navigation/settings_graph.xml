@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_settingsFragment_to_settingsAccountFragment"
             app:destination="@id/settingsAccountFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsFeaturesFragment"
+            app:destination="@id/settingsFeaturesFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsAccountFragment"
@@ -56,4 +59,9 @@
         android:name="app.vazovsky.healsted.presentation.settings.sendfeedback.SettingsSendFeedbackFragment"
         android:label="SettingsSendFeedbackFragment"
         tools:layout="@layout/fragment_settings_send_feedback" />
+    <fragment
+        android:id="@+id/settingsFeaturesFragment"
+        android:name="app.vazovsky.healsted.presentation.settings.features.SettingsFeaturesFragment"
+        android:label="SettingsFeaturesFragment"
+        tools:layout="@layout/fragment_settings_features" />
 </navigation>

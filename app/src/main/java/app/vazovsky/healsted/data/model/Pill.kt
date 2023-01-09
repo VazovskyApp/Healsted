@@ -25,7 +25,7 @@ data class Pill(
     @PropertyName("takePillType") val takePillType: TakePillType? = TakePillType.NEVERMIND,
 
     /** Список времени уведомлений */
-    @PropertyName("times") val times: List<OffsetTime>? = null,
+    @PropertyName("times") val times: List<OffsetTime>? = listOf(),
 
     /** Регулярность приема лекарств */
     @PropertyName("datesTaken") val datesTaken: DatesTakenType = DatesTakenType.EVERYDAY,

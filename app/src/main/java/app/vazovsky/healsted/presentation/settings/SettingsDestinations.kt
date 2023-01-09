@@ -20,6 +20,10 @@ class SettingsDestinations @Inject constructor() {
         SettingsFragmentDirections.actionSettingsFragmentToSettingsNotificationFragment()
     )
 
+    fun features() = NavigationCommand.To(
+        SettingsFragmentDirections.actionSettingsFragmentToSettingsFeaturesFragment()
+    )
+
     fun reportBug() = NavigationCommand.To(
         SettingsFragmentDirections.actionSettingsFragmentToSettingsReportBugFragment()
     )
