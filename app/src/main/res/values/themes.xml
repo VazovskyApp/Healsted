@@ -7,6 +7,10 @@
         <item name="windowNoTitle">true</item>
         <item name="appBarLayoutStyle">@style/AppBarStyle</item>
         <item name="toolbarStyle">@style/ToolbarStyle</item>
+        <item name="editTextStyle">@style/EditTextStyle</item>
+        <item name="switchStyle">@style/SwitchStyle</item>
+        <item name="buttonStyle">@style/ButtonStyle</item>
+        <item name="materialButtonStyle">@style/ButtonStyle</item>
 
         <item name="colorOnError">@color/white</item>
         <item name="colorError">@color/folly</item>

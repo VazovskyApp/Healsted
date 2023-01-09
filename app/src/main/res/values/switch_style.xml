@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="SwitchStyle" parent="@style/Widget.MaterialComponents.CompoundButton.Switch">
+        <item name="trackTint">@color/pillsCardTransparent30</item>
+        <item name="thumbTint">?colorOnPrimary</item>
+        <item name="android:textColor">?colorOnPrimary</item>
+        <item name="android:textAppearance">@style/Font.Body_1.Medium</item>
+    </style>
+</resources>

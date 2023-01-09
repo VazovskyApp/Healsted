@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextInputLayoutTheme" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:minHeight">48dp</item>
+
+        <!-- Container attributes -->
+        <item name="boxBackgroundColor">?colorOnPrimary</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/text_input_rounded_corner</item>
+        <item name="boxCornerRadiusTopStart">@dimen/text_input_rounded_corner</item>
+        <!-- Hint -->
+        <item name="android:textColorHint">?colorOnBackground</item>
+        <item name="hintTextAppearance">@style/Font.Caption_1.Regular</item>
+        <item name="hintTextColor">?colorOnBackground</item>
+        <item name="materialThemeOverlay">@style/CustomMaterialThemeOverlay</item>
+        <!-- Helper text -->
+        <item name="helperTextTextAppearance">@style/Font.Caption_1.Regular</item>
+        <item name="helperTextTextColor">?android:textColorSecondary</item>
+        <!-- Activation indicator attributes -->
+        <item name="boxStrokeColor">?colorPrimary</item>
+        <item name="boxStrokeErrorColor">?colorError</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">@dimen/text_input_stroke_width</item>
+        <!-- Helper/error/counter text attributes -->
+        <item name="errorEnabled">true</item>
+        <item name="errorTextColor">?colorError</item>
+        <item name="errorTextAppearance">@style/Font.Caption_1.Regular</item>
+        <item name="errorIconDrawable">@null</item>
+        <!-- Placeholder -->
+        <item name="placeholderTextAppearance">@style/Font.Body_2.Regular</item>
+        <item name="placeholderTextColor">?colorOnBackground</item>
+    </style>
+
+    <dimen name="text_input_rounded_corner">8dp</dimen>
+    <dimen name="text_input_stroke_width">1dp</dimen>
+    <dimen name="text_input_inner_padding">16dp</dimen>
+
+    <style name="CustomMaterialThemeOverlay" parent="ThemeOverlay.MaterialComponents.TextInputEditText.FilledBox">
+        <item name="editTextStyle">@style/TextInputEditTextTheme</item>
+    </style>
+
+    <style name="TextInputEditTextTheme" parent="@style/Widget.MaterialComponents.TextInputEditText.FilledBox">
+        <item name="android:textAppearance">@style/Font.Body_2.Regular</item>
+        <item name="android:textColor">?colorOnBackground</item>
+        <item name="android:textColorHint">?colorOnBackground</item>
+    </style>
+
+    <style name="AutoCompleteTextInputLayoutTheme" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+        <item name="android:minHeight">48dp</item>
+
+        <!-- Container attributes -->
+        <item name="boxBackgroundColor">?colorPrimary</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/text_input_rounded_corner</item>
+        <item name="boxCornerRadiusTopStart">@dimen/text_input_rounded_corner</item>
+        <!-- Hint -->
+        <item name="android:textColorHint">?colorOnBackground</item>
+        <item name="hintTextAppearance">@style/Font.Caption_1.Regular</item>
+        <item name="hintTextColor">?colorOnBackground</item>
+        <!-- Activation indicator attributes -->
+        <item name="boxStrokeColor">?colorPrimary</item>
+        <item name="boxStrokeErrorColor">?colorError</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">@dimen/text_input_stroke_width</item>
+        <!-- Helper/error/counter text attributes -->
+        <item name="errorEnabled">true</item>
+        <item name="errorTextColor">?colorError</item>
+        <item name="errorTextAppearance">@style/Font.Caption_1.Regular</item>
+        <item name="errorIconDrawable">@null</item>
+    </style>
+
+</resources>

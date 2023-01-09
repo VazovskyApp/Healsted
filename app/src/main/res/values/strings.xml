@@ -64,6 +64,9 @@
     <string name="pill_editor_add_time">Добавить время</string>
     <string name="pill_editor_comment_hint">Комментарий</string>
     <string name="pill_editor_dosage_hint">Дозировка</string>
+    <string name="pill_editor_time_hint">Время</string>
+    <string name="pill_editor_start_date_hint">Дата начала</string>
+    <string name="pill_editor_end_date_hint">Дата конца</string>
     <string name="pill_editor_name_hint">Название</string>
     <string name="pill_editor_confirm">Подтвердить</string>
 
@@ -77,4 +80,6 @@
     <string name="health_attribute_current_value">Текущее:</string>
     <string name="health_attribute_switch_remind_to_measure">Напоминать об измерении</string>
     <string name="health_attribute_history">История</string>
+    <string name="pill_editor_other">Дополнительно</string>
+    <string name="pill_editor_attributes">Атрибуты</string>
 </resources>

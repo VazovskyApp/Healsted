@@ -1,14 +1,17 @@
 package app.vazovsky.healsted.presentation.pilleditor
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.data.model.DatesTakenType
 import app.vazovsky.healsted.data.model.TakePillType
 import app.vazovsky.healsted.databinding.FragmentPillEditorBinding
+import app.vazovsky.healsted.extensions.fitKeyboardInsetsWithPadding
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -34,7 +37,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     }
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
-        root.fitTopInsetsWithPadding()
+        root.fitKeyboardInsetsWithPadding()
 
         setupToolbar()
 
@@ -42,6 +45,10 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         setTakePillType()
         setTimeNotification()
         setDateNotification()
+    }
+
+    override fun applyBottomNavigationViewPadding(view: View, bottomNavigationViewHeight: Int) = with(binding) {
+        linearLayoutParametres.updatePadding(bottom = bottomNavigationViewHeight)
     }
 
     private fun setupToolbar() = with(binding.toolbar) {
@@ -52,7 +59,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     private fun setDatesTakenType() = with(binding) {
         spinnerDatesTakenType.adapter = ArrayAdapter(
             requireContext(),
-            AndroidR.layout.simple_spinner_item,
+            androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item,
             DatesTakenType.values()
         )
     }
@@ -60,13 +67,13 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     private fun setTakePillType() = with(binding) {
         spinnerTakePillType.adapter = ArrayAdapter(
             requireContext(),
-            AndroidR.layout.simple_spinner_item,
+            androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item,
             TakePillType.values()
         )
     }
 
     private fun setTimeNotification() = with(binding) {
-        timePickerTimeNotification.setIs24HourView(true)
+
         buttonAddTime.setOnClickListener {
             /** TODO Придумать добавление и enabled кнопки */
         }
@@ -74,7 +81,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
 
     private fun setDateNotification() = with(binding) {
         switchEndDateEnabled.setOnCheckedChangeListener { _, isChecked ->
-            linearLayoutEndDateNotification.isVisible = isChecked
+            cardViewEndDateNotification.isVisible = isChecked
         }
     }
 }
