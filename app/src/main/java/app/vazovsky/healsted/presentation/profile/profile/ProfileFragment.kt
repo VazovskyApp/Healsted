@@ -11,7 +11,6 @@ import app.vazovsky.healsted.databinding.FragmentProfileBinding
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -25,45 +24,46 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     private val viewModel: ProfileViewModel by viewModels()
 
     override fun callOperations() {
-        viewModel.getProfile()
+        viewModel.getProfileSnapshot()
+        viewModel.getLoyaltySnapshot()
     }
 
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
-        profileLiveData.observe { result ->
-            binding.stateViewFlipper.setStateFromResult(result)
+        profileSnapshotLiveData.observe { result ->
             result.doOnSuccess { task ->
-                task.addOnSuccessListener {
-                    bindProfile(it)
-                    viewModel.getLoyalty()
-                }
-                task.addOnFailureListener {
-                    Timber.d(it.localizedMessage)
+                task.addOnSuccessListener { snapshot ->
+                    viewModel.getProfile(snapshot)
+                    Timber.d("PROFILE SNAPSHOT: $snapshot")
                 }
             }
-            result.doOnFailure {
-                Timber.d(it.message)
+        }
+        profileLiveData.observe { result ->
+            result.doOnSuccess { account ->
+                bindProfile(account)
+                Timber.d("PROFILE: $account")
+            }
+        }
+        loyaltySnapshotLiveData.observe { result ->
+            binding.stateViewFlipper.setStateFromResult(result)
+            result.doOnSuccess { task ->
+                task.addOnSuccessListener { snapshot ->
+                    viewModel.getLoyalty(snapshot)
+                    Timber.d("LOYALTY SNAPSHOT: $snapshot")
+                }
             }
         }
         loyaltyLiveData.observe { result ->
-            binding.stateViewFlipper.setStateFromResult(result)
-            result.doOnSuccess { task ->
-                task.addOnSuccessListener {
-                    bindLoyalty(it)
-                }
-                task.addOnFailureListener {
-                    Timber.d(it.localizedMessage)
-                }
-            }
-            result.doOnFailure {
-                Timber.d(it.message)
+            result.doOnSuccess { loyalty ->
+                bindLoyalty(loyalty)
+                Timber.d("LOYALTY: $loyalty")
             }
         }
     }
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitTopInsetsWithPadding()
-        stateViewFlipper.setRetryMethod { viewModel.getProfile() }
+        stateViewFlipper.setRetryMethod { viewModel.getProfileSnapshot() }
 
         textViewLevel.setOnClickListener {
             //TODO сделать открытие BottomSheet с инфой об уровнях
@@ -74,27 +74,20 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         constraintLayout.updatePadding(bottom = bottomNavigationViewHeight)
     }
 
-    private fun bindProfile(it: DocumentSnapshot?) = with(binding) {
-        val profile = it?.toObject(Account::class.java)
-        profile?.let { account ->
-            textViewNickname.text = account.nickname
-        }
+    private fun bindProfile(account: Account) = with(binding) {
+        textViewNickname.text = account.nickname
     }
 
-    private fun bindLoyalty(it: DocumentSnapshot?) = with(binding) {
-        // TODO сделать так, чтоб все превращалось в объекты уже в use case
-        val loyalty = it?.toObject(LoyaltyProgress::class.java)
-        loyalty?.let { loyaltyProgress ->
-            textViewLevel.text = loyaltyProgress.level.toString()
+    private fun bindLoyalty(loyaltyProgress: LoyaltyProgress) = with(binding) {
+        textViewLevel.text = loyaltyProgress.level.toString()
 
-            textViewAccountProgress.text = buildString {
-                append(loyaltyProgress.currentValue)
-                append(" / ")
-                append(loyaltyProgress.level.xpCount)
-            }
-
-            progressIndicatorAccountProgress.progress = loyaltyProgress.currentValue
-            progressIndicatorAccountProgress.max = loyaltyProgress.level.xpCount
+        textViewAccountProgress.text = buildString {
+            append(loyaltyProgress.currentValue)
+            append(" / ")
+            append(loyaltyProgress.level.xpCount)
         }
+
+        progressIndicatorAccountProgress.progress = loyaltyProgress.currentValue
+        progressIndicatorAccountProgress.max = loyaltyProgress.level.xpCount
     }
 }

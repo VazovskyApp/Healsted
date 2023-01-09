@@ -10,12 +10,11 @@
         android:id="@+id/appbarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <!-- TODO сделать смену приветствия в зависимости от времени суток -->
+
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            app:title="Доброе утро, Vazovsky" />
+            android:layout_height="?actionBarSize" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

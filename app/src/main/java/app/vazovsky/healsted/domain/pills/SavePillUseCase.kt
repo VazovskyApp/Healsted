@@ -1,4 +1,4 @@
-package app.vazovsky.healsted.domain.auth
+package app.vazovsky.healsted.domain.pills
 
 import app.vazovsky.healsted.data.firebase.auth.FirebaseAuthRepository
 import app.vazovsky.healsted.data.firebase.profile.FirebaseProfileRepository
@@ -8,8 +8,10 @@ import app.vazovsky.healsted.data.repository.AuthRepository
 import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.base.UseCaseUnary
 import app.vazovsky.healsted.extensions.orDefault
+import app.vazovsky.healsted.extensions.toStartOfDayTimestamp
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
+import java.time.LocalDate
 import java.time.OffsetDateTime
 import javax.inject.Inject
 
@@ -31,7 +33,7 @@ class SavePillUseCase @Inject constructor(
                 type = PillType.CAPSULE,
                 times = null,
                 amount = 1F,
-                startDate = Timestamp.now(),
+                startDate = LocalDate.now().toStartOfDayTimestamp(),
             ),
         )
     }

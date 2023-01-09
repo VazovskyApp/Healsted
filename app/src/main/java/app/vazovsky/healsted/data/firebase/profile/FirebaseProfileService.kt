@@ -5,6 +5,7 @@ import app.vazovsky.healsted.data.model.MonitoringAttribute
 import app.vazovsky.healsted.data.model.Mood
 import app.vazovsky.healsted.data.model.Pill
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 
@@ -19,6 +20,8 @@ interface FirebaseProfileService {
 
     /** Mood */
     fun addProfileMood(uid: String, mood: Mood): Task<Void>
+    fun updateProfileMood(uid: String, mood: Mood): Task<Void>
+    fun fetchProfileTodayMood(uid: String, date: Timestamp): Task<DocumentSnapshot>
     fun fetchProfileMoods(uid: String): Task<QuerySnapshot>
 
     /** Weight */

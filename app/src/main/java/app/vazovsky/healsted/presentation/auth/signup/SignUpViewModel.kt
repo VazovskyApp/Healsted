@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import app.vazovsky.healsted.data.model.User
 import app.vazovsky.healsted.data.model.base.LoadableResult
 import app.vazovsky.healsted.domain.auth.SaveAccountUseCase
-import app.vazovsky.healsted.domain.auth.SaveLoyaltyUseCase
-import app.vazovsky.healsted.domain.auth.SaveMoodUseCase
-import app.vazovsky.healsted.domain.auth.SavePillUseCase
+import app.vazovsky.healsted.domain.profile.SaveLoyaltyUseCase
+import app.vazovsky.healsted.domain.mood.SaveMoodUseCase
+import app.vazovsky.healsted.domain.pills.SavePillUseCase
 import app.vazovsky.healsted.domain.auth.SaveUserUseCase
 import app.vazovsky.healsted.domain.auth.SignUpUseCase
 import app.vazovsky.healsted.domain.base.UseCase

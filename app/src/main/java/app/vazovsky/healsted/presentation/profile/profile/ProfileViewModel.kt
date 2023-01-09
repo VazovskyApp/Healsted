@@ -3,10 +3,13 @@ package app.vazovsky.healsted.presentation.profile.profile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import app.vazovsky.healsted.data.model.Account
+import app.vazovsky.healsted.data.model.LoyaltyProgress
 import app.vazovsky.healsted.data.model.base.LoadableResult
 import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.profile.GetLoyaltyUseCase
 import app.vazovsky.healsted.domain.profile.GetProfileUseCase
+import app.vazovsky.healsted.domain.profile.ParseSnapshotToLoyaltyUseCase
+import app.vazovsky.healsted.domain.profile.ParseSnapshotToProfileUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
@@ -16,27 +19,50 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val getProfileUseCase: GetProfileUseCase,
+    private val parseSnapshotToProfileUseCase: ParseSnapshotToProfileUseCase,
     private val getLoyaltyUseCase: GetLoyaltyUseCase,
+    private val parseSnapshotToLoyaltyUseCase: ParseSnapshotToLoyaltyUseCase,
 ) : BaseViewModel() {
     /** Данные об аккаунте */
-    private val _profileLiveData = MutableLiveData<LoadableResult<Task<DocumentSnapshot>>>()
-    val profileLiveData: LiveData<LoadableResult<Task<DocumentSnapshot>>> = _profileLiveData
+    private val _profileSnapshotLiveData = MutableLiveData<LoadableResult<Task<DocumentSnapshot>>>()
+    val profileSnapshotLiveData: LiveData<LoadableResult<Task<DocumentSnapshot>>> = _profileSnapshotLiveData
+
+    /** Данные об аккаунте */
+    private val _profileLiveData = MutableLiveData<LoadableResult<Account>>()
+    val profileLiveData: LiveData<LoadableResult<Account>> = _profileLiveData
 
     /** Данные об уровне в программе лояльности */
-    private val _loyaltyLiveData = MutableLiveData<LoadableResult<Task<DocumentSnapshot>>>()
-    val loyaltyLiveData: LiveData<LoadableResult<Task<DocumentSnapshot>>> = _loyaltyLiveData
+    private val _loyaltySnapshotLiveData = MutableLiveData<LoadableResult<Task<DocumentSnapshot>>>()
+    val loyaltySnapshotLiveData: LiveData<LoadableResult<Task<DocumentSnapshot>>> = _loyaltySnapshotLiveData
+
+    /** Данные об уровне в программе лояльности */
+    private val _loyaltyLiveData = MutableLiveData<LoadableResult<LoyaltyProgress>>()
+    val loyaltyLiveData: LiveData<LoadableResult<LoyaltyProgress>> = _loyaltyLiveData
 
     /** Получение данных об аккаунте */
-    fun getProfile() {
-        _profileLiveData.launchLoadData(
+    fun getProfileSnapshot() {
+        _profileSnapshotLiveData.launchLoadData(
             getProfileUseCase.executeFlow(UseCase.None)
         )
     }
 
+    fun getProfile(snapshot: DocumentSnapshot) {
+        _profileLiveData.launchLoadData(
+            parseSnapshotToProfileUseCase.executeFlow(ParseSnapshotToProfileUseCase.Params(snapshot))
+        )
+    }
+
     /** Получение данных о программе лояльности */
-    fun getLoyalty() {
-        _loyaltyLiveData.launchLoadData(
+    fun getLoyaltySnapshot() {
+        _loyaltySnapshotLiveData.launchLoadData(
             getLoyaltyUseCase.executeFlow(UseCase.None)
+        )
+    }
+
+    /** Получение данных о программе лояльности */
+    fun getLoyalty(snapshot: DocumentSnapshot) {
+        _loyaltyLiveData.launchLoadData(
+            parseSnapshotToLoyaltyUseCase.executeFlow(ParseSnapshotToLoyaltyUseCase.Params(snapshot))
         )
     }
 }

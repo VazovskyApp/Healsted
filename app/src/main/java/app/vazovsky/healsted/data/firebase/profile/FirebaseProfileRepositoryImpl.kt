@@ -4,6 +4,8 @@ import app.vazovsky.healsted.data.model.LoyaltyProgress
 import app.vazovsky.healsted.data.model.MonitoringAttribute
 import app.vazovsky.healsted.data.model.Mood
 import app.vazovsky.healsted.data.model.Pill
+import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
 import javax.inject.Inject
 
 class FirebaseProfileRepositoryImpl @Inject constructor(
@@ -27,6 +29,16 @@ class FirebaseProfileRepositoryImpl @Inject constructor(
         uid: String,
         mood: Mood,
     ) = firebaseProfileService.addProfileMood(uid, mood)
+
+    override fun updateProfileMood(
+        uid: String,
+        mood: Mood,
+    ) = firebaseProfileService.updateProfileMood(uid, mood)
+
+    override fun fetchProfileTodayMood(
+        uid: String,
+        date: Timestamp,
+    ) = firebaseProfileService.fetchProfileTodayMood(uid, date)
 
     override fun fetchProfileMoods(uid: String) = firebaseProfileService.fetchProfileMoods(uid)
 

@@ -8,6 +8,7 @@ import app.vazovsky.healsted.extensions.orDefault
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import javax.inject.Inject
+import timber.log.Timber
 
 /** Получить данные об аккаунте */
 class GetProfileUseCase @Inject constructor(

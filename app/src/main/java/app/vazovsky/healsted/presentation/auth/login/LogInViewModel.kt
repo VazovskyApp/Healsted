@@ -3,8 +3,9 @@ package app.vazovsky.healsted.presentation.auth.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import app.vazovsky.healsted.data.model.base.LoadableResult
-import app.vazovsky.healsted.domain.auth.GetAccountUseCase
 import app.vazovsky.healsted.domain.auth.LogInUseCase
+import app.vazovsky.healsted.domain.base.UseCase
+import app.vazovsky.healsted.domain.profile.GetProfileUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -16,7 +17,7 @@ import javax.inject.Inject
 class LogInViewModel @Inject constructor(
     private val destinations: LogInDestinations,
     private val logInUseCase: LogInUseCase,
-    private val getAccountUseCase: GetAccountUseCase,
+    private val getProfileUseCase: GetProfileUseCase,
 ) : BaseViewModel() {
 
     /** Получение результата авторизации */
@@ -35,9 +36,9 @@ class LogInViewModel @Inject constructor(
     }
 
     /** Получение аккаунта */
-    fun getAccount(uid: String) {
+    fun getAccount() {
         _accountLiveData.launchLoadData(
-            getAccountUseCase.executeFlow(GetAccountUseCase.Params(uid))
+            getProfileUseCase.executeFlow(UseCase.None)
         )
     }
 

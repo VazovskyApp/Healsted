@@ -5,6 +5,8 @@ import app.vazovsky.healsted.data.model.MonitoringAttribute
 import app.vazovsky.healsted.data.model.MonitoringType
 import app.vazovsky.healsted.data.model.Mood
 import app.vazovsky.healsted.data.model.Pill
+import app.vazovsky.healsted.extensions.serializeToMap
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import javax.inject.Inject
 
@@ -37,8 +39,32 @@ class FirebaseProfileServiceImpl @Inject constructor(
     override fun addProfileMood(
         uid: String,
         mood: Mood,
-    ) = firestore.collection(MOODS_COLLECTION).document(uid).collection(MOODS_COLLECTION)
-        .document(mood.date.toString()).set(mood)
+    ) = firestore
+        .collection(MOODS_COLLECTION)
+        .document(uid)
+        .collection(MOODS_COLLECTION)
+        .document(mood.date.toString())
+        .set(mood)
+
+    override fun updateProfileMood(
+        uid: String,
+        mood: Mood,
+    ) = firestore
+        .collection(MOODS_COLLECTION)
+        .document(uid)
+        .collection(MOODS_COLLECTION)
+        .document(mood.date.toString())
+        .update(mood.serializeToMap())
+
+    override fun fetchProfileTodayMood(
+        uid: String,
+        date: Timestamp,
+    ) = firestore
+        .collection(MOODS_COLLECTION)
+        .document(uid)
+        .collection(MOODS_COLLECTION)
+        .document(date.toString())
+        .get()
 
     override fun fetchProfileMoods(
         uid: String,

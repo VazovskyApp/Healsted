@@ -51,7 +51,7 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
 
     private fun setLogInTask(task: Task<AuthResult>) {
         task.addOnSuccessListener { authResult ->
-            authResult.user?.uid?.let { viewModel.getAccount(it) }
+            authResult.user?.uid?.let { viewModel.getAccount() }
         }
         task.addOnFailureListener { exception ->
             showErrorSnackbar(
