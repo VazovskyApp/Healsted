@@ -7,16 +7,14 @@ import androidx.fragment.app.viewModels
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.Mood
-import app.vazovsky.healsted.data.model.MoodType
 import app.vazovsky.healsted.databinding.FragmentDashboardBinding
 import app.vazovsky.healsted.extensions.addLinearSpaceItemDecoration
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
-import app.vazovsky.healsted.extensions.showErrorSnackbar
 import app.vazovsky.healsted.extensions.toStartOfDayTimestamp
 import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import app.vazovsky.healsted.presentation.dashboard.adapter.TodayPillsAdapter
-import app.vazovsky.healsted.presentation.view.rating.EmojiRatingBar
+import app.vazovsky.healsted.presentation.view.StateViewFlipper
 import app.vazovsky.healsted.presentation.view.timeline.OnDateSelectedListener
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
@@ -52,7 +50,6 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
             result.doOnSuccess { task ->
                 task.addOnSuccessListener { snapshot ->
                     viewModel.getProfile(snapshot)
-                    Timber.d("PROFILE SNAPSHOT: $snapshot")
                 }
             }
         }
@@ -76,11 +73,13 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
             }
         }
         todayMoodSnapshotLiveData.observe { result ->
+            binding.stateViewFlipperMood.changeState(StateViewFlipper.State.LOADING)
             result.doOnSuccess { task ->
                 setMoodSnapshotTask(task)
             }
         }
         todayMoodLiveData.observe { result ->
+            binding.stateViewFlipperMood.setStateFromResult(result)
             result.doOnSuccess { mood ->
                 setupMood(mood)
             }
@@ -88,11 +87,14 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         updateMoodLiveEvent.observe { result ->
             result.doOnSuccess { task ->
                 task.addOnSuccessListener {
-                    showErrorSnackbar(
-                        "ВСЕ ОК",
-                        marginBottom = resources.getDimensionPixelOffset(R.dimen.bottom_navigation_fab_size)
-                    )
+                    Timber.d("Настроение обновлено")
                 }
+                task.addOnFailureListener {
+                    Timber.d(it.localizedMessage)
+                }
+            }
+            result.doOnFailure {
+                Timber.d(it.message)
             }
         }
     }
@@ -117,15 +119,13 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitTopInsetsWithPadding()
         stateViewFlipper.setRetryMethod { viewModel.getTodayPillsSnapshot(viewModel.selectedDate) }
-
-        ratingBarMood.setRateChangeListener(object : EmojiRatingBar.OnRateChangeListener {
-            override fun onRateChanged(rateStatus: MoodType) {
-                val mood = Mood(value = rateStatus, date = LocalDate.now().toStartOfDayTimestamp())
-                viewModel.updateMood(mood)
-            }
-        })
         setupTimeline()
         setupRecyclerView()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.updateMood(Mood(binding.ratingBarMood.getCurrentRateStatus()))
     }
 
     private fun setupToolbar(profile: Account) = with(binding.toolbar) {

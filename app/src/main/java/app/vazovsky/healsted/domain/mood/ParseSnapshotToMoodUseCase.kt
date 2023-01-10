@@ -27,11 +27,7 @@ class ParseSnapshotToMoodUseCase @Inject constructor(
         val result = params.snapshot.data?.toDataClass<Mood>()
         return if (result == null) {
             val uid = firebaseAuthRepository.getCurrentUserUid() ?: authRepository.getCurrentUserUid().orDefault()
-            val newMood = Mood(
-                value = MoodType.EMPTY,
-                date = LocalDate.now().toStartOfDayTimestamp(),
-            )
-            Timber.d("LOL нет сегодня настроения")
+            val newMood = Mood()
             firebaseProfileRepository.addProfileMood(uid, newMood)
             newMood
         } else result

@@ -23,13 +23,17 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <app.vazovsky.healsted.presentation.view.StateViewFlipper
-            android:id="@+id/stateViewFlipper"
+            android:id="@+id/stateViewFlipperMood"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:measureAllChildren="false"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
+                android:id="@+id/linearLayoutMood"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textViewMood"
@@ -38,29 +42,40 @@
                     android:layout_marginHorizontal="@dimen/margin_16"
                     android:layout_marginTop="8dp"
                     android:text="@string/dashboard_mood"
-                    android:textAppearance="@style/Font.Body_1.Bold"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textAppearance="@style/Font.Body_1.Bold" />
 
-                <!-- TODO Сделать русские настроения -->
                 <app.vazovsky.healsted.presentation.view.rating.EmojiRatingBar
                     android:id="@+id/ratingBarMood"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_16"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toBottomOf="@id/textViewMood" />
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+        </app.vazovsky.healsted.presentation.view.StateViewFlipper>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutContent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_round_sheet"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/stateViewFlipperMood">
+
+            <app.vazovsky.healsted.presentation.view.StateViewFlipper
+                android:id="@+id/stateViewFlipper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/stateViewFlipperMood">
 
                 <LinearLayout
-                    android:id="@+id/linearLayoutContent"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/bg_round_sheet"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ratingBarMood">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/cardViewTimeline"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_20"
@@ -121,7 +136,7 @@
                             app:emptyTitle="@string/empty_default_title" />
                     </FrameLayout>
                 </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </app.vazovsky.healsted.presentation.view.StateViewFlipper>
+            </app.vazovsky.healsted.presentation.view.StateViewFlipper>
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
