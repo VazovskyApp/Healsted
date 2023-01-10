@@ -49,6 +49,8 @@
     <string name="dashboard_date_early">Ранее</string>
     <string name="dashboard_date_later">Позже</string>
     <string name="dashboard_date_unknown">Неизвестно</string>
+    <string name="dashboard_empty_pills_title">На сегодня нет лекарств</string>
+    <string name="dashboard_empty_pills_comment">Вы можете добавить их во вкладке Лекарства</string>
 
     <!-- Pills -->
     <string name="pills_active_tab_title">Активные</string>
@@ -69,6 +71,8 @@
     <string name="pill_editor_end_date_hint">Дата конца</string>
     <string name="pill_editor_name_hint">Название</string>
     <string name="pill_editor_confirm">Подтвердить</string>
+    <string name="pill_editor_other">Дополнительно</string>
+    <string name="pill_editor_attributes">Атрибуты</string>
 
     <!-- Health -->
     <string name="health_title">Мое здоровье</string>
@@ -80,6 +84,4 @@
     <string name="health_attribute_current_value">Текущее:</string>
     <string name="health_attribute_switch_remind_to_measure">Напоминать об измерении</string>
     <string name="health_attribute_history">История</string>
-    <string name="pill_editor_other">Дополнительно</string>
-    <string name="pill_editor_attributes">Атрибуты</string>
 </resources>

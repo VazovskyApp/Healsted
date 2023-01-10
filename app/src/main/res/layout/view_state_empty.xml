@@ -15,7 +15,7 @@
         android:layout_marginStart="@dimen/empty_state_animation_horizontal_margin"
         android:layout_marginEnd="@dimen/empty_state_animation_horizontal_margin"
         app:layout_constraintBottom_toTopOf="@id/textEmptyTitle"
-        app:layout_constraintDimensionRatio="260:222"
+        app:layout_constraintDimensionRatio="4:3"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         app:lottie_autoPlay="false"

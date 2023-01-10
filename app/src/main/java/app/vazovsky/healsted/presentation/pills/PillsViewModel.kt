@@ -44,7 +44,6 @@ class PillsViewModel @Inject constructor(
         )
     }
 
-    /** TODO !!! сделать внутри как в спортмастере */
     fun getPillsSnapshot(slot: PillsTabSlot? = null) {
         _pillsSnapshotLiveData.launchLoadData(
             getPillsUseCase.executeFlow(GetPillsUseCase.Params(slot))

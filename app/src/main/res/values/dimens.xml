@@ -30,7 +30,7 @@
     <dimen name="error_state_animation_horizontal_margin">72dp</dimen>
 
     <!-- Empty State -->
-    <dimen name="empty_state_animation_horizontal_margin">48dp</dimen>
+    <dimen name="empty_state_animation_horizontal_margin">72dp</dimen>
 
     <!-- BOTTOM NAVIGATION VIEW -->
     <dimen name="bottom_navigation_view_height">48dp</dimen>

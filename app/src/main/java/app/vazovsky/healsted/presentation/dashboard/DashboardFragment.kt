@@ -56,7 +56,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         profileLiveData.observe { result ->
             binding.stateViewFlipper.setStateFromResult(result)
             result.doOnSuccess { account ->
-                setupToolbar(account)
+                bindToolbar(account)
             }
         }
         todayPillsSnapshotLiveData.observe { result ->
@@ -81,7 +81,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         todayMoodLiveData.observe { result ->
             binding.stateViewFlipperMood.setStateFromResult(result)
             result.doOnSuccess { mood ->
-                setupMood(mood)
+                bindMood(mood)
             }
         }
         updateMoodLiveEvent.observe { result ->
@@ -99,6 +99,26 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         }
     }
 
+    override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
+        root.fitTopInsetsWithPadding()
+        stateViewFlipperMood.setRetryMethod { viewModel.getTodayPillsSnapshot(LocalDate.now().toStartOfDayTimestamp()) }
+        stateViewFlipper.setRetryMethod { viewModel.getTodayPillsSnapshot(viewModel.selectedDate) }
+
+        setupTimeline()
+        setupRecyclerView()
+    }
+
+    override fun applyBottomNavigationViewPadding(view: View, bottomNavigationViewHeight: Int) = with(binding) {
+        constraintLayout.updatePadding(
+            bottom = bottomNavigationViewHeight + resources.getDimensionPixelOffset(R.dimen.margin_20)
+        )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.updateMood(Mood(binding.ratingBarMood.getCurrentRateStatus()))
+    }
+
     private fun setMoodSnapshotTask(task: Task<DocumentSnapshot>) {
         task.apply {
             addOnSuccessListener { snapshot ->
@@ -110,25 +130,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         }
     }
 
-    override fun applyBottomNavigationViewPadding(view: View, bottomNavigationViewHeight: Int) = with(binding) {
-        linearLayoutContent.updatePadding(
-            bottom = bottomNavigationViewHeight + resources.getDimensionPixelOffset(R.dimen.margin_20)
-        )
-    }
-
-    override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
-        root.fitTopInsetsWithPadding()
-        stateViewFlipper.setRetryMethod { viewModel.getTodayPillsSnapshot(viewModel.selectedDate) }
-        setupTimeline()
-        setupRecyclerView()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        viewModel.updateMood(Mood(binding.ratingBarMood.getCurrentRateStatus()))
-    }
-
-    private fun setupToolbar(profile: Account) = with(binding.toolbar) {
+    private fun bindToolbar(profile: Account) = with(binding.toolbar) {
         val currentHour = LocalTime.now().hour
         title = resources.getString(
             when (currentHour) {
@@ -141,7 +143,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         )
     }
 
-    private fun setupMood(mood: Mood) = with(binding) {
+    private fun bindMood(mood: Mood) = with(binding) {
         ratingBarMood.setCurrentRateStatus(mood.value)
     }
 

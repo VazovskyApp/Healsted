@@ -34,13 +34,18 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
                 android:id="@+id/textInputName"
+                style="@style/TextInputLayoutTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_16"
                 android:layout_marginTop="16dp"
-                app:layout_constraintTop_toTopOf="parent">
+                app:emptyCheck="true"
+                app:errorEmpty="@string/empty_field_error"
+                app:errorMalformed="@string/malformed_field_error"
+                app:layout_constraintTop_toTopOf="parent"
+                app:validationPattern="@string/text_validation_pattern">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextName"
@@ -49,7 +54,7 @@
                     android:hint="@string/pill_editor_name_hint"
                     android:imeOptions="actionNext"
                     android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+            </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
 
             <!-- Список иконок для типа -->
             <app.vazovsky.healsted.presentation.view.EmptyRecyclerView
@@ -100,7 +105,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/margin_16"
-                            android:layout_marginTop="8dp">
+                            android:layout_marginTop="8dp"
+                            app:emptyCheck="true"
+                            app:errorEmpty="@string/empty_field_error"
+                            app:errorMalformed="@string/malformed_field_error"
+                            app:validationPattern="@string/decimal_validation_pattern">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/editTextDosage"
@@ -163,10 +172,13 @@
                             android:id="@+id/textInputTime"
                             style="@style/TextInputLayoutTheme"
                             android:layout_width="match_parent"
-                            app:validationPattern=""
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/margin_16"
-                            android:layout_marginTop="8dp">
+                            android:layout_marginTop="8dp"
+                            app:emptyCheck="true"
+                            app:errorEmpty="@string/empty_time_error"
+                            app:errorMalformed="@string/malformed_time_error"
+                            app:validationPattern="@string/time_validation_pattern">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/editTextTime"
@@ -219,7 +231,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/margin_16"
-                            android:layout_marginTop="8dp">
+                            android:layout_marginTop="8dp"
+                            app:emptyCheck="true"
+                            app:errorEmpty="@string/empty_date_error"
+                            app:errorMalformed="@string/malformed_date_error"
+                            app:validationPattern="@string/date_validation_pattern">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/editTextStartDate"
@@ -273,7 +289,11 @@
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/margin_16"
                             android:layout_marginTop="8dp"
-                            android:layout_marginBottom="16dp">
+                            android:layout_marginBottom="16dp"
+                            app:emptyCheck="true"
+                            app:errorEmpty="@string/empty_date_error"
+                            app:errorMalformed="@string/malformed_date_error"
+                            app:validationPattern="@string/date_validation_pattern">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/editTextEndDate"
@@ -283,15 +303,6 @@
                                 android:imeOptions="actionNext"
                                 android:inputType="date" />
                         </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
-                        <!--                        <DatePicker-->
-                        <!--                            android:id="@+id/datePickerEndDateNotification"-->
-                        <!--                            android:layout_width="wrap_content"-->
-                        <!--                            android:layout_height="wrap_content"-->
-                        <!--                            android:layout_gravity="center_horizontal"-->
-                        <!--                            android:layout_marginHorizontal="@dimen/margin_16"-->
-                        <!--                            android:layout_marginTop="8dp"-->
-                        <!--                            android:calendarViewShown="false"-->
-                        <!--                            android:datePickerMode="spinner" />-->
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 

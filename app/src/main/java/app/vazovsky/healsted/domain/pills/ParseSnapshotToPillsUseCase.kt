@@ -4,6 +4,7 @@ import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.data.model.PillsTabSlot
 import app.vazovsky.healsted.domain.base.UseCaseUnary
 import app.vazovsky.healsted.extensions.orError
+import app.vazovsky.healsted.extensions.toDataClass
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.QuerySnapshot
 import javax.inject.Inject
@@ -14,8 +15,8 @@ class ParseSnapshotToPillsUseCase @Inject constructor() : UseCaseUnary<ParseSnap
     override suspend fun execute(params: Params): List<Pill> {
         val listOfPills = mutableListOf<Pill>()
         params.snapshot.documents.forEach { snapshot ->
-            val pillObject = snapshot.toObject(Pill::class.java)?.orError()
-            pillObject?.let { pill -> listOfPills.add(pill) }
+            val pill = snapshot.data?.toDataClass<Pill>().orError()
+            listOfPills.add(pill)
         }
         return when (params.slot) {
             PillsTabSlot.ACTIVE -> listOfPills.filter { it.endDate == null || it.endDate > Timestamp.now() }

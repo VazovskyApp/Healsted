@@ -14,7 +14,7 @@
         android:layout_marginStart="@dimen/error_state_animation_horizontal_margin"
         android:layout_marginEnd="@dimen/error_state_animation_horizontal_margin"
         app:layout_constraintBottom_toTopOf="@id/textErrorTitle"
-        app:layout_constraintDimensionRatio="260:222"
+        app:layout_constraintDimensionRatio="4:3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -59,10 +59,10 @@
         app:layout_goneMarginTop="24dp"
         tools:text="@string/error_internet_message" />
 
-    <!-- TODO сделать стиль кнопки -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonError"
         android:layout_width="wrap_content"
+        android:backgroundTint="@color/pillsCardBlue"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="@string/error_button_label"

@@ -18,7 +18,6 @@ import app.vazovsky.healsted.extensions.fitKeyboardInsetsWithPadding
 import app.vazovsky.healsted.extensions.orDefault
 import app.vazovsky.healsted.extensions.showErrorSnackbar
 import app.vazovsky.healsted.extensions.toOffsetDateTime
-import app.vazovsky.healsted.extensions.toStartOfDayTimestamp
 import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import app.vazovsky.healsted.presentation.pills.REQUEST_KEY
@@ -74,36 +73,57 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
 
     }
 
+    override fun applyBottomNavigationViewPadding(view: View, bottomNavigationViewHeight: Int) = with(binding) {
+        linearLayoutParametres.updatePadding(bottom = bottomNavigationViewHeight)
+    }
+
     private fun setConfirmClick() = with(binding) {
         buttonConfirm.setOnClickListener {
             setFragmentResult(REQUEST_KEY, bundleOf())
-            val newPill = pill?.let {
-                pill?.copy(
-                    name = editTextName.text.toString(),
-                    amount = editTextDosage.text.toString().toFloatOrNull().orDefault(),
-                    times = listOf(dateFormatter.parseTimeFromString(editTextTime.text.toString())),
-                    startDate = dateFormatter.parseDateFromString(editTextStartDate.text.toString()).toStartOfDayTimestamp(),
-                    endDate = if (switchEndDateEnabled.isChecked) {
-                        dateFormatter.parseDateFromString(editTextEndDate.text.toString()).toStartOfDayTimestamp()
-                    } else null,
-                    comment = editTextComment.text.toString(),
-                )
-            } ?: Pill(
-                name = editTextName.text.toString(),
-                amount = editTextDosage.text.toString().toFloatOrNull().orDefault(),
-                times = listOf(dateFormatter.parseTimeFromString(editTextTime.text.toString())),
-                startDate = dateFormatter.parseDateFromString(editTextStartDate.text.toString()).toStartOfDayTimestamp(),
-                endDate = if (switchEndDateEnabled.isChecked) {
-                    dateFormatter.parseDateFromString(editTextEndDate.text.toString()).toStartOfDayTimestamp()
-                } else null,
-                comment = editTextComment.text.toString(),
-            )
-            if (pill == null) viewModel.addPill(newPill) else viewModel.updatePill(newPill)
+
+            if (checkInputs()) {
+                try {
+                    val newPill = pill?.let {
+                        pill?.copy(
+                            name = editTextName.text.toString(),
+                            amount = editTextDosage.text.toString().toFloatOrNull().orDefault(),
+                            times = listOf(dateFormatter.parseTimeFromString(editTextTime.text.toString())),
+                            startDate = dateFormatter.parseDateFromString(editTextStartDate.text.toString()),
+                            datesTaken = spinnerDatesTakenType.selectedItem as DatesTakenType,
+                            takePillType = spinnerTakePillType.selectedItem as TakePillType,
+                            endDate = if (switchEndDateEnabled.isChecked) {
+                                dateFormatter.parseDateFromString(editTextEndDate.text.toString())
+                            } else null,
+                            comment = editTextComment.text.toString(),
+                        )
+                    } ?: Pill(
+                        name = editTextName.text.toString(),
+                        amount = editTextDosage.text.toString().toFloatOrNull().orDefault(),
+                        times = listOf(dateFormatter.parseTimeFromString(editTextTime.text.toString())),
+                        startDate = dateFormatter.parseDateFromString(editTextStartDate.text.toString()),
+                        datesTaken = spinnerDatesTakenType.selectedItem as DatesTakenType,
+                        takePillType = spinnerTakePillType.selectedItem as TakePillType,
+                        endDate = if (switchEndDateEnabled.isChecked) {
+                            dateFormatter.parseDateFromString(editTextEndDate.text.toString())
+                        } else null,
+                        comment = editTextComment.text.toString(),
+                    )
+                    if (pill == null) viewModel.addPill(newPill) else viewModel.updatePill(newPill)
+                } catch (e: Exception) {
+                    showErrorSnackbar(e.message.toString())
+                }
+            }
         }
     }
 
-    override fun applyBottomNavigationViewPadding(view: View, bottomNavigationViewHeight: Int) = with(binding) {
-        linearLayoutParametres.updatePadding(bottom = bottomNavigationViewHeight)
+    private fun checkInputs(): Boolean = with(binding) {
+        var validated = true
+        val listOfInputs = mutableListOf(textInputName, textInputDosage, textInputTime, textInputStartDate)
+        if (switchEndDateEnabled.isChecked) listOfInputs.add(textInputEndDate)
+        listOfInputs.forEach {
+            validated = validated.and(it.validate())
+        }
+        return@with validated
     }
 
     /** Настройка тулбара */
@@ -115,7 +135,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     /** Заполнение значений из Pill */
     private fun setupDataIfPillEsNotNull() = with(binding) {
         editTextName.setText(pill?.name.orDefault())
-        editTextDosage.setText(pill?.amount.orDefault().toString())
+        editTextDosage.setText(pill?.amount.orDefault(1F).toString())
         editTextTime.setText(dateFormatter.formatTime(pill?.times?.first().orDefault()))
         editTextStartDate.setText(dateFormatter.formatStandardDateFull(pill?.startDate.orDefault().toOffsetDateTime()))
         editTextEndDate.setText(dateFormatter.formatStandardDateFull(pill?.endDate.orDefault().toOffsetDateTime()))
@@ -123,19 +143,23 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     }
 
     private fun setDatesTakenType() = with(binding) {
+        val listOfDatesTakenType = DatesTakenType.values()
         spinnerDatesTakenType.adapter = ArrayAdapter(
-            requireContext(),
-            androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item,
-            DatesTakenType.values()
+            requireContext(), androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item, listOfDatesTakenType
         )
+        pill?.let { data ->
+            spinnerDatesTakenType.setSelection(listOfDatesTakenType.indexOf(data.datesTaken))
+        }
     }
 
     private fun setTakePillType() = with(binding) {
+        val listOfTakePillType = TakePillType.values()
         spinnerTakePillType.adapter = ArrayAdapter(
-            requireContext(),
-            androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item,
-            TakePillType.values()
+            requireContext(), androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item, listOfTakePillType
         )
+        pill?.let { data ->
+            spinnerTakePillType.setSelection(listOfTakePillType.indexOf(data.takePillType))
+        }
     }
 
     private fun setTimeNotification() = with(binding) {

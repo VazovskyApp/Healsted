@@ -57,6 +57,7 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
     private val monthShortFormat = SimpleDateFormat(MONTH_SHORT_TEMPLATE, defaultLocale)
     private val monthWithYearFormat = SimpleDateFormat(MONTH_YEAR_TEMPLATE, defaultLocale)
     private val timeSimpleFormat = SimpleDateFormat(TIME_TEMPLATE, defaultLocale)
+    private val dateSimpleFormat = SimpleDateFormat(STANDARD_DATE_TEMPLATE, defaultLocale)
 
     /**
      * Форматирует дату в формат
@@ -162,8 +163,9 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
         return formatTime(time.toOffsetDateTime().toOffsetTime())
     }
 
-    fun parseDateFromString(dateString: String): LocalDate {
-        return LocalDate.parse(dateString, DateTimeFormatter.ofPattern(STANDARD_DATE_FULL_TEMPLATE))
+    fun parseDateFromString(dateString: String): Timestamp {
+        val parseDate: Date? = dateSimpleFormat.parse(dateString)
+        return parseDate?.let { Timestamp(it) } ?: LocalDate.now().toStartOfDayTimestamp()
     }
 
     fun parseTimeFromString(timeString: String): Timestamp {
