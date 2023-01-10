@@ -3,7 +3,6 @@ package app.vazovsky.healsted.presentation.auth.login
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import app.vazovsky.healsted.R
-import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.databinding.FragmentLogInBinding
 import app.vazovsky.healsted.extensions.fitKeyboardInsetsWithPadding
 import app.vazovsky.healsted.extensions.showErrorSnackbar
@@ -12,7 +11,6 @@ import app.vazovsky.healsted.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,11 +53,8 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
         }
         task.addOnFailureListener { exception ->
             showErrorSnackbar(
-                message = if (exception is FirebaseAuthException) {
-                    firebaseAuthExceptionManager.getErrorMessage(exception)
-                } else {
-                    exception.localizedMessage
-                }
+                message = if (exception is FirebaseAuthException) firebaseAuthExceptionManager.getErrorMessage(exception)
+                else exception.localizedMessage
             )
         }
     }

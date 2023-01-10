@@ -7,6 +7,7 @@ import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.databinding.ItemTodayPillBinding
 import app.vazovsky.healsted.extensions.getColorIdFromPosition
 import app.vazovsky.healsted.extensions.inflate
+import app.vazovsky.healsted.extensions.toOffsetDateTime
 import by.kirich1409.viewbindingdelegate.viewBinding
 
 class TodayPillViewHolder(
@@ -25,6 +26,6 @@ class TodayPillViewHolder(
         // TODO формат
         textViewCount.text = item.amount.toString()
         // TODO время добавить адекватно
-        textViewTime.text = item.times?.firstOrNull()?.hour.toString()
+        textViewTime.text = item.times?.firstOrNull()?.toOffsetDateTime()?.hour.toString()
     }
 }

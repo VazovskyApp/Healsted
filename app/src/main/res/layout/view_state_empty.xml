@@ -33,6 +33,7 @@
         android:paddingTop="24dp"
         android:paddingEnd="@dimen/padding_8"
         android:textAppearance="@style/Font.Heading_1"
+        android:textColor="?colorOnBackground"
         app:layout_constraintBottom_toTopOf="@id/textEmptyComment"
         app:layout_constraintTop_toBottomOf="@id/animationViewEmpty"
         app:layout_goneMarginBottom="20dp"
@@ -49,7 +50,7 @@
         android:paddingEnd="@dimen/padding_8"
         android:paddingBottom="20dp"
         android:textAppearance="@style/Font.Body_1"
-        android:textColor="?android:textColorSecondary"
+        android:textColor="?colorOnBackground"
         app:layout_constraintBottom_toTopOf="@id/buttonEmpty"
         app:layout_constraintTop_toBottomOf="@+id/textEmptyTitle"
         tools:text="Но скоро появится" />

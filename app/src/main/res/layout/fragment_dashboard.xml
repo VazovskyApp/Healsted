@@ -99,13 +99,27 @@
                         android:textAppearance="@style/Font.Body_1"
                         android:textColor="@color/black" />
 
-                    <app.vazovsky.healsted.presentation.view.EmptyRecyclerView
-                        android:id="@+id/recyclerViewTodayPills"
+                    <FrameLayout
+                        android:id="@+id/frameLayoutTodayPills"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_20"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_today_pill" />
+                        android:layout_height="wrap_content">
+
+                        <app.vazovsky.healsted.presentation.view.EmptyRecyclerView
+                            android:id="@+id/recyclerViewTodayPills"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_20"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/item_today_pill" />
+
+                        <app.vazovsky.healsted.presentation.view.EmptyView
+                            android:id="@+id/emptyViewTodayPills"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="gone"
+                            app:emptyComment="@string/empty_default_message"
+                            app:emptyTitle="@string/empty_default_title" />
+                    </FrameLayout>
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </app.vazovsky.healsted.presentation.view.StateViewFlipper>

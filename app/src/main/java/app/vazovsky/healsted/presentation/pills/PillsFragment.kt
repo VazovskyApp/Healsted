@@ -79,14 +79,15 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
         recyclerViewTabs.addLinearSpaceItemDecoration(R.dimen.tabsSpace)
     }
 
-    private fun setupPills() = with(binding) {
-        recyclerViewPills.adapter = pillsAdapter.apply {
+    private fun setupPills() = with(binding.recyclerViewPills) {
+        adapter = pillsAdapter.apply {
             onItemClick = { pill ->
                 viewModel.openEditPill(pill)
             }
         }
-        recyclerViewPills.layoutManager = GridLayoutManager(requireContext(), 2)
-        recyclerViewPills.addDefaultGridSpaceItemDecoration(
+        emptyView = binding.emptyViewPills
+        layoutManager = GridLayoutManager(requireContext(), 2)
+        addDefaultGridSpaceItemDecoration(
             spanCount = 2,
             spacing = R.dimen.padding_16,
             includeEdge = true,

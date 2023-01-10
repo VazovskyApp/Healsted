@@ -5,16 +5,21 @@ import app.vazovsky.healsted.R
 import app.vazovsky.healsted.extensions.capitalizeFirstChar
 import app.vazovsky.healsted.extensions.toMillis
 import app.vazovsky.healsted.extensions.toOffsetDateTime
+import app.vazovsky.healsted.extensions.toStartOfDayTimestamp
+import app.vazovsky.healsted.extensions.toTimestamp
 import com.google.firebase.Timestamp
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.OffsetDateTime
+import java.time.OffsetTime
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.*
 import javax.inject.Inject
+import timber.log.Timber
 
 /** Пример: "07.06.21" */
 private const val STANDARD_DATE_TEMPLATE = "dd.MM.yy"
@@ -37,6 +42,9 @@ private const val MONTH_SHORT_TEMPLATE = "LLL"
 /** Пример: "март 2022" */
 private const val MONTH_YEAR_TEMPLATE = "LLLL yyyy"
 
+/** Пример: "20:23" */
+private const val TIME_TEMPLATE = "HH:mm"
+
 class DateFormatter @Inject constructor(@ApplicationContext val context: Context) {
 
     val defaultLocale = Locale.getDefault()
@@ -45,6 +53,7 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
     private val standardDateFullFormat = DateTimeFormatter.ofPattern(STANDARD_DATE_FULL_TEMPLATE, Locale.getDefault())
     private val reversedDateFullFormat = DateTimeFormatter.ofPattern(REVERSED_DATE_FULL_TEMPLATE, Locale.getDefault())
     private val dayFormat = DateTimeFormatter.ofPattern(DAY_TEMPLATE, Locale.getDefault())
+    private val timeFormat = DateTimeFormatter.ofPattern(TIME_TEMPLATE, Locale.getDefault())
 
     // Форматы L в java 8 показывают месяц цифрой
     private val monthFormat = SimpleDateFormat(MONTH_TEMPLATE, Locale.getDefault())
@@ -129,6 +138,39 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
      */
     fun formatDay(date: LocalDateTime): String {
         return dayFormat.format(date)
+    }
+
+    /**
+     * Форматирует дату в формат
+     * @see TIME_TEMPLATE
+     *
+     * Пример: "20:23"
+     */
+    fun formatTime(date: LocalDateTime): String {
+        return timeFormat.format(date)
+    }
+
+    /**
+     * Форматирует дату в формат
+     * @see TIME_TEMPLATE
+     *
+     * Пример: "20:23"
+     */
+    fun formatTime(date: OffsetTime): String {
+        return timeFormat.format(date)
+    }
+
+    fun formatTime(time: Timestamp): String {
+        return formatTime(time.toOffsetDateTime().toOffsetTime())
+    }
+
+    fun parseDateFromString(dateString: String): LocalDate {
+        return LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+    }
+
+    fun parseTimeFromString(timeString: String): Timestamp {
+        Timber.d("parse: ${LocalDateTime.parse(timeString, DateTimeFormatter.ofPattern(TIME_TEMPLATE, defaultLocale))}")
+        return LocalDateTime.parse(timeString, DateTimeFormatter.ofPattern(TIME_TEMPLATE)).toTimestamp()
     }
 
     /**

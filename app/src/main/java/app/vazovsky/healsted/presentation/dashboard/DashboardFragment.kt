@@ -109,12 +109,14 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     }
 
     override fun applyBottomNavigationViewPadding(view: View, bottomNavigationViewHeight: Int) = with(binding) {
-        linearLayoutContent.updatePadding(bottom = bottomNavigationViewHeight)
+        linearLayoutContent.updatePadding(
+            bottom = bottomNavigationViewHeight + resources.getDimensionPixelOffset(R.dimen.margin_20)
+        )
     }
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitTopInsetsWithPadding()
-        binding.stateViewFlipper.setRetryMethod { viewModel.getTodayPillsSnapshot(viewModel.selectedDate) }
+        stateViewFlipper.setRetryMethod { viewModel.getTodayPillsSnapshot(viewModel.selectedDate) }
 
         ratingBarMood.setRateChangeListener(object : EmojiRatingBar.OnRateChangeListener {
             override fun onRateChanged(rateStatus: MoodType) {
@@ -160,10 +162,11 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         })
     }
 
-    private fun setupRecyclerView() = with(binding) {
-        recyclerViewTodayPills.adapter = todayPillsAdapter.apply {
+    private fun setupRecyclerView() = with(binding.recyclerViewTodayPills) {
+        adapter = todayPillsAdapter.apply {
             onItemClick = { viewModel.openEditPill(it) }
         }
-        recyclerViewTodayPills.addLinearSpaceItemDecoration(R.dimen.padding_8)
+        emptyView = binding.emptyViewTodayPills
+        addLinearSpaceItemDecoration(R.dimen.padding_8)
     }
 }

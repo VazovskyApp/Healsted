@@ -23,6 +23,11 @@ class FirebaseProfileRepositoryImpl @Inject constructor(
         pill: Pill,
     ) = firebaseProfileService.addProfilePill(uid, pill)
 
+    override fun updateProfilePill(
+        uid: String,
+        pill: Pill,
+    ) = firebaseProfileService.updateProfilePill(uid, pill)
+
     override fun fetchProfilePills(uid: String) = firebaseProfileService.fetchProfilePills(uid)
 
     override fun addProfileMood(

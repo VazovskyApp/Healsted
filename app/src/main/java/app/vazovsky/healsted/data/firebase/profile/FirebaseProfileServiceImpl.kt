@@ -6,6 +6,7 @@ import app.vazovsky.healsted.data.model.MonitoringType
 import app.vazovsky.healsted.data.model.Mood
 import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.extensions.serializeToMap
+import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import javax.inject.Inject
@@ -30,7 +31,17 @@ class FirebaseProfileServiceImpl @Inject constructor(
     override fun addProfilePill(
         uid: String,
         pill: Pill,
-    ) = firestore.collection(PILLS_COLLECTION).document(uid).collection(PILLS_COLLECTION).document(pill.name).set(pill)
+    ) = firestore.collection(PILLS_COLLECTION).document(uid).collection(PILLS_COLLECTION).document(pill.id).set(pill)
+
+    override fun updateProfilePill(
+        uid: String,
+        pill: Pill,
+    ) = firestore
+        .collection(PILLS_COLLECTION)
+        .document(uid)
+        .collection(PILLS_COLLECTION)
+        .document(pill.id)
+        .update(pill.serializeToMap())
 
     override fun fetchProfilePills(
         uid: String,

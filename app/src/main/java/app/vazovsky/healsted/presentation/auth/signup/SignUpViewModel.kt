@@ -2,15 +2,16 @@ package app.vazovsky.healsted.presentation.auth.signup
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.data.model.User
 import app.vazovsky.healsted.data.model.base.LoadableResult
 import app.vazovsky.healsted.domain.auth.SaveAccountUseCase
-import app.vazovsky.healsted.domain.profile.SaveLoyaltyUseCase
-import app.vazovsky.healsted.domain.mood.SaveMoodUseCase
-import app.vazovsky.healsted.domain.pills.SavePillUseCase
 import app.vazovsky.healsted.domain.auth.SaveUserUseCase
 import app.vazovsky.healsted.domain.auth.SignUpUseCase
 import app.vazovsky.healsted.domain.base.UseCase
+import app.vazovsky.healsted.domain.mood.SaveMoodUseCase
+import app.vazovsky.healsted.domain.pills.SavePillUseCase
+import app.vazovsky.healsted.domain.profile.SaveLoyaltyUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -25,8 +26,6 @@ class SignUpViewModel @Inject constructor(
     private val saveAccountUseCase: SaveAccountUseCase,
     private val saveUserUseCase: SaveUserUseCase,
     private val saveLoyaltyUseCase: SaveLoyaltyUseCase,
-    private val savePillUseCase: SavePillUseCase,
-    private val saveMoodUseCase: SaveMoodUseCase,
 ) : BaseViewModel() {
 
     /** Получение результата регистрации */
@@ -45,13 +44,6 @@ class SignUpViewModel @Inject constructor(
     private val _saveLoyaltyLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
     val saveLoyaltyLiveData: LiveData<LoadableResult<Task<Void>>> = _saveLoyaltyLiveData
 
-    /** Добавление пустого списка таблеток для аккаунта */
-    private val _savePillsLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
-    val savePillsLiveData: LiveData<LoadableResult<Task<Void>>> = _savePillsLiveData
-
-    /** Добавление настроений для аккаунта */
-    private val _saveMoodsLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
-    val saveMoodsLiveData: LiveData<LoadableResult<Task<Void>>> = _saveMoodsLiveData
 
     /** Зарегистрироваться */
     fun signUp(email: String, password: String) {
@@ -109,20 +101,6 @@ class SignUpViewModel @Inject constructor(
     fun saveLoyalty() {
         _saveLoyaltyLiveData.launchLoadData(
             saveLoyaltyUseCase.executeFlow(UseCase.None)
-        )
-    }
-
-    /** Добавить пустой список таблеток */
-    fun savePills() {
-        _savePillsLiveData.launchLoadData(
-            savePillUseCase.executeFlow(UseCase.None)
-        )
-    }
-
-    /** Добавить пустой список настроений */
-    fun saveMoods() {
-        _saveMoodsLiveData.launchLoadData(
-            saveMoodUseCase.executeFlow(UseCase.None)
         )
     }
 

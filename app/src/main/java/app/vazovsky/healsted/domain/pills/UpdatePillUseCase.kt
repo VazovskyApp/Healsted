@@ -9,17 +9,17 @@ import app.vazovsky.healsted.extensions.orDefault
 import com.google.android.gms.tasks.Task
 import javax.inject.Inject
 
-/** Добавление лекарства  */
-class SavePillUseCase @Inject constructor(
+/** Обновить данные о лекарстве */
+class UpdatePillUseCase @Inject constructor(
     private val firebaseProfileRepository: FirebaseProfileRepository,
     private val authRepository: AuthRepository,
     private val firebaseAuthRepository: FirebaseAuthRepository,
-) : UseCaseUnary<SavePillUseCase.Params, Task<Void>>() {
+) : UseCaseUnary<UpdatePillUseCase.Params, Task<Void>>() {
 
     override suspend fun execute(params: Params): Task<Void> {
         val uid = firebaseAuthRepository.getCurrentUserUid() ?: authRepository.getCurrentUserUid().orDefault()
 
-        return firebaseProfileRepository.addProfilePill(uid, params.pill)
+        return firebaseProfileRepository.updateProfilePill(uid, params.pill)
     }
 
     data class Params(
