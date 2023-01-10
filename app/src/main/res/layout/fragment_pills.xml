@@ -63,9 +63,11 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_16"
                 android:contentDescription="@null"
+                app:backgroundTint="?colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/ic_plus" />
+                app:srcCompat="@drawable/ic_plus"
+                app:tint="?colorOnPrimary" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </app.vazovsky.healsted.presentation.view.StateViewFlipper>

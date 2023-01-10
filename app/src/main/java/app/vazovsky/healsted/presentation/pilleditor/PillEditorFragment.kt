@@ -3,8 +3,10 @@ package app.vazovsky.healsted.presentation.pilleditor
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import app.vazovsky.healsted.R
@@ -19,10 +21,10 @@ import app.vazovsky.healsted.extensions.toOffsetDateTime
 import app.vazovsky.healsted.extensions.toStartOfDayTimestamp
 import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.base.BaseFragment
+import app.vazovsky.healsted.presentation.pills.REQUEST_KEY
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import timber.log.Timber
 
 /** Экран редактирования или добавления лекарства */
 @AndroidEntryPoint
@@ -74,6 +76,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
 
     private fun setConfirmClick() = with(binding) {
         buttonConfirm.setOnClickListener {
+            setFragmentResult(REQUEST_KEY, bundleOf())
             val newPill = pill?.let {
                 pill?.copy(
                     name = editTextName.text.toString(),
@@ -95,7 +98,6 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                 } else null,
                 comment = editTextComment.text.toString(),
             )
-            Timber.d(newPill.toString())
             if (pill == null) viewModel.addPill(newPill) else viewModel.updatePill(newPill)
         }
     }

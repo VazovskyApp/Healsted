@@ -23,6 +23,8 @@ class PillsViewModel @Inject constructor(
     private val parseSnapshotToPillsUseCase: ParseSnapshotToPillsUseCase,
 ) : BaseViewModel() {
 
+    var selectedPillTab: PillsTabSlot = PillsTabSlot.ALL
+
     /** Табы */
     private val _tabsLiveData = MutableLiveData<LoadableResult<List<PillsTab>>>()
     val tabsLiveData: LiveData<LoadableResult<List<PillsTab>>> = _tabsLiveData

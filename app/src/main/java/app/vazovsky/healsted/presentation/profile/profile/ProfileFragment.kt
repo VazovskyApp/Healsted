@@ -12,7 +12,6 @@ import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 /** Экран с информацией об аккаунте */
 @AndroidEntryPoint
@@ -34,29 +33,25 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             result.doOnSuccess { task ->
                 task.addOnSuccessListener { snapshot ->
                     viewModel.getProfile(snapshot)
-                    Timber.d("PROFILE SNAPSHOT: $snapshot")
                 }
             }
         }
         profileLiveData.observe { result ->
             result.doOnSuccess { account ->
                 bindProfile(account)
-                Timber.d("PROFILE: $account")
             }
         }
         loyaltySnapshotLiveData.observe { result ->
-            binding.stateViewFlipper.setStateFromResult(result)
             result.doOnSuccess { task ->
                 task.addOnSuccessListener { snapshot ->
                     viewModel.getLoyalty(snapshot)
-                    Timber.d("LOYALTY SNAPSHOT: $snapshot")
                 }
             }
         }
         loyaltyLiveData.observe { result ->
+            binding.stateViewFlipper.setStateFromResult(result)
             result.doOnSuccess { loyalty ->
                 bindLoyalty(loyalty)
-                Timber.d("LOYALTY: $loyalty")
             }
         }
     }

@@ -3,6 +3,7 @@ package app.vazovsky.healsted.presentation.pills
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.updatePadding
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import app.vazovsky.healsted.R
@@ -16,6 +17,8 @@ import app.vazovsky.healsted.presentation.pills.tab.PillsTabsAdapter
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
+const val REQUEST_KEY = "request_key"
 
 /** Экран со списками всех лекарств */
 @AndroidEntryPoint
@@ -59,6 +62,10 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitTopInsetsWithPadding()
 
+        setFragmentResultListener(REQUEST_KEY) { _, _ ->
+            viewModel.getPillsSnapshot(viewModel.selectedPillTab)
+        }
+
         setupTabs()
         setupPills()
         fabAddPill.setOnClickListener {
@@ -73,6 +80,7 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
     private fun setupTabs() = with(binding) {
         recyclerViewTabs.adapter = pillsTabsAdapter.apply {
             onItemClick = {
+                viewModel.selectedPillTab = it.slot
                 viewModel.onTabClick(it)
             }
         }
