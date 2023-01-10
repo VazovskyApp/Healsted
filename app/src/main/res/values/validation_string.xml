@@ -24,4 +24,8 @@
     <string name="malformed_date_error">Неверный формат даты. Нужно в виде 17.03.1999</string>
     <string name="empty_date_error">Введите дату.</string>
     <string name="date_validation_pattern">^(0?[1-9]|[12][0-9]|3[01])[- /.](0?[1-9]|1[012])[- /.](19|20)?[0-9]{2}$</string>
+
+    <string name="malformed_password_error">Пароль должен содержать от 6 до 20 символов, хотя бы одну заглавную, одну строчную букву и цифру.</string>
+    <string name="empty_password_error">Введите пароль.</string>
+    <string name="password_validation_pattern">^[a-zA-Z0-9]{6,20}$</string>
 </resources>

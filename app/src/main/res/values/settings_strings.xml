@@ -4,7 +4,7 @@
     <string name="settings_account_title">Редактировать аккаунт</string>
     <string name="settings_account_save">Сохранить</string>
     <string name="settings_account_birthday">День рождения</string>
-    <string name="settings_account_birthday_hint">17.03.1999</string>
+    <string name="settings_account_birthday_hint">Дата рождения</string>
     <string name="settings_account_phone">Номер телефона</string>
     <string name="settings_account_nickname">Никнейм</string>
     <string name="settings_account_nickname_hint">Никнейм</string>

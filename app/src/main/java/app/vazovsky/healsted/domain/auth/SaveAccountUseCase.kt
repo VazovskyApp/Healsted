@@ -4,7 +4,7 @@ import app.vazovsky.healsted.data.firebase.auth.FirebaseAuthRepository
 import app.vazovsky.healsted.data.model.User
 import app.vazovsky.healsted.domain.base.UseCaseUnary
 import com.google.android.gms.tasks.Task
-import java.time.LocalDate
+import com.google.firebase.Timestamp
 import javax.inject.Inject
 
 /** Сохранение аккаунта в FireStore */
@@ -32,7 +32,7 @@ class SaveAccountUseCase @Inject constructor(
         val name: String,
         val surname: String,
         val patronymic: String,
-        val birthday: LocalDate?,
+        val birthday: Timestamp?,
         val avatar: String?,
     )
 }

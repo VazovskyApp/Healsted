@@ -33,16 +33,10 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
             result.doOnSuccess { task ->
                 setLogInTask(task)
             }
-            result.doOnFailure {
-                Timber.d(it.message)
-            }
         }
         accountLiveData.observe { result ->
             result.doOnSuccess { task ->
                 setAccountTask(task)
-            }
-            result.doOnFailure {
-                Timber.d(it.message)
             }
         }
     }
@@ -83,14 +77,21 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
 
     private fun setupLogIn() = with(binding) {
         buttonConfirm.setOnClickListener {
+
             val email = editTextEmail.text.toString()
             val password = editTextPassword.text.toString()
 
-            if (email.isBlank() || password.isBlank()) {
-                showErrorSnackbar(message = requireContext().getString(R.string.auth_empty_data))
-            } else {
+            if (checkInputs()) {
                 viewModel.logIn(email, password)
             }
         }
+    }
+
+    private fun checkInputs(): Boolean = with(binding) {
+        var validated = true
+        listOf(textInputEmail, textInputPassword).forEach {
+            validated = validated.and(it.validate())
+        }
+        return@with validated
     }
 }

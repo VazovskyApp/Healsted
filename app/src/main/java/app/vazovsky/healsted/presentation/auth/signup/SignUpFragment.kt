@@ -131,15 +131,20 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
 
     private fun setupSignUp() = with(binding) {
         buttonConfirm.setOnClickListener {
-            val nickname = editTextNickname.text.toString()
             val email = editTextEmail.text.toString()
             val password = editTextPassword.text.toString()
 
-            if (nickname.isBlank() || email.isBlank() || password.isBlank()) {
-                showErrorSnackbar(message = requireContext().getString(R.string.auth_empty_data))
-            } else {
+            if (checkInputs()) {
                 viewModel.signUp(email, password)
             }
         }
+    }
+
+    private fun checkInputs(): Boolean = with(binding) {
+        var validated = true
+        listOf(textInputEmail, textInputNickname, textInputPassword).forEach {
+            validated = validated.and(it.validate())
+        }
+        return@with validated
     }
 }

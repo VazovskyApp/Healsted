@@ -2,13 +2,12 @@ package app.vazovsky.healsted.data.firebase.auth
 
 import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.User
+import app.vazovsky.healsted.extensions.serializeToMap
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
-import java.time.LocalDate
 import javax.inject.Inject
 
 const val USERS_COLLECTION = "users"
@@ -55,7 +54,7 @@ class FirebaseAuthServiceImpl @Inject constructor(
         name: String,
         surname: String,
         patronymic: String,
-        birthday: LocalDate?,
+        birthday: Timestamp?,
         avatar: String?,
     ) = firestore.collection(ACCOUNTS_COLLECTION).document(uid).set(
         Account(
@@ -69,6 +68,11 @@ class FirebaseAuthServiceImpl @Inject constructor(
         )
     )
 
+    override fun updateAccount(
+        uid: String,
+        account: Account,
+    ) = firestore.collection(ACCOUNTS_COLLECTION).document(uid).update(account.serializeToMap())
+
     override fun fetchAccount(
         uid: String
     ) = firestore.collection(ACCOUNTS_COLLECTION).document(uid).get()
@@ -76,12 +80,6 @@ class FirebaseAuthServiceImpl @Inject constructor(
     override fun fetchUsers() = firestore.collection(USERS_COLLECTION).get()
 
     override fun fetchAccounts() = firestore.collection(ACCOUNTS_COLLECTION).get()
-
-    /** Тут скорей всего update */
-    override fun editAccount(account: Account) = firestore
-        .collection(ACCOUNTS_COLLECTION)
-        .document(account.accountHolder.email)
-        .set(account)
 
     override fun sendForgotPassword(email: String) = firebaseAuth.sendPasswordResetEmail(email)
 }

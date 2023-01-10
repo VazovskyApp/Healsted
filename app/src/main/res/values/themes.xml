@@ -19,5 +19,6 @@
         <item name="android:colorBackground">@color/hanPurple</item>
         <item name="android:textColor">@color/white</item>
         <item name="errorSnackbarBackgroundColor">@color/folly</item>
+        <item name="infoSnackbarBackgroundColor">@color/pillsCardGreen</item>
     </style>
 </resources>

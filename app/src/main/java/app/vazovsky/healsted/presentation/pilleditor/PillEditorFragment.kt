@@ -48,12 +48,6 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                 task.addOnSuccessListener {
                     viewModel.navigateBack()
                 }
-                task.addOnFailureListener { exception ->
-                    showErrorSnackbar(exception.message.toString())
-                }
-            }
-            result.doOnFailure {
-                showErrorSnackbar(it.message)
             }
         }
     }

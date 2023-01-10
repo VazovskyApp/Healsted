@@ -4,10 +4,10 @@ import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.User
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
-import java.time.LocalDate
 
 interface FirebaseAuthService {
 
@@ -42,17 +42,17 @@ interface FirebaseAuthService {
         name: String = "",
         surname: String = "",
         patronymic: String = "",
-        birthday: LocalDate?,
+        birthday: Timestamp?,
         avatar: String?,
     ): Task<Void>
+
+    fun updateAccount(uid: String, account: Account): Task<Void>
 
     fun fetchAccount(uid: String): Task<DocumentSnapshot>
 
     fun fetchUsers(): Task<QuerySnapshot>
 
     fun fetchAccounts(): Task<QuerySnapshot>
-
-    fun editAccount(account: Account): Task<Void>
 
     fun sendForgotPassword(email: String): Task<Void>
 }

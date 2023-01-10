@@ -45,4 +45,5 @@
     </declare-styleable>
 
     <attr name="errorSnackbarBackgroundColor" format="reference|color" />
+    <attr name="infoSnackbarBackgroundColor" format="reference|color" />
 </resources>

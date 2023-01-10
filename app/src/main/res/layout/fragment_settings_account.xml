@@ -18,109 +18,126 @@
             app:title="@string/settings_account_title"
             app:titleTextAppearance="@style/Font.Heading_1.Black" />
     </com.google.android.material.appbar.AppBarLayout>
-    <!-- Todo сделать больше параметров -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <app.vazovsky.healsted.presentation.view.StateViewFlipper
+        android:id="@+id/stateViewFlipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <!-- Todo сделать обводку -->
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageViewAvatar"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/CircleShape" />
-
-        <!-- Todo сделать красивее -->
-        <com.google.android.material.imageview.ShapeableImageView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            app:layout_constraintBottom_toBottomOf="@id/imageViewAvatar"
-            app:layout_constraintEnd_toEndOf="@id/imageViewAvatar"
-            app:shapeAppearanceOverlay="@style/CircleShape"
-            app:srcCompat="@drawable/bg_edit" />
-
-        <TextView
-            android:id="@+id/textViewNickname"
+        <!-- Todo сделать больше параметров -->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_marginTop="20dp"
-            android:text="@string/settings_account_nickname"
-            android:textAppearance="@style/Font.Heading_3.Medium"
-            app:layout_constraintTop_toBottomOf="@id/imageViewAvatar" />
+            android:layout_height="match_parent">
+            <!-- Todo сделать обводку -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageViewAvatar"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/CircleShape" />
 
-        <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
-            android:id="@+id/textInputNickname"
-            style="@style/TextInputLayoutTheme"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/textViewNickname">
+            <!-- Todo сделать красивее -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:layout_constraintBottom_toBottomOf="@id/imageViewAvatar"
+                app:layout_constraintEnd_toEndOf="@id/imageViewAvatar"
+                app:shapeAppearanceOverlay="@style/CircleShape"
+                app:srcCompat="@drawable/bg_edit" />
 
-            <EditText
-                android:id="@+id/editTextNickname"
+            <TextView
+                android:id="@+id/textViewNickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_16"
-                android:layout_marginTop="8dp"
-                android:hint="@string/auth_nickname_hint"
-                android:imeOptions="actionNext"
-                android:inputType="text"
-                android:textAppearance="@style/Font.Body_1.Bold"
-                app:layout_constraintTop_toBottomOf="@id/textViewNickname" />
-        </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+                android:layout_marginTop="20dp"
+                android:text="@string/settings_account_nickname"
+                android:textAppearance="@style/Font.Heading_3.Medium"
+                app:layout_constraintTop_toBottomOf="@id/imageViewAvatar" />
 
-        <TextView
-            android:id="@+id/textViewBirthday"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_marginTop="20dp"
-            android:text="@string/settings_account_birthday"
-            android:textAppearance="@style/Font.Heading_3.Medium"
-            app:layout_constraintTop_toBottomOf="@id/textInputNickname" />
+            <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
+                android:id="@+id/textInputNickname"
+                style="@style/TextInputLayoutTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:emptyCheck="true"
+                app:errorEmpty="Введите никнейм"
+                app:errorMalformed="@string/malformed_field_error"
+                app:layout_constraintTop_toBottomOf="@id/textViewNickname"
+                app:validationPattern="@string/text_validation_pattern">
 
-        <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
-            android:id="@+id/textInputLayoutBirthday"
-            style="@style/TextInputLayoutTheme"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/textViewBirthday">
+                <EditText
+                    android:id="@+id/editTextNickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/auth_nickname_hint"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:textAppearance="@style/Font.Body_1.Bold"
+                    app:layout_constraintTop_toBottomOf="@id/textViewNickname" />
+            </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
 
-            <EditText
-                android:id="@+id/editTextBirthday"
+            <TextView
+                android:id="@+id/textViewBirthday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_16"
-                android:layout_marginTop="8dp"
-                android:hint="@string/settings_account_birthday_hint"
-                android:imeOptions="actionDone"
-                android:inputType="date"
-                android:textAppearance="@style/Font.Body_1.Bold"
-                app:layout_constraintTop_toBottomOf="@id/textViewBirthday" />
-        </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+                android:layout_marginTop="20dp"
+                android:text="@string/settings_account_birthday"
+                android:textAppearance="@style/Font.Heading_3.Medium"
+                app:layout_constraintTop_toBottomOf="@id/textInputNickname" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonSave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_16"
-            android:backgroundTint="?colorOnPrimary"
-            android:padding="16dp"
-            android:text="@string/settings_account_save"
-            android:textAllCaps="true"
-            android:textAppearance="@style/Font.Body_1.Bold"
-            android:textColor="?colorOnBackground"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextBirthday"
-            app:layout_constraintVertical_bias="1" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
+                android:id="@+id/textInputBirthday"
+                style="@style/TextInputLayoutTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:emptyCheck="true"
+                app:errorEmpty="@string/empty_date_error"
+                app:errorMalformed="@string/malformed_date_error"
+                app:layout_constraintTop_toBottomOf="@id/textViewBirthday"
+                app:validationPattern="@string/date_validation_pattern">
+
+                <EditText
+                    android:id="@+id/editTextBirthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/settings_account_birthday_hint"
+                    android:imeOptions="actionDone"
+                    android:inputType="date"
+                    android:textAppearance="@style/Font.Body_1.Bold"
+                    app:layout_constraintTop_toBottomOf="@id/textViewBirthday" />
+            </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_16"
+                android:backgroundTint="?colorOnPrimary"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="16dp"
+                android:text="@string/settings_account_save"
+                android:textAllCaps="true"
+                android:textAppearance="@style/Font.Body_1.Bold"
+                android:textColor="?colorOnBackground"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textInputBirthday"
+                app:layout_constraintVertical_bias="1" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </app.vazovsky.healsted.presentation.view.StateViewFlipper>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

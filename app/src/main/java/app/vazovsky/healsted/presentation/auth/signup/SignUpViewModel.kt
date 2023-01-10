@@ -14,6 +14,7 @@ import app.vazovsky.healsted.domain.pills.SavePillUseCase
 import app.vazovsky.healsted.domain.profile.SaveLoyaltyUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.AuthResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.time.LocalDate
@@ -78,7 +79,7 @@ class SignUpViewModel @Inject constructor(
         name: String = "",
         surname: String = "",
         patronymic: String = "",
-        birthday: LocalDate? = null,
+        birthday: Timestamp? = null,
         avatar: String? = null,
     ) {
         _saveAccountLiveData.launchLoadData(

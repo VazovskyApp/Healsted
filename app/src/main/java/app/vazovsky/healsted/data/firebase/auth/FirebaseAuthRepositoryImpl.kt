@@ -3,9 +3,7 @@ package app.vazovsky.healsted.data.firebase.auth
 import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.User
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
-import java.time.LocalDate
+import com.google.firebase.Timestamp
 import javax.inject.Inject
 
 class FirebaseAuthRepositoryImpl @Inject constructor(
@@ -39,7 +37,7 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
         name: String,
         surname: String,
         patronymic: String,
-        birthday: LocalDate?,
+        birthday: Timestamp?,
         avatar: String?,
     ) = firebaseAuthService.saveAccount(
         uid = uid,
@@ -52,12 +50,16 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
         avatar = avatar,
     )
 
+    override fun updateAccount(
+        uid: String,
+        account: Account,
+    ) = firebaseAuthService.updateAccount(uid, account)
+
     override fun fetchAccount(uid: String) = firebaseAuthService.fetchAccount(uid)
 
     override fun fetchUsers() = firebaseAuthService.fetchUsers()
 
     override fun fetchAccounts() = firebaseAuthService.fetchAccounts()
-    override fun editAccount(account: Account): Task<Void> = firebaseAuthService.editAccount(account)
 
     override fun sendForgotPassword(email: String) = firebaseAuthService.sendForgotPassword(email)
 }

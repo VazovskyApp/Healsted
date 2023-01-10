@@ -1,7 +1,7 @@
 package app.vazovsky.healsted.data.model
 
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.PropertyName
-import java.time.LocalDate
 
 /** Данные об аккаунте */
 data class Account(
@@ -10,6 +10,6 @@ data class Account(
     @PropertyName("name") val name: String = "",
     @PropertyName("surname") val surname: String = "",
     @PropertyName("patronymic") val patronymic: String = "",
-    @PropertyName("birthday") val birthday: LocalDate? = null,
+    @PropertyName("birthday") val birthday: Timestamp? = null,
     @PropertyName("avatar") val avatar: String? = null,
 )

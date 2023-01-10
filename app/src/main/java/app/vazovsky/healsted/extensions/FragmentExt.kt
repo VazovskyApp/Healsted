@@ -40,6 +40,24 @@ fun Fragment.showErrorSnackbar(
     )
 }
 
+fun Fragment.showInfoSnackbar(
+    message: String,
+    actionText: String? = null,
+    @Px marginBottom: Int = 0,
+    textMaxLines: Int = DEFAULT_SNACK_BAR_TEXT_MAX_LINES,
+    action: () -> Unit = {},
+) {
+    showCustomSnackbar(
+        view = if (this is BottomSheetDialogFragment) dialog?.window?.decorView else view,
+        message = message,
+        actionText = actionText,
+        marginBottom = marginBottom,
+        backgroundTintAttrRes = R.attr.infoSnackbarBackgroundColor,
+        textMaxLines = textMaxLines,
+        action = action,
+    )
+}
+
 fun Activity.showSnackbar(
     view: View?,
     message: String,
