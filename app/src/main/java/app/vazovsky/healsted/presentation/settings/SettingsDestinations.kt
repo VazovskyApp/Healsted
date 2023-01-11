@@ -4,10 +4,6 @@ import app.vazovsky.healsted.presentation.base.NavigationCommand
 import javax.inject.Inject
 
 class SettingsDestinations @Inject constructor() {
-    fun auth() = NavigationCommand.To(
-        SettingsFragmentDirections.actionSettingsFragmentToAuthGraph(),
-    )
-
     fun account() = NavigationCommand.To(
         SettingsFragmentDirections.actionSettingsFragmentToSettingsAccountFragment()
     )

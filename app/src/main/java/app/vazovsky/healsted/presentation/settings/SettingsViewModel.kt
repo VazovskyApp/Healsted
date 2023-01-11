@@ -15,6 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val destinations: SettingsDestinations,
+    private val outDestinations: SettingsOutDestinations,
     private val getSettingsUseCase: GetSettingsUseCase,
     private val signOutUseCase: SignOutUseCase,
 ) : BaseViewModel() {
@@ -35,7 +36,7 @@ class SettingsViewModel @Inject constructor(
 
     /** Открыть авторизацию */
     fun openAuth() {
-        navigate(destinations.auth())
+        navigate(outDestinations.auth())
     }
 
     /** Открыть настройки аккаунта */

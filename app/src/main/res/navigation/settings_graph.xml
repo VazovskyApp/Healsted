@@ -5,16 +5,11 @@
     android:id="@+id/settings_graph"
     app:startDestination="@id/settingsFragment">
 
-    <include app:graph="@navigation/auth_graph" />
-
     <fragment
         android:id="@+id/settingsFragment"
         android:name="app.vazovsky.healsted.presentation.settings.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/fragment_settings">
-        <action
-            android:id="@+id/action_settingsFragment_to_auth_graph"
-            app:destination="@id/auth_graph" />
         <action
             android:id="@+id/action_settingsFragment_to_settingsAboutUsFragment"
             app:destination="@id/settingsAboutUsFragment" />
@@ -38,11 +33,7 @@
         android:id="@+id/settingsAccountFragment"
         android:name="app.vazovsky.healsted.presentation.settings.account.SettingsAccountFragment"
         android:label="SettingsAccountFragment"
-        tools:layout="@layout/fragment_settings_account" >
-        <action
-            android:id="@+id/action_settingsAccountFragment_to_auth_graph"
-            app:destination="@id/auth_graph" />
-    </fragment>
+        tools:layout="@layout/fragment_settings_account" />
     <fragment
         android:id="@+id/settingsAboutUsFragment"
         android:name="app.vazovsky.healsted.presentation.settings.aboutus.SettingsAboutUsFragment"

@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsAccountViewModel @Inject constructor(
-    private val destinations: SettingsAccountDestinations,
+    private val outDestinations: SettingsAccountOutDestinations,
     private val getProfileUseCase: GetProfileUseCase,
     private val parseSnapshotToProfileUseCase: ParseSnapshotToProfileUseCase,
     private val editAccountUseCase: EditAccountUseCase,
@@ -45,7 +45,6 @@ class SettingsAccountViewModel @Inject constructor(
     /** Удаление аккаунта из Firebase */
     private val _deleteAccountFirebaseLiveData = MutableLiveData<LoadableResult<DeleteAccountUseCase.Result>>()
     val deleteAccountFirebaseLiveData: LiveData<LoadableResult<DeleteAccountUseCase.Result>> = _deleteAccountFirebaseLiveData
-
 
 
     /** Получить профиль в виде DocumentSnapshot */
@@ -83,7 +82,7 @@ class SettingsAccountViewModel @Inject constructor(
         )
     }
 
-    fun openAuth(){
-        navigate(destinations.auth())
+    fun openAuth() {
+        navigate(outDestinations.auth())
     }
 }

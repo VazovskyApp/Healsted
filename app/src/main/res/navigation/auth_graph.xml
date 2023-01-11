@@ -5,6 +5,7 @@
     android:id="@+id/auth_graph"
     app:startDestination="@id/authFragment">
 
+    <deepLink app:uri="@string/deep_link_auth_graph"/>
     <include app:graph="@navigation/dashboard_graph" />
 
     <fragment
