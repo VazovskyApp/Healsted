@@ -223,7 +223,7 @@
                     android:textAppearance="@style/Font.Body_1.Bold"
                     app:layout_constraintBottom_toTopOf="@id/buttonDelete"
                     app:layout_constraintTop_toBottomOf="@id/textInputBirthday" />
-
+                <!-- TODO убрать кнопку подальше, а то нажать можно случайно -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonDelete"
                     android:layout_width="match_parent"

@@ -6,12 +6,10 @@ import app.vazovsky.healsted.data.firebase.profile.FirebaseProfileRepository
 import app.vazovsky.healsted.data.firebase.profile.FirebaseProfileRepositoryImpl
 import app.vazovsky.healsted.data.repository.AuthRepository
 import app.vazovsky.healsted.data.repository.AuthRepositoryImpl
-import app.vazovsky.healsted.data.repository.DashboardRepository
-import app.vazovsky.healsted.data.repository.DashboardRepositoryImpl
-import app.vazovsky.healsted.data.repository.HealthRepository
-import app.vazovsky.healsted.data.repository.HealthRepositoryImpl
 import app.vazovsky.healsted.data.repository.PillsRepository
 import app.vazovsky.healsted.data.repository.PillsRepositoryImpl
+import app.vazovsky.healsted.data.repository.RoomRepository
+import app.vazovsky.healsted.data.repository.RoomRepositoryImpl
 import app.vazovsky.healsted.data.repository.SettingsRepository
 import app.vazovsky.healsted.data.repository.SettingsRepositoryImpl
 import dagger.Binds
@@ -35,16 +33,6 @@ abstract class RepositoryModule {
     ): PillsRepository
 
     @Binds
-    abstract fun bindDashboardRepository(
-        dashboardRepository: DashboardRepositoryImpl
-    ): DashboardRepository
-
-    @Binds
-    abstract fun bindHealthRepository(
-        healthRepository: HealthRepositoryImpl
-    ): HealthRepository
-
-    @Binds
     abstract fun bindSettingsRepository(
         settingsRepository: SettingsRepositoryImpl
     ): SettingsRepository
@@ -58,4 +46,9 @@ abstract class RepositoryModule {
     abstract fun bindFirebaseProfileRepository(
         firebaseProfileRepository: FirebaseProfileRepositoryImpl
     ): FirebaseProfileRepository
+
+    @Binds
+    abstract fun bindRoomRepository(
+        roomRepository: RoomRepositoryImpl
+    ): RoomRepository
 }

@@ -86,4 +86,8 @@ dependencies {
 
     implementation(libs.bubble.tab.bar)
     implementation(libs.decoro)
+
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    kapt(libs.room.compiler)
 }
