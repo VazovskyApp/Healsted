@@ -126,14 +126,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_16"
-                android:backgroundTint="?colorOnPrimary"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="16dp"
                 android:text="@string/settings_account_save"
                 android:textAllCaps="true"
                 android:textAppearance="@style/Font.Body_1.Bold"
-                android:textColor="?colorOnBackground"
+                app:layout_constraintBottom_toTopOf="@id/buttonDelete" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonDelete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_16"
+                android:backgroundTint="@color/pillsCardRed"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="16dp"
+                android:text="@string/settings_account_save"
+                android:textAllCaps="true"
+                android:textAppearance="@style/Font.Body_1.Bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textInputBirthday"
                 app:layout_constraintVertical_bias="1" />

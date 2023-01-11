@@ -29,6 +29,8 @@ interface FirebaseAuthService {
 
     fun logOut()
 
+    fun deleteAccountFromFirebaseAuth(): Task<Void>?
+
     fun saveUser(
         uid: String,
         email: String,
@@ -47,6 +49,8 @@ interface FirebaseAuthService {
     ): Task<Void>
 
     fun updateAccount(uid: String, account: Account): Task<Void>
+
+    fun deleteAccount(uid: String): Task<Void>
 
     fun fetchAccount(uid: String): Task<DocumentSnapshot>
 

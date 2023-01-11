@@ -61,6 +61,16 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
                 showErrorSnackbar("Не удалось обновить профиль")
             }
         }
+        deleteAccountFirebaseLiveData.observe { result ->
+            result.doOnSuccess {
+                viewModel.deleteAccountFireStore()
+            }
+        }
+        deleteAccountFireStoreLiveData.observe { result ->
+            result.doOnSuccess {
+                viewModel.openAuth()
+            }
+        }
     }
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
@@ -68,6 +78,7 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
         toolbar.setNavigationOnClickListener { viewModel.navigateBack() }
 
         setupConfirm()
+        setupDelete()
     }
 
     private fun bindProfile(account: Account) = with(binding) {
@@ -89,6 +100,12 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
                     viewModel.updateAccount(editedAccount)
                 }
             }
+        }
+    }
+
+    private fun setupDelete() = with(binding) {
+        buttonDelete.setOnClickListener {
+            viewModel.deleteAccountFirebase()
         }
     }
 

@@ -21,21 +21,29 @@ class FirebaseAuthServiceImpl @Inject constructor(
 
 
     override fun signUpUser(
-        email: String, password: String
+        email: String,
+        password: String,
     ) = firebaseAuth.createUserWithEmailAndPassword(email, password)
 
 
     override fun signInUser(
-        email: String, password: String
+        email: String,
+        password: String,
     ) = firebaseAuth.signInWithEmailAndPassword(email, password)
 
 
     override fun signInWithGoogle(account: GoogleSignInAccount) =
-        firebaseAuth.signInWithCredential(GoogleAuthProvider.getCredential(account.idToken, null))
+        firebaseAuth.signInWithCredential(
+            GoogleAuthProvider.getCredential(
+                account.idToken,
+                null
+            )
+        )
 
     override fun logOut() = firebaseAuth.signOut()
 
-
+    /** TODO не удаляется аккаунт из Firebase */
+    override fun deleteAccountFromFirebaseAuth() = firebaseAuth.currentUser?.delete()
     override fun saveUser(
         uid: String,
         email: String,
@@ -73,8 +81,12 @@ class FirebaseAuthServiceImpl @Inject constructor(
         account: Account,
     ) = firestore.collection(ACCOUNTS_COLLECTION).document(uid).update(account.serializeToMap())
 
-    override fun fetchAccount(
+    override fun deleteAccount(
         uid: String
+    ) = firestore.collection(ACCOUNTS_COLLECTION).document(uid).delete()
+
+    override fun fetchAccount(
+        uid: String,
     ) = firestore.collection(ACCOUNTS_COLLECTION).document(uid).get()
 
     override fun fetchUsers() = firestore.collection(USERS_COLLECTION).get()

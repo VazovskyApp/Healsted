@@ -29,6 +29,8 @@ interface FirebaseAuthRepository {
 
     fun logOut()
 
+    fun deleteAccountFromFirebaseAuth() : Task<Void>?
+
     fun saveUser(
         uid: String,
         email: String,
@@ -50,6 +52,10 @@ interface FirebaseAuthRepository {
         uid: String,
         account: Account,
     ): Task<Void>
+
+    fun deleteAccount(
+        uid: String,
+    ) : Task<Void>
 
     fun fetchAccount(uid: String): Task<DocumentSnapshot>
 

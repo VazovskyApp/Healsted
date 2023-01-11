@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.base.LoadableResult
+import app.vazovsky.healsted.domain.auth.DeleteAccountFromFirestoreUseCase
+import app.vazovsky.healsted.domain.auth.DeleteAccountUseCase
 import app.vazovsky.healsted.domain.auth.EditAccountUseCase
 import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.profile.GetProfileUseCase
@@ -17,9 +19,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsAccountViewModel @Inject constructor(
+    private val destinations: SettingsAccountDestinations,
     private val getProfileUseCase: GetProfileUseCase,
     private val parseSnapshotToProfileUseCase: ParseSnapshotToProfileUseCase,
     private val editAccountUseCase: EditAccountUseCase,
+    private val deleteAccountUseCase: DeleteAccountUseCase,
+    private val deleteAccountFromFirestoreUseCase: DeleteAccountFromFirestoreUseCase,
 ) : BaseViewModel() {
     /** Профиль в виде DocumentSnapshot */
     private val _profileSnapshotLiveData = MutableLiveData<LoadableResult<Task<DocumentSnapshot>>>()
@@ -32,6 +37,16 @@ class SettingsAccountViewModel @Inject constructor(
     /** Обновление аккаунта */
     private val _editAccountLiveEvent = SingleLiveEvent<LoadableResult<Task<Void>>>()
     val editAccountLiveEvent: LiveData<LoadableResult<Task<Void>>> = _editAccountLiveEvent
+
+    /** Удаление аккаунта из FireStore */
+    private val _deleteAccountFireStoreLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
+    val deleteAccountFireStoreLiveData: LiveData<LoadableResult<Task<Void>>> = _deleteAccountFireStoreLiveData
+
+    /** Удаление аккаунта из Firebase */
+    private val _deleteAccountFirebaseLiveData = MutableLiveData<LoadableResult<DeleteAccountUseCase.Result>>()
+    val deleteAccountFirebaseLiveData: LiveData<LoadableResult<DeleteAccountUseCase.Result>> = _deleteAccountFirebaseLiveData
+
+
 
     /** Получить профиль в виде DocumentSnapshot */
     fun getProfileSnapshot() {
@@ -52,5 +67,23 @@ class SettingsAccountViewModel @Inject constructor(
         _editAccountLiveEvent.launchLoadData(
             editAccountUseCase.executeFlow(EditAccountUseCase.Params(account))
         )
+    }
+
+    /** Удаление аккаунта из FireStore */
+    fun deleteAccountFireStore() {
+        _deleteAccountFireStoreLiveData.launchLoadData(
+            deleteAccountFromFirestoreUseCase.executeFlow(UseCase.None)
+        )
+    }
+
+    /** Удаление аккаунта из Firebase */
+    fun deleteAccountFirebase() {
+        _deleteAccountFirebaseLiveData.launchLoadData(
+            deleteAccountUseCase.executeFlow(UseCase.None)
+        )
+    }
+
+    fun openAuth(){
+        navigate(destinations.auth())
     }
 }
