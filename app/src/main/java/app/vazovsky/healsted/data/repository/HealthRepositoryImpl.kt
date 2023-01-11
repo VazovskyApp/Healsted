@@ -30,10 +30,6 @@ class HealthRepositoryImpl @Inject constructor() : HealthRepository {
         ),
     )
 
-    override fun getHealthMonitoring(): List<MonitoringAttribute> {
-        return listOfHealthMonitoring
-    }
-
     override fun getHealthMonitoringHistory(type: MonitoringType): List<MonitoringAttribute> {
         return listOfHealthMonitoring.filter { it.type == type }
     }

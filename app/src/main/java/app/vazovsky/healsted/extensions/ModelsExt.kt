@@ -2,6 +2,7 @@ package app.vazovsky.healsted.extensions
 
 import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.LoyaltyProgress
+import app.vazovsky.healsted.data.model.MonitoringAttribute
 import app.vazovsky.healsted.data.model.Mood
 import app.vazovsky.healsted.data.model.Pill
 
@@ -16,3 +17,6 @@ fun Mood?.orError() = this ?: throw Exception()
 
 fun Pill?.orDefault() = this ?: Pill()
 fun Pill?.orError() = this ?: throw Exception()
+
+fun MonitoringAttribute?.orDefault() = this ?: MonitoringAttribute()
+fun MonitoringAttribute?.orError() = this ?: throw Exception()

@@ -2,22 +2,21 @@ package app.vazovsky.healsted.presentation.auth.signup
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import app.vazovsky.healsted.data.model.Pill
+import app.vazovsky.healsted.data.model.MonitoringAttribute
+import app.vazovsky.healsted.data.model.MonitoringType
 import app.vazovsky.healsted.data.model.User
 import app.vazovsky.healsted.data.model.base.LoadableResult
 import app.vazovsky.healsted.domain.auth.SaveAccountUseCase
 import app.vazovsky.healsted.domain.auth.SaveUserUseCase
 import app.vazovsky.healsted.domain.auth.SignUpUseCase
 import app.vazovsky.healsted.domain.base.UseCase
-import app.vazovsky.healsted.domain.mood.SaveMoodUseCase
-import app.vazovsky.healsted.domain.pills.SavePillUseCase
+import app.vazovsky.healsted.domain.health.SaveMonitoringAttributeUseCase
 import app.vazovsky.healsted.domain.profile.SaveLoyaltyUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.AuthResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,6 +26,7 @@ class SignUpViewModel @Inject constructor(
     private val saveAccountUseCase: SaveAccountUseCase,
     private val saveUserUseCase: SaveUserUseCase,
     private val saveLoyaltyUseCase: SaveLoyaltyUseCase,
+    private val saveMonitoringAttributeUseCase: SaveMonitoringAttributeUseCase,
 ) : BaseViewModel() {
 
     /** Получение результата регистрации */
@@ -45,6 +45,21 @@ class SignUpViewModel @Inject constructor(
     private val _saveLoyaltyLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
     val saveLoyaltyLiveData: LiveData<LoadableResult<Task<Void>>> = _saveLoyaltyLiveData
 
+    /** Добавление первого значения Веса в аккаунт */
+    private val _saveWeightLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
+    val saveWeightLiveData: LiveData<LoadableResult<Task<Void>>> = _saveWeightLiveData
+
+    /** Добавление первого значения Роста в аккаунт */
+    private val _saveHeightLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
+    val saveHeightLiveData: LiveData<LoadableResult<Task<Void>>> = _saveHeightLiveData
+
+    /** Добавление первого значения Температуры в аккаунт */
+    private val _saveTemperatureLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
+    val saveTemperatureLiveData: LiveData<LoadableResult<Task<Void>>> = _saveTemperatureLiveData
+
+    /** Добавление первого значения Температуры в аккаунт */
+    private val _saveBloodPressureLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
+    val saveBloodPressureLiveData: LiveData<LoadableResult<Task<Void>>> = _saveBloodPressureLiveData
 
     /** Зарегистрироваться */
     fun signUp(email: String, password: String) {
@@ -105,7 +120,64 @@ class SignUpViewModel @Inject constructor(
         )
     }
 
+    /** Открыть дашборд */
     fun openDashboard() {
         navigate(destinations.dashboard())
+    }
+
+    /** Сохранение веса */
+    fun saveWeight() {
+        _saveWeightLiveData.launchLoadData(
+            saveMonitoringAttributeUseCase.executeFlow(
+                SaveMonitoringAttributeUseCase.Params(
+                    MonitoringAttribute(
+                        value = "50",
+                        type = MonitoringType.WEIGHT,
+                    )
+                )
+            )
+        )
+    }
+
+    /** Сохранение роста */
+    fun saveHeight() {
+        _saveHeightLiveData.launchLoadData(
+            saveMonitoringAttributeUseCase.executeFlow(
+                SaveMonitoringAttributeUseCase.Params(
+                    MonitoringAttribute(
+                        value = "150",
+                        type = MonitoringType.HEIGHT,
+                    )
+                )
+            )
+        )
+    }
+
+    /** Сохранение температуры */
+    fun saveTemperature() {
+        _saveTemperatureLiveData.launchLoadData(
+            saveMonitoringAttributeUseCase.executeFlow(
+                SaveMonitoringAttributeUseCase.Params(
+                    MonitoringAttribute(
+                        value = "36.6",
+                        type = MonitoringType.TEMPERATURE,
+                    )
+                )
+            )
+        )
+    }
+
+    /** Сохранение давления */
+    fun saveBloodPressure() {
+        _saveBloodPressureLiveData.launchLoadData(
+            saveMonitoringAttributeUseCase.executeFlow(
+                SaveMonitoringAttributeUseCase.Params(
+                    MonitoringAttribute(
+                        value = "120/80",
+                        type = MonitoringType.BLOOD_PRESSURE,
+                    )
+                )
+            )
+        )
     }
 }

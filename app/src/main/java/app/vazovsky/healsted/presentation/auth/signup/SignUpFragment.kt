@@ -6,6 +6,7 @@ import app.vazovsky.healsted.R
 import app.vazovsky.healsted.data.model.User
 import app.vazovsky.healsted.databinding.FragmentSignUpBinding
 import app.vazovsky.healsted.domain.auth.SaveUserUseCase
+import app.vazovsky.healsted.extensions.checkInputs
 import app.vazovsky.healsted.extensions.fitKeyboardInsetsWithPadding
 import app.vazovsky.healsted.extensions.showErrorSnackbar
 import app.vazovsky.healsted.managers.FirebaseAuthExceptionManager
@@ -31,53 +32,59 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
         signUpResultLiveData.observe { result ->
-            result.doOnSuccess { task ->
-                setSignUpTask(task)
-            }
-            result.doOnFailure {
-                Timber.d(it.message)
-            }
+            result.doOnSuccess { setSignUpTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
         }
         saveUserLiveData.observe { result ->
-            result.doOnSuccess { saveUserResult ->
-                setSaveUserTask(saveUserResult)
-            }
-            result.doOnFailure {
-                Timber.d(it.message)
-            }
+            result.doOnSuccess { setSaveUserTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
         }
         saveAccountLiveData.observe { result ->
-            result.doOnSuccess { task ->
-                setSaveAccountTask(task)
-            }
-            result.doOnFailure {
-                Timber.d(it.message)
-            }
+            result.doOnSuccess { setSaveAccountTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
         }
         saveLoyaltyLiveData.observe { result ->
-            result.doOnSuccess { task ->
-                setSaveLoyaltyTask(task)
-            }
-            result.doOnFailure {
-                Timber.d(it.message)
-            }
+            result.doOnSuccess { setSaveLoyaltyTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
+        }
+        saveWeightLiveData.observe { result ->
+            result.doOnSuccess { setSaveWeightTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
+        }
+        saveHeightLiveData.observe { result ->
+            result.doOnSuccess { setSaveHeightTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
+        }
+        saveTemperatureLiveData.observe { result ->
+            result.doOnSuccess { setSaveTemperatureTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
+        }
+        saveBloodPressureLiveData.observe { result ->
+            result.doOnSuccess { setSaveBloodPressureTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
         }
     }
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitKeyboardInsetsWithPadding()
+        toolbar.setNavigationOnClickListener { viewModel.navigateBack() }
 
-        setupToolbar()
         setupSignUp()
     }
 
-    private fun setSignUpTask(task: Task<AuthResult>) {
-        task.addOnSuccessListener { authResult ->
-            authResult.user?.let { user ->
-                viewModel.saveUser(uid = user.uid, email = user.email.toString())
-            }
+    private fun setupSignUp() = with(binding) {
+        buttonConfirm.setOnClickListener {
+            val email = editTextEmail.text.toString()
+            val password = editTextPassword.text.toString()
+
+            val validated = listOf(textInputEmail, textInputNickname, textInputPassword).checkInputs()
+            if (validated) viewModel.signUp(email, password)
         }
-        task.addOnFailureListener { exception ->
+    }
+
+    private fun setSignUpTask(task: Task<AuthResult>) = with(task) {
+        addOnSuccessListener { it.user?.let { user -> viewModel.saveUser(user.uid, user.email.toString()) } }
+        addOnFailureListener { exception ->
             showErrorSnackbar(
                 message = if (exception is FirebaseAuthException) {
                     firebaseAuthExceptionManager.getErrorMessage(exception)
@@ -88,63 +95,44 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
         }
     }
 
-    private fun setSaveUserTask(saveUserResult: SaveUserUseCase.Result) {
-        saveUserResult.task.apply {
-            addOnSuccessListener {
-                viewModel.saveAccount(
-                    uid = saveUserResult.uid,
-                    accountHolder = User(email = saveUserResult.email, ""),
-                    nickname = binding.editTextNickname.text.toString(),
-                )
-            }
-            addOnFailureListener { exception ->
-                Timber.d(exception.localizedMessage)
-            }
+    private fun setSaveUserTask(saveUserResult: SaveUserUseCase.Result) = with(saveUserResult.task) {
+        addOnSuccessListener {
+            viewModel.saveAccount(
+                uid = saveUserResult.uid,
+                accountHolder = User(email = saveUserResult.email, ""),
+                nickname = binding.editTextNickname.text.toString(),
+            )
         }
+        addOnFailureListener { Timber.d(it.message) }
     }
 
-    private fun setSaveAccountTask(task: Task<Void>) {
-        task.apply {
-            addOnSuccessListener {
-                viewModel.saveLoyalty()
-            }
-            addOnFailureListener { exception ->
-                Timber.d(exception.localizedMessage)
-            }
-        }
+    private fun setSaveAccountTask(task: Task<Void>) = with(task) {
+        addOnSuccessListener { viewModel.saveLoyalty() }
+        addOnFailureListener { Timber.d(it.message) }
     }
 
-    private fun setSaveLoyaltyTask(task: Task<Void>) {
-        task.apply {
-            addOnSuccessListener {
-                viewModel.openDashboard()
-            }
-            addOnFailureListener { exception ->
-                Timber.d(exception.localizedMessage)
-            }
-        }
+    private fun setSaveLoyaltyTask(task: Task<Void>) = with(task) {
+        addOnSuccessListener { viewModel.saveWeight() }
+        addOnFailureListener { Timber.d(it.message) }
     }
 
-    private fun setupToolbar() = with(binding) {
-        toolbar.setNavigationOnClickListener { viewModel.navigateBack() }
+    private fun setSaveWeightTask(task: Task<Void>) = with(task) {
+        addOnSuccessListener { viewModel.saveHeight() }
+        addOnFailureListener { Timber.d(it.message) }
     }
 
-    private fun setupSignUp() = with(binding) {
-        buttonConfirm.setOnClickListener {
-            val email = editTextEmail.text.toString()
-            val password = editTextPassword.text.toString()
-
-            if (checkInputs()) {
-                viewModel.signUp(email, password)
-            }
-        }
+    private fun setSaveHeightTask(task: Task<Void>) = with(task) {
+        addOnSuccessListener { viewModel.saveTemperature() }
+        addOnFailureListener { Timber.d(it.message) }
     }
 
-    private fun checkInputs(): Boolean = with(binding) {
-        var validated = true
-        listOf(textInputEmail, textInputNickname, textInputPassword).forEach {
-            validated = validated.and(it.validate())
-        }
-        return@with validated
+    private fun setSaveTemperatureTask(task: Task<Void>) = with(task) {
+        addOnSuccessListener { viewModel.saveBloodPressure() }
+        addOnFailureListener { Timber.d(it.message) }
+    }
+
+    private fun setSaveBloodPressureTask(task: Task<Void>) = with(task) {
+        addOnSuccessListener { viewModel.openDashboard() }
+        addOnFailureListener { Timber.d(it.message) }
     }
 }

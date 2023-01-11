@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -24,17 +23,58 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <app.vazovsky.healsted.presentation.view.StateViewFlipper
-            android:id="@+id/stateViewFlipper"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <app.vazovsky.healsted.presentation.view.EmptyRecyclerView
-                android:id="@+id/recyclerViewHealthMonitoring"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:listitem="@layout/item_monitoring" />
+            <include
+                android:id="@+id/viewWeight"
+                layout="@layout/item_monitoring"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toStartOf="@id/viewHeight"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </app.vazovsky.healsted.presentation.view.StateViewFlipper>
+            <include
+                android:id="@+id/viewHeight"
+                layout="@layout/item_monitoring"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginEnd="@dimen/margin_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/viewWeight"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <include
+                android:id="@+id/viewTemperature"
+                layout="@layout/item_monitoring"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toStartOf="@id/viewBloodPressure"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/viewWeight" />
+
+            <include
+                android:id="@+id/viewBloodPressure"
+                layout="@layout/item_monitoring"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginEnd="@dimen/margin_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/viewTemperature"
+                app:layout_constraintTop_toBottomOf="@id/viewHeight" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

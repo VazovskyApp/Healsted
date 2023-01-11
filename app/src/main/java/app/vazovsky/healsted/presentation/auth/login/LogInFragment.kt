@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.viewModels
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.databinding.FragmentLogInBinding
+import app.vazovsky.healsted.extensions.checkInputs
 import app.vazovsky.healsted.extensions.fitKeyboardInsetsWithPadding
 import app.vazovsky.healsted.extensions.showErrorSnackbar
 import app.vazovsky.healsted.managers.FirebaseAuthExceptionManager
@@ -30,49 +31,20 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
         logInResultLiveData.observe { result ->
-            result.doOnSuccess { task ->
-                setLogInTask(task)
-            }
+            result.doOnSuccess { setLogInTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
         }
         accountLiveData.observe { result ->
-            result.doOnSuccess { task ->
-                setAccountTask(task)
-            }
-        }
-    }
-
-    private fun setLogInTask(task: Task<AuthResult>) {
-        task.addOnSuccessListener { authResult ->
-            authResult.user?.uid?.let { viewModel.getAccount() }
-        }
-        task.addOnFailureListener { exception ->
-            showErrorSnackbar(
-                message = if (exception is FirebaseAuthException) firebaseAuthExceptionManager.getErrorMessage(exception)
-                else exception.localizedMessage
-            )
-        }
-    }
-
-    private fun setAccountTask(task: Task<DocumentSnapshot>) {
-        task.apply {
-            addOnSuccessListener {
-                viewModel.openDashboard()
-            }
-            addOnFailureListener { exception ->
-                Timber.d(exception.localizedMessage)
-            }
+            result.doOnSuccess { setAccountTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
         }
     }
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitKeyboardInsetsWithPadding()
-
-        setupToolbar()
-        setupLogIn()
-    }
-
-    private fun setupToolbar() = with(binding) {
         toolbar.setNavigationOnClickListener { viewModel.navigateBack() }
+
+        setupLogIn()
     }
 
     private fun setupLogIn() = with(binding) {
@@ -81,17 +53,23 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
             val email = editTextEmail.text.toString()
             val password = editTextPassword.text.toString()
 
-            if (checkInputs()) {
-                viewModel.logIn(email, password)
-            }
+            val validated = listOf(textInputEmail, textInputPassword).checkInputs()
+            if (validated) viewModel.logIn(email, password)
         }
     }
 
-    private fun checkInputs(): Boolean = with(binding) {
-        var validated = true
-        listOf(textInputEmail, textInputPassword).forEach {
-            validated = validated.and(it.validate())
+    private fun setLogInTask(task: Task<AuthResult>) = with(task) {
+        addOnSuccessListener { viewModel.getAccount() }
+        addOnFailureListener { exception ->
+            showErrorSnackbar(
+                message = if (exception is FirebaseAuthException) firebaseAuthExceptionManager.getErrorMessage(exception)
+                else exception.localizedMessage
+            )
         }
-        return@with validated
+    }
+
+    private fun setAccountTask(task: Task<DocumentSnapshot>) = with(task) {
+        addOnSuccessListener { viewModel.openDashboard() }
+        addOnFailureListener { Timber.d(it.message) }
     }
 }

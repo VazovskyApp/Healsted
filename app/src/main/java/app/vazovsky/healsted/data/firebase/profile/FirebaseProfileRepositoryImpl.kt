@@ -4,7 +4,6 @@ import app.vazovsky.healsted.data.model.LoyaltyProgress
 import app.vazovsky.healsted.data.model.MonitoringAttribute
 import app.vazovsky.healsted.data.model.Mood
 import app.vazovsky.healsted.data.model.Pill
-import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import javax.inject.Inject
 

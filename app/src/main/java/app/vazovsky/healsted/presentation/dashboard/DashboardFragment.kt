@@ -3,17 +3,21 @@ package app.vazovsky.healsted.presentation.dashboard
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.updatePadding
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.Mood
 import app.vazovsky.healsted.databinding.FragmentDashboardBinding
+import app.vazovsky.healsted.domain.pills.GetTodayPillsUseCase
 import app.vazovsky.healsted.extensions.addLinearSpaceItemDecoration
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
+import app.vazovsky.healsted.extensions.showInfoSnackbar
 import app.vazovsky.healsted.extensions.toStartOfDayTimestamp
 import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import app.vazovsky.healsted.presentation.dashboard.adapter.TodayPillsAdapter
+import app.vazovsky.healsted.presentation.pills.REQUEST_KEY
 import app.vazovsky.healsted.presentation.view.StateViewFlipper
 import app.vazovsky.healsted.presentation.view.timeline.OnDateSelectedListener
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -47,55 +51,39 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
         profileSnapshotLiveData.observe { result ->
-            result.doOnSuccess { task ->
-                task.addOnSuccessListener { snapshot ->
-                    viewModel.getProfile(snapshot)
-                }
-            }
+            result.doOnSuccess { setProfileSnapshotTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
         }
         profileLiveData.observe { result ->
             binding.stateViewFlipper.setStateFromResult(result)
-            result.doOnSuccess { account ->
-                bindToolbar(account)
-            }
+            result.doOnSuccess { account -> bindToolbar(account) }
+            result.doOnFailure { Timber.d(it.message) }
         }
         todayPillsSnapshotLiveData.observe { result ->
-            result.doOnSuccess { getTodayPillsResult ->
-                getTodayPillsResult.snapshotTask.addOnSuccessListener { snapshot ->
-                    viewModel.getTodayPills(snapshot, getTodayPillsResult.date)
-                }
-            }
+            result.doOnSuccess { setPillsSnapshotTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
         }
         todayPillsLiveData.observe { result ->
             binding.stateViewFlipper.setStateFromResult(result)
-            result.doOnSuccess { pills ->
-                todayPillsAdapter.submitList(pills)
-            }
+            result.doOnSuccess { pills -> todayPillsAdapter.submitList(pills) }
+            result.doOnFailure { Timber.d(it.message) }
         }
         todayMoodSnapshotLiveData.observe { result ->
             binding.stateViewFlipperMood.changeState(StateViewFlipper.State.LOADING)
-            result.doOnSuccess { task ->
-                setMoodSnapshotTask(task)
-            }
+            result.doOnSuccess { task -> setMoodSnapshotTask(task) }
+            result.doOnFailure { Timber.d(it.message) }
         }
         todayMoodLiveData.observe { result ->
             binding.stateViewFlipperMood.setStateFromResult(result)
-            result.doOnSuccess { mood ->
-                bindMood(mood)
-            }
+            result.doOnSuccess { mood -> bindMood(mood) }
+            result.doOnFailure { Timber.d(it.message) }
         }
         updateMoodLiveEvent.observe { result ->
             result.doOnSuccess { task ->
-                task.addOnSuccessListener {
-                    Timber.d("Настроение обновлено")
-                }
-                task.addOnFailureListener {
-                    Timber.d(it.localizedMessage)
-                }
+                task.addOnSuccessListener { Timber.d("Настроение обновлено") }
+                task.addOnFailureListener { Timber.d(it.message) }
             }
-            result.doOnFailure {
-                Timber.d(it.message)
-            }
+            result.doOnFailure { Timber.d(it.message) }
         }
     }
 
@@ -103,6 +91,10 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         root.fitTopInsetsWithPadding()
         stateViewFlipperMood.setRetryMethod { viewModel.getTodayPillsSnapshot(LocalDate.now().toStartOfDayTimestamp()) }
         stateViewFlipper.setRetryMethod { viewModel.getTodayPillsSnapshot(viewModel.selectedDate) }
+
+        setFragmentResultListener(REQUEST_KEY) { _, _ ->
+            viewModel.getTodayPillsSnapshot(viewModel.selectedDate)
+        }
 
         setupTimeline()
         setupRecyclerView()
@@ -119,34 +111,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         viewModel.updateMood(Mood(binding.ratingBarMood.getCurrentRateStatus()))
     }
 
-    private fun setMoodSnapshotTask(task: Task<DocumentSnapshot>) {
-        task.apply {
-            addOnSuccessListener { snapshot ->
-                viewModel.getTodayMood(snapshot)
-            }
-            addOnFailureListener {
-                Timber.d(it.localizedMessage)
-            }
-        }
-    }
-
-    private fun bindToolbar(profile: Account) = with(binding.toolbar) {
-        val currentHour = LocalTime.now().hour
-        title = resources.getString(
-            when (currentHour) {
-                in 6..11 -> R.string.welcome_string_morning
-                in 12..16 -> R.string.welcome_string_afternoon
-                in 17..21 -> R.string.welcome_string_evening
-                else -> R.string.welcome_string_night
-            },
-            profile.nickname,
-        )
-    }
-
-    private fun bindMood(mood: Mood) = with(binding) {
-        ratingBarMood.setCurrentRateStatus(mood.value)
-    }
-
+    /** Настройка таймлайна */
     private fun setupTimeline() = with(binding) {
         datePickerTimeline.setInitialDate(2023, 0, 1)
         datePickerTimeline.setActiveDate(Calendar.getInstance())
@@ -164,11 +129,48 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         })
     }
 
+    /** Настройка RecyclerView */
     private fun setupRecyclerView() = with(binding.recyclerViewTodayPills) {
         adapter = todayPillsAdapter.apply {
             onItemClick = { viewModel.openEditPill(it) }
         }
         emptyView = binding.emptyViewTodayPills
         addLinearSpaceItemDecoration(R.dimen.padding_8)
+    }
+
+    private fun setProfileSnapshotTask(task: Task<DocumentSnapshot>) = with(task) {
+        addOnSuccessListener { viewModel.getProfile(it) }
+        addOnFailureListener { Timber.d(it.message) }
+    }
+
+    private fun setMoodSnapshotTask(task: Task<DocumentSnapshot>) = with(task) {
+        addOnSuccessListener { viewModel.getTodayMood(it) }
+        addOnFailureListener { Timber.d(it.message) }
+    }
+
+    private fun setPillsSnapshotTask(
+        getTodayPillsResult: GetTodayPillsUseCase.Result
+    ) = with(getTodayPillsResult.snapshotTask) {
+        addOnSuccessListener { viewModel.getTodayPills(it, getTodayPillsResult.date) }
+        addOnFailureListener { Timber.d(it.message) }
+    }
+
+    /** Привязка данных для тулбара */
+    private fun bindToolbar(profile: Account) = with(binding.toolbar) {
+        val currentHour = LocalTime.now().hour
+        title = resources.getString(
+            when (currentHour) {
+                in 6..11 -> R.string.welcome_string_morning
+                in 12..16 -> R.string.welcome_string_afternoon
+                in 17..21 -> R.string.welcome_string_evening
+                else -> R.string.welcome_string_night
+            },
+            profile.nickname,
+        )
+    }
+
+    /** Привязка настроения */
+    private fun bindMood(mood: Mood) = with(binding) {
+        ratingBarMood.setCurrentRateStatus(mood.value)
     }
 }

@@ -42,6 +42,7 @@ class LogInViewModel @Inject constructor(
         )
     }
 
+    /** Открытие дашборда */
     fun openDashboard() {
         navigate(destinations.dashboard())
     }

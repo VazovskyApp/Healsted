@@ -14,6 +14,7 @@ import app.vazovsky.healsted.data.model.DatesTakenType
 import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.data.model.TakePillType
 import app.vazovsky.healsted.databinding.FragmentPillEditorBinding
+import app.vazovsky.healsted.extensions.checkInputs
 import app.vazovsky.healsted.extensions.fitKeyboardInsetsWithPadding
 import app.vazovsky.healsted.extensions.orDefault
 import app.vazovsky.healsted.extensions.showErrorSnackbar
@@ -22,8 +23,11 @@ import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import app.vazovsky.healsted.presentation.pills.REQUEST_KEY
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import timber.log.Timber
+import androidx.constraintlayout.widget.R as ConstraintR
 
 /** Экран редактирования или добавления лекарства */
 @AndroidEntryPoint
@@ -44,11 +48,8 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
         updatePillLiveData.observe { result ->
-            result.doOnSuccess { task ->
-                task.addOnSuccessListener {
-                    viewModel.navigateBack()
-                }
-            }
+            result.doOnSuccess { setUpdatePillTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
         }
     }
 
@@ -75,7 +76,11 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         buttonConfirm.setOnClickListener {
             setFragmentResult(REQUEST_KEY, bundleOf())
 
-            if (checkInputs()) {
+            val listOfInputs = mutableListOf(textInputName, textInputDosage, textInputTime, textInputStartDate)
+            if (switchEndDateEnabled.isChecked) listOfInputs.add(textInputEndDate)
+
+            val validated = listOfInputs.checkInputs()
+            if (validated) {
                 try {
                     val newPill = pill?.let {
                         pill?.copy(
@@ -110,16 +115,6 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         }
     }
 
-    private fun checkInputs(): Boolean = with(binding) {
-        var validated = true
-        val listOfInputs = mutableListOf(textInputName, textInputDosage, textInputTime, textInputStartDate)
-        if (switchEndDateEnabled.isChecked) listOfInputs.add(textInputEndDate)
-        listOfInputs.forEach {
-            validated = validated.and(it.validate())
-        }
-        return@with validated
-    }
-
     /** Настройка тулбара */
     private fun setupToolbar() = with(binding.toolbar) {
         setNavigationOnClickListener { viewModel.navigateBack() }
@@ -136,35 +131,36 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         editTextComment.setText(pill?.comment.orDefault())
     }
 
+    /** Настройка спиннера для DatesTakenType */
     private fun setDatesTakenType() = with(binding) {
         val listOfDatesTakenType = DatesTakenType.values()
         spinnerDatesTakenType.adapter = ArrayAdapter(
-            requireContext(), androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item, listOfDatesTakenType
+            requireContext(), ConstraintR.layout.support_simple_spinner_dropdown_item, listOfDatesTakenType
         )
-        pill?.let { data ->
-            spinnerDatesTakenType.setSelection(listOfDatesTakenType.indexOf(data.datesTaken))
-        }
+        pill?.let { spinnerDatesTakenType.setSelection(listOfDatesTakenType.indexOf(it.datesTaken)) }
     }
 
+    /** Настройка спиннера для TakePillType */
     private fun setTakePillType() = with(binding) {
         val listOfTakePillType = TakePillType.values()
         spinnerTakePillType.adapter = ArrayAdapter(
-            requireContext(), androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item, listOfTakePillType
+            requireContext(), ConstraintR.layout.support_simple_spinner_dropdown_item, listOfTakePillType
         )
-        pill?.let { data ->
-            spinnerTakePillType.setSelection(listOfTakePillType.indexOf(data.takePillType))
-        }
+        pill?.let { spinnerTakePillType.setSelection(listOfTakePillType.indexOf(it.takePillType)) }
     }
 
+    /** Настройка времени */
     private fun setTimeNotification() = with(binding) {
-        buttonAddTime.setOnClickListener {
-            /** TODO Придумать добавление и enabled кнопки */
-        }
+        buttonAddTime.setOnClickListener { /** TODO Придумать добавление и enabled кнопки */ }
     }
 
+    /** Настройка дат */
     private fun setDateNotification() = with(binding) {
-        switchEndDateEnabled.setOnCheckedChangeListener { _, isChecked ->
-            cardViewEndDateNotification.isVisible = isChecked
-        }
+        switchEndDateEnabled.setOnCheckedChangeListener { _, isChecked -> cardViewEndDateNotification.isVisible = isChecked }
+    }
+
+    private fun setUpdatePillTask(task: Task<Void>) = with(task) {
+        addOnSuccessListener { viewModel.navigateBack() }
+        addOnFailureListener { Timber.d(it.message) }
     }
 }

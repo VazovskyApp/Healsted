@@ -67,20 +67,28 @@ class DashboardViewModel @Inject constructor(
     private val _todayMoodLiveData = MutableLiveData<LoadableResult<Mood>>()
     val todayMoodLiveData: LiveData<LoadableResult<Mood>> = _todayMoodLiveData
 
+    /** Получение профиля в виде DocumentSnapshot */
     fun getProfileSnapshot() {
-        _profileSnapshotLiveData.launchLoadData(
-            getProfileUseCase.executeFlow(UseCase.None)
-        )
+        _profileSnapshotLiveData.launchLoadData(getProfileUseCase.executeFlow(UseCase.None))
     }
 
+    /** Получение профиля из DocumentSnapshot */
     fun getProfile(snapshot: DocumentSnapshot) {
-        _profileLiveData.launchLoadData(
-            parseSnapshotToProfileUseCase.executeFlow(ParseSnapshotToProfileUseCase.Params(snapshot))
+        _profileLiveData.launchLoadData(parseSnapshotToProfileUseCase.executeFlow(ParseSnapshotToProfileUseCase.Params(snapshot)))
+    }
+
+    /** Получение лекарств на сегодня в виде QuerySnapshot */
+    fun getTodayPillsSnapshot(date: Timestamp) {
+        _todayPillsSnapshotLiveData.launchLoadData(
+            getTodayPillsUseCase.executeFlow(GetTodayPillsUseCase.Params(date))
         )
     }
 
-    /** Получение сегодняшних лекарств */
-    fun getTodayPills(snapshot: QuerySnapshot, date: Timestamp) {
+    /** Получение лекарств на сегодня из QuerySnapshot */
+    fun getTodayPills(
+        snapshot: QuerySnapshot,
+        date: Timestamp,
+    ) {
         _todayPillsLiveData.launchLoadData(
             parseSnapshotToTodayPillsUseCase.executeFlow(
                 ParseSnapshotToTodayPillsUseCase.Params(snapshot, date)
@@ -88,19 +96,12 @@ class DashboardViewModel @Inject constructor(
         )
     }
 
-    fun getTodayPillsSnapshot(date: Timestamp) {
-        _todayPillsSnapshotLiveData.launchLoadData(
-            getTodayPillsUseCase.executeFlow(GetTodayPillsUseCase.Params(date))
-        )
-    }
-
+    /** Получение сегодняшнего настроения в виде DocumentSnapshot */
     fun getTodayMoodSnapshot() {
-        _todayMoodSnapshotLiveData.launchLoadData(
-            getTodayMoodUseCase.executeFlow(UseCase.None)
-        )
+        _todayMoodSnapshotLiveData.launchLoadData(getTodayMoodUseCase.executeFlow(UseCase.None))
     }
 
-    /** Получить настроение на сегодня */
+    /** Получение сегодняшнего настроения из DocumentSnapshot */
     fun getTodayMood(snapshot: DocumentSnapshot) {
         _todayMoodLiveData.launchLoadData(
             parseSnapshotToMoodUseCase.executeFlow(
@@ -109,10 +110,9 @@ class DashboardViewModel @Inject constructor(
         )
     }
 
+    /** Обновление сегодняшнего настроения */
     fun updateMood(mood: Mood) {
-        _updateMoodLiveEvent.launchLoadData(
-            updateMoodUseCase.executeFlow(UpdateMoodUseCase.Params(mood))
-        )
+        _updateMoodLiveEvent.launchLoadData(updateMoodUseCase.executeFlow(UpdateMoodUseCase.Params(mood)))
     }
 
     /** Открыть добавление лекарства TODO не факт, что это нужно на данном экране */

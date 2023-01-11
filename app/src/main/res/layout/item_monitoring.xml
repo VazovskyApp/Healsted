@@ -2,64 +2,72 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="20dp"
     app:cardElevation="30dp"
     tools:cardBackgroundColor="@color/pills_card_blue">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <app.vazovsky.healsted.presentation.view.StateViewFlipper
+        android:id="@+id/stateViewFlipper"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_shape_gradient">
+        android:layout_height="wrap_content"
+        android:measureAllChildren="false">
 
-        <!-- TODO сделать картинку и размеры -->
-        <ImageView
-            android:id="@+id/imageViewBackground"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@null"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:background="@drawable/bg_shape_gradient">
 
-        <TextView
-            android:id="@+id/textViewTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_marginTop="@dimen/margin_16"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textAppearance="@style/Font.Body_1.Bold"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Вес" />
+            <!-- TODO сделать картинку и размеры -->
+            <ImageView
+                android:id="@+id/imageViewBackground"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:contentDescription="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textViewValue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_marginTop="4dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textAppearance="@style/Font.Body_1"
-            app:layout_constraintTop_toBottomOf="@id/textViewTitle"
-            tools:text="45 кг" />
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/Font.Body_1.Bold"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Вес" />
 
-        <TextView
-            android:id="@+id/textViewUpdate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="@dimen/margin_16"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@string/health_update"
-            android:textAppearance="@style/Font.Body_1.Medium"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewValue" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textViewValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/Font.Body_1"
+                app:layout_constraintTop_toBottomOf="@id/textViewTitle"
+                tools:text="45 кг" />
+
+            <TextView
+                android:id="@+id/textViewUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="@dimen/margin_16"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/health_update"
+                android:textAppearance="@style/Font.Body_1.Medium"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewValue" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </app.vazovsky.healsted.presentation.view.StateViewFlipper>
 </com.google.android.material.card.MaterialCardView>
