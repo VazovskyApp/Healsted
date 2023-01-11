@@ -85,6 +85,5 @@ dependencies {
     implementation(libs.firebase.firestore)
 
     implementation(libs.bubble.tab.bar)
-    implementation(libs.emoji.rating.bar)
     implementation(libs.decoro)
 }

@@ -12,12 +12,11 @@ import app.vazovsky.healsted.databinding.FragmentDashboardBinding
 import app.vazovsky.healsted.domain.pills.GetTodayPillsUseCase
 import app.vazovsky.healsted.extensions.addLinearSpaceItemDecoration
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
-import app.vazovsky.healsted.extensions.showInfoSnackbar
 import app.vazovsky.healsted.extensions.toStartOfDayTimestamp
 import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import app.vazovsky.healsted.presentation.dashboard.adapter.TodayPillsAdapter
-import app.vazovsky.healsted.presentation.pills.REQUEST_KEY
+import app.vazovsky.healsted.presentation.pills.REQUEST_KEY_UPDATE_PILLS
 import app.vazovsky.healsted.presentation.view.StateViewFlipper
 import app.vazovsky.healsted.presentation.view.timeline.OnDateSelectedListener
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -92,7 +91,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         stateViewFlipperMood.setRetryMethod { viewModel.getTodayPillsSnapshot(LocalDate.now().toStartOfDayTimestamp()) }
         stateViewFlipper.setRetryMethod { viewModel.getTodayPillsSnapshot(viewModel.selectedDate) }
 
-        setFragmentResultListener(REQUEST_KEY) { _, _ ->
+        setFragmentResultListener(REQUEST_KEY_UPDATE_PILLS) { _, _ ->
             viewModel.getTodayPillsSnapshot(viewModel.selectedDate)
         }
 
@@ -101,9 +100,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     }
 
     override fun applyBottomNavigationViewPadding(view: View, bottomNavigationViewHeight: Int) = with(binding) {
-        constraintLayout.updatePadding(
-            bottom = bottomNavigationViewHeight + resources.getDimensionPixelOffset(R.dimen.margin_20)
-        )
+        frameLayoutTodayPills.updatePadding(bottom = bottomNavigationViewHeight)
     }
 
     override fun onPause() {

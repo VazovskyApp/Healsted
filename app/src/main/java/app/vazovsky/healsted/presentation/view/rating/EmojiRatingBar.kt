@@ -32,7 +32,6 @@ class EmojiRatingBar @JvmOverloads constructor(
     private var rating: MoodType = MoodType.EMPTY
     private var ratingChangeListener: OnRateChangeListener? = null
 
-
     private var _view: View
     private lateinit var btnAwful: LinearLayout
     private lateinit var btnBad: LinearLayout
@@ -59,7 +58,6 @@ class EmojiRatingBar @JvmOverloads constructor(
     private var readOnly = false
 
     private lateinit var smileyList: List<Smiley>
-
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -137,18 +135,15 @@ class EmojiRatingBar @JvmOverloads constructor(
             setCurrentRateStatus(MoodType.AWFUL)
         }
 
-
         btnBad.setOnClickListener {
             scaleEmoji(ivBad, btnBad)
             setCurrentRateStatus(MoodType.BAD)
         }
 
-
         btnOkay.setOnClickListener {
             scaleEmoji(ivOkay, btnOkay)
             setCurrentRateStatus(MoodType.OKAY)
         }
-
 
         btnGood.setOnClickListener {
             scaleEmoji(ivGood, btnGood)
@@ -226,11 +221,11 @@ class EmojiRatingBar @JvmOverloads constructor(
 
     private fun getRatingImageResource(rateStatus: MoodType) =
         when (rateStatus) {
-            MoodType.AWFUL -> R.drawable.ic_awful
-            MoodType.BAD -> R.drawable.ic_bad
-            MoodType.OKAY -> R.drawable.ic_okay
-            MoodType.GOOD -> R.drawable.ic_good
-            MoodType.GREAT -> R.drawable.ic_great
+            MoodType.AWFUL -> R.drawable.ic_rating_awful
+            MoodType.BAD -> R.drawable.ic_rating_bad
+            MoodType.OKAY -> R.drawable.ic_rating_okay
+            MoodType.GOOD -> R.drawable.ic_rating_good
+            MoodType.GREAT -> R.drawable.ic_rating_great
             MoodType.EMPTY -> null
         }
 

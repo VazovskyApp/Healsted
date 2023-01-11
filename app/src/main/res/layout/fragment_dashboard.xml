@@ -9,7 +9,9 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        app:liftOnScroll="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -17,133 +19,133 @@
             android:layout_height="?actionBarSize" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
+        <app.vazovsky.healsted.presentation.view.StateViewFlipper
+            android:id="@+id/stateViewFlipperMood"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:measureAllChildren="false"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/linearLayoutMood"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewMood"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/dashboard_mood"
+                    android:textAppearance="@style/Font.Body_1.Bold" />
+
+                <app.vazovsky.healsted.presentation.view.rating.EmojiRatingBar
+                    android:id="@+id/ratingBarMood"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+        </app.vazovsky.healsted.presentation.view.StateViewFlipper>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutContent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_round_sheet"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/stateViewFlipperMood">
 
             <app.vazovsky.healsted.presentation.view.StateViewFlipper
-                android:id="@+id/stateViewFlipperMood"
+                android:id="@+id/stateViewFlipper"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:measureAllChildren="false"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toBottomOf="@id/stateViewFlipperMood">
 
                 <LinearLayout
-                    android:id="@+id/linearLayoutMood"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/textViewMood"
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardViewTimeline"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/margin_16"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/dashboard_mood"
-                        android:textAppearance="@style/Font.Body_1.Bold" />
+                        android:layout_margin="@dimen/margin_20"
+                        app:cardBackgroundColor="?colorSecondary"
+                        app:cardCornerRadius="10dp">
 
-                    <app.vazovsky.healsted.presentation.view.rating.EmojiRatingBar
-                        android:id="@+id/ratingBarMood"
+                        <app.vazovsky.healsted.presentation.view.timeline.DatePickerTimeline
+                            android:id="@+id/datePickerTimeline"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:dateTextColor="?colorOnPrimary"
+                            app:dayTextColor="?colorOnPrimary"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:monthTextColor="?colorOnPrimary" />
+                    </androidx.cardview.widget.CardView>
+
+                    <app.vazovsky.healsted.presentation.view.TextViewNoClipping
+                        android:id="@+id/textViewTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/margin_16"
-                        android:layout_marginTop="8dp" />
+                        android:layout_marginHorizontal="@dimen/margin_20"
+                        android:layout_marginTop="12dp"
+                        android:text=""
+                        android:textAppearance="@style/Font.Heading_1.Black"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/textViewDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_20"
+                        android:text="17 марта, Среда"
+                        android:textAppearance="@style/Font.Body_1"
+                        android:textColor="@color/black" />
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:id="@+id/divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="@dimen/margin_20"
+                        android:layout_marginVertical="@dimen/margin_8" />
+
+                    <FrameLayout
+                        android:id="@+id/frameLayoutTodayPills"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <app.vazovsky.healsted.presentation.view.EmptyRecyclerView
+                            android:id="@+id/recyclerViewTodayPills"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/item_today_pill" />
+
+                        <app.vazovsky.healsted.presentation.view.EmptyView
+                            android:id="@+id/emptyViewTodayPills"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="gone"
+                            app:emptyComment="@string/dashboard_empty_pills_comment"
+                            app:emptyTitle="@string/dashboard_empty_pills_title" />
+                    </FrameLayout>
                 </LinearLayout>
             </app.vazovsky.healsted.presentation.view.StateViewFlipper>
-
-            <LinearLayout
-                android:id="@+id/linearLayoutContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/bg_round_sheet"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/stateViewFlipperMood">
-
-                <app.vazovsky.healsted.presentation.view.StateViewFlipper
-                    android:id="@+id/stateViewFlipper"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_constraintTop_toBottomOf="@id/stateViewFlipperMood">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cardViewTimeline"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/margin_20"
-                            app:cardBackgroundColor="?colorSecondary"
-                            app:cardCornerRadius="10dp">
-
-                            <app.vazovsky.healsted.presentation.view.timeline.DatePickerTimeline
-                                android:id="@+id/datePickerTimeline"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:dateTextColor="?colorOnPrimary"
-                                app:dayTextColor="?colorOnPrimary"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:monthTextColor="?colorOnPrimary" />
-                        </androidx.cardview.widget.CardView>
-
-                        <app.vazovsky.healsted.presentation.view.TextViewNoClipping
-                            android:id="@+id/textViewTitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/margin_20"
-                            android:layout_marginTop="12dp"
-                            android:text=""
-                            android:textAppearance="@style/Font.Heading_1.Black"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:id="@+id/textViewDate"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/margin_20"
-                            android:text="17 марта, Среда"
-                            android:textAppearance="@style/Font.Body_1"
-                            android:textColor="@color/black" />
-
-                        <FrameLayout
-                            android:id="@+id/frameLayoutTodayPills"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <app.vazovsky.healsted.presentation.view.EmptyRecyclerView
-                                android:id="@+id/recyclerViewTodayPills"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/margin_20"
-                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                                tools:listitem="@layout/item_today_pill" />
-
-                            <app.vazovsky.healsted.presentation.view.EmptyView
-                                android:id="@+id/emptyViewTodayPills"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:visibility="gone"
-                                app:emptyComment="@string/dashboard_empty_pills_comment"
-                                app:emptyTitle="@string/dashboard_empty_pills_title" />
-                        </FrameLayout>
-                    </LinearLayout>
-                </app.vazovsky.healsted.presentation.view.StateViewFlipper>
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

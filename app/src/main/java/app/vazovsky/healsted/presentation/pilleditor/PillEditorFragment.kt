@@ -21,7 +21,7 @@ import app.vazovsky.healsted.extensions.showErrorSnackbar
 import app.vazovsky.healsted.extensions.toOffsetDateTime
 import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.base.BaseFragment
-import app.vazovsky.healsted.presentation.pills.REQUEST_KEY
+import app.vazovsky.healsted.presentation.pills.REQUEST_KEY_UPDATE_PILLS
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
@@ -74,7 +74,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
 
     private fun setConfirmClick() = with(binding) {
         buttonConfirm.setOnClickListener {
-            setFragmentResult(REQUEST_KEY, bundleOf())
+            setFragmentResult(REQUEST_KEY_UPDATE_PILLS, bundleOf())
 
             val listOfInputs = mutableListOf(textInputName, textInputDosage, textInputTime, textInputStartDate)
             if (switchEndDateEnabled.isChecked) listOfInputs.add(textInputEndDate)

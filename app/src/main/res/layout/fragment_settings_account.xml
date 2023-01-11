@@ -68,18 +68,18 @@
                 style="@style/TextInputLayoutTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="8dp"
                 app:emptyCheck="true"
                 app:errorEmpty="Введите никнейм"
                 app:errorMalformed="@string/malformed_field_error"
                 app:layout_constraintTop_toBottomOf="@id/textViewNickname"
                 app:validationPattern="@string/text_validation_pattern">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextNickname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_16"
-                    android:layout_marginTop="8dp"
                     android:hint="@string/auth_nickname_hint"
                     android:imeOptions="actionNext"
                     android:inputType="text"
@@ -108,7 +108,7 @@
                 app:layout_constraintTop_toBottomOf="@id/textViewBirthday"
                 app:validationPattern="@string/date_validation_pattern">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextBirthday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -143,7 +143,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="16dp"
-                android:text="@string/settings_account_save"
+                android:text="@string/settings_account_delete"
                 android:textAllCaps="true"
                 android:textAppearance="@style/Font.Body_1.Bold"
                 app:layout_constraintBottom_toBottomOf="parent"

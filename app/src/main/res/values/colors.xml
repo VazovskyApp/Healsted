@@ -25,11 +25,10 @@
     <color name="rate_color_awful">#DE4A3D</color>
     <color name="rate_color_bad">#E2701C</color>
     <color name="rate_color_okay">#ECB036</color>
-    <color name="rate_color_good_">#77C179</color>
+    <color name="rate_color_good">#77C179</color>
     <color name="rate_color_great">#5F9868</color>
     <color name="some_random_color">#FF00FF</color>
 
-    <!-- TODO переименовать, используется много где -->
     <color name="pillsCardBlue">#585CE5</color>
     <color name="pillsCardOrange">#E79F5B</color>
     <color name="pillsCardRed">#E65A81</color>

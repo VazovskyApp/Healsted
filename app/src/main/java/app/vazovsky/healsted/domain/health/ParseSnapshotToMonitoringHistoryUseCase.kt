@@ -7,17 +7,17 @@ import app.vazovsky.healsted.extensions.toDataClass
 import com.google.firebase.firestore.QuerySnapshot
 import javax.inject.Inject
 
-/** Парсинг из снепшота в объект мониторинга */
-class ParseSnapshotToMonitoringUseCase @Inject constructor() :
-    UseCaseUnary<ParseSnapshotToMonitoringUseCase.Params, MonitoringAttribute>() {
+/** Парсинг QuerySnapshot в историю мониторинга */
+class ParseSnapshotToMonitoringHistoryUseCase @Inject constructor() :
+    UseCaseUnary<ParseSnapshotToMonitoringHistoryUseCase.Params, List<MonitoringAttribute>>() {
 
-    override suspend fun execute(params: Params): MonitoringAttribute {
+    override suspend fun execute(params: Params): List<MonitoringAttribute> {
         val history = mutableListOf<MonitoringAttribute>()
         params.snapshot.documents.forEach { snapshot ->
             val item = snapshot.data?.toDataClass<MonitoringAttribute>().orError()
             history.add(item)
         }
-        return history.maxByOrNull { it.date }.orError()
+        return history
     }
 
     data class Params(

@@ -2,7 +2,7 @@
 <resources>
 
     <style name="SwitchStyle" parent="@style/Widget.MaterialComponents.CompoundButton.Switch">
-        <item name="trackTint">@color/pillsCardTransparent30</item>
+        <item name="trackTint">@color/pillsCardBlue</item>
         <item name="thumbTint">?colorOnPrimary</item>
         <item name="android:textColor">?colorOnPrimary</item>
         <item name="android:textAppearance">@style/Font.Body_1.Medium</item>

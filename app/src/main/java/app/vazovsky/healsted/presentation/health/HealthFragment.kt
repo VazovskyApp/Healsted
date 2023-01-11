@@ -1,17 +1,21 @@
 package app.vazovsky.healsted.presentation.health
 
 import android.os.Bundle
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.data.model.MonitoringAttribute
 import app.vazovsky.healsted.databinding.FragmentHealthBinding
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.presentation.base.BaseFragment
+import app.vazovsky.healsted.presentation.pills.REQUEST_KEY_UPDATE_PILLS
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.QuerySnapshot
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+
+const val REQUEST_KEY_UPDATE_HEALTH = "request_key_update_health"
 
 /** Экран мониторинга здоровья */
 @AndroidEntryPoint
@@ -71,6 +75,12 @@ class HealthFragment : BaseFragment(R.layout.fragment_health) {
 
     override fun onSetupLayout(savedInstanceState: Bundle?) {
         binding.root.fitTopInsetsWithPadding()
+        setFragmentResultListener(REQUEST_KEY_UPDATE_HEALTH) { _, _ ->
+            viewModel.getWeightSnapshot()
+            viewModel.getHeightSnapshot()
+            viewModel.getTemperatureSnapshot()
+            viewModel.getBloodPressureSnapshot()
+        }
 
         setupCards()
     }
@@ -99,24 +109,28 @@ class HealthFragment : BaseFragment(R.layout.fragment_health) {
     private fun bindWeight(weight: MonitoringAttribute) = with(binding.viewWeight) {
         textViewTitle.text = weight.type.toString()
         textViewValue.text = weight.value
+        root.setOnClickListener { viewModel.openAttribute(weight) }
     }
 
     /** Привязка роста */
     private fun bindHeight(height: MonitoringAttribute) = with(binding.viewHeight) {
         textViewTitle.text = height.type.toString()
         textViewValue.text = height.value
+        root.setOnClickListener { viewModel.openAttribute(height) }
     }
 
     /** Привязка температуры */
     private fun bindTemperature(temperature: MonitoringAttribute) = with(binding.viewTemperature) {
         textViewTitle.text = temperature.type.toString()
         textViewValue.text = temperature.value
+        root.setOnClickListener { viewModel.openAttribute(temperature) }
     }
 
     /** Привязка давления */
     private fun bindBloodPressure(bloodPressure: MonitoringAttribute) = with(binding.viewBloodPressure) {
         textViewTitle.text = bloodPressure.type.toString()
         textViewValue.text = bloodPressure.value
+        root.setOnClickListener { viewModel.openAttribute(bloodPressure) }
     }
 
     private fun setWeightSnapshotTask(task: Task<QuerySnapshot>) = with(task) {

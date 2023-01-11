@@ -81,7 +81,15 @@
     <!-- Health Attribute -->
     <!-- TODO сделать строки для атрибутов мониторинга относительно кол-ва -->
     <string name="health_attribute_add_value">Добавить значение</string>
-    <string name="health_attribute_current_value">Текущее:</string>
+    <string name="health_attribute_current_value">Текущее значение:</string>
     <string name="health_attribute_switch_remind_to_measure">Напоминать об измерении</string>
     <string name="health_attribute_history">История</string>
+    <string name="health_attribute_value_title">Значение</string>
+    <string name="health_attribute_date_title">Дата</string>
+
+    <string name="awful">AWFUL</string>
+    <string name="bad">BAD</string>
+    <string name="okay">OKAY</string>
+    <string name="good">GOOD</string>
+    <string name="great">GREAT</string>
 </resources>

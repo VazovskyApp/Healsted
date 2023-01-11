@@ -18,7 +18,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-const val REQUEST_KEY = "request_key"
+const val REQUEST_KEY_UPDATE_PILLS = "request_key_update_pills"
 
 /** Экран со списками всех лекарств */
 @AndroidEntryPoint
@@ -62,7 +62,7 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitTopInsetsWithPadding()
 
-        setFragmentResultListener(REQUEST_KEY) { _, _ ->
+        setFragmentResultListener(REQUEST_KEY_UPDATE_PILLS) { _, _ ->
             viewModel.getPillsSnapshot(viewModel.selectedPillTab)
         }
 

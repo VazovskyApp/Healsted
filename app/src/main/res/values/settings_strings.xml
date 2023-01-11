@@ -3,6 +3,7 @@
     <!-- Settings Account -->
     <string name="settings_account_title">Редактировать аккаунт</string>
     <string name="settings_account_save">Сохранить</string>
+    <string name="settings_account_delete">Удалить</string>
     <string name="settings_account_birthday">День рождения</string>
     <string name="settings_account_birthday_hint">Дата рождения</string>
     <string name="settings_account_phone">Номер телефона</string>
