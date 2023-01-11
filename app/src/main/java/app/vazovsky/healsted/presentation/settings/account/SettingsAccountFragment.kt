@@ -5,6 +5,7 @@ import androidx.fragment.app.viewModels
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.databinding.FragmentSettingsAccountBinding
+import app.vazovsky.healsted.extensions.checkInputs
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.extensions.orDefault
 import app.vazovsky.healsted.extensions.showErrorSnackbar
@@ -84,16 +85,26 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
     private fun bindProfile(account: Account) = with(binding) {
         editTextNickname.setText(account.nickname)
         editTextBirthday.setText(dateFormatter.formatStandardDateFull(account.birthday.orDefault().toOffsetDateTime()))
+        editTextSurname.setText(account.surname)
+        editTextName.setText(account.name)
+        editTextPatronymic.setText(account.patronymic)
     }
 
     private fun setupConfirm() = with(binding) {
         buttonSave.setOnClickListener {
             val nickname = editTextNickname.text.toString()
+            val surname = editTextSurname.text.toString()
+            val name = editTextName.text.toString()
+            val patronymic = editTextPatronymic.text.toString()
             val birthday = dateFormatter.parseDateFromString(editTextBirthday.text.toString())
 
-            if (checkInputs()) {
+            val isValidate = listOf(textInputNickname, textInputBirthday).checkInputs()
+            if (isValidate) {
                 val editedAccount = account?.copy(
                     nickname = nickname,
+                    surname = surname,
+                    name = name,
+                    patronymic = patronymic,
                     birthday = birthday,
                 )
                 if (editedAccount != null) {
@@ -107,13 +118,5 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
         buttonDelete.setOnClickListener {
             viewModel.deleteAccountFirebase()
         }
-    }
-
-    private fun checkInputs(): Boolean = with(binding) {
-        var validated = true
-        listOf(textInputNickname, textInputBirthday).forEach {
-            validated = validated.and(it.validate())
-        }
-        return@with validated
     }
 }

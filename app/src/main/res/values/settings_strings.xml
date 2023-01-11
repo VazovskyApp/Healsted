@@ -6,6 +6,12 @@
     <string name="settings_account_delete">Удалить</string>
     <string name="settings_account_birthday">День рождения</string>
     <string name="settings_account_birthday_hint">Дата рождения</string>
+    <string name="settings_account_surname">Фамилия</string>
+    <string name="settings_account_surname_hint">Фамилия</string>
+    <string name="settings_account_name">Имя</string>
+    <string name="settings_account_name_hint">Имя</string>
+    <string name="settings_account_patronymic">Отчество</string>
+    <string name="settings_account_patronymic_hint">Отчество</string>
     <string name="settings_account_phone">Номер телефона</string>
     <string name="settings_account_nickname">Никнейм</string>
     <string name="settings_account_nickname_hint">Никнейм</string>

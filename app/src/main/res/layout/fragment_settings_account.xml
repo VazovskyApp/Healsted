@@ -8,7 +8,9 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        app:liftOnScroll="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -19,137 +21,225 @@
             app:titleTextAppearance="@style/Font.Heading_1.Black" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <app.vazovsky.healsted.presentation.view.StateViewFlipper
-        android:id="@+id/stateViewFlipper"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <!-- Todo сделать больше параметров -->
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <app.vazovsky.healsted.presentation.view.StateViewFlipper
+            android:id="@+id/stateViewFlipper"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <!-- Todo сделать обводку -->
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imageViewAvatar"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/CircleShape" />
 
-            <!-- Todo сделать красивее -->
-            <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                app:layout_constraintBottom_toBottomOf="@id/imageViewAvatar"
-                app:layout_constraintEnd_toEndOf="@id/imageViewAvatar"
-                app:shapeAppearanceOverlay="@style/CircleShape"
-                app:srcCompat="@drawable/bg_edit" />
-
-            <TextView
-                android:id="@+id/textViewNickname"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_16"
-                android:layout_marginTop="20dp"
-                android:text="@string/settings_account_nickname"
-                android:textAppearance="@style/Font.Heading_3.Medium"
-                app:layout_constraintTop_toBottomOf="@id/imageViewAvatar" />
+                android:layout_height="match_parent">
+                <!-- Todo сделать обводку -->
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imageViewAvatar"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/CircleShape" />
 
-            <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
-                android:id="@+id/textInputNickname"
-                style="@style/TextInputLayoutTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_16"
-                android:layout_marginTop="8dp"
-                app:emptyCheck="true"
-                app:errorEmpty="Введите никнейм"
-                app:errorMalformed="@string/malformed_field_error"
-                app:layout_constraintTop_toBottomOf="@id/textViewNickname"
-                app:validationPattern="@string/text_validation_pattern">
+                <!-- Todo сделать красивее -->
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    app:layout_constraintBottom_toBottomOf="@id/imageViewAvatar"
+                    app:layout_constraintEnd_toEndOf="@id/imageViewAvatar"
+                    app:shapeAppearanceOverlay="@style/CircleShape"
+                    app:srcCompat="@drawable/bg_edit" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextNickname"
+                <TextView
+                    android:id="@+id/textViewNickname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/auth_nickname_hint"
-                    android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:textAppearance="@style/Font.Body_1.Bold"
-                    app:layout_constraintTop_toBottomOf="@id/textViewNickname" />
-            </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/settings_account_nickname"
+                    android:textAppearance="@style/Font.Heading_3.Medium"
+                    app:layout_constraintTop_toBottomOf="@id/imageViewAvatar" />
 
-            <TextView
-                android:id="@+id/textViewBirthday"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_16"
-                android:layout_marginTop="20dp"
-                android:text="@string/settings_account_birthday"
-                android:textAppearance="@style/Font.Heading_3.Medium"
-                app:layout_constraintTop_toBottomOf="@id/textInputNickname" />
-
-            <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
-                android:id="@+id/textInputBirthday"
-                style="@style/TextInputLayoutTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:emptyCheck="true"
-                app:errorEmpty="@string/empty_date_error"
-                app:errorMalformed="@string/malformed_date_error"
-                app:layout_constraintTop_toBottomOf="@id/textViewBirthday"
-                app:validationPattern="@string/date_validation_pattern">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextBirthday"
+                <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
+                    android:id="@+id/textInputNickname"
+                    style="@style/TextInputLayoutTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_16"
                     android:layout_marginTop="8dp"
-                    android:hint="@string/settings_account_birthday_hint"
-                    android:imeOptions="actionDone"
-                    android:inputType="date"
+                    app:emptyCheck="true"
+                    app:errorEmpty="Введите никнейм"
+                    app:errorMalformed="@string/malformed_field_error"
+                    app:layout_constraintTop_toBottomOf="@id/textViewNickname"
+                    app:validationPattern="@string/text_validation_pattern">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextNickname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/settings_account_nickname_hint"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:textAppearance="@style/Font.Body_1.Bold" />
+                </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+
+                <TextView
+                    android:id="@+id/textViewSurname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:text="@string/settings_account_surname"
+                    android:textAppearance="@style/Font.Heading_3.Medium"
+                    app:layout_constraintTop_toBottomOf="@id/textInputNickname" />
+
+                <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
+                    android:id="@+id/textInputSurname"
+                    style="@style/TextInputLayoutTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/textViewSurname">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextSurname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/settings_account_surname_hint"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:textAppearance="@style/Font.Body_1.Bold" />
+                </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+
+                <TextView
+                    android:id="@+id/textViewName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:text="@string/settings_account_name"
+                    android:textAppearance="@style/Font.Heading_3.Medium"
+                    app:layout_constraintTop_toBottomOf="@id/textInputSurname" />
+
+                <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
+                    android:id="@+id/textInputName"
+                    style="@style/TextInputLayoutTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/textViewName">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/settings_account_name_hint"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:textAppearance="@style/Font.Body_1.Bold" />
+                </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+
+                <TextView
+                    android:id="@+id/textViewPatronymic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:text="@string/settings_account_patronymic"
+                    android:textAppearance="@style/Font.Heading_3.Medium"
+                    app:layout_constraintTop_toBottomOf="@id/textInputName" />
+
+                <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
+                    android:id="@+id/textInputPatronymic"
+                    style="@style/TextInputLayoutTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/textViewPatronymic">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextPatronymic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/settings_account_patronymic_hint"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:textAppearance="@style/Font.Body_1.Bold" />
+                </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+
+                <TextView
+                    android:id="@+id/textViewBirthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:text="@string/settings_account_birthday"
+                    android:textAppearance="@style/Font.Heading_3.Medium"
+                    app:layout_constraintTop_toBottomOf="@id/textInputPatronymic" />
+
+                <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
+                    android:id="@+id/textInputBirthday"
+                    style="@style/TextInputLayoutTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="8dp"
+                    app:emptyCheck="true"
+                    app:errorEmpty="@string/empty_date_error"
+                    app:errorMalformed="@string/malformed_date_error"
+                    app:layout_constraintTop_toBottomOf="@id/textViewBirthday"
+                    app:validationPattern="@string/date_validation_pattern">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextBirthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/settings_account_birthday_hint"
+                        android:imeOptions="actionDone"
+                        android:inputType="date"
+                        android:textAppearance="@style/Font.Body_1.Bold" />
+                </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_16"
+                    android:backgroundTint="@color/pillsCardBlue"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="16dp"
+                    android:text="@string/settings_account_save"
+                    android:textAllCaps="true"
                     android:textAppearance="@style/Font.Body_1.Bold"
-                    app:layout_constraintTop_toBottomOf="@id/textViewBirthday" />
-            </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+                    app:layout_constraintBottom_toTopOf="@id/buttonDelete"
+                    app:layout_constraintTop_toBottomOf="@id/textInputBirthday" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonSave"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_16"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="16dp"
-                android:text="@string/settings_account_save"
-                android:textAllCaps="true"
-                android:textAppearance="@style/Font.Body_1.Bold"
-                app:layout_constraintBottom_toTopOf="@id/buttonDelete" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonDelete"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_16"
-                android:backgroundTint="@color/pillsCardRed"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="16dp"
-                android:text="@string/settings_account_delete"
-                android:textAllCaps="true"
-                android:textAppearance="@style/Font.Body_1.Bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textInputBirthday"
-                app:layout_constraintVertical_bias="1" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </app.vazovsky.healsted.presentation.view.StateViewFlipper>
-
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonDelete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_16"
+                    android:backgroundTint="@color/pillsCardRed"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="16dp"
+                    android:text="@string/settings_account_delete"
+                    android:textAllCaps="true"
+                    android:textAppearance="@style/Font.Body_1.Bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textInputBirthday"
+                    app:layout_constraintVertical_bias="1" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </app.vazovsky.healsted.presentation.view.StateViewFlipper>
+    </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
