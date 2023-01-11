@@ -5,14 +5,20 @@ import androidx.recyclerview.widget.RecyclerView
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.databinding.ItemTodayPillBinding
+import app.vazovsky.healsted.extensions.capitalizeFirstChar
 import app.vazovsky.healsted.extensions.getColorIdFromPosition
 import app.vazovsky.healsted.extensions.inflate
-import app.vazovsky.healsted.extensions.toOffsetDateTime
+import app.vazovsky.healsted.extensions.orDefault
+import app.vazovsky.healsted.managers.DataTypeFormatter
+import app.vazovsky.healsted.managers.DateFormatter
 import by.kirich1409.viewbindingdelegate.viewBinding
+import java.util.*
 
 class TodayPillViewHolder(
     parent: ViewGroup,
     private val onItemClick: (Pill) -> Unit,
+    private val dateFormatter: DateFormatter,
+    private val dataTypeFormatter: DataTypeFormatter,
 ) : RecyclerView.ViewHolder(parent.inflate(R.layout.item_today_pill)) {
     private val binding by viewBinding(ItemTodayPillBinding::bind)
 
@@ -22,10 +28,8 @@ class TodayPillViewHolder(
             setCardBackgroundColor(context.getColor(position.getColorIdFromPosition()))
         }
 
-        textViewName.text = item.name
-        // TODO формат
-        textViewCount.text = item.amount.toString()
-        // TODO время добавить адекватно
-        textViewTime.text = item.times?.firstOrNull()?.toOffsetDateTime()?.hour.toString()
+        textViewName.text = item.name.capitalizeFirstChar(Locale.getDefault())
+        textViewCount.text = dataTypeFormatter.formatPill(item)
+        textViewTime.text = dateFormatter.formatTime(item.times?.firstOrNull().orDefault())
     }
 }

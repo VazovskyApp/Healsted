@@ -5,10 +5,12 @@ import androidx.recyclerview.widget.RecyclerView
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.databinding.ItemPillBinding
+import app.vazovsky.healsted.extensions.capitalizeFirstChar
 import app.vazovsky.healsted.extensions.getColorIdFromPosition
 import app.vazovsky.healsted.extensions.inflate
 import app.vazovsky.healsted.managers.DateFormatter
 import by.kirich1409.viewbindingdelegate.viewBinding
+import java.util.*
 
 class PillsViewHolder(
     parent: ViewGroup,
@@ -23,7 +25,7 @@ class PillsViewHolder(
             setCardBackgroundColor(context.getColor(position.getColorIdFromPosition()))
         }
 
-        textViewName.text = item.name
+        textViewName.text = item.name.capitalizeFirstChar(Locale.getDefault())
         textViewDates.text = dateFormatter.formatPeriod(item.startDate, item.endDate)
     }
 }

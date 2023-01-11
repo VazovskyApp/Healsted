@@ -1,5 +1,9 @@
 package app.vazovsky.healsted.extensions
 
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.*
 import kotlin.math.roundToInt
 
 /**
@@ -12,6 +16,20 @@ fun Float.formatWithoutTrailingZero(): String {
     }
     return temp.replace(',', '.')
 }
+
+fun Float.formatDecimalWithSpacing(): String {
+    val df = DecimalFormat(
+        "###,###.#",
+        DecimalFormatSymbols(Locale.getDefault()).apply {
+            decimalSeparator = '.'
+            groupingSeparator = ' '
+            patternSeparator = ' '
+        }
+    )
+    df.roundingMode = RoundingMode.CEILING
+    return df.format(this)
+}
+
 
 /**
  * Форматирование дробных чисел до десятых с округлением по математическим правилам

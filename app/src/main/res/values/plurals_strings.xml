@@ -1,12 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- TODO понадобавлять плюралсов -->
-    <plurals name="steps">
-        <item quantity="zero">шагов</item>
-        <item quantity="one">шаг</item>
-        <item quantity="two">шага</item>
-        <item quantity="few">шага</item>
-        <item quantity="many">шагов</item>
-        <item quantity="other">шагов</item>
+    <plurals name="tablets">
+        <item quantity="zero">%s таблеток</item>
+        <item quantity="one">%s таблетка</item>
+        <item quantity="two">%s таблетки</item>
+        <item quantity="few">%s таблетки</item>
+        <item quantity="many">%s таблеток</item>
+        <item quantity="other">%s таблеток</item>
+    </plurals>
+
+    <plurals name="capsules">
+        <item quantity="zero">%s капсул</item>
+        <item quantity="one">%s капсула</item>
+        <item quantity="two">%s капсулы</item>
+        <item quantity="few">%s капсулы</item>
+        <item quantity="many">%s капсул</item>
+        <item quantity="other">%s капсул</item>
+    </plurals>
+
+    <plurals name="injections">
+        <item quantity="zero">%s инъекций</item>
+        <item quantity="one">%s инъекция</item>
+        <item quantity="two">%s инъекции</item>
+        <item quantity="few">%s инъекции</item>
+        <item quantity="many">%s инъекций</item>
+        <item quantity="other">%s инъекций</item>
+    </plurals>
+
+    <plurals name="procedures">
+        <item quantity="zero">%s процедур</item>
+        <item quantity="one">%s процедура</item>
+        <item quantity="two">%s процедуры</item>
+        <item quantity="few">%s процедуры</item>
+        <item quantity="many">%s процедур</item>
+        <item quantity="other">%s процедур</item>
+    </plurals>
+
+    <plurals name="drops">
+        <item quantity="zero">%s капель</item>
+        <item quantity="one">%s капля</item>
+        <item quantity="two">%s капли</item>
+        <item quantity="few">%s капли</item>
+        <item quantity="many">%s капель</item>
+        <item quantity="other">%s капель</item>
     </plurals>
 </resources>
