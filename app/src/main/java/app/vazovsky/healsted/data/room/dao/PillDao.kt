@@ -8,6 +8,7 @@ import androidx.room.Query
 import app.vazovsky.healsted.data.room.entity.PillEntity
 import kotlinx.coroutines.flow.Flow
 
+/** Dao объект с возможными функциями */
 @Dao
 interface PillDao {
     companion object {
@@ -25,15 +26,19 @@ interface PillDao {
         const val COLUMN_COMMENT = "comment"
     }
 
+    /** Получение всех лекарств из Room */
     @Query("SELECT * FROM $PILL_TABLE_NAME")
     fun getAllPills(): Flow<List<PillEntity>>
 
+    /** Добавление лекарства в Room */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPill(pill: PillEntity)
 
+    /** Получение лекарства по ID из Room */
     @Query("SELECT * FROM $PILL_TABLE_NAME WHERE $COLUMN_ID=(:id)")
     suspend fun getPillById(id: String): PillEntity
 
+    /** Удаление лекарства из Room */
     @Delete()
     suspend fun deletePill(pill: PillEntity)
 }

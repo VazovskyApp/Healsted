@@ -11,7 +11,7 @@ import app.vazovsky.healsted.data.model.TakePillType
 import app.vazovsky.healsted.data.room.dao.PillDao
 import kotlinx.parcelize.Parcelize
 
-/** Данные о лекарстве */
+/** Данные о лекарстве в виде Entity */
 @Parcelize
 @Entity(tableName = PillDao.PILL_TABLE_NAME)
 data class PillEntity(

@@ -9,6 +9,7 @@ import app.vazovsky.healsted.data.room.converters.StringListConverter
 import app.vazovsky.healsted.data.room.dao.PillDao
 import app.vazovsky.healsted.data.room.entity.PillEntity
 
+/** Класс для базы данных Room */
 @TypeConverters(
     StringListConverter::class,
     DatesTakenSelectedListConverter::class,
