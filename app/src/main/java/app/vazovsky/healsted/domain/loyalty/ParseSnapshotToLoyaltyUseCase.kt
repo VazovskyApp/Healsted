@@ -1,4 +1,4 @@
-package app.vazovsky.healsted.domain.profile
+package app.vazovsky.healsted.domain.loyalty
 
 import app.vazovsky.healsted.data.model.LoyaltyProgress
 import app.vazovsky.healsted.domain.base.UseCaseUnary
@@ -6,6 +6,7 @@ import app.vazovsky.healsted.extensions.orError
 import com.google.firebase.firestore.DocumentSnapshot
 import javax.inject.Inject
 
+/** Парсинг из DocumentSnapshot в уровень аккаунта */
 class ParseSnapshotToLoyaltyUseCase @Inject constructor() :
     UseCaseUnary<ParseSnapshotToLoyaltyUseCase.Params, LoyaltyProgress>() {
 
@@ -14,6 +15,7 @@ class ParseSnapshotToLoyaltyUseCase @Inject constructor() :
     }
 
     data class Params(
+        /** Форматируемый DocumentSnapshot с уровнем аккаунта */
         val snapshot: DocumentSnapshot,
     )
 }

@@ -15,7 +15,7 @@ import app.vazovsky.healsted.domain.health.AddMonitoringAttributeUseCase
 import app.vazovsky.healsted.domain.pills.GetAllPillsUseCase
 import app.vazovsky.healsted.domain.pills.ParseSnapshotToAllPillsUseCase
 import app.vazovsky.healsted.domain.pills.SaveLocalPillsUseCase
-import app.vazovsky.healsted.domain.profile.SaveLoyaltyUseCase
+import app.vazovsky.healsted.domain.loyalty.AddLoyaltyUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import app.vazovsky.healsted.presentation.base.SingleLiveEvent
 import com.google.android.gms.tasks.Task
@@ -31,7 +31,7 @@ class SignUpViewModel @Inject constructor(
     private val signUpUseCase: SignUpUseCase,
     private val saveFireStoreAccountUseCase: SaveFireStoreAccountUseCase,
     private val saveFireStoreUserUseCase: SaveFireStoreUserUseCase,
-    private val saveLoyaltyUseCase: SaveLoyaltyUseCase,
+    private val addLoyaltyUseCase: AddLoyaltyUseCase,
     private val addMonitoringAttributeUseCase: AddMonitoringAttributeUseCase,
     private val getAllPillsUseCase: GetAllPillsUseCase,
     private val parseSnapshotToAllPillsUseCase: ParseSnapshotToAllPillsUseCase,
@@ -126,7 +126,7 @@ class SignUpViewModel @Inject constructor(
     /** Добавить аккаунт в программу лояльности */
     fun saveLoyalty() {
         _saveLoyaltyLiveEvent.launchLoadData(
-            saveLoyaltyUseCase.executeFlow(UseCase.None)
+            addLoyaltyUseCase.executeFlow(UseCase.None)
         )
     }
 

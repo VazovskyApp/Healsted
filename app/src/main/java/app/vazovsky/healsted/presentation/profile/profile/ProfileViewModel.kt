@@ -6,9 +6,9 @@ import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.LoyaltyProgress
 import app.vazovsky.healsted.data.model.base.LoadableResult
 import app.vazovsky.healsted.domain.base.UseCase
-import app.vazovsky.healsted.domain.profile.GetLoyaltyUseCase
+import app.vazovsky.healsted.domain.loyalty.GetLoyaltyUseCase
 import app.vazovsky.healsted.domain.profile.GetProfileUseCase
-import app.vazovsky.healsted.domain.profile.ParseSnapshotToLoyaltyUseCase
+import app.vazovsky.healsted.domain.loyalty.ParseSnapshotToLoyaltyUseCase
 import app.vazovsky.healsted.domain.profile.ParseSnapshotToProfileUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import com.google.android.gms.tasks.Task
