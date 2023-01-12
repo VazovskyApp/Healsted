@@ -3,26 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profile_graph"
-    app:startDestination="@id/profileRoutingFragment">
+    app:startDestination="@+id/profileFragment">
 
     <include app:graph="@navigation/auth_graph" />
 
     <fragment
-        android:id="@+id/profileRoutingFragment"
-        android:name="app.vazovsky.healsted.presentation.profile.routing.ProfileRoutingFragment"
-        android:label="ProfileRoutingFragment"
-        tools:layout="@layout/fragment_profile_routing" >
-        <action
-            android:id="@+id/action_profileRoutingFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-        <action
-            android:id="@+id/action_profileRoutingFragment_to_auth_graph"
-            app:destination="@id/auth_graph" />
-    </fragment>
-
-    <fragment
         android:id="@+id/profileFragment"
-        android:name="app.vazovsky.healsted.presentation.profile.profile.ProfileFragment"
+        android:name="app.vazovsky.healsted.presentation.profile.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile" />
 

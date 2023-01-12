@@ -1,4 +1,4 @@
-package app.vazovsky.healsted.presentation.profile.profile
+package app.vazovsky.healsted.presentation.profile
 
 import android.os.Bundle
 import android.view.View

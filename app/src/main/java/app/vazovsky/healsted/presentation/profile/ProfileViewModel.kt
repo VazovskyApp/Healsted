@@ -1,4 +1,4 @@
-package app.vazovsky.healsted.presentation.profile.profile
+package app.vazovsky.healsted.presentation.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
