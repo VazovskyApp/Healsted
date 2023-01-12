@@ -8,7 +8,7 @@ import app.vazovsky.healsted.data.model.base.LoadableResult
 import app.vazovsky.healsted.domain.health.GetHealthMonitoringUseCase
 import app.vazovsky.healsted.domain.health.ParseSnapshotToMonitoringHistoryUseCase
 import app.vazovsky.healsted.domain.health.ParseSnapshotToMonitoringUseCase
-import app.vazovsky.healsted.domain.health.SaveMonitoringAttributeUseCase
+import app.vazovsky.healsted.domain.health.AddMonitoringAttributeUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import app.vazovsky.healsted.presentation.base.SingleLiveEvent
 import com.google.android.gms.tasks.Task
@@ -21,7 +21,7 @@ class HealthAttributeViewModel @Inject constructor(
     private val getHealthMonitoringUseCase: GetHealthMonitoringUseCase,
     private val parseSnapshotToMonitoringUseCase: ParseSnapshotToMonitoringUseCase,
     private val parseSnapshotToMonitoringHistoryUseCase: ParseSnapshotToMonitoringHistoryUseCase,
-    private val saveMonitoringAttributeUseCase: SaveMonitoringAttributeUseCase,
+    private val addMonitoringAttributeUseCase: AddMonitoringAttributeUseCase,
 ) : BaseViewModel() {
 
     /** Информация об атрибуте мониторинга в виде QuerySnapshot */
@@ -78,7 +78,7 @@ class HealthAttributeViewModel @Inject constructor(
     /** Добавить новое значение здоровья */
     fun updateMonitoring(monitoringAttribute: MonitoringAttribute) {
         _updateMonitoringLiveEvent.launchLoadData(
-            saveMonitoringAttributeUseCase.executeFlow(SaveMonitoringAttributeUseCase.Params(monitoringAttribute))
+            addMonitoringAttributeUseCase.executeFlow(AddMonitoringAttributeUseCase.Params(monitoringAttribute))
         )
     }
 }

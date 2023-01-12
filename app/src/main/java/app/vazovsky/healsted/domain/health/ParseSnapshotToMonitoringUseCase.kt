@@ -7,7 +7,7 @@ import app.vazovsky.healsted.extensions.toDataClass
 import com.google.firebase.firestore.QuerySnapshot
 import javax.inject.Inject
 
-/** Парсинг из снепшота в объект мониторинга */
+/** Парсинг из QuerySnapshot в атрибут мониторинга здоровья с актуальным значением */
 class ParseSnapshotToMonitoringUseCase @Inject constructor() :
     UseCaseUnary<ParseSnapshotToMonitoringUseCase.Params, MonitoringAttribute>() {
 
@@ -21,7 +21,7 @@ class ParseSnapshotToMonitoringUseCase @Inject constructor() :
     }
 
     data class Params(
-        /** Форматируемый QuerySnapshot со списком Pill */
+        /** Форматируемый QuerySnapshot со списком MonitoringAttribute */
         val snapshot: QuerySnapshot,
     )
 }

@@ -11,7 +11,7 @@ import app.vazovsky.healsted.domain.auth.SaveFireStoreAccountUseCase
 import app.vazovsky.healsted.domain.auth.SaveFireStoreUserUseCase
 import app.vazovsky.healsted.domain.auth.SignUpUseCase
 import app.vazovsky.healsted.domain.base.UseCase
-import app.vazovsky.healsted.domain.health.SaveMonitoringAttributeUseCase
+import app.vazovsky.healsted.domain.health.AddMonitoringAttributeUseCase
 import app.vazovsky.healsted.domain.pills.GetAllPillsUseCase
 import app.vazovsky.healsted.domain.pills.ParseSnapshotToAllPillsUseCase
 import app.vazovsky.healsted.domain.pills.SaveLocalPillsUseCase
@@ -32,7 +32,7 @@ class SignUpViewModel @Inject constructor(
     private val saveFireStoreAccountUseCase: SaveFireStoreAccountUseCase,
     private val saveFireStoreUserUseCase: SaveFireStoreUserUseCase,
     private val saveLoyaltyUseCase: SaveLoyaltyUseCase,
-    private val saveMonitoringAttributeUseCase: SaveMonitoringAttributeUseCase,
+    private val addMonitoringAttributeUseCase: AddMonitoringAttributeUseCase,
     private val getAllPillsUseCase: GetAllPillsUseCase,
     private val parseSnapshotToAllPillsUseCase: ParseSnapshotToAllPillsUseCase,
     private val saveLocalPillsUseCase: SaveLocalPillsUseCase,
@@ -145,8 +145,8 @@ class SignUpViewModel @Inject constructor(
     /** Сохранение веса */
     fun saveWeight() {
         _saveWeightLiveEvent.launchLoadData(
-            saveMonitoringAttributeUseCase.executeFlow(
-                SaveMonitoringAttributeUseCase.Params(
+            addMonitoringAttributeUseCase.executeFlow(
+                AddMonitoringAttributeUseCase.Params(
                     MonitoringAttribute(
                         value = "50",
                         type = MonitoringType.WEIGHT,
@@ -159,8 +159,8 @@ class SignUpViewModel @Inject constructor(
     /** Сохранение роста */
     fun saveHeight() {
         _saveHeightLiveEvent.launchLoadData(
-            saveMonitoringAttributeUseCase.executeFlow(
-                SaveMonitoringAttributeUseCase.Params(
+            addMonitoringAttributeUseCase.executeFlow(
+                AddMonitoringAttributeUseCase.Params(
                     MonitoringAttribute(
                         value = "150",
                         type = MonitoringType.HEIGHT,
@@ -173,8 +173,8 @@ class SignUpViewModel @Inject constructor(
     /** Сохранение температуры */
     fun saveTemperature() {
         _saveTemperatureLiveEvent.launchLoadData(
-            saveMonitoringAttributeUseCase.executeFlow(
-                SaveMonitoringAttributeUseCase.Params(
+            addMonitoringAttributeUseCase.executeFlow(
+                AddMonitoringAttributeUseCase.Params(
                     MonitoringAttribute(
                         value = "36.6",
                         type = MonitoringType.TEMPERATURE,
@@ -187,8 +187,8 @@ class SignUpViewModel @Inject constructor(
     /** Сохранение давления */
     fun saveBloodPressure() {
         _saveBloodPressureLiveEvent.launchLoadData(
-            saveMonitoringAttributeUseCase.executeFlow(
-                SaveMonitoringAttributeUseCase.Params(
+            addMonitoringAttributeUseCase.executeFlow(
+                AddMonitoringAttributeUseCase.Params(
                     MonitoringAttribute(
                         value = "120/80",
                         type = MonitoringType.BLOOD_PRESSURE,

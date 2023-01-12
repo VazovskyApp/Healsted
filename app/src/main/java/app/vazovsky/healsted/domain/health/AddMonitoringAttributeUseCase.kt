@@ -9,11 +9,12 @@ import app.vazovsky.healsted.extensions.orDefault
 import com.google.android.gms.tasks.Task
 import javax.inject.Inject
 
-class SaveMonitoringAttributeUseCase @Inject constructor(
+/** Добавление атрибута мониторинга здоровья с текущим значением */
+class AddMonitoringAttributeUseCase @Inject constructor(
     private val firebaseProfileRepository: FirebaseProfileRepository,
     private val authRepository: AuthRepository,
     private val firebaseAuthRepository: FirebaseAuthRepository,
-) : UseCaseUnary<SaveMonitoringAttributeUseCase.Params, Task<Void>>() {
+) : UseCaseUnary<AddMonitoringAttributeUseCase.Params, Task<Void>>() {
 
     override suspend fun execute(params: Params): Task<Void> {
         val uid = firebaseAuthRepository.getCurrentUserUid() ?: authRepository.getCurrentUserUid().orDefault()
@@ -22,6 +23,7 @@ class SaveMonitoringAttributeUseCase @Inject constructor(
     }
 
     data class Params(
+        /** Атрибут мониторинга здоровья */
         val monitoringAttribute: MonitoringAttribute,
     )
 }

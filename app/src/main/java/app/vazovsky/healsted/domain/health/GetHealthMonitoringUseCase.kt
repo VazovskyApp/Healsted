@@ -10,7 +10,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.QuerySnapshot
 import javax.inject.Inject
 
-/** Получение данных о мониторинге здоровья */
+/** Получение данных о мониторинге здоровья в виде QuerySnapshot */
 class GetHealthMonitoringUseCase @Inject constructor(
     private val firebaseProfileRepository: FirebaseProfileRepository,
     private val authRepository: AuthRepository,
@@ -28,6 +28,7 @@ class GetHealthMonitoringUseCase @Inject constructor(
     }
 
     data class Params(
+        /** Параметр, который нужно загрузить */
         val type: MonitoringType,
     )
 }
