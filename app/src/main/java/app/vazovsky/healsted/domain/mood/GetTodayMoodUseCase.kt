@@ -12,7 +12,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import java.time.LocalDate
 import javax.inject.Inject
 
-/** Получить настроение за день */
+/** Получить настроение за сегодняшний день в виде DocumentSnapshot */
 class GetTodayMoodUseCase @Inject constructor(
     private val firebaseProfileRepository: FirebaseProfileRepository,
     private val authRepository: AuthRepository,

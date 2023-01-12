@@ -9,7 +9,7 @@ import app.vazovsky.healsted.extensions.orDefault
 import com.google.android.gms.tasks.Task
 import javax.inject.Inject
 
-/** Обновить настроение */
+/** Обновить сегодняшнее настроение */
 class UpdateMoodUseCase @Inject constructor(
     private val firebaseProfileRepository: FirebaseProfileRepository,
     private val authRepository: AuthRepository,
@@ -23,6 +23,7 @@ class UpdateMoodUseCase @Inject constructor(
     }
 
     data class Params(
+        /** Текущее настроение */
         val mood: Mood,
     )
 }

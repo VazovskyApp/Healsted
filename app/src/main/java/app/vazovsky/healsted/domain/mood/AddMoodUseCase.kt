@@ -10,14 +10,11 @@ import app.vazovsky.healsted.domain.base.UseCaseUnary
 import app.vazovsky.healsted.extensions.orDefault
 import app.vazovsky.healsted.extensions.toStartOfDayTimestamp
 import com.google.android.gms.tasks.Task
-import com.google.firebase.Timestamp
 import java.time.LocalDate
-import java.time.ZoneId
-import java.util.*
 import javax.inject.Inject
 
-/** Добавление настроений в аккаунт */
-class SaveMoodUseCase @Inject constructor(
+/** Добавление настроения с текущим значением */
+class AddMoodUseCase @Inject constructor(
     private val firebaseProfileRepository: FirebaseProfileRepository,
     private val authRepository: AuthRepository,
     private val firebaseAuthRepository: FirebaseAuthRepository,

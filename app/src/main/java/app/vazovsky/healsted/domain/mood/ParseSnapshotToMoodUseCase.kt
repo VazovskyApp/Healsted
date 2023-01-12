@@ -28,7 +28,7 @@ class ParseSnapshotToMoodUseCase @Inject constructor(
     }
 
     data class Params(
-        /** Форматируемый DocumentSnapshot, содержащий объект Mood */
+        /** Форматируемый DocumentSnapshot с настроением */
         val snapshot: DocumentSnapshot,
     )
 }
