@@ -14,8 +14,11 @@ import app.vazovsky.healsted.extensions.toOffsetDateTime
 import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import timber.log.Timber
 
 /** Экран с редактированием профиля */
 @AndroidEntryPoint
@@ -36,11 +39,8 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
         profileSnapshotLiveData.observe { result ->
-            result.doOnSuccess { task ->
-                task.addOnSuccessListener { snapshot ->
-                    viewModel.getProfile(snapshot)
-                }
-            }
+            result.doOnSuccess { setProfileSnapshotTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
         }
         profileLiveData.observe { result ->
             binding.stateViewFlipper.setStateFromResult(result)
@@ -48,29 +48,19 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
                 account = profile
                 bindProfile(profile)
             }
+            result.doOnFailure { Timber.d(it.message) }
         }
         editAccountLiveEvent.observe { result ->
-            result.doOnSuccess { task ->
-                task.addOnSuccessListener {
-                    showInfoSnackbar("Профиль обновлен")
-                }
-                task.addOnFailureListener {
-                    showErrorSnackbar("Не удалось обновить профиль")
-                }
-            }
-            result.doOnFailure {
-                showErrorSnackbar("Не удалось обновить профиль")
-            }
+            result.doOnSuccess { setEditAccountTask(it) }
+            result.doOnFailure { showErrorSnackbar("Не удалось обновить профиль") }
         }
         deleteAccountFirebaseLiveData.observe { result ->
-            result.doOnSuccess {
-                viewModel.deleteAccountFireStore()
-            }
+            result.doOnSuccess { viewModel.deleteAccountFireStore() }
+            result.doOnFailure { Timber.d(it.message) }
         }
         deleteAccountFireStoreLiveData.observe { result ->
-            result.doOnSuccess {
-                viewModel.openAuth()
-            }
+            result.doOnSuccess { viewModel.openAuth() }
+            result.doOnFailure { Timber.d(it.message) }
         }
     }
 
@@ -118,5 +108,15 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
         buttonDelete.setOnClickListener {
             viewModel.deleteAccountFirebase()
         }
+    }
+
+    private fun setEditAccountTask(task: Task<Void>) = with(task) {
+        addOnSuccessListener { showInfoSnackbar("Профиль обновлен") }
+        addOnFailureListener { showErrorSnackbar("Не удалось обновить профиль") }
+    }
+
+    private fun setProfileSnapshotTask(task: Task<DocumentSnapshot>) = with(task) {
+        addOnSuccessListener { viewModel.getProfile(it) }
+        addOnFailureListener { Timber.d(it.message) }
     }
 }

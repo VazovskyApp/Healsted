@@ -8,6 +8,7 @@ import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 /** Экран главного роутинга */
 @AndroidEntryPoint
@@ -30,6 +31,7 @@ class RoutingFragment : BaseFragment(R.layout.fragment_routing) {
         observeNavigationCommands()
         initLiveEvent.observe { result ->
             result.doOnSuccess { navigateToResult(it) }
+            result.doOnFailure { Timber.d(it.message) }
         }
     }
 }

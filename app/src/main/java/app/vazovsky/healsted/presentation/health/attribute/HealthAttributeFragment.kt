@@ -64,15 +64,17 @@ class HealthAttributeFragment : BaseFragment(R.layout.fragment_health_attribute)
             result.doOnFailure { Timber.d(it.message) }
         }
         updateMonitoringLiveEvent.observe { result ->
-            result.doOnSuccess { task ->
-                task.addOnSuccessListener {
-                    viewModel.getMonitoringSnapshot(type)
-                    viewModel.getHistorySnapshot(type)
-                }
-                task.addOnFailureListener { Timber.d(it.message) }
-            }
+            result.doOnSuccess { setUpdateMonitoringTask(it) }
             result.doOnFailure { Timber.d(it.message) }
         }
+    }
+
+    private fun setUpdateMonitoringTask(task: Task<Void>) = with(task) {
+        addOnSuccessListener {
+            viewModel.getMonitoringSnapshot(type)
+            viewModel.getHistorySnapshot(type)
+        }
+        addOnFailureListener { Timber.d(it.message) }
     }
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {

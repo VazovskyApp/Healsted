@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.databinding.FragmentPillsBinding
+import app.vazovsky.healsted.domain.pills.GetPillsUseCase
 import app.vazovsky.healsted.extensions.addDefaultGridSpaceItemDecoration
 import app.vazovsky.healsted.extensions.addLinearSpaceItemDecoration
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
@@ -42,27 +43,27 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
         tabsLiveData.observe { result ->
-            result.doOnSuccess { tabs ->
-                pillsTabsAdapter.submitList(tabs)
-            }
+            result.doOnSuccess { tabs -> pillsTabsAdapter.submitList(tabs) }
+            result.doOnFailure { Timber.d(it.message) }
         }
         pillsSnapshotLiveData.observe { result ->
-            result.doOnSuccess { pillsResult ->
-                pillsResult.snapshotTask.addOnSuccessListener { snapshot ->
-                    viewModel.getPills(snapshot, pillsResult.slot)
-                }
-            }
+            result.doOnSuccess { pillsResult -> setPillsSnapshotTask(pillsResult) }
+            result.doOnFailure { Timber.d(it.message) }
         }
         pillsLiveData.observe { result ->
             binding.stateViewFlipper.setStateFromResult(result)
-            result.doOnSuccess { pills ->
-                pillsAdapter.submitList(pills)
-            }
+            result.doOnSuccess { pills -> pillsAdapter.submitList(pills) }
+            result.doOnFailure { Timber.d(it.message) }
         }
         localPillsLiveEvent.observe { result ->
             result.doOnSuccess { Timber.d("LOL result: $it") }
             result.doOnFailure { Timber.d(it.message) }
         }
+    }
+
+    private fun setPillsSnapshotTask(pillsResult: GetPillsUseCase.Result) = with(pillsResult.snapshotTask) {
+        addOnSuccessListener { snapshot -> viewModel.getPills(snapshot, pillsResult.slot) }
+        addOnFailureListener { Timber.d(it.message) }
     }
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {

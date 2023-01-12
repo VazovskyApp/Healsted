@@ -13,6 +13,7 @@ import app.vazovsky.healsted.presentation.settings.adapter.SettingsAdapter
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import timber.log.Timber
 
 /** Экран настроек */
 @AndroidEntryPoint
@@ -33,22 +34,13 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         observeNavigationCommands()
         settingsLiveData.observe { result ->
             binding.stateViewFlipper.setStateFromResult(result)
-            result.doOnSuccess { settings ->
-                bindSettings(settings)
-            }
+            result.doOnSuccess { settings -> bindSettings(settings) }
+            result.doOnFailure { Timber.d(it.message) }
         }
         signOutLiveEvent.observe { result ->
-            result.doOnSuccess {
-                viewModel.openAuth()
-            }
-            result.doOnFailure {
-                showErrorSnackbar(it.message)
-            }
+            result.doOnSuccess { viewModel.openAuth() }
+            result.doOnFailure { showErrorSnackbar(it.message) }
         }
-    }
-
-    private fun bindSettings(settings: List<SettingsItem>) {
-        settingsAdapter.submitList(settings)
     }
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
@@ -56,6 +48,10 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         stateViewFlipper.setRetryMethod { viewModel.getSettings() }
 
         setupRecyclerView()
+    }
+
+    private fun bindSettings(settings: List<SettingsItem>) {
+        settingsAdapter.submitList(settings)
     }
 
     private fun setupRecyclerView() = with(binding) {

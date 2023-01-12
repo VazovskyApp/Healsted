@@ -11,7 +11,10 @@ import app.vazovsky.healsted.databinding.FragmentProfileBinding
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 /** Экран с информацией об аккаунте */
 @AndroidEntryPoint
@@ -30,29 +33,21 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
         profileSnapshotLiveData.observe { result ->
-            result.doOnSuccess { task ->
-                task.addOnSuccessListener { snapshot ->
-                    viewModel.getProfile(snapshot)
-                }
-            }
+            result.doOnSuccess { setProfileSnapshotTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
         }
         profileLiveData.observe { result ->
-            result.doOnSuccess { account ->
-                bindProfile(account)
-            }
+            result.doOnSuccess { account -> bindProfile(account) }
+            result.doOnFailure { Timber.d(it.message) }
         }
         loyaltySnapshotLiveData.observe { result ->
-            result.doOnSuccess { task ->
-                task.addOnSuccessListener { snapshot ->
-                    viewModel.getLoyalty(snapshot)
-                }
-            }
+            result.doOnSuccess { setLoyaltySnapshotTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
         }
         loyaltyLiveData.observe { result ->
             binding.stateViewFlipper.setStateFromResult(result)
-            result.doOnSuccess { loyalty ->
-                bindLoyalty(loyalty)
-            }
+            result.doOnSuccess { loyalty -> bindLoyalty(loyalty) }
+            result.doOnFailure { Timber.d(it.message) }
         }
     }
 
@@ -84,5 +79,15 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
         progressIndicatorAccountProgress.progress = loyaltyProgress.currentValue
         progressIndicatorAccountProgress.max = loyaltyProgress.level.xpCount
+    }
+
+    private fun setLoyaltySnapshotTask(task: Task<DocumentSnapshot>) {
+        task.addOnSuccessListener { viewModel.getLoyalty(it) }
+        task.addOnFailureListener { Timber.d(it.message) }
+    }
+
+    private fun setProfileSnapshotTask(task: Task<DocumentSnapshot>) {
+        task.addOnSuccessListener { viewModel.getProfile(it) }
+        task.addOnFailureListener { Timber.d(it.message) }
     }
 }
