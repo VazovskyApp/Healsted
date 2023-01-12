@@ -1,9 +1,9 @@
 package app.vazovsky.healsted.presentation.pilleditor
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.data.model.base.LoadableResult
+import app.vazovsky.healsted.domain.pills.DeletePillUseCase
 import app.vazovsky.healsted.domain.pills.InsertPillToDatabaseUseCase
 import app.vazovsky.healsted.domain.pills.SavePillUseCase
 import app.vazovsky.healsted.domain.pills.UpdatePillUseCase
@@ -18,11 +18,16 @@ class PillEditorViewModel @Inject constructor(
     private val savePillUseCase: SavePillUseCase,
     private val updatePillUseCase: UpdatePillUseCase,
     private val insertPillToDatabaseUseCase: InsertPillToDatabaseUseCase,
+    private val deletePillUseCase: DeletePillUseCase,
 ) : BaseViewModel() {
 
     /** Добавление либо обновление лекарства */
-    private val _updatePillLiveData = MutableLiveData<LoadableResult<UpdateResult>>()
-    val updatePillLiveData: LiveData<LoadableResult<UpdateResult>> = _updatePillLiveData
+    private val _updatePillLiveEvent = SingleLiveEvent<LoadableResult<UpdateResult>>()
+    val updatePillLiveEvent: LiveData<LoadableResult<UpdateResult>> = _updatePillLiveEvent
+
+    /** Удаление лекарства */
+    private val _deletePillLiveEvent = SingleLiveEvent<LoadableResult<Task<Void>>>()
+    val deletePillLiveEvent: LiveData<LoadableResult<Task<Void>>> = _deletePillLiveEvent
 
     /** Сохранение лекарства в локальную базу данных */
     private val _saveLocalPillLiveEvent = SingleLiveEvent<LoadableResult<Boolean>>()
@@ -30,15 +35,22 @@ class PillEditorViewModel @Inject constructor(
 
     /** Добавление лекарства */
     fun addPill(pill: Pill) {
-        _updatePillLiveData.launchLoadData(
+        _updatePillLiveEvent.launchLoadData(
             savePillUseCase.executeFlow(SavePillUseCase.Params(pill))
         )
     }
 
     /** Обновление лекарства */
     fun updatePill(pill: Pill) {
-        _updatePillLiveData.launchLoadData(
+        _updatePillLiveEvent.launchLoadData(
             updatePillUseCase.executeFlow(UpdatePillUseCase.Params(pill))
+        )
+    }
+
+    /** Удаление лекарства */
+    fun deletePill(pill: Pill){
+        _deletePillLiveEvent.launchLoadData(
+            deletePillUseCase.executeFlow(DeletePillUseCase.Params(pill))
         )
     }
 

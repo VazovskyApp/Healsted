@@ -47,15 +47,20 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
 
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
-        updatePillLiveData.observe { result ->
+        updatePillLiveEvent.observe { result ->
             result.doOnSuccess { setUpdatePillTask(it.task, it.pill) }
             result.doOnFailure { Timber.d(it.message) }
         }
+
         saveLocalPillLiveEvent.observe { result ->
             result.doOnSuccess {
                 Timber.d("UPDATE RESULT: $it")
                 viewModel.navigateBack()
             }
+            result.doOnFailure { Timber.d(it.message) }
+        }
+        deletePillLiveEvent.observe { result ->
+            result.doOnSuccess { setDeletePillTask(it) }
             result.doOnFailure { Timber.d(it.message) }
         }
     }
@@ -72,11 +77,22 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         setDateNotification()
 
         setConfirmClick()
-
+        setDeleteClick()
     }
 
     override fun applyBottomNavigationViewPadding(view: View, bottomNavigationViewHeight: Int) = with(binding) {
         linearLayoutParametres.updatePadding(bottom = bottomNavigationViewHeight)
+    }
+
+    private fun setDeleteClick() = with(binding.toolbar) {
+        menu.findItem(R.id.menuDelete).isVisible = pill != null
+        setOnMenuItemClickListener { item ->
+            if (item.itemId == R.id.menuDelete) {
+                setFragmentResult(REQUEST_KEY_UPDATE_PILLS, bundleOf())
+                pill?.let { viewModel.deletePill(it) }
+            }
+            true
+        }
     }
 
     private fun setConfirmClick() = with(binding) {
@@ -136,6 +152,11 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         editTextStartDate.setText(dateFormatter.formatStandardDateFull(pill?.startDate.orDefault().toOffsetDateTime()))
         editTextEndDate.setText(dateFormatter.formatStandardDateFull(pill?.endDate.orDefault().toOffsetDateTime()))
         editTextComment.setText(pill?.comment.orDefault())
+    }
+
+    private fun setDeletePillTask(task: Task<Void>) = with(task) {
+        addOnSuccessListener { viewModel.navigateBack() }
+        addOnFailureListener { Timber.d(it.message) }
     }
 
     /** Настройка спиннера для DatesTakenType */

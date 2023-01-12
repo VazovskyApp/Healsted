@@ -49,6 +49,15 @@ class FirebaseProfileServiceImpl @Inject constructor(
         .document(pill.id)
         .update(pill.serializeToMap())
 
+    override fun deleteProfilePill(
+        uid: String,
+        pill: Pill,
+    ) = firestore.collection(PILLS_COLLECTION)
+        .document(uid)
+        .collection(PILLS_COLLECTION)
+        .document(pill.id)
+        .delete()
+
     override fun fetchProfilePills(
         uid: String,
     ) = firestore.collection(PILLS_COLLECTION)

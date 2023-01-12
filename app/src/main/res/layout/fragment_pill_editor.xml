@@ -16,6 +16,7 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
+            app:menu="@menu/pill_editor"
             android:layout_height="?actionBarSize"
             app:navigationIcon="@drawable/ic_back"
             app:titleCentered="true"

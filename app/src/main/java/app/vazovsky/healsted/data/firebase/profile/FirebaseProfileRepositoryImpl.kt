@@ -4,6 +4,7 @@ import app.vazovsky.healsted.data.model.LoyaltyProgress
 import app.vazovsky.healsted.data.model.MonitoringAttribute
 import app.vazovsky.healsted.data.model.Mood
 import app.vazovsky.healsted.data.model.Pill
+import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import javax.inject.Inject
 
@@ -26,6 +27,11 @@ class FirebaseProfileRepositoryImpl @Inject constructor(
         uid: String,
         pill: Pill,
     ) = firebaseProfileService.updateProfilePill(uid, pill)
+
+    override fun deleteProfilePill(
+        uid: String,
+        pill: Pill,
+    ) = firebaseProfileService.deleteProfilePill(uid,pill)
 
     override fun fetchProfilePills(uid: String) = firebaseProfileService.fetchProfilePills(uid)
 

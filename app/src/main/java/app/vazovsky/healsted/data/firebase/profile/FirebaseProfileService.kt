@@ -17,6 +17,7 @@ interface FirebaseProfileService {
     /** Pill */
     fun addProfilePill(uid: String, pill: Pill): Task<Void>
     fun updateProfilePill(uid: String, pill: Pill): Task<Void>
+    fun deleteProfilePill(uid: String, pill: Pill): Task<Void>
     fun fetchProfilePills(uid: String): Task<QuerySnapshot>
 
     /** Mood */

@@ -15,6 +15,7 @@ import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import app.vazovsky.healsted.presentation.pills.adapter.PillsAdapter
 import app.vazovsky.healsted.presentation.pills.tab.PillsTabsAdapter
+import app.vazovsky.healsted.presentation.view.StateViewFlipper
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -47,6 +48,7 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
             result.doOnFailure { Timber.d(it.message) }
         }
         pillsSnapshotLiveData.observe { result ->
+            binding.stateViewFlipper.changeState(StateViewFlipper.State.LOADING)
             result.doOnSuccess { pillsResult -> setPillsSnapshotTask(pillsResult) }
             result.doOnFailure { Timber.d(it.message) }
         }

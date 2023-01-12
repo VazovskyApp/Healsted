@@ -57,6 +57,7 @@
     <string name="pills_completed_tab_title">Завершенные</string>
 
     <!-- Pill Editor -->
+    <string name="pill_editor_menu_delete">Удалить</string>
     <string name="pill_editor_title_add_pill">Добавить лекарство</string>
     <string name="pill_editor_title_edit_pill">Редактировать лекарство</string>
     <string name="pill_editor_time_notification">Время уведомления</string>
