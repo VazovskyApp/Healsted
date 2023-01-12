@@ -3,12 +3,12 @@ package app.vazovsky.healsted.presentation.auth.login
 import androidx.lifecycle.LiveData
 import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.data.model.base.LoadableResult
+import app.vazovsky.healsted.domain.account.GetAccountUseCase
 import app.vazovsky.healsted.domain.auth.LogInUseCase
 import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.pills.GetAllPillsUseCase
 import app.vazovsky.healsted.domain.pills.ParseSnapshotToAllPillsUseCase
 import app.vazovsky.healsted.domain.roompills.SaveRoomPillsUseCase
-import app.vazovsky.healsted.domain.account.GetAccountUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import app.vazovsky.healsted.presentation.base.SingleLiveEvent
 import com.google.android.gms.tasks.Task
@@ -25,7 +25,7 @@ class LogInViewModel @Inject constructor(
     private val getAccountUseCase: GetAccountUseCase,
     private val getAllPillsUseCase: GetAllPillsUseCase,
     private val parseSnapshotToAllPillsUseCase: ParseSnapshotToAllPillsUseCase,
-    private val saveRoomPillsUseCase: SaveRoomPillsUseCase,
+    private val saveRoomPillsUseCase: SaveRoomPillsUseCase, singleLiveEvent: SingleLiveEvent<LoadableResult<List<Pill>>>,
 ) : BaseViewModel() {
 
     /** Получение результата авторизации */
@@ -44,9 +44,9 @@ class LogInViewModel @Inject constructor(
     private val _listPillsLiveEvent = SingleLiveEvent<LoadableResult<List<Pill>>>()
     val listPillsLiveEvent: LiveData<LoadableResult<List<Pill>>> = _listPillsLiveEvent
 
-    /** Сохранение таблеток в локальную бд */
-    private val _saveLocalPillsLiveEvent = SingleLiveEvent<LoadableResult<Boolean>>()
-    val saveLocalPillsLiveEvent: LiveData<LoadableResult<Boolean>> = _saveLocalPillsLiveEvent
+    /** Сохранение лекарств в Room */
+    private val _saveRoomPillsLiveEvent = SingleLiveEvent<LoadableResult<Boolean>>()
+    val saveRoomPillsLiveEvent: LiveData<LoadableResult<Boolean>> = _saveRoomPillsLiveEvent
 
     /** Авторизоваться */
     fun logIn(email: String, password: String) {
@@ -55,16 +55,30 @@ class LogInViewModel @Inject constructor(
         )
     }
 
-    /** Получение аккаунта */
+    /** Получить аккаунт */
     fun getAccount() {
         _accountLiveEvent.launchLoadData(
             getAccountUseCase.executeFlow(UseCase.None)
         )
     }
 
-    /** Сохранение лекарств локально */
-    fun saveLocalPills(pills: List<Pill>) {
-        _saveLocalPillsLiveEvent.launchLoadData(
+    /** Получить все лекарства в виде QuerySnapshot */
+    fun getPillsSnapshot() {
+        _listPillsSnapshotLiveEvent.launchLoadData(getAllPillsUseCase.executeFlow(UseCase.None))
+    }
+
+    /** Получить все лекарства из QuerySnapshot */
+    fun getPills(snapshot: QuerySnapshot) {
+        _listPillsLiveEvent.launchLoadData(
+            parseSnapshotToAllPillsUseCase.executeFlow(
+                ParseSnapshotToAllPillsUseCase.Params(snapshot)
+            )
+        )
+    }
+
+    /** Сохранение лекарств в Room */
+    fun saveRoomPills(pills: List<Pill>) {
+        _saveRoomPillsLiveEvent.launchLoadData(
             saveRoomPillsUseCase.executeFlow(SaveRoomPillsUseCase.Params(pills))
         )
     }
@@ -72,19 +86,5 @@ class LogInViewModel @Inject constructor(
     /** Открытие дашборда */
     fun openDashboard() {
         navigate(destinations.dashboard())
-    }
-
-    /** Получить все таблетки в виде QuerySnapshot */
-    fun getPillsSnapshot() {
-        _listPillsSnapshotLiveEvent.launchLoadData(getAllPillsUseCase.executeFlow(UseCase.None))
-    }
-
-    /** Получить все таблетки из QuerySnapshot */
-    fun getPills(snapshot: QuerySnapshot) {
-        _listPillsLiveEvent.launchLoadData(
-            parseSnapshotToAllPillsUseCase.executeFlow(
-                ParseSnapshotToAllPillsUseCase.Params(snapshot)
-            )
-        )
     }
 }

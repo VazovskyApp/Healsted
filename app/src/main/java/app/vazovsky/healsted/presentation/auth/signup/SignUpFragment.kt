@@ -68,10 +68,10 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
             result.doOnFailure { Timber.d(it.message) }
         }
         listPillsLiveEvent.observe { result ->
-            result.doOnSuccess { pills -> viewModel.saveLocalPills(pills) }
+            result.doOnSuccess { pills -> viewModel.saveRoomPills(pills) }
             result.doOnFailure { Timber.d(it.message) }
         }
-        saveLocalPillsLiveEvent.observe { result ->
+        saveRoomPillsLiveEvent.observe { result ->
             result.doOnSuccess { viewModel.openDashboard() }
             result.doOnFailure { Timber.d(it.message) }
         }

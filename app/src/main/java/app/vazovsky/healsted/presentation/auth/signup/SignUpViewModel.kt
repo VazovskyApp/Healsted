@@ -78,9 +78,9 @@ class SignUpViewModel @Inject constructor(
     private val _listPillsLiveEvent = SingleLiveEvent<LoadableResult<List<Pill>>>()
     val listPillsLiveEvent: LiveData<LoadableResult<List<Pill>>> = _listPillsLiveEvent
 
-    /** Сохранение таблеток в локальную бд */
-    private val _saveLocalPillsLiveEvent = SingleLiveEvent<LoadableResult<Boolean>>()
-    val saveLocalPillsLiveEvent: LiveData<LoadableResult<Boolean>> = _saveLocalPillsLiveEvent
+    /** Сохранение лекарств в Room */
+    private val _saveRoomPillsLiveEvent = SingleLiveEvent<LoadableResult<Boolean>>()
+    val saveRoomPillsLiveEvent: LiveData<LoadableResult<Boolean>> = _saveRoomPillsLiveEvent
 
     /** Зарегистрироваться */
     fun signUp(email: String, password: String) {
@@ -130,9 +130,9 @@ class SignUpViewModel @Inject constructor(
         )
     }
 
-    /** Сохранение лекарств локально */
-    fun saveLocalPills(pills: List<Pill>) {
-        _saveLocalPillsLiveEvent.launchLoadData(
+    /** Сохранение лекарств в Room */
+    fun saveRoomPills(pills: List<Pill>) {
+        _saveRoomPillsLiveEvent.launchLoadData(
             saveRoomPillsUseCase.executeFlow(SaveRoomPillsUseCase.Params(pills))
         )
     }
