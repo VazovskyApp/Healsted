@@ -34,7 +34,7 @@ fun Timestamp.toLocalDateTime(): LocalDateTime = LocalDateTime.ofInstant(
 
 fun Timestamp?.orDefault() = this ?: LocalDate.now().toStartOfDayTimestamp()
 
-fun OffsetTime?.orDefault() = this ?: OffsetTime.now()
+fun OffsetTime?.orDefault(): OffsetTime = this ?: OffsetTime.now()
 
 fun LocalDate.toStartOfDayTimestamp() = Timestamp(Date.from(this.atStartOfDay(ZoneId.systemDefault()).toInstant()))
 

@@ -17,6 +17,9 @@ fun Float.formatWithoutTrailingZero(): String {
     return temp.replace(',', '.')
 }
 
+/**
+ * Форматирование дробных чисел до десятых и без нуля на конце.
+ */
 fun Float.formatDecimalWithSpacing(): String {
     val df = DecimalFormat(
         "###,###.#",

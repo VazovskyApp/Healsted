@@ -19,10 +19,12 @@ import kotlin.math.max
 
 private const val DEFAULT_SNACK_BAR_TEXT_MAX_LINES = 3
 
+/** Показать снекбар с ошибкой на фрагменте */
 fun Fragment.errorSnackbar(@StringRes message: Int, @Px marginBottom: Int = 0) {
     showErrorSnackbar(requireContext().getString(message), null, marginBottom) {}
 }
 
+/** Показать снекбар с ошибкой на фрагменте */
 fun Fragment.showErrorSnackbar(
     message: String,
     actionText: String? = null,
@@ -40,6 +42,7 @@ fun Fragment.showErrorSnackbar(
     )
 }
 
+/** Показать снекбар с инфой на фрагменте */
 fun Fragment.showInfoSnackbar(
     message: String,
     actionText: String? = null,
@@ -58,6 +61,7 @@ fun Fragment.showInfoSnackbar(
     )
 }
 
+/** Показать снекбар на активити */
 fun Activity.showSnackbar(
     view: View?,
     message: String,
@@ -68,6 +72,7 @@ fun Activity.showSnackbar(
     showCustomSnackbar(view, message, actionText, marginBottom, action = action)
 }
 
+/** Показать кастомный снекбар */
 private fun showCustomSnackbar(
     view: View?,
     message: String,
@@ -119,15 +124,18 @@ private fun showCustomSnackbar(
     }
 }
 
+/** Показать клавиатуру */
 fun Fragment.showSoftKeyboard(view: View) {
     val inputMethodManager = view.context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
     inputMethodManager?.showSoftInput(view, 0)
 }
 
+/** Скрыть клавиатуру */
 fun Fragment.hideSoftKeyboard() {
     view?.hideSoftKeyboard()
 }
 
+/** Показать тоаст */
 fun Fragment.showToast(message: String) {
     Toast.makeText(context, message, Toast.LENGTH_LONG).show()
 }

@@ -19,7 +19,7 @@ import com.bumptech.glide.request.transition.Transition
 
 /**
  * Модифицированная версия функции для загрузки картинки с помощью Glide
- * Позволяет задавать трансформации, ресурсы для плейсхолдера или ошибки и др. параметры
+ * Позволяет задавать трансформации, ресурсы для плейсхолдера или ошибки и другие параметры
  */
 fun ImageView.load(
     imageUrl: String?,
@@ -32,44 +32,27 @@ fun ImageView.load(
     doOnSuccess: (Drawable?) -> Unit = { }
 ) {
     Glide.with(this).clear(this)
-    Glide.with(context)
-        .load(imageUrl)
-        .apply { placeHolderRes?.let(::placeholder) }
-        .apply { errorRes?.let(::error) }
-        .apply { fallbackRes?.let(::fallback) }
-        .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
-        .apply {
+    Glide.with(context).load(imageUrl).apply { placeHolderRes?.let(::placeholder) }.apply { errorRes?.let(::error) }
+        .apply { fallbackRes?.let(::fallback) }.apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL)).apply {
             if (isCircle) {
                 apply(RequestOptions.circleCropTransform())
             }
-        }
-        .addListener(
-            object : RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    e?.printStackTrace()
-                    doOnFailure.invoke()
-                    return false
-                }
-
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    doOnSuccess.invoke(resource)
-                    return false
-                }
+        }.addListener(object : RequestListener<Drawable> {
+            override fun onLoadFailed(
+                e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean
+            ): Boolean {
+                e?.printStackTrace()
+                doOnFailure.invoke()
+                return false
             }
-        )
-        .apply { transform(*transformations.toTypedArray()) }
-        .into(this)
+
+            override fun onResourceReady(
+                resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean
+            ): Boolean {
+                doOnSuccess.invoke(resource)
+                return false
+            }
+        }).apply { transform(*transformations.toTypedArray()) }.into(this)
 }
 
 fun ImageView.loadSvgFitStart(
@@ -82,37 +65,23 @@ fun ImageView.loadSvgFitStart(
     doOnFailure: () -> Unit = {},
     doOnSuccess: (Drawable?) -> Unit = {},
 ) {
-    Glide.with(context)
-        .load(imageUrl)
-        .apply { placeHolderRes?.let(::placeholder) }
-        .apply { errorRes?.let(::error) }
-        .apply { fallbackRes?.let(::fallback) }
-        .addListener(
-            object : RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    e?.printStackTrace()
-                    doOnFailure.invoke()
-                    return false
-                }
-
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    doOnSuccess.invoke(resource)
-                    return false
-                }
+    Glide.with(context).load(imageUrl).apply { placeHolderRes?.let(::placeholder) }.apply { errorRes?.let(::error) }
+        .apply { fallbackRes?.let(::fallback) }.addListener(object : RequestListener<Drawable> {
+            override fun onLoadFailed(
+                e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean
+            ): Boolean {
+                e?.printStackTrace()
+                doOnFailure.invoke()
+                return false
             }
-        )
-        .into(object : CustomTarget<Drawable>() {
+
+            override fun onResourceReady(
+                resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean
+            ): Boolean {
+                doOnSuccess.invoke(resource)
+                return false
+            }
+        }).into(object : CustomTarget<Drawable>() {
             override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
                 val bitmap = FitHeightSideTransformation.transform(
                     align = FitHeightSideTransformation.Align.FIT_START,

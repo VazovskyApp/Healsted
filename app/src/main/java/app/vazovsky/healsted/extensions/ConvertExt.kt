@@ -3,16 +3,17 @@ package app.vazovsky.healsted.extensions
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-//convert a data class to a map
+/** Конвертация в Map<String, Any> из Объекта */
 fun <T> T.serializeToMap(): Map<String, Any> {
     return convert()
 }
-//convert a map to a data class
+
+/** Конвертация в Объект из Map<String, Any> */
 inline fun <reified T> Map<String, Any>.toDataClass(): T {
     return convert()
 }
 
-//convert an object of type I to type O
+/** Конвертация объект из типа I в тип O */
 inline fun <I, reified O> I.convert(): O {
     val gson = Gson()
     val json = gson.toJson(this)
