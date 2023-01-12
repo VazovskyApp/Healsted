@@ -9,7 +9,7 @@ import app.vazovsky.healsted.extensions.orDefault
 import app.vazovsky.healsted.presentation.pilleditor.UpdateResult
 import javax.inject.Inject
 
-/** Обновить данные о лекарстве */
+/** Обновление данные о лекарстве */
 class UpdatePillUseCase @Inject constructor(
     private val firebaseProfileRepository: FirebaseProfileRepository,
     private val authRepository: AuthRepository,

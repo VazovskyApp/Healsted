@@ -8,8 +8,8 @@ import app.vazovsky.healsted.domain.auth.DeleteFirestoreAccountUseCase
 import app.vazovsky.healsted.domain.auth.DeleteAccountUseCase
 import app.vazovsky.healsted.domain.auth.UpdateFireStoreAccountUseCase
 import app.vazovsky.healsted.domain.base.UseCase
-import app.vazovsky.healsted.domain.profile.GetProfileUseCase
-import app.vazovsky.healsted.domain.profile.ParseSnapshotToProfileUseCase
+import app.vazovsky.healsted.domain.account.GetAccountUseCase
+import app.vazovsky.healsted.domain.account.ParseSnapshotToAccountUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import app.vazovsky.healsted.presentation.base.SingleLiveEvent
 import com.google.android.gms.tasks.Task
@@ -20,8 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsAccountViewModel @Inject constructor(
     private val outDestinations: SettingsAccountOutDestinations,
-    private val getProfileUseCase: GetProfileUseCase,
-    private val parseSnapshotToProfileUseCase: ParseSnapshotToProfileUseCase,
+    private val getAccountUseCase: GetAccountUseCase,
+    private val parseSnapshotToAccountUseCase: ParseSnapshotToAccountUseCase,
     private val updateFireStoreAccountUseCase: UpdateFireStoreAccountUseCase,
     private val deleteAccountUseCase: DeleteAccountUseCase,
     private val deleteFirestoreAccountUseCase: DeleteFirestoreAccountUseCase,
@@ -50,14 +50,14 @@ class SettingsAccountViewModel @Inject constructor(
     /** Получить профиль в виде DocumentSnapshot */
     fun getProfileSnapshot() {
         _profileSnapshotLiveData.launchLoadData(
-            getProfileUseCase.executeFlow(UseCase.None)
+            getAccountUseCase.executeFlow(UseCase.None)
         )
     }
 
     /** Получение профиля */
     fun getProfile(snapshot: DocumentSnapshot) {
         _profileLiveData.launchLoadData(
-            parseSnapshotToProfileUseCase.executeFlow(ParseSnapshotToProfileUseCase.Params(snapshot))
+            parseSnapshotToAccountUseCase.executeFlow(ParseSnapshotToAccountUseCase.Params(snapshot))
         )
     }
 

@@ -27,7 +27,7 @@ class ParseSnapshotToTodayPillsUseCase @Inject constructor() :
     }
 
     data class Params(
-        /** Форматируемый QuerySnapshot со списком Pill */
+        /** Форматируемый QuerySnapshot со списком лекарств */
         val snapshot: QuerySnapshot,
 
         /** Дата, по которой нужно получить лекарства */

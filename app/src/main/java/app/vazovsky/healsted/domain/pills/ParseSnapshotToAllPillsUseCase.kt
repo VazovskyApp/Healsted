@@ -20,7 +20,7 @@ class ParseSnapshotToAllPillsUseCase @Inject constructor() : UseCaseUnary<ParseS
     }
 
     data class Params(
-        /** Форматируемый QuerySnapshot со списком Pill */
+        /** Форматируемый QuerySnapshot со списком лекарств */
         val snapshot: QuerySnapshot,
     )
 }

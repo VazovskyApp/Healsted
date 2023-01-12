@@ -9,7 +9,7 @@ import app.vazovsky.healsted.data.model.PillsTabSlot
 import app.vazovsky.healsted.data.model.base.LoadableResult
 import app.vazovsky.healsted.data.room.entity.PillEntity
 import app.vazovsky.healsted.domain.base.UseCase
-import app.vazovsky.healsted.domain.pills.GetRoomPillsUseCase
+import app.vazovsky.healsted.domain.roompills.GetRoomPillsUseCase
 import app.vazovsky.healsted.domain.pills.GetPillsUseCase
 import app.vazovsky.healsted.domain.pills.GetTabsUseCase
 import app.vazovsky.healsted.domain.pills.ParseSnapshotToPillsUseCase

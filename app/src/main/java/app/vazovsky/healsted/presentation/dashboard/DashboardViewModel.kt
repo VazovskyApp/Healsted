@@ -12,8 +12,8 @@ import app.vazovsky.healsted.domain.mood.ParseSnapshotToMoodUseCase
 import app.vazovsky.healsted.domain.mood.UpdateMoodUseCase
 import app.vazovsky.healsted.domain.pills.GetTodayPillsUseCase
 import app.vazovsky.healsted.domain.pills.ParseSnapshotToTodayPillsUseCase
-import app.vazovsky.healsted.domain.profile.GetProfileUseCase
-import app.vazovsky.healsted.domain.profile.ParseSnapshotToProfileUseCase
+import app.vazovsky.healsted.domain.account.GetAccountUseCase
+import app.vazovsky.healsted.domain.account.ParseSnapshotToAccountUseCase
 import app.vazovsky.healsted.extensions.toStartOfDayTimestamp
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import app.vazovsky.healsted.presentation.base.SingleLiveEvent
@@ -28,8 +28,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
     private val destinations: DashboardDestinations,
-    private val getProfileUseCase: GetProfileUseCase,
-    private val parseSnapshotToProfileUseCase: ParseSnapshotToProfileUseCase,
+    private val getAccountUseCase: GetAccountUseCase,
+    private val parseSnapshotToAccountUseCase: ParseSnapshotToAccountUseCase,
     private val getTodayPillsUseCase: GetTodayPillsUseCase,
     private val parseSnapshotToTodayPillsUseCase: ParseSnapshotToTodayPillsUseCase,
     private val getTodayMoodUseCase: GetTodayMoodUseCase,
@@ -69,12 +69,12 @@ class DashboardViewModel @Inject constructor(
 
     /** Получение профиля в виде DocumentSnapshot */
     fun getProfileSnapshot() {
-        _profileSnapshotLiveData.launchLoadData(getProfileUseCase.executeFlow(UseCase.None))
+        _profileSnapshotLiveData.launchLoadData(getAccountUseCase.executeFlow(UseCase.None))
     }
 
     /** Получение профиля из DocumentSnapshot */
     fun getProfile(snapshot: DocumentSnapshot) {
-        _profileLiveData.launchLoadData(parseSnapshotToProfileUseCase.executeFlow(ParseSnapshotToProfileUseCase.Params(snapshot)))
+        _profileLiveData.launchLoadData(parseSnapshotToAccountUseCase.executeFlow(ParseSnapshotToAccountUseCase.Params(snapshot)))
     }
 
     /** Получение лекарств на сегодня в виде QuerySnapshot */

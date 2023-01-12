@@ -3,9 +3,9 @@ package app.vazovsky.healsted.presentation.pilleditor
 import androidx.lifecycle.LiveData
 import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.data.model.base.LoadableResult
-import app.vazovsky.healsted.domain.pills.DeleteRoomPillUseCase
+import app.vazovsky.healsted.domain.roompills.DeleteRoomPillUseCase
 import app.vazovsky.healsted.domain.pills.DeletePillUseCase
-import app.vazovsky.healsted.domain.pills.InsertRoomPillUseCase
+import app.vazovsky.healsted.domain.roompills.InsertRoomPillUseCase
 import app.vazovsky.healsted.domain.pills.SavePillUseCase
 import app.vazovsky.healsted.domain.pills.UpdatePillUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel

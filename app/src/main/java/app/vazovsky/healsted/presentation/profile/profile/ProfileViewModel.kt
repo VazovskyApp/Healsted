@@ -7,9 +7,9 @@ import app.vazovsky.healsted.data.model.LoyaltyProgress
 import app.vazovsky.healsted.data.model.base.LoadableResult
 import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.loyalty.GetLoyaltyUseCase
-import app.vazovsky.healsted.domain.profile.GetProfileUseCase
+import app.vazovsky.healsted.domain.account.GetAccountUseCase
 import app.vazovsky.healsted.domain.loyalty.ParseSnapshotToLoyaltyUseCase
-import app.vazovsky.healsted.domain.profile.ParseSnapshotToProfileUseCase
+import app.vazovsky.healsted.domain.account.ParseSnapshotToAccountUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
@@ -18,8 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val getProfileUseCase: GetProfileUseCase,
-    private val parseSnapshotToProfileUseCase: ParseSnapshotToProfileUseCase,
+    private val getAccountUseCase: GetAccountUseCase,
+    private val parseSnapshotToAccountUseCase: ParseSnapshotToAccountUseCase,
     private val getLoyaltyUseCase: GetLoyaltyUseCase,
     private val parseSnapshotToLoyaltyUseCase: ParseSnapshotToLoyaltyUseCase,
 ) : BaseViewModel() {
@@ -42,13 +42,13 @@ class ProfileViewModel @Inject constructor(
     /** Получение данных об аккаунте */
     fun getProfileSnapshot() {
         _profileSnapshotLiveData.launchLoadData(
-            getProfileUseCase.executeFlow(UseCase.None)
+            getAccountUseCase.executeFlow(UseCase.None)
         )
     }
 
     fun getProfile(snapshot: DocumentSnapshot) {
         _profileLiveData.launchLoadData(
-            parseSnapshotToProfileUseCase.executeFlow(ParseSnapshotToProfileUseCase.Params(snapshot))
+            parseSnapshotToAccountUseCase.executeFlow(ParseSnapshotToAccountUseCase.Params(snapshot))
         )
     }
 

@@ -7,8 +7,8 @@ import app.vazovsky.healsted.domain.auth.LogInUseCase
 import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.pills.GetAllPillsUseCase
 import app.vazovsky.healsted.domain.pills.ParseSnapshotToAllPillsUseCase
-import app.vazovsky.healsted.domain.pills.SaveRoomPillsUseCase
-import app.vazovsky.healsted.domain.profile.GetProfileUseCase
+import app.vazovsky.healsted.domain.roompills.SaveRoomPillsUseCase
+import app.vazovsky.healsted.domain.account.GetAccountUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import app.vazovsky.healsted.presentation.base.SingleLiveEvent
 import com.google.android.gms.tasks.Task
@@ -22,7 +22,7 @@ import javax.inject.Inject
 class LogInViewModel @Inject constructor(
     private val destinations: LogInDestinations,
     private val logInUseCase: LogInUseCase,
-    private val getProfileUseCase: GetProfileUseCase,
+    private val getAccountUseCase: GetAccountUseCase,
     private val getAllPillsUseCase: GetAllPillsUseCase,
     private val parseSnapshotToAllPillsUseCase: ParseSnapshotToAllPillsUseCase,
     private val saveRoomPillsUseCase: SaveRoomPillsUseCase,
@@ -58,7 +58,7 @@ class LogInViewModel @Inject constructor(
     /** Получение аккаунта */
     fun getAccount() {
         _accountLiveEvent.launchLoadData(
-            getProfileUseCase.executeFlow(UseCase.None)
+            getAccountUseCase.executeFlow(UseCase.None)
         )
     }
 

@@ -14,7 +14,7 @@ import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.health.AddMonitoringAttributeUseCase
 import app.vazovsky.healsted.domain.pills.GetAllPillsUseCase
 import app.vazovsky.healsted.domain.pills.ParseSnapshotToAllPillsUseCase
-import app.vazovsky.healsted.domain.pills.SaveRoomPillsUseCase
+import app.vazovsky.healsted.domain.roompills.SaveRoomPillsUseCase
 import app.vazovsky.healsted.domain.loyalty.AddLoyaltyUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import app.vazovsky.healsted.presentation.base.SingleLiveEvent

@@ -1,4 +1,4 @@
-package app.vazovsky.healsted.domain.pills
+package app.vazovsky.healsted.domain.roompills
 
 import app.vazovsky.healsted.data.mapper.PillMapper
 import app.vazovsky.healsted.data.model.Pill
