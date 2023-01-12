@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import timber.log.Timber
@@ -30,12 +31,24 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
     override fun callOperations() = Unit
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
-        logInResultLiveData.observe { result ->
+        logInResultLiveEvent.observe { result ->
             result.doOnSuccess { setLogInTask(it) }
             result.doOnFailure { Timber.d(it.message) }
         }
-        accountLiveData.observe { result ->
+        accountLiveEvent.observe { result ->
             result.doOnSuccess { setAccountTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
+        }
+        listPillsSnapshotLiveEvent.observe { result ->
+            result.doOnSuccess { setListPillsSnapshotTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
+        }
+        listPillsLiveEvent.observe { result ->
+            result.doOnSuccess { pills -> viewModel.saveLocalPills(pills) }
+            result.doOnFailure { Timber.d(it.message) }
+        }
+        saveLocalPillsLiveEvent.observe { result ->
+            result.doOnSuccess { viewModel.openDashboard() }
             result.doOnFailure { Timber.d(it.message) }
         }
     }
@@ -68,8 +81,13 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
         }
     }
 
+    private fun setListPillsSnapshotTask(task: Task<QuerySnapshot>) = with(task) {
+        addOnSuccessListener { viewModel.getPills(it) }
+        addOnFailureListener { Timber.d(it.message) }
+    }
+
     private fun setAccountTask(task: Task<DocumentSnapshot>) = with(task) {
-        addOnSuccessListener { viewModel.openDashboard() }
+        addOnSuccessListener { viewModel.getPillsSnapshot() }
         addOnFailureListener { Timber.d(it.message) }
     }
 }

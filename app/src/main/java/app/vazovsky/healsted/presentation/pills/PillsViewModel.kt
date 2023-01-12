@@ -7,13 +7,18 @@ import app.vazovsky.healsted.data.model.PillsTab
 import app.vazovsky.healsted.data.model.PillsTabSlot
 import app.vazovsky.healsted.data.model.base.LoadableResult
 import app.vazovsky.healsted.domain.base.UseCase
+import app.vazovsky.healsted.domain.pills.GetLocalPillsUseCase
 import app.vazovsky.healsted.domain.pills.GetPillsUseCase
 import app.vazovsky.healsted.domain.pills.GetTabsUseCase
 import app.vazovsky.healsted.domain.pills.ParseSnapshotToPillsUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
+import app.vazovsky.healsted.presentation.base.SingleLiveEvent
 import com.google.firebase.firestore.QuerySnapshot
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectIndexed
+import timber.log.Timber
 
 @HiltViewModel
 class PillsViewModel @Inject constructor(
@@ -21,6 +26,7 @@ class PillsViewModel @Inject constructor(
     private val getTabsUseCase: GetTabsUseCase,
     private val getPillsUseCase: GetPillsUseCase,
     private val parseSnapshotToPillsUseCase: ParseSnapshotToPillsUseCase,
+    private val getLocalPillsUseCase: GetLocalPillsUseCase,
 ) : BaseViewModel() {
 
     var selectedPillTab: PillsTabSlot = PillsTabSlot.ALL
@@ -36,6 +42,10 @@ class PillsViewModel @Inject constructor(
     /** Все лекарства */
     private val _pillsLiveData = MutableLiveData<LoadableResult<List<Pill>>>()
     val pillsLiveData: LiveData<LoadableResult<List<Pill>>> = _pillsLiveData
+
+    /** Лекарства из базы данных */
+    private val _localPillsLiveEvent = SingleLiveEvent<LoadableResult<List<Pill>>>()
+    val localPillsLiveEvent: LiveData<LoadableResult<List<Pill>>> = _localPillsLiveEvent
 
     /** Получение табов */
     fun getTabs() {
@@ -54,6 +64,14 @@ class PillsViewModel @Inject constructor(
     fun getPills(snapshot: QuerySnapshot, slot: PillsTabSlot? = null) {
         _pillsLiveData.launchLoadData(
             parseSnapshotToPillsUseCase.executeFlow(ParseSnapshotToPillsUseCase.Params(snapshot, slot))
+        )
+    }
+
+    /** Получение лекарств из локальной базы данных */
+    fun getLocalPills() {
+        Timber.d("LOL geLocalPills")
+        _localPillsLiveEvent.launchLoadData(
+            getLocalPillsUseCase.executeFlow(UseCase.None)
         )
     }
 

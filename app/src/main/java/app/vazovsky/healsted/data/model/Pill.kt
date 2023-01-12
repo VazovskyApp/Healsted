@@ -1,6 +1,7 @@
 package app.vazovsky.healsted.data.model
 
 import android.os.Parcelable
+import androidx.annotation.Nullable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -26,10 +27,10 @@ data class Pill(
     @ColumnInfo(name = "type") @PropertyName("type") val type: PillType = PillType.CAPSULE,
 
     /** Тип принятия лекарства в зависимости от еды */
-    @ColumnInfo(name = "takePillType") @PropertyName("takePillType") val takePillType: TakePillType? = TakePillType.NEVERMIND,
+    @Nullable @ColumnInfo(name = "takePillType") @PropertyName("takePillType") val takePillType: TakePillType? = TakePillType.NEVERMIND,
 
     /** Список времени уведомлений */
-    @ColumnInfo(name = "times") @PropertyName("times") val times: List<Timestamp>? = listOf(
+    @Nullable @ColumnInfo(name = "times") @PropertyName("times") val times: List<Timestamp>? = listOf(
         LocalDate.now().toStartOfDayTimestamp()
     ),
 
@@ -43,7 +44,7 @@ data class Pill(
     @ColumnInfo(name = "startDate") @PropertyName("startDate") val startDate: Timestamp = LocalDate.now().toStartOfDayTimestamp(),
 
     /** Конечная дата принятия лекарств, если есть */
-    @ColumnInfo(name = "endDate") @PropertyName("endDate") val endDate: Timestamp? = null,
+    @Nullable @ColumnInfo(name = "endDate") @PropertyName("endDate") val endDate: Timestamp? = null,
 
     /** Дозировка лекарства */
     @ColumnInfo(name = "amount") @PropertyName("amount") val amount: Float = 1F,

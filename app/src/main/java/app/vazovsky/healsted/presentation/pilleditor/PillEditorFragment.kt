@@ -48,7 +48,14 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
         updatePillLiveData.observe { result ->
-            result.doOnSuccess { setUpdatePillTask(it) }
+            result.doOnSuccess { setUpdatePillTask(it.task, it.pill) }
+            result.doOnFailure { Timber.d(it.message) }
+        }
+        saveLocalPillLiveEvent.observe { result ->
+            result.doOnSuccess {
+                Timber.d("UPDATE RESULT: $it")
+                viewModel.navigateBack()
+            }
             result.doOnFailure { Timber.d(it.message) }
         }
     }
@@ -159,8 +166,8 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         switchEndDateEnabled.setOnCheckedChangeListener { _, isChecked -> cardViewEndDateNotification.isVisible = isChecked }
     }
 
-    private fun setUpdatePillTask(task: Task<Void>) = with(task) {
-        addOnSuccessListener { viewModel.navigateBack() }
+    private fun setUpdatePillTask(task: Task<Void>, pill: Pill) = with(task) {
+        addOnSuccessListener { viewModel.savePill(pill) }
         addOnFailureListener { Timber.d(it.message) }
     }
 }

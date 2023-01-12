@@ -17,6 +17,7 @@ import app.vazovsky.healsted.presentation.pills.tab.PillsTabsAdapter
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import timber.log.Timber
 
 const val REQUEST_KEY_UPDATE_PILLS = "request_key_update_pills"
 
@@ -35,6 +36,7 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
     override fun callOperations() {
         viewModel.getTabs()
         viewModel.getPillsSnapshot()
+        viewModel.getLocalPills()
     }
 
     override fun onBindViewModel() = with(viewModel) {
@@ -56,6 +58,10 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
             result.doOnSuccess { pills ->
                 pillsAdapter.submitList(pills)
             }
+        }
+        localPillsLiveEvent.observe { result ->
+            result.doOnSuccess { Timber.d("LOL result: $it") }
+            result.doOnFailure { Timber.d(it.message) }
         }
     }
 

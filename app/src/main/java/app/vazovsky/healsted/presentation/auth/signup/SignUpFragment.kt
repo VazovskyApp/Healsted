@@ -15,6 +15,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.firestore.QuerySnapshot
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import timber.log.Timber
@@ -31,36 +32,48 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
 
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
-        signUpResultLiveData.observe { result ->
+        signUpResultLiveEvent.observe { result ->
             result.doOnSuccess { setSignUpTask(it) }
             result.doOnFailure { Timber.d(it.message) }
         }
-        saveUserLiveData.observe { result ->
+        saveUserLiveEvent.observe { result ->
             result.doOnSuccess { setSaveUserTask(it) }
             result.doOnFailure { Timber.d(it.message) }
         }
-        saveAccountLiveData.observe { result ->
+        saveAccountLiveEvent.observe { result ->
             result.doOnSuccess { setSaveAccountTask(it) }
             result.doOnFailure { Timber.d(it.message) }
         }
-        saveLoyaltyLiveData.observe { result ->
+        saveLoyaltyLiveEvent.observe { result ->
             result.doOnSuccess { setSaveLoyaltyTask(it) }
             result.doOnFailure { Timber.d(it.message) }
         }
-        saveWeightLiveData.observe { result ->
+        saveWeightLiveEvent.observe { result ->
             result.doOnSuccess { setSaveWeightTask(it) }
             result.doOnFailure { Timber.d(it.message) }
         }
-        saveHeightLiveData.observe { result ->
+        saveHeightLiveEvent.observe { result ->
             result.doOnSuccess { setSaveHeightTask(it) }
             result.doOnFailure { Timber.d(it.message) }
         }
-        saveTemperatureLiveData.observe { result ->
+        saveTemperatureLiveEvent.observe { result ->
             result.doOnSuccess { setSaveTemperatureTask(it) }
             result.doOnFailure { Timber.d(it.message) }
         }
-        saveBloodPressureLiveData.observe { result ->
+        saveBloodPressureLiveEvent.observe { result ->
             result.doOnSuccess { setSaveBloodPressureTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
+        }
+        listPillsSnapshotLiveEvent.observe { result ->
+            result.doOnSuccess { setListPillsSnapshotTask(it) }
+            result.doOnFailure { Timber.d(it.message) }
+        }
+        listPillsLiveEvent.observe { result ->
+            result.doOnSuccess { pills -> viewModel.saveLocalPills(pills) }
+            result.doOnFailure { Timber.d(it.message) }
+        }
+        saveLocalPillsLiveEvent.observe { result ->
+            result.doOnSuccess { viewModel.openDashboard() }
             result.doOnFailure { Timber.d(it.message) }
         }
     }
@@ -132,7 +145,12 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     }
 
     private fun setSaveBloodPressureTask(task: Task<Void>) = with(task) {
-        addOnSuccessListener { viewModel.openDashboard() }
+        addOnSuccessListener { viewModel.getPillsSnapshot() }
+        addOnFailureListener { Timber.d(it.message) }
+    }
+
+    private fun setListPillsSnapshotTask(task: Task<QuerySnapshot>) = with(task) {
+        addOnSuccessListener { viewModel.getPills(it) }
         addOnFailureListener { Timber.d(it.message) }
     }
 }

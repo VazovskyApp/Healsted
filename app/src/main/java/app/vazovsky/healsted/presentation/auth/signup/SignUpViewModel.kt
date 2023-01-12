@@ -1,9 +1,9 @@
 package app.vazovsky.healsted.presentation.auth.signup
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import app.vazovsky.healsted.data.model.MonitoringAttribute
 import app.vazovsky.healsted.data.model.MonitoringType
+import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.data.model.User
 import app.vazovsky.healsted.data.model.base.LoadableResult
 import app.vazovsky.healsted.domain.auth.SaveAccountUseCase
@@ -11,11 +11,18 @@ import app.vazovsky.healsted.domain.auth.SaveUserUseCase
 import app.vazovsky.healsted.domain.auth.SignUpUseCase
 import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.health.SaveMonitoringAttributeUseCase
+import app.vazovsky.healsted.domain.pills.GetAllPillsUseCase
+import app.vazovsky.healsted.domain.pills.GetPillsUseCase
+import app.vazovsky.healsted.domain.pills.ParseSnapshotToAllPillsUseCase
+import app.vazovsky.healsted.domain.pills.ParseSnapshotToPillsUseCase
+import app.vazovsky.healsted.domain.pills.SavePillsToDatabaseUseCase
 import app.vazovsky.healsted.domain.profile.SaveLoyaltyUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
+import app.vazovsky.healsted.presentation.base.SingleLiveEvent
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.firestore.QuerySnapshot
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -27,43 +34,58 @@ class SignUpViewModel @Inject constructor(
     private val saveUserUseCase: SaveUserUseCase,
     private val saveLoyaltyUseCase: SaveLoyaltyUseCase,
     private val saveMonitoringAttributeUseCase: SaveMonitoringAttributeUseCase,
+    private val getAllPillsUseCase: GetAllPillsUseCase,
+    private val parseSnapshotToAllPillsUseCase: ParseSnapshotToAllPillsUseCase,
+    private val savePillsToDatabaseUseCase: SavePillsToDatabaseUseCase,
 ) : BaseViewModel() {
 
     /** Получение результата регистрации */
-    private val _signUpResultLiveData = MutableLiveData<LoadableResult<Task<AuthResult>>>()
-    val signUpResultLiveData: LiveData<LoadableResult<Task<AuthResult>>> = _signUpResultLiveData
+    private val _signUpResultLiveEvent = SingleLiveEvent<LoadableResult<Task<AuthResult>>>()
+    val signUpResultLiveEvent: LiveData<LoadableResult<Task<AuthResult>>> = _signUpResultLiveEvent
 
     /** Сохранение пользователя в FireStore */
-    private val _saveUserLiveData = MutableLiveData<LoadableResult<SaveUserUseCase.Result>>()
-    val saveUserLiveData: LiveData<LoadableResult<SaveUserUseCase.Result>> = _saveUserLiveData
+    private val _saveUserLiveEvent = SingleLiveEvent<LoadableResult<SaveUserUseCase.Result>>()
+    val saveUserLiveEvent: LiveData<LoadableResult<SaveUserUseCase.Result>> = _saveUserLiveEvent
 
     /** Сохранение аккаунта в FireStore */
-    private val _saveAccountLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
-    val saveAccountLiveData: LiveData<LoadableResult<Task<Void>>> = _saveAccountLiveData
+    private val _saveAccountLiveEvent = SingleLiveEvent<LoadableResult<Task<Void>>>()
+    val saveAccountLiveEvent: LiveData<LoadableResult<Task<Void>>> = _saveAccountLiveEvent
 
     /** Добавление аккаунта в программу лояльности */
-    private val _saveLoyaltyLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
-    val saveLoyaltyLiveData: LiveData<LoadableResult<Task<Void>>> = _saveLoyaltyLiveData
+    private val _saveLoyaltyLiveEvent = SingleLiveEvent<LoadableResult<Task<Void>>>()
+    val saveLoyaltyLiveEvent: LiveData<LoadableResult<Task<Void>>> = _saveLoyaltyLiveEvent
 
     /** Добавление первого значения Веса в аккаунт */
-    private val _saveWeightLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
-    val saveWeightLiveData: LiveData<LoadableResult<Task<Void>>> = _saveWeightLiveData
+    private val _saveWeightLiveEvent = SingleLiveEvent<LoadableResult<Task<Void>>>()
+    val saveWeightLiveEvent: LiveData<LoadableResult<Task<Void>>> = _saveWeightLiveEvent
 
     /** Добавление первого значения Роста в аккаунт */
-    private val _saveHeightLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
-    val saveHeightLiveData: LiveData<LoadableResult<Task<Void>>> = _saveHeightLiveData
+    private val _saveHeightLiveEvent = SingleLiveEvent<LoadableResult<Task<Void>>>()
+    val saveHeightLiveEvent: LiveData<LoadableResult<Task<Void>>> = _saveHeightLiveEvent
 
     /** Добавление первого значения Температуры в аккаунт */
-    private val _saveTemperatureLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
-    val saveTemperatureLiveData: LiveData<LoadableResult<Task<Void>>> = _saveTemperatureLiveData
+    private val _saveTemperatureLiveEvent = SingleLiveEvent<LoadableResult<Task<Void>>>()
+    val saveTemperatureLiveEvent: LiveData<LoadableResult<Task<Void>>> = _saveTemperatureLiveEvent
 
     /** Добавление первого значения Температуры в аккаунт */
-    private val _saveBloodPressureLiveData = MutableLiveData<LoadableResult<Task<Void>>>()
-    val saveBloodPressureLiveData: LiveData<LoadableResult<Task<Void>>> = _saveBloodPressureLiveData
+    private val _saveBloodPressureLiveEvent = SingleLiveEvent<LoadableResult<Task<Void>>>()
+    val saveBloodPressureLiveEvent: LiveData<LoadableResult<Task<Void>>> = _saveBloodPressureLiveEvent
+
+    /** Таблетки из FireStore в виде QuerySnapshot */
+    private val _listPillsSnapshotLiveEvent = SingleLiveEvent<LoadableResult<Task<QuerySnapshot>>>()
+    val listPillsSnapshotLiveEvent: LiveData<LoadableResult<Task<QuerySnapshot>>> = _listPillsSnapshotLiveEvent
+
+    /** Таблетки из FireStore из QuerySnapshot */
+    private val _listPillsLiveEvent = SingleLiveEvent<LoadableResult<List<Pill>>>()
+    val listPillsLiveEvent: LiveData<LoadableResult<List<Pill>>> = _listPillsLiveEvent
+
+    /** Сохранение таблеток в локальную бд */
+    private val _saveLocalPillsLiveEvent = SingleLiveEvent<LoadableResult<Boolean>>()
+    val saveLocalPillsLiveEvent: LiveData<LoadableResult<Boolean>> = _saveLocalPillsLiveEvent
 
     /** Зарегистрироваться */
     fun signUp(email: String, password: String) {
-        _signUpResultLiveData.launchLoadData(
+        _signUpResultLiveEvent.launchLoadData(
             signUpUseCase.executeFlow(
                 SignUpUseCase.Params(
                     email = email,
@@ -75,7 +97,7 @@ class SignUpViewModel @Inject constructor(
 
     /** Сохранить пользователя в FireStore */
     fun saveUser(uid: String, email: String, phoneNumber: String = "") {
-        _saveUserLiveData.launchLoadData(
+        _saveUserLiveEvent.launchLoadData(
             saveUserUseCase.executeFlow(
                 SaveUserUseCase.Params(
                     uid = uid,
@@ -97,7 +119,7 @@ class SignUpViewModel @Inject constructor(
         birthday: Timestamp? = null,
         avatar: String? = null,
     ) {
-        _saveAccountLiveData.launchLoadData(
+        _saveAccountLiveEvent.launchLoadData(
             saveAccountUseCase.executeFlow(
                 SaveAccountUseCase.Params(
                     uid = uid,
@@ -115,8 +137,15 @@ class SignUpViewModel @Inject constructor(
 
     /** Добавить аккаунт в программу лояльности */
     fun saveLoyalty() {
-        _saveLoyaltyLiveData.launchLoadData(
+        _saveLoyaltyLiveEvent.launchLoadData(
             saveLoyaltyUseCase.executeFlow(UseCase.None)
+        )
+    }
+
+    /** Сохранение лекарств локально */
+    fun saveLocalPills(pills: List<Pill>) {
+        _saveLocalPillsLiveEvent.launchLoadData(
+            savePillsToDatabaseUseCase.executeFlow(SavePillsToDatabaseUseCase.Params(pills))
         )
     }
 
@@ -127,7 +156,7 @@ class SignUpViewModel @Inject constructor(
 
     /** Сохранение веса */
     fun saveWeight() {
-        _saveWeightLiveData.launchLoadData(
+        _saveWeightLiveEvent.launchLoadData(
             saveMonitoringAttributeUseCase.executeFlow(
                 SaveMonitoringAttributeUseCase.Params(
                     MonitoringAttribute(
@@ -141,7 +170,7 @@ class SignUpViewModel @Inject constructor(
 
     /** Сохранение роста */
     fun saveHeight() {
-        _saveHeightLiveData.launchLoadData(
+        _saveHeightLiveEvent.launchLoadData(
             saveMonitoringAttributeUseCase.executeFlow(
                 SaveMonitoringAttributeUseCase.Params(
                     MonitoringAttribute(
@@ -155,7 +184,7 @@ class SignUpViewModel @Inject constructor(
 
     /** Сохранение температуры */
     fun saveTemperature() {
-        _saveTemperatureLiveData.launchLoadData(
+        _saveTemperatureLiveEvent.launchLoadData(
             saveMonitoringAttributeUseCase.executeFlow(
                 SaveMonitoringAttributeUseCase.Params(
                     MonitoringAttribute(
@@ -169,7 +198,7 @@ class SignUpViewModel @Inject constructor(
 
     /** Сохранение давления */
     fun saveBloodPressure() {
-        _saveBloodPressureLiveData.launchLoadData(
+        _saveBloodPressureLiveEvent.launchLoadData(
             saveMonitoringAttributeUseCase.executeFlow(
                 SaveMonitoringAttributeUseCase.Params(
                     MonitoringAttribute(
@@ -177,6 +206,20 @@ class SignUpViewModel @Inject constructor(
                         type = MonitoringType.BLOOD_PRESSURE,
                     )
                 )
+            )
+        )
+    }
+
+    /** Получить все таблетки в виде QuerySnapshot */
+    fun getPillsSnapshot() {
+        _listPillsSnapshotLiveEvent.launchLoadData(getAllPillsUseCase.executeFlow(UseCase.None))
+    }
+
+    /** Получить все таблетки из QuerySnapshot */
+    fun getPills(snapshot: QuerySnapshot) {
+        _listPillsLiveEvent.launchLoadData(
+            parseSnapshotToAllPillsUseCase.executeFlow(
+                ParseSnapshotToAllPillsUseCase.Params(snapshot)
             )
         )
     }
