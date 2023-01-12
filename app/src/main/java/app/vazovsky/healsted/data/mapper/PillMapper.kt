@@ -5,9 +5,11 @@ import app.vazovsky.healsted.data.room.entity.PillEntity
 import app.vazovsky.healsted.managers.DateFormatter
 import javax.inject.Inject
 
+/** Маппер для преобразования модели Pill в PillEntity и обратно */
 class PillMapper @Inject constructor(
     private val dateFormatter: DateFormatter,
 ) {
+
     fun fromModelToEntity(model: Pill): PillEntity {
         return PillEntity(
             id = model.id,

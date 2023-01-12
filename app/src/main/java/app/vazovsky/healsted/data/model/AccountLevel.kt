@@ -3,6 +3,7 @@ package app.vazovsky.healsted.data.model
 /** Уровень аккаунта */
 enum class AccountLevel(
     private val friendlyName: String,
+    /** Количество xp на уровень */
     val xpCount: Int,
 ) {
     BACTERIA("Бактерия", 100),

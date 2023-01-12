@@ -9,5 +9,3 @@ enum class TakePillType(private val friendlyName: String) {
 
     override fun toString() = friendlyName
 }
-
-fun String.convertTakePillTypeFromString() = TakePillType.valueOf(this)

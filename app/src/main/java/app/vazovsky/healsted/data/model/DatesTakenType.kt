@@ -9,5 +9,3 @@ enum class DatesTakenType(
 
     override fun toString() = friendlyName
 }
-
-fun String.convertDatesTakenTypeFromString() = DatesTakenType.valueOf(this)

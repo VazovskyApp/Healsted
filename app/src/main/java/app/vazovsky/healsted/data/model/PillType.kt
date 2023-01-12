@@ -14,5 +14,3 @@ enum class PillType(private val friendlyName: String) {
     override fun toString() = friendlyName
 
 }
-
-fun String.convertPillTypeFromString() = PillType.valueOf(this)

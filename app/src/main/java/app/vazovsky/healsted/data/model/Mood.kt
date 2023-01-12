@@ -7,7 +7,6 @@ import com.google.firebase.firestore.PropertyName
 import java.time.LocalDate
 import kotlinx.parcelize.Parcelize
 
-
 /** Данные о настроении на день */
 @Parcelize
 data class Mood(

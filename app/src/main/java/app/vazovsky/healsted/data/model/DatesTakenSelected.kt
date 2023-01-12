@@ -12,5 +12,3 @@ enum class DatesTakenSelected(private val friendlyName: String) {
 
     override fun toString() = friendlyName
 }
-
-fun String.convertDatesTakenSelectedFromString() = DatesTakenSelected.valueOf(this)
