@@ -113,9 +113,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_20"
-                        android:text="17 марта, Среда"
                         android:textAppearance="@style/Font.Body_1"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        tools:text="17 марта, Среда" />
 
                     <com.google.android.material.divider.MaterialDivider
                         android:id="@+id/divider"

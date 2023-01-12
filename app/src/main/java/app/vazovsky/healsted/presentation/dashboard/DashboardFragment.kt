@@ -70,7 +70,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         }
         todayMoodSnapshotLiveData.observe { result ->
             binding.stateViewFlipperMood.changeState(StateViewFlipper.State.LOADING)
-            result.doOnSuccess { task -> setMoodSnapshotTask(task) }
+            result.doOnSuccess { setMoodSnapshotTask(it) }
             result.doOnFailure { Timber.d(it.message) }
         }
         todayMoodLiveData.observe { result ->
@@ -79,10 +79,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
             result.doOnFailure { Timber.d(it.message) }
         }
         updateMoodLiveEvent.observe { result ->
-            result.doOnSuccess { task ->
-                task.addOnSuccessListener { Timber.d("Настроение обновлено") }
-                task.addOnFailureListener { Timber.d(it.message) }
-            }
+            result.doOnSuccess { setUpdateMoodTask(it) }
             result.doOnFailure { Timber.d(it.message) }
         }
     }
@@ -114,6 +111,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         datePickerTimeline.setInitialDate(2023, 0, 1)
         datePickerTimeline.setActiveDate(Calendar.getInstance())
         textViewTitle.text = dateFormatter.getDisplayDifferentDates(LocalDate.now(), LocalDate.now())
+        textViewDate.text = dateFormatter.formatDateWithDayOfWeek(LocalDate.now())
         datePickerTimeline.setOnDateSelectedListener(object : OnDateSelectedListener {
             override fun onDateSelected(year: Int, month: Int, day: Int, dayOfWeek: Int) {
                 val selectedDate = LocalDate.of(year, month + 1, day)
@@ -134,6 +132,11 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         }
         emptyView = binding.emptyViewTodayPills
         addLinearSpaceItemDecoration(R.dimen.padding_8)
+    }
+
+    private fun setUpdateMoodTask(task: Task<Void>) = with(task) {
+        addOnSuccessListener { Timber.d("Настроение обновлено") }
+        addOnFailureListener { Timber.d(it.message) }
     }
 
     private fun setProfileSnapshotTask(task: Task<DocumentSnapshot>) = with(task) {
