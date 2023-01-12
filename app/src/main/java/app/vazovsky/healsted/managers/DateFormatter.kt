@@ -3,9 +3,11 @@ package app.vazovsky.healsted.managers
 import android.content.Context
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.extensions.capitalizeFirstChar
+import app.vazovsky.healsted.extensions.toLocalDateTime
 import app.vazovsky.healsted.extensions.toMillis
 import app.vazovsky.healsted.extensions.toOffsetDateTime
 import app.vazovsky.healsted.extensions.toStartOfDayTimestamp
+import app.vazovsky.healsted.extensions.toTimestamp
 import com.google.firebase.Timestamp
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.text.SimpleDateFormat
@@ -315,5 +317,13 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
      */
     fun formatReversedDateFull(date: LocalDate): String {
         return reversedDateFullFormat.format(date)
+    }
+
+    fun formatFromLocalDateToTimestamp(date: LocalDateTime): Timestamp {
+        return date.toTimestamp()
+    }
+
+    fun formatTimestampToLocalDate(timestamp: Timestamp): LocalDateTime {
+        return timestamp.toLocalDateTime()
     }
 }

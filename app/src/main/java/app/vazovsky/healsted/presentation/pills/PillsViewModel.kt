@@ -2,10 +2,12 @@ package app.vazovsky.healsted.presentation.pills
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.data.model.PillsTab
 import app.vazovsky.healsted.data.model.PillsTabSlot
 import app.vazovsky.healsted.data.model.base.LoadableResult
+import app.vazovsky.healsted.data.room.entity.PillEntity
 import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.pills.GetLocalPillsUseCase
 import app.vazovsky.healsted.domain.pills.GetPillsUseCase
@@ -16,9 +18,7 @@ import app.vazovsky.healsted.presentation.base.SingleLiveEvent
 import com.google.firebase.firestore.QuerySnapshot
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectIndexed
-import timber.log.Timber
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class PillsViewModel @Inject constructor(
@@ -44,8 +44,8 @@ class PillsViewModel @Inject constructor(
     val pillsLiveData: LiveData<LoadableResult<List<Pill>>> = _pillsLiveData
 
     /** Лекарства из базы данных */
-    private val _localPillsLiveEvent = SingleLiveEvent<LoadableResult<List<Pill>>>()
-    val localPillsLiveEvent: LiveData<LoadableResult<List<Pill>>> = _localPillsLiveEvent
+    private val _localPillsLiveEvent = SingleLiveEvent<LoadableResult<List<PillEntity>>>()
+    val localPillsLiveEvent: LiveData<LoadableResult<List<PillEntity>>> = _localPillsLiveEvent
 
     /** Получение табов */
     fun getTabs() {
@@ -69,10 +69,20 @@ class PillsViewModel @Inject constructor(
 
     /** Получение лекарств из локальной базы данных */
     fun getLocalPills() {
-        Timber.d("LOL geLocalPills")
-        _localPillsLiveEvent.launchLoadData(
-            getLocalPillsUseCase.executeFlow(UseCase.None)
-        )
+        viewModelScope.launch {
+            try {
+                getLocalPillsUseCase.executeFlow(UseCase.None).collect {
+
+                    it.doOnSuccess { flow ->
+                        flow.collect { list ->
+                            _localPillsLiveEvent.postValue(LoadableResult.success(list))
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                _localPillsLiveEvent.postValue(LoadableResult.failure(Throwable()))
+            }
+        }
     }
 
     /** Открыть добавление лекарства */

@@ -1,28 +1,31 @@
 package app.vazovsky.healsted.domain.pills
 
+import app.vazovsky.healsted.data.mapper.PillMapper
 import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.data.repository.RoomRepository
 import app.vazovsky.healsted.domain.base.UseCaseUnary
 import javax.inject.Inject
 import timber.log.Timber
 
-/** Добавить лекарство в локальную базу данных */
-class InsertPillToDatabaseUseCase @Inject constructor(
+/** Сохранение таблеток в локальную базу данных */
+class SaveLocalPillsUseCase @Inject constructor(
     private val roomRepository: RoomRepository,
-) : UseCaseUnary<InsertPillToDatabaseUseCase.Params, Boolean>() {
+    private val pillMapper: PillMapper,
+) : UseCaseUnary<SaveLocalPillsUseCase.Params, Boolean>() {
     override suspend fun execute(params: Params): Boolean {
         val isSuccess = try {
-            roomRepository.insertPill(params.pill)
+            Timber.d("UPDATE RESULT LIST: " + params.pills)
+            params.pills.forEach { pill ->
+                roomRepository.insertPill(pillMapper.fromModelToEntity(pill))
+            }
             true
         } catch (e: Exception) {
-            Timber.d("LOL exc: ${e.message}")
             false
         }
-        Timber.d("LOL insert: $isSuccess")
         return isSuccess
     }
 
     data class Params(
-        val pill: Pill,
+        val pills: List<Pill>,
     )
 }

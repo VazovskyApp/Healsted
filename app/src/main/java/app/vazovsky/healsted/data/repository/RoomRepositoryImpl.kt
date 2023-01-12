@@ -1,7 +1,7 @@
 package app.vazovsky.healsted.data.repository
 
-import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.data.room.AppDatabase
+import app.vazovsky.healsted.data.room.entity.PillEntity
 import javax.inject.Inject
 
 class RoomRepositoryImpl @Inject constructor(
@@ -12,7 +12,7 @@ class RoomRepositoryImpl @Inject constructor(
 
     override suspend fun getPillById(id: String) = appDatabase.getPillsDao().getPillById(id)
 
-    override suspend fun insertPill(pill: Pill) = appDatabase.getPillsDao().insertPill(pill)
+    override suspend fun insertPill(pill: PillEntity) = appDatabase.getPillsDao().insertPill(pill)
 
-    override suspend fun deletePill(pill: Pill) = appDatabase.getPillsDao().deletePill(pill)
+    override suspend fun deletePill(pill: PillEntity) = appDatabase.getPillsDao().deletePill(pill)
 }

@@ -24,7 +24,12 @@ fun Long.toLocalDate(): LocalDate {
 
 fun Timestamp.toOffsetDateTime(): OffsetDateTime = OffsetDateTime.ofInstant(
     Instant.ofEpochMilli(this.toDate().time),
-    ZoneId.systemDefault()
+    ZoneId.systemDefault(),
+)
+
+fun Timestamp.toLocalDateTime(): LocalDateTime = LocalDateTime.ofInstant(
+    Instant.ofEpochMilli(this.toDate().time),
+    ZoneId.systemDefault(),
 )
 
 fun Timestamp?.orDefault() = this ?: LocalDate.now().toStartOfDayTimestamp()
@@ -33,4 +38,4 @@ fun OffsetTime?.orDefault() = this ?: OffsetTime.now()
 
 fun LocalDate.toStartOfDayTimestamp() = Timestamp(Date.from(this.atStartOfDay(ZoneId.systemDefault()).toInstant()))
 
-fun LocalDateTime.toTimestamp() = Timestamp(this.second.toLong(),this.nano)
+fun LocalDateTime.toTimestamp() = Timestamp(this.second.toLong(), this.nano)

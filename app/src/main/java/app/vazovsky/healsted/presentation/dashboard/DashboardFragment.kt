@@ -9,7 +9,6 @@ import app.vazovsky.healsted.R
 import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.Mood
 import app.vazovsky.healsted.databinding.FragmentDashboardBinding
-import app.vazovsky.healsted.domain.pills.GetTodayPillsUseCase
 import app.vazovsky.healsted.extensions.addLinearSpaceItemDecoration
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.extensions.toStartOfDayTimestamp
@@ -21,7 +20,9 @@ import app.vazovsky.healsted.presentation.view.StateViewFlipper
 import app.vazovsky.healsted.presentation.view.timeline.OnDateSelectedListener
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.LocalTime
@@ -60,7 +61,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         }
         todayPillsSnapshotLiveData.observe { result ->
             binding.stateViewFlipper.changeState(StateViewFlipper.State.LOADING)
-            result.doOnSuccess { setPillsSnapshotTask(it) }
+            result.doOnSuccess { setPillsSnapshotTask(it.snapshotTask, it.date) }
             result.doOnFailure { Timber.d(it.message) }
         }
         todayPillsLiveData.observe { result ->
@@ -134,28 +135,6 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         addLinearSpaceItemDecoration(R.dimen.padding_8)
     }
 
-    private fun setUpdateMoodTask(task: Task<Void>) = with(task) {
-        addOnSuccessListener { Timber.d("Настроение обновлено") }
-        addOnFailureListener { Timber.d(it.message) }
-    }
-
-    private fun setProfileSnapshotTask(task: Task<DocumentSnapshot>) = with(task) {
-        addOnSuccessListener { viewModel.getProfile(it) }
-        addOnFailureListener { Timber.d(it.message) }
-    }
-
-    private fun setMoodSnapshotTask(task: Task<DocumentSnapshot>) = with(task) {
-        addOnSuccessListener { viewModel.getTodayMood(it) }
-        addOnFailureListener { Timber.d(it.message) }
-    }
-
-    private fun setPillsSnapshotTask(
-        getTodayPillsResult: GetTodayPillsUseCase.Result
-    ) = with(getTodayPillsResult.snapshotTask) {
-        addOnSuccessListener { viewModel.getTodayPills(it, getTodayPillsResult.date) }
-        addOnFailureListener { Timber.d(it.message) }
-    }
-
     /** Привязка данных для тулбара */
     private fun bindToolbar(profile: Account) = with(binding.toolbar) {
         val currentHour = LocalTime.now().hour
@@ -173,5 +152,25 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     /** Привязка настроения */
     private fun bindMood(mood: Mood) = with(binding) {
         ratingBarMood.setCurrentRateStatus(mood.value)
+    }
+
+    private fun setUpdateMoodTask(task: Task<Void>) = with(task) {
+        addOnSuccessListener { Timber.d("Настроение обновлено") }
+        addOnFailureListener { Timber.d(it.message) }
+    }
+
+    private fun setProfileSnapshotTask(task: Task<DocumentSnapshot>) = with(task) {
+        addOnSuccessListener { viewModel.getProfile(it) }
+        addOnFailureListener { Timber.d(it.message) }
+    }
+
+    private fun setMoodSnapshotTask(task: Task<DocumentSnapshot>) = with(task) {
+        addOnSuccessListener { viewModel.getTodayMood(it) }
+        addOnFailureListener { Timber.d(it.message) }
+    }
+
+    private fun setPillsSnapshotTask(task: Task<QuerySnapshot>, date: Timestamp) = with(task) {
+        addOnSuccessListener { snapshot -> viewModel.getTodayPills(snapshot, date) }
+        addOnFailureListener { Timber.d(it.message) }
     }
 }

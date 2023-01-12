@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import app.vazovsky.healsted.data.model.Pill
+import app.vazovsky.healsted.data.room.entity.PillEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -26,14 +26,14 @@ interface PillDao {
     }
 
     @Query("SELECT * FROM $PILL_TABLE_NAME")
-    fun getAllPills(): Flow<List<Pill>>
+    fun getAllPills(): Flow<List<PillEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPill(pill: Pill)
+    suspend fun insertPill(pill: PillEntity)
 
     @Query("SELECT * FROM $PILL_TABLE_NAME WHERE $COLUMN_ID=(:id)")
-    suspend fun getPillById(id: String): Pill
+    suspend fun getPillById(id: String): PillEntity
 
     @Delete()
-    suspend fun deletePill(pill: Pill)
+    suspend fun deletePill(pill: PillEntity)
 }

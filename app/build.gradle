@@ -58,6 +58,7 @@ dependencies {
 
     implementation(libs.kotlin)
     implementation(libs.kotlin.serialization)
+    implementation(libs.kotlin.datetime)
     coreLibraryDesugaring(libs.desugaring)
 
     implementation(libs.hilt)

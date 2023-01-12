@@ -12,10 +12,8 @@ import app.vazovsky.healsted.domain.auth.SignUpUseCase
 import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.health.SaveMonitoringAttributeUseCase
 import app.vazovsky.healsted.domain.pills.GetAllPillsUseCase
-import app.vazovsky.healsted.domain.pills.GetPillsUseCase
 import app.vazovsky.healsted.domain.pills.ParseSnapshotToAllPillsUseCase
-import app.vazovsky.healsted.domain.pills.ParseSnapshotToPillsUseCase
-import app.vazovsky.healsted.domain.pills.SavePillsToDatabaseUseCase
+import app.vazovsky.healsted.domain.pills.SaveLocalPillsUseCase
 import app.vazovsky.healsted.domain.profile.SaveLoyaltyUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import app.vazovsky.healsted.presentation.base.SingleLiveEvent
@@ -36,7 +34,7 @@ class SignUpViewModel @Inject constructor(
     private val saveMonitoringAttributeUseCase: SaveMonitoringAttributeUseCase,
     private val getAllPillsUseCase: GetAllPillsUseCase,
     private val parseSnapshotToAllPillsUseCase: ParseSnapshotToAllPillsUseCase,
-    private val savePillsToDatabaseUseCase: SavePillsToDatabaseUseCase,
+    private val saveLocalPillsUseCase: SaveLocalPillsUseCase,
 ) : BaseViewModel() {
 
     /** Получение результата регистрации */
@@ -145,7 +143,7 @@ class SignUpViewModel @Inject constructor(
     /** Сохранение лекарств локально */
     fun saveLocalPills(pills: List<Pill>) {
         _saveLocalPillsLiveEvent.launchLoadData(
-            savePillsToDatabaseUseCase.executeFlow(SavePillsToDatabaseUseCase.Params(pills))
+            saveLocalPillsUseCase.executeFlow(SaveLocalPillsUseCase.Params(pills))
         )
     }
 

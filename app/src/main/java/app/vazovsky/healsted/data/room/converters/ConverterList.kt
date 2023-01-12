@@ -20,17 +20,3 @@ abstract class ConverterList<T> {
         return gson.fromJson(value, type)
     }
 }
-
-abstract class Converter<T> {
-    @TypeConverter
-    fun fromTimestamp(data: T?): String {
-        val type = object : TypeToken<T>() {}.type
-        return Gson().toJson(data, type)
-    }
-
-    @TypeConverter
-    fun toTimestamp(data: String): T? {
-        val type = object : TypeToken<T>() {}.type
-        return Gson().fromJson(data, type)
-    }
-}

@@ -51,16 +51,16 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
             result.doOnSuccess { setUpdatePillTask(it.task, it.pill) }
             result.doOnFailure { Timber.d(it.message) }
         }
-
-        saveLocalPillLiveEvent.observe { result ->
-            result.doOnSuccess {
-                Timber.d("UPDATE RESULT: $it")
-                viewModel.navigateBack()
-            }
+        updateLocalPillLiveEvent.observe { result ->
+            result.doOnSuccess { viewModel.navigateBack() }
             result.doOnFailure { Timber.d(it.message) }
         }
         deletePillLiveEvent.observe { result ->
-            result.doOnSuccess { setDeletePillTask(it) }
+            result.doOnSuccess { setDeletePillTask(it.task, it.pill) }
+            result.doOnFailure { Timber.d(it.message) }
+        }
+        deleteLocalPillLiveEvent.observe { result ->
+            result.doOnSuccess { viewModel.navigateBack() }
             result.doOnFailure { Timber.d(it.message) }
         }
     }
@@ -154,11 +154,6 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         editTextComment.setText(pill?.comment.orDefault())
     }
 
-    private fun setDeletePillTask(task: Task<Void>) = with(task) {
-        addOnSuccessListener { viewModel.navigateBack() }
-        addOnFailureListener { Timber.d(it.message) }
-    }
-
     /** Настройка спиннера для DatesTakenType */
     private fun setDatesTakenType() = with(binding) {
         val listOfDatesTakenType = DatesTakenType.values()
@@ -188,7 +183,12 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     }
 
     private fun setUpdatePillTask(task: Task<Void>, pill: Pill) = with(task) {
-        addOnSuccessListener { viewModel.savePill(pill) }
+        addOnSuccessListener { viewModel.updateLocalPill(pill) }
+        addOnFailureListener { Timber.d(it.message) }
+    }
+
+    private fun setDeletePillTask(task: Task<Void>, pill: Pill) = with(task) {
+        addOnSuccessListener { viewModel.deleteLocalPill(pill) }
         addOnFailureListener { Timber.d(it.message) }
     }
 }

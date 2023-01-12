@@ -7,8 +7,8 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import app.vazovsky.healsted.R
+import app.vazovsky.healsted.data.model.PillsTabSlot
 import app.vazovsky.healsted.databinding.FragmentPillsBinding
-import app.vazovsky.healsted.domain.pills.GetPillsUseCase
 import app.vazovsky.healsted.extensions.addDefaultGridSpaceItemDecoration
 import app.vazovsky.healsted.extensions.addLinearSpaceItemDecoration
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
@@ -17,6 +17,8 @@ import app.vazovsky.healsted.presentation.pills.adapter.PillsAdapter
 import app.vazovsky.healsted.presentation.pills.tab.PillsTabsAdapter
 import app.vazovsky.healsted.presentation.view.StateViewFlipper
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.QuerySnapshot
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import timber.log.Timber
@@ -49,7 +51,7 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
         }
         pillsSnapshotLiveData.observe { result ->
             binding.stateViewFlipper.changeState(StateViewFlipper.State.LOADING)
-            result.doOnSuccess { pillsResult -> setPillsSnapshotTask(pillsResult) }
+            result.doOnSuccess { setPillsSnapshotTask(it.snapshotTask, it.slot) }
             result.doOnFailure { Timber.d(it.message) }
         }
         pillsLiveData.observe { result ->
@@ -58,14 +60,9 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
             result.doOnFailure { Timber.d(it.message) }
         }
         localPillsLiveEvent.observe { result ->
-            result.doOnSuccess { Timber.d("LOL result: $it") }
+            result.doOnSuccess { Timber.d("LOL: pills: $it") }
             result.doOnFailure { Timber.d(it.message) }
         }
-    }
-
-    private fun setPillsSnapshotTask(pillsResult: GetPillsUseCase.Result) = with(pillsResult.snapshotTask) {
-        addOnSuccessListener { snapshot -> viewModel.getPills(snapshot, pillsResult.slot) }
-        addOnFailureListener { Timber.d(it.message) }
     }
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
@@ -110,5 +107,10 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
             includeEdge = true,
             excludeTopEdge = false,
         )
+    }
+
+    private fun setPillsSnapshotTask(task: Task<QuerySnapshot>, slot: PillsTabSlot?) = with(task) {
+        addOnSuccessListener { snapshot -> viewModel.getPills(snapshot, slot) }
+        addOnFailureListener { Timber.d(it.message) }
     }
 }
