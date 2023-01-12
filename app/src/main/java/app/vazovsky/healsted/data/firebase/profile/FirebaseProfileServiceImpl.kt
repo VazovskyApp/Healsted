@@ -18,6 +18,8 @@ const val HEALTH_COLLECTION = "health"
 class FirebaseProfileServiceImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
 ) : FirebaseProfileService {
+
+    //<editor-fold desc="Loyalty">
     override fun addProfileLoyalty(
         uid: String,
         loyaltyProgress: LoyaltyProgress,
@@ -28,9 +30,10 @@ class FirebaseProfileServiceImpl @Inject constructor(
     override fun fetchProfileLoyalty(
         uid: String,
     ) = firestore.collection(LOYALTY_COLLECTION)
-        .document(uid)
-        .get()
+        .document(uid).get()
+    //</editor-fold>
 
+    //<editor-fold desc="Pills">
     override fun addProfilePill(
         uid: String,
         pill: Pill,
@@ -55,15 +58,16 @@ class FirebaseProfileServiceImpl @Inject constructor(
     ) = firestore.collection(PILLS_COLLECTION)
         .document(uid)
         .collection(PILLS_COLLECTION)
-        .document(pill.id)
-        .delete()
+        .document(pill.id).delete()
 
     override fun fetchProfilePills(
         uid: String,
     ) = firestore.collection(PILLS_COLLECTION)
         .document(uid)
         .collection(PILLS_COLLECTION).get()
+    //</editor-fold>
 
+    //<editor-fold desc="Mood">
     override fun addProfileMood(
         uid: String,
         mood: Mood,
@@ -95,7 +99,9 @@ class FirebaseProfileServiceImpl @Inject constructor(
     ) = firestore.collection(MOODS_COLLECTION)
         .document(uid)
         .collection(MOODS_COLLECTION).get()
+    //</editor-fold>
 
+    //<editor-fold desc="Health">
     override fun addProfileMonitoringAttribute(
         uid: String,
         monitoringAttribute: MonitoringAttribute,
@@ -128,4 +134,6 @@ class FirebaseProfileServiceImpl @Inject constructor(
     ) = firestore.collection(HEALTH_COLLECTION)
         .document(uid)
         .collection(MonitoringType.BLOOD_PRESSURE.name).get()
+    //</editor-fold>
+
 }

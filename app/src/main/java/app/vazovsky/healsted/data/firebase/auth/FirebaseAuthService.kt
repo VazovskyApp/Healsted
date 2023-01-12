@@ -11,32 +11,31 @@ import com.google.firebase.firestore.QuerySnapshot
 
 interface FirebaseAuthService {
 
+    //<editor-fold desc="FirebaseAuth">
+    /** Получение UID текущего пользователя из FirebaseAuth */
     fun getCurrentUserUid(): String?
 
-    fun signUpUser(
-        email: String,
-        password: String,
-    ): Task<AuthResult>
+    /** Регистрация пользователя по Email в FirebaseAuth */
+    fun signUpUser(email: String, password: String): Task<AuthResult>
 
-    fun signInUser(
-        email: String,
-        password: String,
-    ): Task<AuthResult>
+    /** Авторизация пользователя по Email в FirebaseAuth */
+    fun signInUser(email: String, password: String): Task<AuthResult>
 
-    fun signInWithGoogle(
-        account: GoogleSignInAccount,
-    ): Task<AuthResult>
+    /** Авторизация пользователя через Google в FirebaseAuth */
+    fun signInWithGoogle(account: GoogleSignInAccount): Task<AuthResult>
 
+    /** Выход из аккаунта в FirebaseAuth */
     fun logOut()
 
+    /** Удаление аккаунта из FirebaseAuth */
     fun deleteAccountFromFirebaseAuth(): Task<Void>?
+    //</editor-fold>
 
-    fun saveUser(
-        uid: String,
-        email: String,
-        phoneNumber: String,
-    ): Task<Void>
+    //<editor-fold desc="FireStore">
+    /** Сохранение пользователя в FireStore */
+    fun saveUser(uid: String, email: String, phoneNumber: String): Task<Void>
 
+    /** Сохранение аккаунта в FireStore */
     fun saveAccount(
         uid: String,
         accountHolder: User,
@@ -48,15 +47,20 @@ interface FirebaseAuthService {
         avatar: String?,
     ): Task<Void>
 
+    /** Обновление аккаунта в FireStore */
     fun updateAccount(uid: String, account: Account): Task<Void>
 
+    /** Удаление аккаунта из FireStore */
     fun deleteAccount(uid: String): Task<Void>
 
+    /** Получение аккаунта по UID из FireStore */
     fun fetchAccount(uid: String): Task<DocumentSnapshot>
 
+    /** Получение всех пользователей из FireStore */
     fun fetchUsers(): Task<QuerySnapshot>
 
+    /** Получение всех аккаунтов из FireStore */
     fun fetchAccounts(): Task<QuerySnapshot>
+    //</editor-fold>
 
-    fun sendForgotPassword(email: String): Task<Void>
 }

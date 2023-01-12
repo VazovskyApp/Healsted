@@ -4,20 +4,21 @@ import app.vazovsky.healsted.data.model.LoyaltyProgress
 import app.vazovsky.healsted.data.model.MonitoringAttribute
 import app.vazovsky.healsted.data.model.Mood
 import app.vazovsky.healsted.data.model.Pill
-import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import javax.inject.Inject
 
 class FirebaseProfileRepositoryImpl @Inject constructor(
     private val firebaseProfileService: FirebaseProfileService,
 ) : FirebaseProfileRepository {
-    override fun addProfileLoyalty(
-        uid: String,
-        loyaltyProgress: LoyaltyProgress,
-    ) = firebaseProfileService.addProfileLoyalty(uid, loyaltyProgress)
+
+    //<editor-fold desc="Loyalty">
+    override fun addProfileLoyalty(uid: String, loyaltyProgress: LoyaltyProgress) =
+        firebaseProfileService.addProfileLoyalty(uid, loyaltyProgress)
 
     override fun fetchProfileLoyalty(uid: String) = firebaseProfileService.fetchProfileLoyalty(uid)
+    //</editor-fold>
 
+    //<editor-fold desc="Pills">
     override fun addProfilePill(
         uid: String,
         pill: Pill,
@@ -31,10 +32,12 @@ class FirebaseProfileRepositoryImpl @Inject constructor(
     override fun deleteProfilePill(
         uid: String,
         pill: Pill,
-    ) = firebaseProfileService.deleteProfilePill(uid,pill)
+    ) = firebaseProfileService.deleteProfilePill(uid, pill)
 
     override fun fetchProfilePills(uid: String) = firebaseProfileService.fetchProfilePills(uid)
+    //</editor-fold>
 
+    //<editor-fold desc="Mood">
     override fun addProfileMood(
         uid: String,
         mood: Mood,
@@ -51,7 +54,9 @@ class FirebaseProfileRepositoryImpl @Inject constructor(
     ) = firebaseProfileService.fetchProfileTodayMood(uid, date)
 
     override fun fetchProfileMoods(uid: String) = firebaseProfileService.fetchProfileMoods(uid)
+    //</editor-fold>
 
+    //<editor-fold desc="Health">
     override fun addProfileMonitoringAttribute(
         uid: String,
         monitoringAttribute: MonitoringAttribute,
@@ -61,4 +66,6 @@ class FirebaseProfileRepositoryImpl @Inject constructor(
     override fun fetchProfileHeight(uid: String) = firebaseProfileService.fetchProfileHeight(uid)
     override fun fetchProfileTemperature(uid: String) = firebaseProfileService.fetchProfileTemperature(uid)
     override fun fetchProfileBloodPressure(uid: String) = firebaseProfileService.fetchProfileBloodPressure(uid)
+    //</editor-fold>
+
 }

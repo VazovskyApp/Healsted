@@ -17,33 +17,33 @@ class FirebaseAuthServiceImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
 ) : FirebaseAuthService {
-    override fun getCurrentUserUid() = firebaseAuth.currentUser?.uid
 
+    //<editor-fold desc="FirebaseAuth">
+    override fun getCurrentUserUid() = firebaseAuth.currentUser?.uid
 
     override fun signUpUser(
         email: String,
         password: String,
     ) = firebaseAuth.createUserWithEmailAndPassword(email, password)
 
-
     override fun signInUser(
         email: String,
         password: String,
     ) = firebaseAuth.signInWithEmailAndPassword(email, password)
 
-
-    override fun signInWithGoogle(account: GoogleSignInAccount) =
-        firebaseAuth.signInWithCredential(
-            GoogleAuthProvider.getCredential(
-                account.idToken,
-                null
-            )
-        )
+    override fun signInWithGoogle(
+        account: GoogleSignInAccount
+    ) = firebaseAuth.signInWithCredential(
+        GoogleAuthProvider.getCredential(account.idToken, null)
+    )
 
     override fun logOut() = firebaseAuth.signOut()
 
     /** TODO не удаляется аккаунт из Firebase */
     override fun deleteAccountFromFirebaseAuth() = firebaseAuth.currentUser?.delete()
+    //</editor-fold>
+
+    //<editor-fold desc="FireStore">
     override fun saveUser(
         uid: String,
         email: String,
@@ -64,25 +64,29 @@ class FirebaseAuthServiceImpl @Inject constructor(
         patronymic: String,
         birthday: Timestamp?,
         avatar: String?,
-    ) = firestore.collection(ACCOUNTS_COLLECTION).document(uid).set(
-        Account(
-            accountHolder = accountHolder,
-            nickname = nickname,
-            name = name,
-            surname = surname,
-            patronymic = patronymic,
-            birthday = birthday,
-            avatar = avatar,
+    ) = firestore.collection(ACCOUNTS_COLLECTION)
+        .document(uid)
+        .set(
+            Account(
+                accountHolder = accountHolder,
+                nickname = nickname,
+                name = name,
+                surname = surname,
+                patronymic = patronymic,
+                birthday = birthday,
+                avatar = avatar,
+            )
         )
-    )
 
     override fun updateAccount(
         uid: String,
         account: Account,
-    ) = firestore.collection(ACCOUNTS_COLLECTION).document(uid).update(account.serializeToMap())
+    ) = firestore.collection(ACCOUNTS_COLLECTION)
+        .document(uid)
+        .update(account.serializeToMap())
 
     override fun deleteAccount(
-        uid: String
+        uid: String,
     ) = firestore.collection(ACCOUNTS_COLLECTION).document(uid).delete()
 
     override fun fetchAccount(
@@ -92,6 +96,6 @@ class FirebaseAuthServiceImpl @Inject constructor(
     override fun fetchUsers() = firestore.collection(USERS_COLLECTION).get()
 
     override fun fetchAccounts() = firestore.collection(ACCOUNTS_COLLECTION).get()
+    //</editor-fold>
 
-    override fun sendForgotPassword(email: String) = firebaseAuth.sendPasswordResetEmail(email)
 }
