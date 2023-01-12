@@ -4,8 +4,8 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
+/** Конвертер для списков любых объектов */
 abstract class ConverterList<T> {
-
     @TypeConverter
     fun mapListToString(value: List<T>?): String {
         val gson = Gson()

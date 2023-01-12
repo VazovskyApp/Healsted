@@ -7,6 +7,9 @@ import app.vazovsky.healsted.data.model.SettingsItem
 import javax.inject.Inject
 
 class SettingsRepositoryImpl @Inject constructor() : SettingsRepository {
+
+    //<editor-fold desc="Settings">
+    /** Получение настроек */
     override fun getSettings(): List<SettingsItem> {
         return listOf(
             SettingsItem(
@@ -46,4 +49,6 @@ class SettingsRepositoryImpl @Inject constructor() : SettingsRepository {
             ),
         )
     }
+    //</editor-fold>
+
 }

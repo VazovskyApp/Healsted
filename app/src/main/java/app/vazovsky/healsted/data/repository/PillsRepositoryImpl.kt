@@ -6,6 +6,7 @@ import javax.inject.Inject
 
 class PillsRepositoryImpl @Inject constructor() : PillsRepository {
 
+    //<editor-fold desc="Tabs">
     private val listOfTabs = listOf(
         PillsTab(
             tabName = "Все",
@@ -25,5 +26,6 @@ class PillsRepositoryImpl @Inject constructor() : PillsRepository {
     )
 
     override fun getTabs() = listOfTabs
+    //</editor-fold>
 
 }
