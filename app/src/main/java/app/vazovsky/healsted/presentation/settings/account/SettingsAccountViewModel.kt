@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.base.LoadableResult
-import app.vazovsky.healsted.domain.auth.DeleteAccountFromFirestoreUseCase
+import app.vazovsky.healsted.domain.auth.DeleteFirestoreAccountUseCase
 import app.vazovsky.healsted.domain.auth.DeleteAccountUseCase
-import app.vazovsky.healsted.domain.auth.EditAccountUseCase
+import app.vazovsky.healsted.domain.auth.UpdateFireStoreAccountUseCase
 import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.profile.GetProfileUseCase
 import app.vazovsky.healsted.domain.profile.ParseSnapshotToProfileUseCase
@@ -22,9 +22,9 @@ class SettingsAccountViewModel @Inject constructor(
     private val outDestinations: SettingsAccountOutDestinations,
     private val getProfileUseCase: GetProfileUseCase,
     private val parseSnapshotToProfileUseCase: ParseSnapshotToProfileUseCase,
-    private val editAccountUseCase: EditAccountUseCase,
+    private val updateFireStoreAccountUseCase: UpdateFireStoreAccountUseCase,
     private val deleteAccountUseCase: DeleteAccountUseCase,
-    private val deleteAccountFromFirestoreUseCase: DeleteAccountFromFirestoreUseCase,
+    private val deleteFirestoreAccountUseCase: DeleteFirestoreAccountUseCase,
 ) : BaseViewModel() {
     /** Профиль в виде DocumentSnapshot */
     private val _profileSnapshotLiveData = MutableLiveData<LoadableResult<Task<DocumentSnapshot>>>()
@@ -64,14 +64,14 @@ class SettingsAccountViewModel @Inject constructor(
     /** Обновление аккаунта */
     fun updateAccount(account: Account) {
         _editAccountLiveEvent.launchLoadData(
-            editAccountUseCase.executeFlow(EditAccountUseCase.Params(account))
+            updateFireStoreAccountUseCase.executeFlow(UpdateFireStoreAccountUseCase.Params(account))
         )
     }
 
     /** Удаление аккаунта из FireStore */
     fun deleteAccountFireStore() {
         _deleteAccountFireStoreLiveData.launchLoadData(
-            deleteAccountFromFirestoreUseCase.executeFlow(UseCase.None)
+            deleteFirestoreAccountUseCase.executeFlow(UseCase.None)
         )
     }
 

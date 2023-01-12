@@ -6,7 +6,7 @@ import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.base.UseCaseUnary
 import javax.inject.Inject
 
-/** Выход из аккаунта */
+/** Выход из аккаунта FirebaseAuth */
 class SignOutUseCase @Inject constructor(
     private val firebaseAuthRepository: FirebaseAuthRepository,
     private val authRepository: AuthRepository,
@@ -14,6 +14,7 @@ class SignOutUseCase @Inject constructor(
     override suspend fun execute(params: UseCase.None) {
         authRepository.setCurrentUserUid(null)
         authRepository.setIsAuthorized(false)
+
         firebaseAuthRepository.logOut()
     }
 }

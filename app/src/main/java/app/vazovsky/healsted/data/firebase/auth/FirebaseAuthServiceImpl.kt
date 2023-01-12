@@ -4,7 +4,6 @@ import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.User
 import app.vazovsky.healsted.extensions.serializeToMap
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
@@ -46,37 +45,17 @@ class FirebaseAuthServiceImpl @Inject constructor(
     //<editor-fold desc="FireStore">
     override fun saveUser(
         uid: String,
-        email: String,
-        phoneNumber: String,
-    ) = firestore.collection(USERS_COLLECTION).document(uid).set(
-        User(
-            email = email,
-            phoneNumber = phoneNumber,
-        )
-    )
+        user: User,
+    ) = firestore.collection(USERS_COLLECTION)
+        .document(uid)
+        .set(user)
 
     override fun saveAccount(
         uid: String,
-        accountHolder: User,
-        nickname: String,
-        name: String,
-        surname: String,
-        patronymic: String,
-        birthday: Timestamp?,
-        avatar: String?,
+        account: Account,
     ) = firestore.collection(ACCOUNTS_COLLECTION)
         .document(uid)
-        .set(
-            Account(
-                accountHolder = accountHolder,
-                nickname = nickname,
-                name = name,
-                surname = surname,
-                patronymic = patronymic,
-                birthday = birthday,
-                avatar = avatar,
-            )
-        )
+        .set(account)
 
     override fun updateAccount(
         uid: String,
@@ -85,13 +64,9 @@ class FirebaseAuthServiceImpl @Inject constructor(
         .document(uid)
         .update(account.serializeToMap())
 
-    override fun deleteAccount(
-        uid: String,
-    ) = firestore.collection(ACCOUNTS_COLLECTION).document(uid).delete()
+    override fun deleteAccount(uid: String) = firestore.collection(ACCOUNTS_COLLECTION).document(uid).delete()
 
-    override fun fetchAccount(
-        uid: String,
-    ) = firestore.collection(ACCOUNTS_COLLECTION).document(uid).get()
+    override fun fetchAccount(uid: String) = firestore.collection(ACCOUNTS_COLLECTION).document(uid).get()
 
     override fun fetchUsers() = firestore.collection(USERS_COLLECTION).get()
 

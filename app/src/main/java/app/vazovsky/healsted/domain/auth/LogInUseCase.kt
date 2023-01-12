@@ -7,7 +7,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import javax.inject.Inject
 
-/** Авторизация */
+/** Авторизация в FirebaseAuth */
 class LogInUseCase @Inject constructor(
     private val firebaseAuthRepository: FirebaseAuthRepository,
     private val authRepository: AuthRepository,

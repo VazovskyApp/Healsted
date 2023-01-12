@@ -4,7 +4,6 @@ import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.User
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
-import com.google.firebase.Timestamp
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
@@ -33,19 +32,10 @@ interface FirebaseAuthService {
 
     //<editor-fold desc="FireStore">
     /** Сохранение пользователя в FireStore */
-    fun saveUser(uid: String, email: String, phoneNumber: String): Task<Void>
+    fun saveUser(uid: String, user: User): Task<Void>
 
     /** Сохранение аккаунта в FireStore */
-    fun saveAccount(
-        uid: String,
-        accountHolder: User,
-        nickname: String,
-        name: String = "",
-        surname: String = "",
-        patronymic: String = "",
-        birthday: Timestamp?,
-        avatar: String?,
-    ): Task<Void>
+    fun saveAccount(uid: String, account: Account): Task<Void>
 
     /** Обновление аккаунта в FireStore */
     fun updateAccount(uid: String, account: Account): Task<Void>

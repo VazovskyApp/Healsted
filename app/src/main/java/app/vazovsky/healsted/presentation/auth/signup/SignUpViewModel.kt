@@ -1,13 +1,14 @@
 package app.vazovsky.healsted.presentation.auth.signup
 
 import androidx.lifecycle.LiveData
+import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.MonitoringAttribute
 import app.vazovsky.healsted.data.model.MonitoringType
 import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.data.model.User
 import app.vazovsky.healsted.data.model.base.LoadableResult
-import app.vazovsky.healsted.domain.auth.SaveAccountUseCase
-import app.vazovsky.healsted.domain.auth.SaveUserUseCase
+import app.vazovsky.healsted.domain.auth.SaveFireStoreAccountUseCase
+import app.vazovsky.healsted.domain.auth.SaveFireStoreUserUseCase
 import app.vazovsky.healsted.domain.auth.SignUpUseCase
 import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.health.SaveMonitoringAttributeUseCase
@@ -28,8 +29,8 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor(
     private val destinations: SignUpDestinations,
     private val signUpUseCase: SignUpUseCase,
-    private val saveAccountUseCase: SaveAccountUseCase,
-    private val saveUserUseCase: SaveUserUseCase,
+    private val saveFireStoreAccountUseCase: SaveFireStoreAccountUseCase,
+    private val saveFireStoreUserUseCase: SaveFireStoreUserUseCase,
     private val saveLoyaltyUseCase: SaveLoyaltyUseCase,
     private val saveMonitoringAttributeUseCase: SaveMonitoringAttributeUseCase,
     private val getAllPillsUseCase: GetAllPillsUseCase,
@@ -42,8 +43,8 @@ class SignUpViewModel @Inject constructor(
     val signUpResultLiveEvent: LiveData<LoadableResult<Task<AuthResult>>> = _signUpResultLiveEvent
 
     /** Сохранение пользователя в FireStore */
-    private val _saveUserLiveEvent = SingleLiveEvent<LoadableResult<SaveUserUseCase.Result>>()
-    val saveUserLiveEvent: LiveData<LoadableResult<SaveUserUseCase.Result>> = _saveUserLiveEvent
+    private val _saveUserLiveEvent = SingleLiveEvent<LoadableResult<SaveFireStoreUserUseCase.Result>>()
+    val saveUserLiveEvent: LiveData<LoadableResult<SaveFireStoreUserUseCase.Result>> = _saveUserLiveEvent
 
     /** Сохранение аккаунта в FireStore */
     private val _saveAccountLiveEvent = SingleLiveEvent<LoadableResult<Task<Void>>>()
@@ -96,12 +97,8 @@ class SignUpViewModel @Inject constructor(
     /** Сохранить пользователя в FireStore */
     fun saveUser(uid: String, email: String, phoneNumber: String = "") {
         _saveUserLiveEvent.launchLoadData(
-            saveUserUseCase.executeFlow(
-                SaveUserUseCase.Params(
-                    uid = uid,
-                    email = email,
-                    phoneNumber = phoneNumber,
-                )
+            saveFireStoreUserUseCase.executeFlow(
+                SaveFireStoreUserUseCase.Params(uid = uid, user = User(email, phoneNumber))
             )
         )
     }
@@ -118,16 +115,9 @@ class SignUpViewModel @Inject constructor(
         avatar: String? = null,
     ) {
         _saveAccountLiveEvent.launchLoadData(
-            saveAccountUseCase.executeFlow(
-                SaveAccountUseCase.Params(
-                    uid = uid,
-                    accountHolder = accountHolder,
-                    nickname = nickname,
-                    name = name,
-                    surname = surname,
-                    patronymic = patronymic,
-                    birthday = birthday,
-                    avatar = avatar,
+            saveFireStoreAccountUseCase.executeFlow(
+                SaveFireStoreAccountUseCase.Params(
+                    uid = uid, account = Account(accountHolder, nickname, name, surname, patronymic, birthday, avatar)
                 )
             )
         )

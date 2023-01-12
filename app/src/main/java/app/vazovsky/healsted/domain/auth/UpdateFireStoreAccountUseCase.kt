@@ -8,11 +8,11 @@ import app.vazovsky.healsted.extensions.orDefault
 import com.google.android.gms.tasks.Task
 import javax.inject.Inject
 
-/** Редактирование аккаунта */
-class EditAccountUseCase @Inject constructor(
+/** Редактирование аккаунта в FireStore */
+class UpdateFireStoreAccountUseCase @Inject constructor(
     private val firebaseAuthRepository: FirebaseAuthRepository,
     private val authRepository: AuthRepository,
-) : UseCaseUnary<EditAccountUseCase.Params, Task<Void>>() {
+) : UseCaseUnary<UpdateFireStoreAccountUseCase.Params, Task<Void>>() {
 
     override suspend fun execute(params: Params): Task<Void> {
         val uid = firebaseAuthRepository.getCurrentUserUid() ?: authRepository.getCurrentUserUid().orDefault()
@@ -21,6 +21,7 @@ class EditAccountUseCase @Inject constructor(
     }
 
     data class Params(
+        /** Обновляемый аккаунт с новыми данными */
         val account: Account,
     )
 }

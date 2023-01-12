@@ -3,9 +3,8 @@ package app.vazovsky.healsted.presentation.auth.signup
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import app.vazovsky.healsted.R
-import app.vazovsky.healsted.data.model.User
 import app.vazovsky.healsted.databinding.FragmentSignUpBinding
-import app.vazovsky.healsted.domain.auth.SaveUserUseCase
+import app.vazovsky.healsted.domain.auth.SaveFireStoreUserUseCase
 import app.vazovsky.healsted.extensions.checkInputs
 import app.vazovsky.healsted.extensions.fitKeyboardInsetsWithPadding
 import app.vazovsky.healsted.extensions.showErrorSnackbar
@@ -108,11 +107,11 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
         }
     }
 
-    private fun setSaveUserTask(saveUserResult: SaveUserUseCase.Result) = with(saveUserResult.task) {
+    private fun setSaveUserTask(saveUserResult: SaveFireStoreUserUseCase.Result) = with(saveUserResult.task) {
         addOnSuccessListener {
             viewModel.saveAccount(
                 uid = saveUserResult.uid,
-                accountHolder = User(email = saveUserResult.email, ""),
+                accountHolder = saveUserResult.user,
                 nickname = binding.editTextNickname.text.toString(),
             )
         }

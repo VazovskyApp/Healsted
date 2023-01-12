@@ -8,8 +8,8 @@ import app.vazovsky.healsted.extensions.orDefault
 import com.google.android.gms.tasks.Task
 import javax.inject.Inject
 
-/** Удаление аккаунта из Firestore */
-class DeleteAccountFromFirestoreUseCase @Inject constructor(
+/** Удаление аккаунта из FireStore */
+class DeleteFirestoreAccountUseCase @Inject constructor(
     private val firebaseAuthRepository: FirebaseAuthRepository,
     private val authRepository: AuthRepository,
 ) : UseCaseUnary<UseCase.None, Task<Void>>() {

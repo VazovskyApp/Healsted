@@ -11,11 +11,11 @@ class DeleteAccountUseCase @Inject constructor(
     private val firebaseAuthRepository: FirebaseAuthRepository,
 ) : UseCaseUnary<UseCase.None, DeleteAccountUseCase.Result>() {
     override suspend fun execute(params: UseCase.None): Result {
-
         return Result(firebaseAuthRepository.deleteAccountFromFirebaseAuth())
     }
 
     data class Result(
+        /** Task с результатом удаления аккаунта */
         val task: Task<Void>?,
     )
 }
