@@ -10,7 +10,7 @@ import app.vazovsky.healsted.presentation.pilleditor.UpdateResult
 import com.google.android.gms.tasks.Task
 import javax.inject.Inject
 
-/** Добавление лекарства  */
+/** Добавление лекарства */
 class SavePillUseCase @Inject constructor(
     private val firebaseProfileRepository: FirebaseProfileRepository,
     private val authRepository: AuthRepository,
@@ -27,6 +27,7 @@ class SavePillUseCase @Inject constructor(
     }
 
     data class Params(
+        /** Добавляемое лекарство */
         val pill: Pill,
     )
 }

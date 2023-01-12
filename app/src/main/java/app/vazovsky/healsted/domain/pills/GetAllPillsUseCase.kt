@@ -10,7 +10,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.QuerySnapshot
 import javax.inject.Inject
 
-/** Получение всех таблеток в виде QuerySnapshot */
+/** Получение всех лекарств в виде QuerySnapshot */
 class GetAllPillsUseCase @Inject constructor(
     private val firebaseProfileRepository: FirebaseProfileRepository,
     private val authRepository: AuthRepository,

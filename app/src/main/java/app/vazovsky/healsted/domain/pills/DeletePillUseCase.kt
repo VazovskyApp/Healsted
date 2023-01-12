@@ -26,6 +26,7 @@ class DeletePillUseCase @Inject constructor(
     }
 
     data class Params(
+        /** Удаляемое лекарство */
         val pill: Pill,
     )
 }

@@ -5,19 +5,15 @@ import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.data.repository.RoomRepository
 import app.vazovsky.healsted.domain.base.UseCaseUnary
 import javax.inject.Inject
-import timber.log.Timber
 
-/** Сохранение таблеток в локальную базу данных */
-class SaveLocalPillsUseCase @Inject constructor(
-    private val roomRepository: RoomRepository,
+/** Добавить лекарство в Room */
+class InsertRoomPillUseCase @Inject constructor(
     private val pillMapper: PillMapper,
-) : UseCaseUnary<SaveLocalPillsUseCase.Params, Boolean>() {
+    private val roomRepository: RoomRepository,
+) : UseCaseUnary<InsertRoomPillUseCase.Params, Boolean>() {
     override suspend fun execute(params: Params): Boolean {
         val isSuccess = try {
-            Timber.d("UPDATE RESULT LIST: " + params.pills)
-            params.pills.forEach { pill ->
-                roomRepository.insertPill(pillMapper.fromModelToEntity(pill))
-            }
+            roomRepository.insertPill(pillMapper.fromModelToEntity(params.pill))
             true
         } catch (e: Exception) {
             false
@@ -26,6 +22,7 @@ class SaveLocalPillsUseCase @Inject constructor(
     }
 
     data class Params(
-        val pills: List<Pill>,
+        /** Добавляемое лекарство */
+        val pill: Pill,
     )
 }

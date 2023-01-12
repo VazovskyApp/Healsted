@@ -21,17 +21,21 @@ class GetPillsUseCase @Inject constructor(
         val uid = firebaseAuthRepository.getCurrentUserUid() ?: authRepository.getCurrentUserUid().orDefault()
 
         return Result(
-            snapshotTask = firebaseProfileRepository.fetchProfilePills(uid),
+            task = firebaseProfileRepository.fetchProfilePills(uid),
             slot = params.slot,
         )
     }
 
     data class Params(
+        /** Выбранный слот для фильтрации лекарств */
         val slot: PillsTabSlot?,
     )
 
     data class Result(
-        val snapshotTask: Task<QuerySnapshot>,
+        /** Результат получения лекарств */
+        val task: Task<QuerySnapshot>,
+
+        /** Выбранный слот для фильтрации лекарств */
         val slot: PillsTabSlot?,
     )
 }

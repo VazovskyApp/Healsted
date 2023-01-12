@@ -6,14 +6,16 @@ import app.vazovsky.healsted.data.repository.RoomRepository
 import app.vazovsky.healsted.domain.base.UseCaseUnary
 import javax.inject.Inject
 
-/** Удаление данных о лекарстве локально */
-class DeleteLocalPillUseCase @Inject constructor(
-    private val roomRepository: RoomRepository,
+/** Сохранение лекарств в Room */
+class SaveRoomPillsUseCase @Inject constructor(
     private val pillMapper: PillMapper,
-) : UseCaseUnary<DeleteLocalPillUseCase.Params, Boolean>() {
+    private val roomRepository: RoomRepository,
+) : UseCaseUnary<SaveRoomPillsUseCase.Params, Boolean>() {
     override suspend fun execute(params: Params): Boolean {
         val isSuccess = try {
-            roomRepository.deletePill(pillMapper.fromModelToEntity(params.pill))
+            params.pills.forEach { pill ->
+                roomRepository.insertPill(pillMapper.fromModelToEntity(pill))
+            }
             true
         } catch (e: Exception) {
             false
@@ -22,6 +24,7 @@ class DeleteLocalPillUseCase @Inject constructor(
     }
 
     data class Params(
-        val pill: Pill,
+        /** Сохраняемый список лекарств */
+        val pills: List<Pill>,
     )
 }

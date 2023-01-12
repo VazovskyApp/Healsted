@@ -7,6 +7,7 @@ import app.vazovsky.healsted.extensions.toDataClass
 import com.google.firebase.firestore.QuerySnapshot
 import javax.inject.Inject
 
+/** Парсинг QuerySnapshot в список всех лекарств */
 class ParseSnapshotToAllPillsUseCase @Inject constructor() : UseCaseUnary<ParseSnapshotToAllPillsUseCase.Params, List<Pill>>() {
 
     override suspend fun execute(params: Params): List<Pill> {

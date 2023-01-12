@@ -3,9 +3,9 @@ package app.vazovsky.healsted.presentation.pilleditor
 import androidx.lifecycle.LiveData
 import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.data.model.base.LoadableResult
-import app.vazovsky.healsted.domain.pills.DeleteLocalPillUseCase
+import app.vazovsky.healsted.domain.pills.DeleteRoomPillUseCase
 import app.vazovsky.healsted.domain.pills.DeletePillUseCase
-import app.vazovsky.healsted.domain.pills.InsertLocalPillUseCase
+import app.vazovsky.healsted.domain.pills.InsertRoomPillUseCase
 import app.vazovsky.healsted.domain.pills.SavePillUseCase
 import app.vazovsky.healsted.domain.pills.UpdatePillUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
@@ -18,9 +18,9 @@ import javax.inject.Inject
 class PillEditorViewModel @Inject constructor(
     private val savePillUseCase: SavePillUseCase,
     private val updatePillUseCase: UpdatePillUseCase,
-    private val insertLocalPillUseCase: InsertLocalPillUseCase,
+    private val insertRoomPillUseCase: InsertRoomPillUseCase,
     private val deletePillUseCase: DeletePillUseCase,
-    private val deleteLocalPillUseCase: DeleteLocalPillUseCase,
+    private val deleteRoomPillUseCase: DeleteRoomPillUseCase,
 ) : BaseViewModel() {
 
     /** Добавление либо обновление лекарства */
@@ -63,14 +63,14 @@ class PillEditorViewModel @Inject constructor(
     /** Сохранение лекарства в локальную базу данных */
     fun updateLocalPill(pill: Pill) {
         _updateLocalPillLiveEvent.launchLoadData(
-            insertLocalPillUseCase.executeFlow(InsertLocalPillUseCase.Params(pill))
+            insertRoomPillUseCase.executeFlow(InsertRoomPillUseCase.Params(pill))
         )
     }
 
     /** Удаление лекарства из локальной базы данных */
     fun deleteLocalPill(pill: Pill) {
         _deleteLocalPillLiveEvent.launchLoadData(
-            deleteLocalPillUseCase.executeFlow(DeleteLocalPillUseCase.Params(pill))
+            deleteRoomPillUseCase.executeFlow(DeleteRoomPillUseCase.Params(pill))
         )
     }
 }

@@ -51,7 +51,7 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
         }
         pillsSnapshotLiveData.observe { result ->
             binding.stateViewFlipper.changeState(StateViewFlipper.State.LOADING)
-            result.doOnSuccess { setPillsSnapshotTask(it.snapshotTask, it.slot) }
+            result.doOnSuccess { setPillsSnapshotTask(it.task, it.slot) }
             result.doOnFailure { Timber.d(it.message) }
         }
         pillsLiveData.observe { result ->

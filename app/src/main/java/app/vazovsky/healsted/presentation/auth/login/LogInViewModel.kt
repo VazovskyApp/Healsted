@@ -7,7 +7,7 @@ import app.vazovsky.healsted.domain.auth.LogInUseCase
 import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.pills.GetAllPillsUseCase
 import app.vazovsky.healsted.domain.pills.ParseSnapshotToAllPillsUseCase
-import app.vazovsky.healsted.domain.pills.SaveLocalPillsUseCase
+import app.vazovsky.healsted.domain.pills.SaveRoomPillsUseCase
 import app.vazovsky.healsted.domain.profile.GetProfileUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import app.vazovsky.healsted.presentation.base.SingleLiveEvent
@@ -25,7 +25,7 @@ class LogInViewModel @Inject constructor(
     private val getProfileUseCase: GetProfileUseCase,
     private val getAllPillsUseCase: GetAllPillsUseCase,
     private val parseSnapshotToAllPillsUseCase: ParseSnapshotToAllPillsUseCase,
-    private val saveLocalPillsUseCase: SaveLocalPillsUseCase,
+    private val saveRoomPillsUseCase: SaveRoomPillsUseCase,
 ) : BaseViewModel() {
 
     /** Получение результата авторизации */
@@ -65,7 +65,7 @@ class LogInViewModel @Inject constructor(
     /** Сохранение лекарств локально */
     fun saveLocalPills(pills: List<Pill>) {
         _saveLocalPillsLiveEvent.launchLoadData(
-            saveLocalPillsUseCase.executeFlow(SaveLocalPillsUseCase.Params(pills))
+            saveRoomPillsUseCase.executeFlow(SaveRoomPillsUseCase.Params(pills))
         )
     }
 

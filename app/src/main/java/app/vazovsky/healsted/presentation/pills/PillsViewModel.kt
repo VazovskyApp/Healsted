@@ -9,7 +9,7 @@ import app.vazovsky.healsted.data.model.PillsTabSlot
 import app.vazovsky.healsted.data.model.base.LoadableResult
 import app.vazovsky.healsted.data.room.entity.PillEntity
 import app.vazovsky.healsted.domain.base.UseCase
-import app.vazovsky.healsted.domain.pills.GetLocalPillsUseCase
+import app.vazovsky.healsted.domain.pills.GetRoomPillsUseCase
 import app.vazovsky.healsted.domain.pills.GetPillsUseCase
 import app.vazovsky.healsted.domain.pills.GetTabsUseCase
 import app.vazovsky.healsted.domain.pills.ParseSnapshotToPillsUseCase
@@ -26,7 +26,7 @@ class PillsViewModel @Inject constructor(
     private val getTabsUseCase: GetTabsUseCase,
     private val getPillsUseCase: GetPillsUseCase,
     private val parseSnapshotToPillsUseCase: ParseSnapshotToPillsUseCase,
-    private val getLocalPillsUseCase: GetLocalPillsUseCase,
+    private val getRoomPillsUseCase: GetRoomPillsUseCase,
 ) : BaseViewModel() {
 
     var selectedPillTab: PillsTabSlot = PillsTabSlot.ALL
@@ -71,7 +71,7 @@ class PillsViewModel @Inject constructor(
     fun getLocalPills() {
         viewModelScope.launch {
             try {
-                getLocalPillsUseCase.executeFlow(UseCase.None).collect {
+                getRoomPillsUseCase.executeFlow(UseCase.None).collect {
 
                     it.doOnSuccess { flow ->
                         flow.collect { list ->

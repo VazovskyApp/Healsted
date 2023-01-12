@@ -9,7 +9,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.QuerySnapshot
 import javax.inject.Inject
 
-/** Парсинг QuerySnapshot в список лекарств */
+/** Парсинг QuerySnapshot в список фильтруемых лекарств */
 class ParseSnapshotToPillsUseCase @Inject constructor() : UseCaseUnary<ParseSnapshotToPillsUseCase.Params, List<Pill>>() {
 
     override suspend fun execute(params: Params): List<Pill> {

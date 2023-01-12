@@ -8,7 +8,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.QuerySnapshot
 import javax.inject.Inject
 
-/** Получение медикаментов, назначенных на текущий день */
+/** Парсинг QuerySnapshot в список лекарств на сегодняшний день */
 class ParseSnapshotToTodayPillsUseCase @Inject constructor() :
     UseCaseUnary<ParseSnapshotToTodayPillsUseCase.Params, List<Pill>>() {
 
@@ -19,11 +19,18 @@ class ParseSnapshotToTodayPillsUseCase @Inject constructor() :
             listOfPills.add(pill)
         }
         /** TODO Сделать норм фильтр */
-        return listOfPills.filter { it.startDate <= params.date }
+        return listOfPills.filter {
+            it.startDate <= params.date && if (it.endDate != null) {
+                it.endDate >= params.date
+            } else true
+        }
     }
 
     data class Params(
+        /** Форматируемый QuerySnapshot со списком Pill */
         val snapshot: QuerySnapshot,
+
+        /** Дата, по которой нужно получить лекарства */
         val date: Timestamp,
     )
 }

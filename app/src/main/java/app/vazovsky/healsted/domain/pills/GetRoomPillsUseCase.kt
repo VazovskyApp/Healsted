@@ -7,7 +7,8 @@ import app.vazovsky.healsted.domain.base.UseCaseUnary
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-class GetLocalPillsUseCase @Inject constructor(
+/** Получение списка лекарств из Room в виде PillEntity */
+class GetRoomPillsUseCase @Inject constructor(
     private val roomRepository: RoomRepository,
 ) : UseCaseUnary<UseCase.None, Flow<List<PillEntity>>>() {
     override suspend fun execute(params: UseCase.None): Flow<List<PillEntity>> {

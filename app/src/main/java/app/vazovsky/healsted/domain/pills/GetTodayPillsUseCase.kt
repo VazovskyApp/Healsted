@@ -10,6 +10,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.QuerySnapshot
 import javax.inject.Inject
 
+/** Получение лекарств на сегодня в виде QuerySnapshot */
 class GetTodayPillsUseCase @Inject constructor(
     private val firebaseProfileRepository: FirebaseProfileRepository,
     private val authRepository: AuthRepository,
@@ -20,17 +21,21 @@ class GetTodayPillsUseCase @Inject constructor(
         val uid = firebaseAuthRepository.getCurrentUserUid() ?: authRepository.getCurrentUserUid().orDefault()
 
         return Result(
-            snapshotTask = firebaseProfileRepository.fetchProfilePills(uid),
+            task = firebaseProfileRepository.fetchProfilePills(uid),
             date = params.date,
         )
     }
 
     data class Params(
+        /** Дата, по которой нужно получить лекарства */
         val date: Timestamp,
     )
 
     data class Result(
-        val snapshotTask: Task<QuerySnapshot>,
+        /** Результат получения лекарств на сегодня */
+        val task: Task<QuerySnapshot>,
+
+        /** Дата, по которой нужно получить лекарства */
         val date: Timestamp,
     )
 }

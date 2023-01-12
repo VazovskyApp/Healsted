@@ -6,7 +6,7 @@ import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.base.UseCaseUnary
 import javax.inject.Inject
 
-/** Получение табов */
+/** Получение табов для фильтрации лекарств */
 class GetTabsUseCase @Inject constructor(
     private val pillsRepository: PillsRepository,
 ) : UseCaseUnary<UseCase.None, List<PillsTab>>() {

@@ -61,7 +61,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         }
         todayPillsSnapshotLiveData.observe { result ->
             binding.stateViewFlipper.changeState(StateViewFlipper.State.LOADING)
-            result.doOnSuccess { setPillsSnapshotTask(it.snapshotTask, it.date) }
+            result.doOnSuccess { setPillsSnapshotTask(it.task, it.date) }
             result.doOnFailure { Timber.d(it.message) }
         }
         todayPillsLiveData.observe { result ->

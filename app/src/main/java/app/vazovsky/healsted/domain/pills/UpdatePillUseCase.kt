@@ -26,6 +26,7 @@ class UpdatePillUseCase @Inject constructor(
     }
 
     data class Params(
+        /** Обновленное лекарство */
         val pill: Pill,
     )
 }
