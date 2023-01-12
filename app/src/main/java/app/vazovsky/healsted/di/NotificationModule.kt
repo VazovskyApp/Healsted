@@ -13,5 +13,7 @@ import dagger.hilt.components.SingletonComponent
 abstract class NotificationModule {
 
     @Binds
-    abstract fun bindNotificationRepository(notificationRepository: NotificationRepositoryImpl): NotificationRepository
+    abstract fun bindNotificationRepository(
+        notificationRepository: NotificationRepositoryImpl,
+    ): NotificationRepository
 }

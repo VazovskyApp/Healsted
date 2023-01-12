@@ -9,13 +9,18 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
+/** Модуль для сервисов */
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class ServiceModule {
 
     @Binds
-    abstract fun bindFirebaseAuthService(firebaseAuthService: FirebaseAuthServiceImpl): FirebaseAuthService
+    abstract fun bindFirebaseAuthService(
+        firebaseAuthService: FirebaseAuthServiceImpl,
+    ): FirebaseAuthService
 
     @Binds
-    abstract fun bindFirebaseProfileService(firebaseProfileService: FirebaseProfileServiceImpl): FirebaseProfileService
+    abstract fun bindFirebaseProfileService(
+        firebaseProfileService: FirebaseProfileServiceImpl,
+    ): FirebaseProfileService
 }

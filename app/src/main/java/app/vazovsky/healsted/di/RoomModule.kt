@@ -9,12 +9,15 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+/** Модуль для Room */
 @Module
 @InstallIn(SingletonComponent::class)
 class RoomModule {
     @Singleton
     @Provides
-    fun provideRoomDatabases(application: Application): AppDatabase {
+    fun provideRoomDatabases(
+        application: Application,
+    ): AppDatabase {
         return Room.databaseBuilder(
             application,
             AppDatabase::class.java,

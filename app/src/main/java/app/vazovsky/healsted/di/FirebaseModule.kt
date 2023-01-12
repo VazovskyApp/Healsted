@@ -12,6 +12,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+/** Модуль для Firebase */
 @Module
 @InstallIn(SingletonComponent::class)
 object FirebaseModule {
@@ -21,11 +22,11 @@ object FirebaseModule {
 
     @Provides
     @Singleton
-    fun provideGso(@ApplicationContext context: Context) = GoogleSignInOptions
-        .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+    fun provideGso(
+        @ApplicationContext context: Context,
+    ) = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestIdToken(context.getString(R.string.default_web_client_id))
-        .requestEmail()
-        .build()
+        .requestEmail().build()
 
 //    @Provides
 //    @Singleton

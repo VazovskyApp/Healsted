@@ -29,11 +29,13 @@ object RemoteModule {
     @Singleton
     @Provides
     @Named("notificationRemoteService")
-    fun provideRemoteService(@Named("notificationRetrofitService") retrofit: Retrofit): RemoteService {
-        return retrofit.create(RemoteService::class.java)
-    }
+    fun provideRemoteService(
+        @Named("notificationRetrofitService") retrofit: Retrofit,
+    ): RemoteService = retrofit.create(RemoteService::class.java)
 
     @Singleton
     @Provides
-    fun provideApiHelper(remoteHelperImpl: RemoteHelperImpl): RemoteHelper = remoteHelperImpl
+    fun provideApiHelper(
+        remoteHelper: RemoteHelperImpl,
+    ): RemoteHelper = remoteHelper
 }
