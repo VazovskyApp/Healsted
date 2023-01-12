@@ -21,6 +21,7 @@ import app.vazovsky.healsted.extensions.showErrorSnackbar
 import app.vazovsky.healsted.extensions.toOffsetDateTime
 import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.base.BaseFragment
+import app.vazovsky.healsted.presentation.pilleditor.adapter.PillTypesAdapter
 import app.vazovsky.healsted.presentation.pills.REQUEST_KEY_UPDATE_PILLS
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
@@ -42,11 +43,21 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     private val pill by lazy { args.pill }
 
     @Inject lateinit var dateFormatter: DateFormatter
+    @Inject lateinit var pillTypesAdapter: PillTypesAdapter
 
-    override fun callOperations() = Unit
+    override fun callOperations() {
+        viewModel.getPillTypes()
+    }
 
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
+        pillTypesLiveData.observe { result ->
+            result.doOnSuccess { types ->
+                pillTypesAdapter.submitList(types)
+                pill?.type?.let { pillTypesAdapter.selectItem(it) }
+            }
+            result.doOnFailure { Timber.d(it.message) }
+        }
         updatePillLiveEvent.observe { result ->
             result.doOnSuccess { setUpdatePillTask(it.task, it.pill) }
             result.doOnFailure { Timber.d(it.message) }
@@ -69,6 +80,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         root.fitKeyboardInsetsWithPadding()
 
         setupToolbar()
+        setupRecyclerView()
         setupDataIfPillEsNotNull()
 
         setDatesTakenType()
@@ -82,6 +94,16 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
 
     override fun applyBottomNavigationViewPadding(view: View, bottomNavigationViewHeight: Int) = with(binding) {
         linearLayoutParametres.updatePadding(bottom = bottomNavigationViewHeight)
+    }
+
+    private fun setupRecyclerView() = with(binding) {
+        recyclerViewPillType.adapter = pillTypesAdapter.apply {
+            onItemClick = { item ->
+                Timber.d("CLICK")
+                this.selectItem(item.pillType)
+                recyclerViewPillType.invalidate()
+            }
+        }
     }
 
     private fun setDeleteClick() = with(binding.toolbar) {
@@ -109,6 +131,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                         pill?.copy(
                             name = editTextName.text.toString(),
                             amount = editTextDosage.text.toString().toFloatOrNull().orDefault(),
+                            type = pillTypesAdapter.getSelectedItemType(),
                             times = listOf(dateFormatter.parseTimeFromString(editTextTime.text.toString())),
                             startDate = dateFormatter.parseDateFromString(editTextStartDate.text.toString()),
                             datesTaken = spinnerDatesTakenType.selectedItem as DatesTakenType,
@@ -121,6 +144,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                     } ?: Pill(
                         name = editTextName.text.toString(),
                         amount = editTextDosage.text.toString().toFloatOrNull().orDefault(),
+                        type = pillTypesAdapter.getSelectedItemType(),
                         times = listOf(dateFormatter.parseTimeFromString(editTextTime.text.toString())),
                         startDate = dateFormatter.parseDateFromString(editTextStartDate.text.toString()),
                         datesTaken = spinnerDatesTakenType.selectedItem as DatesTakenType,

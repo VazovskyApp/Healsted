@@ -25,7 +25,7 @@ class LogInViewModel @Inject constructor(
     private val getAccountUseCase: GetAccountUseCase,
     private val getAllPillsUseCase: GetAllPillsUseCase,
     private val parseSnapshotToAllPillsUseCase: ParseSnapshotToAllPillsUseCase,
-    private val saveRoomPillsUseCase: SaveRoomPillsUseCase, singleLiveEvent: SingleLiveEvent<LoadableResult<List<Pill>>>,
+    private val saveRoomPillsUseCase: SaveRoomPillsUseCase,
 ) : BaseViewModel() {
 
     /** Получение результата авторизации */

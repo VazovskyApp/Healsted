@@ -16,8 +16,8 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            app:menu="@menu/pill_editor"
             android:layout_height="?actionBarSize"
+            app:menu="@menu/pill_editor"
             app:navigationIcon="@drawable/ic_back"
             app:titleCentered="true"
             tools:title="Добавить лекарство" />
@@ -57,15 +57,23 @@
                     android:inputType="text" />
             </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
 
-            <!-- Список иконок для типа -->
-            <app.vazovsky.healsted.presentation.view.EmptyRecyclerView
-                android:id="@+id/recyclerViewPillType"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/textInputName" />
+                android:layout_marginHorizontal="@dimen/margin_16"
+                app:cardBackgroundColor="@color/pillsCardBlue"
+                app:cardCornerRadius="20dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewPillType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_shape_gradient"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/textInputName"
+                    tools:listitem="@layout/item_pill_type" />
+            </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
                 android:id="@+id/linearLayoutParametres"
@@ -89,6 +97,7 @@
                         android:id="@+id/linearLayoutAttributes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/bg_shape_gradient"
                         android:orientation="vertical">
 
                         <TextView
@@ -158,6 +167,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/bg_shape_gradient"
                         android:orientation="vertical">
 
                         <TextView
@@ -215,6 +225,7 @@
                         android:id="@+id/linearLayoutStartDateNotification"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/bg_shape_gradient"
                         android:orientation="vertical">
 
                         <TextView
@@ -272,6 +283,7 @@
                         android:id="@+id/linearLayoutEndDateNotification"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/bg_shape_gradient"
                         android:orientation="vertical">
 
                         <TextView
@@ -320,6 +332,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/bg_shape_gradient"
                         android:orientation="vertical">
 
                         <TextView
@@ -355,7 +368,9 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_20"
                     android:gravity="center_horizontal|bottom"
-                    android:text="@string/pill_editor_confirm" />
+                    android:padding="16dp"
+                    android:text="@string/pill_editor_confirm"
+                    android:textAppearance="@style/Font.Body_2.Bold" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
