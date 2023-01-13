@@ -20,6 +20,7 @@ import app.vazovsky.healsted.extensions.checkInputs
 import app.vazovsky.healsted.extensions.fitKeyboardInsetsWithPadding
 import app.vazovsky.healsted.extensions.orDefault
 import app.vazovsky.healsted.extensions.showErrorSnackbar
+import app.vazovsky.healsted.extensions.toTodayString
 import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import app.vazovsky.healsted.presentation.pilleditor.pilltypes.PillTypesAdapter
@@ -28,6 +29,7 @@ import app.vazovsky.healsted.presentation.pills.REQUEST_KEY_UPDATE_PILLS
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
 import java.time.LocalTime
 import javax.inject.Inject
 import timber.log.Timber
@@ -192,8 +194,12 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         editTextName.setText(pill?.name.orDefault())
         editTextDosage.setText(pill?.amount.orDefault(1F).toString())
         timesAdapter.submitList(pill?.times?.map { it.key to it.value } ?: listOf(LocalTime.now() to false))
-        editTextStartDate.setText(pill?.startDate?.let { dateFormatter.formatStringFromLocalDate(it) }.orDefault())
-        editTextEndDate.setText(pill?.endDate?.let { dateFormatter.formatStringFromLocalDate(it) }.orDefault())
+        editTextStartDate.setText(pill?.startDate?.let {
+            dateFormatter.formatStringFromLocalDate(it)
+        } ?: LocalDate.now().toTodayString())
+        editTextEndDate.setText(pill?.endDate?.let {
+            dateFormatter.formatStringFromLocalDate(it)
+        } ?: LocalDate.now().toTodayString())
         editTextComment.setText(pill?.comment.orDefault())
     }
 
