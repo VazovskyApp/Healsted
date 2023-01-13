@@ -31,7 +31,7 @@
             app:backgroundTint="?colorSurface"
             app:elevation="@dimen/bottom_navigation_view_elevation"
             app:labelVisibilityMode="unlabeled"
-            app:menu="@menu/bottom_navigation" />
+            app:menu="@menu/bottom_navigation_menu" />
 
         <!-- TODO поправить баг с тем, что изначально кнопка находится выше -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.Mood
+import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.databinding.FragmentDashboardBinding
 import app.vazovsky.healsted.extensions.addLinearSpaceItemDecoration
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
@@ -81,6 +82,10 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
             result.doOnSuccess { setUpdateMoodTask(it) }
             result.doOnFailure { Timber.d(it.message) }
         }
+        updatePillLiveEvent.observe { result ->
+            result.doOnSuccess { setUpdatePillTask(it.task, it.pill) }
+            result.doOnFailure { Timber.d(it.message) }
+        }
     }
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
@@ -127,7 +132,8 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     /** Настройка RecyclerView */
     private fun setupRecyclerView() = with(binding.recyclerViewTodayPills) {
         adapter = todayPillsAdapter.apply {
-            onItemClick = { viewModel.openEditPill(it) }
+            onEditItemClick = { pill -> viewModel.openEditPill(pill) }
+            onDoneItemClick = { pill, time -> viewModel.changeStatusTimePill(pill, time) }
         }
         emptyView = binding.emptyViewTodayPills
         addLinearSpaceItemDecoration(R.dimen.padding_8)
@@ -150,6 +156,14 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     /** Привязка настроения */
     private fun bindMood(mood: Mood) = with(binding) {
         ratingBarMood.setCurrentRateStatus(mood.value)
+    }
+
+    private fun setUpdatePillTask(task: Task<Void>, pill: Pill) = with(task) {
+        addOnSuccessListener {
+            Timber.d("Лекарство обновлено: $pill")
+            viewModel.getTodayPillsSnapshot(viewModel.selectedDate)
+        }
+        addOnFailureListener { Timber.d(it.message) }
     }
 
     private fun setUpdateMoodTask(task: Task<Void>) = with(task) {

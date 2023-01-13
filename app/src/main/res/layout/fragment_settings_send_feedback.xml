@@ -14,7 +14,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            app:menu="@menu/settings_send_feedback_toolbar"
+            app:menu="@menu/settings_send_feedback_menu"
             app:navigationIcon="@drawable/ic_back"
             app:title="@string/settings_send_feedback_title"
             app:titleCentered="true"

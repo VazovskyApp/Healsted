@@ -12,15 +12,18 @@ import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.mood.GetTodayMoodUseCase
 import app.vazovsky.healsted.domain.mood.ParseSnapshotToMoodUseCase
 import app.vazovsky.healsted.domain.mood.UpdateMoodUseCase
+import app.vazovsky.healsted.domain.pills.ChangeTimesPillUseCase
 import app.vazovsky.healsted.domain.pills.GetTodayPillsUseCase
 import app.vazovsky.healsted.domain.pills.ParseSnapshotToTodayPillsUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import app.vazovsky.healsted.presentation.base.SingleLiveEvent
+import app.vazovsky.healsted.presentation.pilleditor.UpdateResult
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.time.LocalDate
+import java.time.LocalTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,6 +36,7 @@ class DashboardViewModel @Inject constructor(
     private val getTodayMoodUseCase: GetTodayMoodUseCase,
     private val parseSnapshotToMoodUseCase: ParseSnapshotToMoodUseCase,
     private val updateMoodUseCase: UpdateMoodUseCase,
+    private val changeTimesPillUseCase: ChangeTimesPillUseCase,
 ) : BaseViewModel() {
 
     var selectedDate: LocalDate = LocalDate.now()
@@ -60,6 +64,10 @@ class DashboardViewModel @Inject constructor(
     /** Обновление настроения */
     private val _updateMoodLiveEvent = SingleLiveEvent<LoadableResult<Task<Void>>>()
     val updateMoodLiveEvent: LiveData<LoadableResult<Task<Void>>> = _updateMoodLiveEvent
+
+    /** Обновление лекарств */
+    private val _updatePillLiveEvent = SingleLiveEvent<LoadableResult<UpdateResult>>()
+    val updatePillLiveEvent: LiveData<LoadableResult<UpdateResult>> = _updatePillLiveEvent
 
     /** Настроение на сегодня */
     private val _todayMoodLiveData = MutableLiveData<LoadableResult<Mood>>()
@@ -113,13 +121,15 @@ class DashboardViewModel @Inject constructor(
         _updateMoodLiveEvent.launchLoadData(updateMoodUseCase.executeFlow(UpdateMoodUseCase.Params(mood)))
     }
 
-    /** Открыть добавление лекарства TODO не факт, что это нужно на данном экране */
-    fun openAddPill() {
-        navigate(destinations.addPill())
-    }
-
     /** Открыть редактирование лекарства */
     fun openEditPill(pill: Pill) {
         navigate(destinations.editPill(pill))
+    }
+
+    /** Изменение статуса времени  */
+    fun changeStatusTimePill(pill: Pill, time: LocalTime) {
+        _updatePillLiveEvent.launchLoadData(
+            changeTimesPillUseCase.executeFlow(ChangeTimesPillUseCase.Params(pill, time))
+        )
     }
 }

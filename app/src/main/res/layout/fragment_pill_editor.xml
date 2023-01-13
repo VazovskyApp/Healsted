@@ -17,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            app:menu="@menu/pill_editor"
+            app:menu="@menu/pill_editor_menu"
             app:navigationIcon="@drawable/ic_back"
             app:titleCentered="true"
             tools:title="Добавить лекарство" />

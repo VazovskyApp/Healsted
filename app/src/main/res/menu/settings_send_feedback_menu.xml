@@ -5,6 +5,6 @@
         android:id="@+id/menuSend"
         android:icon="@drawable/ic_send"
         android:enabled="false"
-        android:title="@string/settings_send_feedback_menu_send"
+        android:title="@string/menu_send"
         app:showAsAction="always" />
 </menu>

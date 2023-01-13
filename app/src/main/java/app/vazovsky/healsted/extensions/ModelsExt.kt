@@ -1,5 +1,6 @@
 package app.vazovsky.healsted.extensions
 
+import app.vazovsky.healsted.R
 import app.vazovsky.healsted.data.firebase.model.AccountDocument
 import app.vazovsky.healsted.data.firebase.model.MonitoringAttributeDocument
 import app.vazovsky.healsted.data.firebase.model.MoodDocument
@@ -9,6 +10,7 @@ import app.vazovsky.healsted.data.model.LoyaltyProgress
 import app.vazovsky.healsted.data.model.MonitoringAttribute
 import app.vazovsky.healsted.data.model.Mood
 import app.vazovsky.healsted.data.model.Pill
+import app.vazovsky.healsted.data.model.PillType
 
 fun Account?.orDefault() = this ?: Account()
 fun Account?.orError() = this ?: throw Exception()
@@ -36,3 +38,14 @@ fun MonitoringAttributeDocument?.orError() = this ?: throw Exception()
 
 fun MoodDocument?.orDefault() = this ?: MoodDocument()
 fun MoodDocument?.orError() = this ?: throw Exception()
+
+fun PillType.toIcon() = when (this) {
+    PillType.TABLETS -> R.drawable.ic_pill_tablets
+    PillType.CAPSULE -> R.drawable.ic_pill_capsule
+    PillType.INJECTION -> R.drawable.ic_pill_injection
+    PillType.PROCEDURES -> R.drawable.ic_pill_procedures
+    PillType.DROPS -> R.drawable.ic_pill_drops
+    PillType.LIQUID -> R.drawable.ic_pill_liquid
+    PillType.CREAM -> R.drawable.ic_pill_cream
+    PillType.SPRAY -> R.drawable.ic_pill_spray
+}
