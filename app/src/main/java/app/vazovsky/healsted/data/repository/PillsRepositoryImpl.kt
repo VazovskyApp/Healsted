@@ -35,35 +35,35 @@ class PillsRepositoryImpl @Inject constructor() : PillsRepository {
     private val listOfPillTypes = listOf(
         PillTypeItem(
             PillType.TABLETS,
-            R.drawable.ic_capsule,
+            R.drawable.ic_pill_tablets,
         ),
         PillTypeItem(
             PillType.CAPSULE,
-            R.drawable.ic_capsule,
+            R.drawable.ic_pill_capsule,
         ),
         PillTypeItem(
             PillType.INJECTION,
-            R.drawable.ic_capsule,
+            R.drawable.ic_pill_injection,
         ),
         PillTypeItem(
             PillType.PROCEDURES,
-            R.drawable.ic_capsule,
+            R.drawable.ic_pill_procedures,
         ),
         PillTypeItem(
             PillType.DROPS,
-            R.drawable.ic_capsule,
+            R.drawable.ic_pill_drops,
         ),
         PillTypeItem(
             PillType.LIQUID,
-            R.drawable.ic_capsule,
+            R.drawable.ic_pill_liquid,
         ),
         PillTypeItem(
             PillType.CREAM,
-            R.drawable.ic_capsule,
+            R.drawable.ic_pill_cream,
         ),
         PillTypeItem(
             PillType.SPRAY,
-            R.drawable.ic_capsule,
+            R.drawable.ic_pill_spray,
         ),
     )
 
