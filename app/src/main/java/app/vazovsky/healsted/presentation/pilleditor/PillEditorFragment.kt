@@ -58,6 +58,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
         pillTypesLiveData.observe { result ->
+            binding.stateViewFlipper.setStateFromResult(result)
             result.doOnSuccess { types -> bindTypes(types) }
             result.doOnFailure { Timber.d(it.message) }
         }
@@ -81,6 +82,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitKeyboardInsetsWithPadding()
+        stateViewFlipper.setRetryMethod { viewModel.getPillTypes() }
 
         setupToolbar()
         setupPillTypeRecyclerView()

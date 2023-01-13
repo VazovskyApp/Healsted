@@ -34,6 +34,8 @@
     <color name="pillsCardRed">#E65A81</color>
     <color name="pillsCardViolet">#A176EB</color>
     <color name="pillsCardGreen">#65D9B9</color>
+    <color name="pillsCardTransparent5A">#5AFFFFFF</color>
     <color name="pillsCardTransparent50">#50FFFFFF</color>
     <color name="pillsCardTransparent30">#30FFFFFF</color>
+    <color name="pillsCardTransparent1E">#1EFFFFFF</color>
 </resources>

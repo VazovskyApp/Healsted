@@ -23,344 +23,351 @@
             tools:title="Добавить лекарство" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
+    <app.vazovsky.healsted.presentation.view.StateViewFlipper
+        android:id="@+id/stateViewFlipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
-            android:id="@+id/linearLayoutContent"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
-                android:id="@+id/textInputName"
-                style="@style/TextInputLayoutTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_16"
-                android:layout_marginTop="16dp"
-                app:emptyCheck="true"
-                app:errorEmpty="@string/empty_field_error"
-                app:errorMalformed="@string/malformed_field_error"
-                app:layout_constraintTop_toTopOf="parent"
-                app:validationPattern="@string/text_validation_pattern">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/pill_editor_name_hint"
-                    android:imeOptions="actionNext"
-                    android:inputType="text" />
-            </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_16"
-                app:cardBackgroundColor="@color/pillsCardBlue"
-                app:cardCornerRadius="20dp">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewPillType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_shape_gradient"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@id/textInputName"
-                    tools:listitem="@layout/item_pill_type" />
-            </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
-                android:id="@+id/linearLayoutParametres"
+                android:id="@+id/linearLayoutContent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/bg_round_sheet"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardViewAttributes"
+                <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
+                    android:id="@+id/textInputName"
+                    style="@style/TextInputLayoutTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_20"
-                    android:layout_marginTop="20dp"
-                    app:cardBackgroundColor="@color/frenchSkyBlue"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="10dp">
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="16dp"
+                    app:emptyCheck="true"
+                    app:errorEmpty="@string/empty_field_error"
+                    app:errorMalformed="@string/malformed_field_error"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:validationPattern="@string/text_validation_pattern">
 
-                    <LinearLayout
-                        android:id="@+id/linearLayoutAttributes"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/pill_editor_name_hint"
+                        android:imeOptions="actionNext"
+                        android:inputType="text" />
+                </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    app:cardBackgroundColor="@color/pillsCardBlue"
+                    app:cardCornerRadius="20dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewPillType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_shape_gradient"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_pill_type" />
+                </com.google.android.material.card.MaterialCardView>
 
-                        <TextView
-                            android:id="@+id/textViewAttributes"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
-                            android:layout_marginTop="20dp"
-                            android:text="@string/pill_editor_attributes"
-                            android:textAppearance="@style/Font.Heading_3.Medium" />
+                <LinearLayout
+                    android:id="@+id/linearLayoutParametres"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_round_sheet"
+                    android:orientation="vertical">
 
-                        <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
-                            android:id="@+id/textInputDosage"
-                            style="@style/TextInputLayoutTheme"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/margin_16"
-                            android:layout_marginTop="8dp"
-                            app:emptyCheck="true"
-                            app:errorEmpty="@string/empty_field_error"
-                            app:errorMalformed="@string/malformed_field_error"
-                            app:validationPattern="@string/decimal_validation_pattern">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/editTextDosage"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/pill_editor_dosage_hint"
-                                android:imeOptions="actionNext"
-                                android:inputType="numberDecimal" />
-                        </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardViewAttributes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_20"
+                        android:layout_marginTop="20dp"
+                        app:cardBackgroundColor="@color/frenchSkyBlue"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="10dp">
 
                         <LinearLayout
-                            android:id="@+id/linearLayoutSpinners"
+                            android:id="@+id/linearLayoutAttributes"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="16dp"
-                            android:layout_marginVertical="16dp"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
+                            android:background="@drawable/bg_shape_gradient"
+                            android:orientation="vertical">
 
-                            <Spinner
-                                android:id="@+id/spinnerDatesTakenType"
-                                android:layout_width="wrap_content"
+                            <TextView
+                                android:id="@+id/textViewAttributes"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1" />
+                                android:layout_marginHorizontal="20dp"
+                                android:layout_marginTop="20dp"
+                                android:text="@string/pill_editor_attributes"
+                                android:textAppearance="@style/Font.Heading_3.Medium" />
 
-                            <Spinner
-                                android:id="@+id/spinnerTakePillType"
-                                android:layout_width="wrap_content"
+                            <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
+                                android:id="@+id/textInputDosage"
+                                style="@style/TextInputLayoutTheme"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1" />
+                                android:layout_marginHorizontal="@dimen/margin_16"
+                                android:layout_marginTop="8dp"
+                                app:emptyCheck="true"
+                                app:errorEmpty="@string/empty_field_error"
+                                app:errorMalformed="@string/malformed_field_error"
+                                app:validationPattern="@string/decimal_validation_pattern">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTextDosage"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/pill_editor_dosage_hint"
+                                    android:imeOptions="actionNext"
+                                    android:inputType="numberDecimal" />
+                            </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+
+                            <LinearLayout
+                                android:id="@+id/linearLayoutSpinners"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="16dp"
+                                android:layout_marginVertical="16dp"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <Spinner
+                                    android:id="@+id/spinnerDatesTakenType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1" />
+
+                                <Spinner
+                                    android:id="@+id/spinnerTakePillType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1" />
+                            </LinearLayout>
                         </LinearLayout>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                    </com.google.android.material.card.MaterialCardView>
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardViewTimes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_20"
-                    android:layout_marginTop="20dp"
-                    app:cardBackgroundColor="@color/frenchSkyBlue"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="10dp">
-
-                    <LinearLayout
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardViewTimes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_shape_gradient"
-                        android:orientation="vertical">
+                        android:layout_marginHorizontal="@dimen/margin_20"
+                        android:layout_marginTop="20dp"
+                        app:cardBackgroundColor="@color/frenchSkyBlue"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="10dp">
 
-                        <TextView
-                            android:id="@+id/textViewTimeNotification"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/margin_16"
-                            android:layout_marginTop="16dp"
-                            android:text="@string/pill_editor_time_notification"
-                            android:textAppearance="@style/Font.Heading_3.Medium" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerViewTimes"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:orientation="vertical"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            tools:itemCount="1"
-                            tools:listitem="@layout/item_time" />
+                            android:background="@drawable/bg_shape_gradient"
+                            android:orientation="vertical">
 
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/buttonAddTime"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/margin_16"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="20dp"
-                            android:text="@string/pill_editor_add_time" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                            <TextView
+                                android:id="@+id/textViewTimeNotification"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/margin_16"
+                                android:layout_marginTop="16dp"
+                                android:text="@string/pill_editor_time_notification"
+                                android:textAppearance="@style/Font.Heading_3.Medium" />
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardViewStartDateNotification"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_20"
-                    android:layout_marginTop="20dp"
-                    app:cardBackgroundColor="@color/frenchSkyBlue"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="10dp">
-
-                    <LinearLayout
-                        android:id="@+id/linearLayoutStartDateNotification"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_shape_gradient"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/textViewStartDateNotification"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/margin_16"
-                            android:layout_marginTop="8dp"
-                            android:text="@string/pill_editor_start_date"
-                            android:textAppearance="@style/Font.Heading_3.Medium" />
-
-                        <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
-                            android:id="@+id/textInputStartDate"
-                            style="@style/TextInputLayoutTheme"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/margin_16"
-                            android:layout_marginTop="8dp"
-                            app:emptyCheck="true"
-                            app:errorEmpty="@string/empty_date_error"
-                            app:errorMalformed="@string/malformed_date_error"
-                            app:validationPattern="@string/date_validation_pattern">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/editTextStartDate"
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerViewTimes"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="@string/pill_editor_start_date_hint"
-                                android:imeOptions="actionNext"
-                                android:inputType="date" />
-                        </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+                                android:layout_marginTop="8dp"
+                                android:orientation="vertical"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                tools:itemCount="1"
+                                tools:listitem="@layout/item_time" />
 
-                        <com.google.android.material.switchmaterial.SwitchMaterial
-                            android:id="@+id/switchEndDateEnabled"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:layout_marginEnd="@dimen/margin_16"
-                            android:text="@string/pill_editor_end_date_enabled" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardViewEndDateNotification"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_20"
-                    android:layout_marginTop="20dp"
-                    android:visibility="gone"
-                    app:cardBackgroundColor="@color/frenchSkyBlue"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="10dp">
-
-                    <LinearLayout
-                        android:id="@+id/linearLayoutEndDateNotification"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_shape_gradient"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/textViewEndDateNotification"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/margin_16"
-                            android:layout_marginTop="8dp"
-                            android:text="@string/pill_editor_end_date"
-                            android:textAppearance="@style/Font.Heading_3.Medium" />
-
-                        <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
-                            android:id="@+id/textInputEndDate"
-                            style="@style/TextInputLayoutTheme"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/margin_16"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="16dp"
-                            app:emptyCheck="true"
-                            app:errorEmpty="@string/empty_date_error"
-                            app:errorMalformed="@string/malformed_date_error"
-                            app:validationPattern="@string/date_validation_pattern">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/editTextEndDate"
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/buttonAddTime"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="@string/pill_editor_end_date_hint"
-                                android:imeOptions="actionNext"
-                                android:inputType="date" />
-                        </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                                android:layout_marginHorizontal="@dimen/margin_16"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="20dp"
+                                android:text="@string/pill_editor_add_time" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardViewComment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_20"
-                    android:layout_marginTop="20dp"
-                    app:cardBackgroundColor="@color/frenchSkyBlue"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="10dp">
-
-                    <LinearLayout
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardViewStartDateNotification"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_shape_gradient"
-                        android:orientation="vertical">
+                        android:layout_marginHorizontal="@dimen/margin_20"
+                        android:layout_marginTop="20dp"
+                        app:cardBackgroundColor="@color/frenchSkyBlue"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="10dp">
 
-                        <TextView
-                            android:id="@+id/textViewComment"
+                        <LinearLayout
+                            android:id="@+id/linearLayoutStartDateNotification"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
-                            android:layout_marginTop="20dp"
-                            android:text="@string/pill_editor_other"
-                            android:textAppearance="@style/Font.Heading_3.Medium" />
+                            android:background="@drawable/bg_shape_gradient"
+                            android:orientation="vertical">
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/textInputComment"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="16dp"
-                            app:layout_constraintTop_toBottomOf="@id/cardViewAttributes">
+                            <TextView
+                                android:id="@+id/textViewStartDateNotification"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/margin_16"
+                                android:layout_marginTop="8dp"
+                                android:text="@string/pill_editor_start_date"
+                                android:textAppearance="@style/Font.Heading_3.Medium" />
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/editTextComment"
+                            <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
+                                android:id="@+id/textInputStartDate"
+                                style="@style/TextInputLayoutTheme"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="@string/pill_editor_comment_hint"
-                                android:imeOptions="actionDone"
-                                android:inputType="text" />
-                        </com.google.android.material.textfield.TextInputLayout>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                                android:layout_marginHorizontal="@dimen/margin_16"
+                                android:layout_marginTop="8dp"
+                                app:emptyCheck="true"
+                                app:errorEmpty="@string/empty_date_error"
+                                app:errorMalformed="@string/malformed_date_error"
+                                app:validationPattern="@string/date_validation_pattern">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonConfirm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_20"
-                    android:gravity="center_horizontal|bottom"
-                    android:padding="16dp"
-                    android:text="@string/pill_editor_confirm"
-                    android:textAppearance="@style/Font.Body_2.Bold" />
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTextStartDate"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/pill_editor_start_date_hint"
+                                    android:imeOptions="actionNext"
+                                    android:inputType="date" />
+                            </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/switchEndDateEnabled"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end"
+                                android:layout_marginEnd="@dimen/margin_16"
+                                android:text="@string/pill_editor_end_date_enabled" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardViewEndDateNotification"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_20"
+                        android:layout_marginTop="20dp"
+                        android:visibility="gone"
+                        app:cardBackgroundColor="@color/frenchSkyBlue"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="10dp">
+
+                        <LinearLayout
+                            android:id="@+id/linearLayoutEndDateNotification"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_shape_gradient"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textViewEndDateNotification"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/margin_16"
+                                android:layout_marginTop="8dp"
+                                android:text="@string/pill_editor_end_date"
+                                android:textAppearance="@style/Font.Heading_3.Medium" />
+
+                            <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
+                                android:id="@+id/textInputEndDate"
+                                style="@style/TextInputLayoutTheme"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/margin_16"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="16dp"
+                                app:emptyCheck="true"
+                                app:errorEmpty="@string/empty_date_error"
+                                app:errorMalformed="@string/malformed_date_error"
+                                app:validationPattern="@string/date_validation_pattern">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTextEndDate"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/pill_editor_end_date_hint"
+                                    android:imeOptions="actionNext"
+                                    android:inputType="date" />
+                            </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardViewComment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_20"
+                        android:layout_marginTop="20dp"
+                        app:cardBackgroundColor="@color/frenchSkyBlue"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_shape_gradient"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textViewComment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="20dp"
+                                android:layout_marginTop="20dp"
+                                android:text="@string/pill_editor_other"
+                                android:textAppearance="@style/Font.Heading_3.Medium" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputComment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="16dp"
+                                app:layout_constraintTop_toBottomOf="@id/cardViewAttributes">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTextComment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/pill_editor_comment_hint"
+                                    android:imeOptions="actionDone"
+                                    android:inputType="text" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonConfirm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_20"
+                        android:gravity="center_horizontal|bottom"
+                        android:padding="16dp"
+                        android:text="@string/pill_editor_confirm"
+                        android:textAppearance="@style/Font.Body_2.Bold" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+
+        </androidx.core.widget.NestedScrollView>
+    </app.vazovsky.healsted.presentation.view.StateViewFlipper>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
