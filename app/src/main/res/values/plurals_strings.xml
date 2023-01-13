@@ -44,4 +44,14 @@
         <item quantity="many">%s капель</item>
         <item quantity="other">%s капель</item>
     </plurals>
+
+    <plurals name="spray">
+        <item quantity="zero">%s распылений</item>
+        <item quantity="one">%s распыление</item>
+        <item quantity="two">%s распыления</item>
+        <item quantity="few">%s распыления</item>
+        <item quantity="many">%s распылений</item>
+        <item quantity="other">%s распылений</item>
+    </plurals>
+
 </resources>

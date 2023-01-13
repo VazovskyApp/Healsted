@@ -52,6 +52,10 @@
     <string name="dashboard_empty_pills_title">На сегодня нет лекарств</string>
     <string name="dashboard_empty_pills_comment">Вы можете добавить их во вкладке Лекарства</string>
 
+    <string name="pill_type_cream">мг</string>
+    <string name="pill_type_liquid">мл</string>
+    <string name="pill_type_other">шт</string>
+
     <!-- Pills -->
     <string name="pills_active_tab_title">Активные</string>
     <string name="pills_completed_tab_title">Завершенные</string>
@@ -66,14 +70,13 @@
     <string name="pill_editor_start_date">Дата начала приема</string>
     <string name="pill_editor_add_time">Добавить время</string>
     <string name="pill_editor_comment_hint">Комментарий</string>
-    <string name="pill_editor_dosage_hint">Дозировка</string>
+    <string name="pill_editor_dosage">Дозировка</string>
     <string name="pill_editor_time_hint">Время</string>
     <string name="pill_editor_start_date_hint">Дата начала</string>
     <string name="pill_editor_end_date_hint">Дата конца</string>
     <string name="pill_editor_name_hint">Название</string>
     <string name="pill_editor_confirm">Подтвердить</string>
     <string name="pill_editor_other">Дополнительно</string>
-    <string name="pill_editor_attributes">Атрибуты</string>
 
     <!-- Health -->
     <string name="health_title">Мое здоровье</string>

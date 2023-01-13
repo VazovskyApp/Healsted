@@ -98,6 +98,29 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         setDeleteClick()
     }
 
+    private fun setupDosage() = with(binding) {
+        val type = pillTypesAdapter.getSelectedItemType()
+        textInputDosage.hint = when (type) {
+            PillType.LIQUID -> buildString {
+                append(type.toString())
+                append(", ")
+                append(resources.getString(R.string.pill_type_liquid))
+            }
+
+            PillType.CREAM -> buildString {
+                append(type.toString())
+                append(", ")
+                append(resources.getString(R.string.pill_type_cream))
+            }
+
+            else -> buildString {
+                append(type.toString())
+                append(", ")
+                append(resources.getString(R.string.pill_type_other))
+            }
+        }
+    }
+
     override fun applyBottomNavigationViewPadding(view: View, bottomNavigationViewHeight: Int) = with(binding) {
         linearLayoutParametres.updatePadding(bottom = bottomNavigationViewHeight)
     }
@@ -105,6 +128,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     private fun bindTypes(types: List<PillTypeItem>) = with(pillTypesAdapter) {
         submitList(types)
         selectItem(pill?.type ?: PillType.TABLETS)
+        setupDosage()
     }
 
     private fun setupPillTypeRecyclerView() = with(binding) {
@@ -112,6 +136,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
             onItemClick = { item ->
                 this.selectItem(item.pillType)
                 recyclerViewPillType.invalidate()
+                setupDosage()
             }
         }
     }

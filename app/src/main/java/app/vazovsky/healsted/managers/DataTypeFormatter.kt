@@ -19,7 +19,9 @@ class DataTypeFormatter @Inject constructor(@ApplicationContext val context: Con
                 PillType.INJECTION -> context.resources.getQuantityString(R.plurals.injections, amount, amountDecimal)
                 PillType.PROCEDURES -> context.resources.getQuantityString(R.plurals.procedures, amount, amountDecimal)
                 PillType.DROPS -> context.resources.getQuantityString(R.plurals.drops, amount, amountDecimal)
-                else -> amountDecimal
+                PillType.SPRAY -> context.resources.getQuantityString(R.plurals.spray, amount, amountDecimal)
+                PillType.CREAM -> amountDecimal + " " + context.resources.getString(R.string.pill_type_cream)
+                PillType.LIQUID -> amountDecimal + " " + context.resources.getString(R.string.pill_type_liquid)
             }
         )
     }
