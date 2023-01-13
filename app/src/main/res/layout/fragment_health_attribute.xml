@@ -18,172 +18,178 @@
             tools:title="Вес" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout"
+    <app.vazovsky.healsted.presentation.view.StateViewFlipper
+        android:id="@+id/stateViewFlipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/textViewCurrentValue"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_marginTop="4dp"
-            android:text="@string/health_attribute_current_value"
-            android:textAppearance="@style/Font.Body_1"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textViewNewValue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_marginTop="4dp"
-            android:text="@string/health_attribute_add_value"
-            android:textAppearance="@style/Font.Heading_2.Medium"
-            app:layout_constraintTop_toBottomOf="@id/textViewCurrentValue" />
-
-        <LinearLayout
-            android:id="@+id/linearLayoutNewValue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            app:layout_constraintTop_toBottomOf="@id/textViewNewValue">
-
-            <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
-                android:id="@+id/textInputNewValue"
-                style="@style/TextInputLayoutTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_8"
-                android:layout_weight="1"
-                app:emptyCheck="true"
-                app:errorEmpty="Введите значение"
-                app:errorMalformed="@string/malformed_field_error"
-                app:validationPattern="@string/decimal_validation_pattern">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextNewValue"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionDone"
-                    android:inputType="text"
-                    android:textAppearance="@style/Font.Body_1.Bold" />
-            </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
-
-            <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
-                android:id="@+id/textInputNewValueSecond"
-                style="@style/TextInputLayoutTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_8"
-                android:layout_weight="1"
-                app:emptyCheck="true"
-                app:errorEmpty="Введите значение"
-                app:errorMalformed="@string/malformed_field_error"
-                app:validationPattern="@string/decimal_validation_pattern">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextNewValueSecond"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionDone"
-                    android:inputType="text"
-                    android:textAppearance="@style/Font.Body_1.Bold" />
-            </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
-        </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonUpdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_16"
-            android:backgroundTint="@color/pillsCardBlue"
-            android:text="@string/health_update"
-            android:textAllCaps="true"
-            android:textAppearance="@style/Font.Body_1.Medium"
-            app:cornerRadius="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linearLayoutNewValue" />
-
-        <LinearLayout
-            android:id="@+id/linearLayoutEditValue"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bg_round_sheet"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buttonUpdate">
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textViewHistory"
+                android:id="@+id/textViewCurrentValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_20"
-                android:layout_marginTop="16dp"
-                android:text="@string/health_attribute_history"
-                android:textAppearance="@style/Font.Heading_1.Black"
-                android:textColor="?colorOnBackground" />
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="4dp"
+                android:text="@string/health_attribute_current_value"
+                android:textAppearance="@style/Font.Body_1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewNewValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="4dp"
+                android:text="@string/health_attribute_add_value"
+                android:textAppearance="@style/Font.Heading_2.Medium"
+                app:layout_constraintTop_toBottomOf="@id/textViewCurrentValue" />
 
             <LinearLayout
-                android:id="@+id/linearLayoutHistoryTitles"
+                android:id="@+id/linearLayoutNewValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="36dp"
+                android:layout_marginHorizontal="@dimen/margin_16"
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal"
-                android:weightSum="2">
+                android:weightSum="2"
+                app:layout_constraintTop_toBottomOf="@id/textViewNewValue">
 
-                <com.google.android.material.textview.MaterialTextView
+                <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
+                    android:id="@+id/textInputNewValue"
+                    style="@style/TextInputLayoutTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_8"
                     android:layout_weight="1"
-                    android:text="@string/health_attribute_value_title"
-                    android:textAlignment="textStart"
-                    android:textAppearance="@style/Font.Body_1.Bold"
-                    android:textColor="?colorOnBackground" />
+                    app:emptyCheck="true"
+                    app:errorEmpty="Введите значение"
+                    app:errorMalformed="@string/malformed_field_error"
+                    app:validationPattern="@string/decimal_validation_pattern">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/health_attribute_date_title"
-                    android:textAlignment="textEnd"
-                    android:textAppearance="@style/Font.Body_1.Bold"
-                    android:textColor="?colorOnBackground" />
-            </LinearLayout>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewHistory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_20"
-                android:layout_marginTop="8dp"
-                app:cardCornerRadius="20dp">
-
-                <FrameLayout
-                    android:id="@+id/frameLayoutHistory"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <app.vazovsky.healsted.presentation.view.EmptyRecyclerView
-                        android:id="@+id/recyclerViewHistory"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextNewValue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_monitoring_history" />
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:textAppearance="@style/Font.Body_1.Bold" />
+                </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
 
-                    <app.vazovsky.healsted.presentation.view.EmptyView
-                        android:id="@+id/emptyViewHistory"
+                <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
+                    android:id="@+id/textInputNewValueSecond"
+                    style="@style/TextInputLayoutTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8"
+                    android:layout_weight="1"
+                    app:emptyCheck="true"
+                    app:errorEmpty="Введите значение"
+                    app:errorMalformed="@string/malformed_field_error"
+                    app:validationPattern="@string/decimal_validation_pattern">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextNewValueSecond"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </FrameLayout>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:textAppearance="@style/Font.Body_1.Bold" />
+                </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:backgroundTint="@color/pillsCardBlue"
+                android:text="@string/health_update"
+                android:textAllCaps="true"
+                android:textAppearance="@style/Font.Body_1.Medium"
+                app:cornerRadius="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linearLayoutNewValue" />
+
+            <LinearLayout
+                android:id="@+id/linearLayoutEditValue"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_round_sheet"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/buttonUpdate">
+
+                <TextView
+                    android:id="@+id/textViewHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_20"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/health_attribute_history"
+                    android:textAppearance="@style/Font.Heading_1.Black"
+                    android:textColor="?colorOnBackground" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutHistoryTitles"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="36dp"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/health_attribute_value_title"
+                        android:textAlignment="textStart"
+                        android:textAppearance="@style/Font.Body_1.Bold"
+                        android:textColor="?colorOnBackground" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/health_attribute_date_title"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/Font.Body_1.Bold"
+                        android:textColor="?colorOnBackground" />
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_20"
+                    android:layout_marginTop="8dp"
+                    app:cardCornerRadius="20dp">
+
+                    <FrameLayout
+                        android:id="@+id/frameLayoutHistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <app.vazovsky.healsted.presentation.view.EmptyRecyclerView
+                            android:id="@+id/recyclerViewHistory"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/item_monitoring_history" />
+
+                        <app.vazovsky.healsted.presentation.view.EmptyView
+                            android:id="@+id/emptyViewHistory"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </app.vazovsky.healsted.presentation.view.StateViewFlipper>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

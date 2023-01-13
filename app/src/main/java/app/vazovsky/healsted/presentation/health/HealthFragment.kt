@@ -8,7 +8,7 @@ import app.vazovsky.healsted.data.model.MonitoringAttribute
 import app.vazovsky.healsted.databinding.FragmentHealthBinding
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.presentation.base.BaseFragment
-import app.vazovsky.healsted.presentation.pills.REQUEST_KEY_UPDATE_PILLS
+import app.vazovsky.healsted.presentation.view.StateViewFlipper
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.QuerySnapshot
@@ -36,6 +36,7 @@ class HealthFragment : BaseFragment(R.layout.fragment_health) {
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
         weightSnapshotLiveData.observe { result ->
+            binding.viewWeight.stateViewFlipper.changeState(StateViewFlipper.State.LOADING)
             result.doOnSuccess { setWeightSnapshotTask(it) }
             result.doOnFailure { Timber.d(it.message) }
         }
@@ -45,6 +46,7 @@ class HealthFragment : BaseFragment(R.layout.fragment_health) {
             result.doOnFailure { Timber.d(it.message) }
         }
         heightSnapshotLiveData.observe { result ->
+            binding.viewHeight.stateViewFlipper.changeState(StateViewFlipper.State.LOADING)
             result.doOnSuccess { setHeightSnapshotTask(it) }
             result.doOnFailure { Timber.d(it.message) }
         }
@@ -54,6 +56,7 @@ class HealthFragment : BaseFragment(R.layout.fragment_health) {
             result.doOnFailure { Timber.d(it.message) }
         }
         temperatureSnapshotLiveData.observe { result ->
+            binding.viewTemperature.stateViewFlipper.changeState(StateViewFlipper.State.LOADING)
             result.doOnSuccess { setTemperatureSnapshotTask(it) }
             result.doOnFailure { Timber.d(it.message) }
         }
@@ -63,6 +66,7 @@ class HealthFragment : BaseFragment(R.layout.fragment_health) {
             result.doOnFailure { Timber.d(it.message) }
         }
         bloodPressureSnapshotLiveData.observe { result ->
+            binding.viewBloodPressure.stateViewFlipper.changeState(StateViewFlipper.State.LOADING)
             result.doOnSuccess { setBloodPressureSnapshotTask(it) }
             result.doOnFailure { Timber.d(it.message) }
         }

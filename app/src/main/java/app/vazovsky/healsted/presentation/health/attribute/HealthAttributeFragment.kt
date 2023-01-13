@@ -17,6 +17,7 @@ import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import app.vazovsky.healsted.presentation.health.REQUEST_KEY_UPDATE_HEALTH
 import app.vazovsky.healsted.presentation.health.attribute.adapter.HealthAttributeHistoryAdapter
+import app.vazovsky.healsted.presentation.view.StateViewFlipper
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.QuerySnapshot
@@ -47,18 +48,22 @@ class HealthAttributeFragment : BaseFragment(R.layout.fragment_health_attribute)
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
         monitoringSnapshotLiveData.observe { result ->
+            binding.stateViewFlipper.changeState(StateViewFlipper.State.LOADING)
             result.doOnSuccess { setMonitoringSnapshotTask(it) }
             result.doOnFailure { Timber.d(it.message) }
         }
         monitoringLiveData.observe { result ->
+            binding.stateViewFlipper.changeState(StateViewFlipper.State.LOADING)
             result.doOnSuccess { monitoring -> bindMonitoring(monitoring) }
             result.doOnFailure { Timber.d(it.message) }
         }
         historySnapshotLiveData.observe { result ->
+            binding.stateViewFlipper.changeState(StateViewFlipper.State.LOADING)
             result.doOnSuccess { setHistorySnapshotTask(it) }
             result.doOnFailure { Timber.d(it.message) }
         }
         historyLiveData.observe { result ->
+            binding.stateViewFlipper.setStateFromResult(result)
             result.doOnSuccess { history -> bindHistory(history) }
             result.doOnFailure { Timber.d(it.message) }
         }
