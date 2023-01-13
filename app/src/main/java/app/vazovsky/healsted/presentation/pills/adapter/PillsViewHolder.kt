@@ -9,6 +9,7 @@ import app.vazovsky.healsted.databinding.ItemPillBinding
 import app.vazovsky.healsted.extensions.capitalizeFirstChar
 import app.vazovsky.healsted.extensions.getColorIdFromPosition
 import app.vazovsky.healsted.extensions.inflate
+import app.vazovsky.healsted.managers.DataTypeFormatter
 import app.vazovsky.healsted.managers.DateFormatter
 import by.kirich1409.viewbindingdelegate.viewBinding
 import java.util.*
@@ -17,6 +18,7 @@ class PillsViewHolder(
     parent: ViewGroup,
     private val onItemClick: (Pill) -> Unit,
     private val dateFormatter: DateFormatter,
+    private val dataTypeFormatter: DataTypeFormatter,
 ) : RecyclerView.ViewHolder(parent.inflate(R.layout.item_pill)) {
     private val binding by viewBinding(ItemPillBinding::bind)
 
