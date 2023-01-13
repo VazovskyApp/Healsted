@@ -1,4 +1,4 @@
-package app.vazovsky.healsted.presentation.pilleditor.adapter
+package app.vazovsky.healsted.presentation.pilleditor.pilltypes
 
 import android.view.ViewGroup
 import app.vazovsky.healsted.data.model.PillType

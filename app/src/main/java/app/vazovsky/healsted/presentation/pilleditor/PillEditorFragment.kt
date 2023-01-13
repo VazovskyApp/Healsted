@@ -12,6 +12,8 @@ import androidx.navigation.fragment.navArgs
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.data.model.DatesTakenType
 import app.vazovsky.healsted.data.model.Pill
+import app.vazovsky.healsted.data.model.PillType
+import app.vazovsky.healsted.data.model.PillTypeItem
 import app.vazovsky.healsted.data.model.TakePillType
 import app.vazovsky.healsted.databinding.FragmentPillEditorBinding
 import app.vazovsky.healsted.extensions.checkInputs
@@ -19,13 +21,17 @@ import app.vazovsky.healsted.extensions.fitKeyboardInsetsWithPadding
 import app.vazovsky.healsted.extensions.orDefault
 import app.vazovsky.healsted.extensions.showErrorSnackbar
 import app.vazovsky.healsted.extensions.toOffsetDateTime
+import app.vazovsky.healsted.extensions.toStartOfDayTimestamp
 import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.base.BaseFragment
-import app.vazovsky.healsted.presentation.pilleditor.adapter.PillTypesAdapter
+import app.vazovsky.healsted.presentation.pilleditor.pilltypes.PillTypesAdapter
+import app.vazovsky.healsted.presentation.pilleditor.times.TimesAdapter
 import app.vazovsky.healsted.presentation.pills.REQUEST_KEY_UPDATE_PILLS
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
 import javax.inject.Inject
 import timber.log.Timber
 import androidx.constraintlayout.widget.R as ConstraintR
@@ -44,6 +50,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
 
     @Inject lateinit var dateFormatter: DateFormatter
     @Inject lateinit var pillTypesAdapter: PillTypesAdapter
+    @Inject lateinit var timesAdapter: TimesAdapter
 
     override fun callOperations() {
         viewModel.getPillTypes()
@@ -52,10 +59,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
         pillTypesLiveData.observe { result ->
-            result.doOnSuccess { types ->
-                pillTypesAdapter.submitList(types)
-                pill?.type?.let { pillTypesAdapter.selectItem(it) }
-            }
+            result.doOnSuccess { types -> bindTypes(types) }
             result.doOnFailure { Timber.d(it.message) }
         }
         updatePillLiveEvent.observe { result ->
@@ -80,7 +84,8 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         root.fitKeyboardInsetsWithPadding()
 
         setupToolbar()
-        setupRecyclerView()
+        setupPillTypeRecyclerView()
+        setupTimesRecyclerView()
         setupDataIfPillEsNotNull()
 
         setDatesTakenType()
@@ -96,13 +101,31 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         linearLayoutParametres.updatePadding(bottom = bottomNavigationViewHeight)
     }
 
-    private fun setupRecyclerView() = with(binding) {
+    private fun bindTypes(types: List<PillTypeItem>) = with(pillTypesAdapter) {
+        submitList(types)
+        selectItem(pill?.type ?: PillType.TABLETS)
+    }
+
+    private fun setupPillTypeRecyclerView() = with(binding) {
         recyclerViewPillType.adapter = pillTypesAdapter.apply {
             onItemClick = { item ->
-                Timber.d("CLICK")
                 this.selectItem(item.pillType)
                 recyclerViewPillType.invalidate()
             }
+        }
+    }
+
+    private fun setupTimesRecyclerView() = with(binding) {
+        recyclerViewTimes.adapter = timesAdapter.apply {
+            onDeleteClick = { item -> timesAdapter.deleteItem(item) }
+        }
+    }
+
+    /** Настройка времени */
+    private fun setTimeNotification() = with(binding) {
+        buttonAddTime.setOnClickListener {
+            val timestamp = Timestamp.now()
+            timesAdapter.addItem(timestamp)
         }
     }
 
@@ -121,9 +144,8 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         buttonConfirm.setOnClickListener {
             setFragmentResult(REQUEST_KEY_UPDATE_PILLS, bundleOf())
 
-            val listOfInputs = mutableListOf(textInputName, textInputDosage, textInputTime, textInputStartDate)
+            val listOfInputs = mutableListOf(textInputName, textInputDosage, textInputStartDate)
             if (switchEndDateEnabled.isChecked) listOfInputs.add(textInputEndDate)
-
             val validated = listOfInputs.checkInputs()
             if (validated) {
                 try {
@@ -132,7 +154,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                             name = editTextName.text.toString(),
                             amount = editTextDosage.text.toString().toFloatOrNull().orDefault(),
                             type = pillTypesAdapter.getSelectedItemType(),
-                            times = listOf(dateFormatter.parseTimeFromString(editTextTime.text.toString())),
+                            times = timesAdapter.currentList.distinct(),
                             startDate = dateFormatter.parseDateFromString(editTextStartDate.text.toString()),
                             datesTaken = spinnerDatesTakenType.selectedItem as DatesTakenType,
                             takePillType = spinnerTakePillType.selectedItem as TakePillType,
@@ -145,7 +167,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                         name = editTextName.text.toString(),
                         amount = editTextDosage.text.toString().toFloatOrNull().orDefault(),
                         type = pillTypesAdapter.getSelectedItemType(),
-                        times = listOf(dateFormatter.parseTimeFromString(editTextTime.text.toString())),
+                        times = timesAdapter.currentList.distinct(),
                         startDate = dateFormatter.parseDateFromString(editTextStartDate.text.toString()),
                         datesTaken = spinnerDatesTakenType.selectedItem as DatesTakenType,
                         takePillType = spinnerTakePillType.selectedItem as TakePillType,
@@ -172,7 +194,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     private fun setupDataIfPillEsNotNull() = with(binding) {
         editTextName.setText(pill?.name.orDefault())
         editTextDosage.setText(pill?.amount.orDefault(1F).toString())
-        editTextTime.setText(dateFormatter.formatTime(pill?.times?.first().orDefault()))
+        timesAdapter.submitList(pill?.times ?: listOf(LocalDate.now().toStartOfDayTimestamp()))
         editTextStartDate.setText(dateFormatter.formatStandardDateFull(pill?.startDate.orDefault().toOffsetDateTime()))
         editTextEndDate.setText(dateFormatter.formatStandardDateFull(pill?.endDate.orDefault().toOffsetDateTime()))
         editTextComment.setText(pill?.comment.orDefault())
@@ -194,11 +216,6 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
             requireContext(), ConstraintR.layout.support_simple_spinner_dropdown_item, listOfTakePillType
         )
         pill?.let { spinnerTakePillType.setSelection(listOfTakePillType.indexOf(it.takePillType)) }
-    }
-
-    /** Настройка времени */
-    private fun setTimeNotification() = with(binding) {
-        buttonAddTime.setOnClickListener { /** TODO Придумать добавление и enabled кнопки */ }
     }
 
     /** Настройка дат */

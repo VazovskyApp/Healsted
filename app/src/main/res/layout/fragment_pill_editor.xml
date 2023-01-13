@@ -179,26 +179,15 @@
                             android:text="@string/pill_editor_time_notification"
                             android:textAppearance="@style/Font.Heading_3.Medium" />
 
-                        <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
-                            android:id="@+id/textInputTime"
-                            style="@style/TextInputLayoutTheme"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerViewTimes"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/margin_16"
                             android:layout_marginTop="8dp"
-                            app:emptyCheck="true"
-                            app:errorEmpty="@string/empty_time_error"
-                            app:errorMalformed="@string/malformed_time_error"
-                            app:validationPattern="@string/time_validation_pattern">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/editTextTime"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/pill_editor_time_hint"
-                                android:imeOptions="actionNext"
-                                android:inputType="time" />
-                        </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+                            android:orientation="vertical"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:itemCount="1"
+                            tools:listitem="@layout/item_time" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/buttonAddTime"
