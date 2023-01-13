@@ -1,6 +1,6 @@
 package app.vazovsky.healsted.data.firebase.auth
 
-import app.vazovsky.healsted.data.model.Account
+import app.vazovsky.healsted.data.firebase.model.AccountDocument
 import app.vazovsky.healsted.data.model.User
 import app.vazovsky.healsted.extensions.serializeToMap
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -52,14 +52,14 @@ class FirebaseAuthServiceImpl @Inject constructor(
 
     override fun saveAccount(
         uid: String,
-        account: Account,
+        account: AccountDocument,
     ) = firestore.collection(ACCOUNTS_COLLECTION)
         .document(uid)
         .set(account)
 
     override fun updateAccount(
         uid: String,
-        account: Account,
+        account: AccountDocument,
     ) = firestore.collection(ACCOUNTS_COLLECTION)
         .document(uid)
         .update(account.serializeToMap())

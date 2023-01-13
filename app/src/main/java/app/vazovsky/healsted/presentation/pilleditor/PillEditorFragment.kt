@@ -20,8 +20,6 @@ import app.vazovsky.healsted.extensions.checkInputs
 import app.vazovsky.healsted.extensions.fitKeyboardInsetsWithPadding
 import app.vazovsky.healsted.extensions.orDefault
 import app.vazovsky.healsted.extensions.showErrorSnackbar
-import app.vazovsky.healsted.extensions.toOffsetDateTime
-import app.vazovsky.healsted.extensions.toStartOfDayTimestamp
 import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import app.vazovsky.healsted.presentation.pilleditor.pilltypes.PillTypesAdapter
@@ -29,9 +27,8 @@ import app.vazovsky.healsted.presentation.pilleditor.times.TimesAdapter
 import app.vazovsky.healsted.presentation.pills.REQUEST_KEY_UPDATE_PILLS
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
-import com.google.firebase.Timestamp
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.LocalDate
+import java.time.LocalTime
 import javax.inject.Inject
 import timber.log.Timber
 import androidx.constraintlayout.widget.R as ConstraintR
@@ -124,8 +121,8 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     /** Настройка времени */
     private fun setTimeNotification() = with(binding) {
         buttonAddTime.setOnClickListener {
-            val timestamp = Timestamp.now()
-            timesAdapter.addItem(timestamp)
+            val localTime = LocalTime.now()
+            timesAdapter.addItem(localTime to false)
         }
     }
 
@@ -154,12 +151,12 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                             name = editTextName.text.toString(),
                             amount = editTextDosage.text.toString().toFloatOrNull().orDefault(),
                             type = pillTypesAdapter.getSelectedItemType(),
-                            times = timesAdapter.currentList.distinct(),
-                            startDate = dateFormatter.parseDateFromString(editTextStartDate.text.toString()),
+                            times = timesAdapter.currentList.distinct().toMap(),
                             datesTaken = spinnerDatesTakenType.selectedItem as DatesTakenType,
                             takePillType = spinnerTakePillType.selectedItem as TakePillType,
+                            startDate = dateFormatter.parseLocalDateFromString(editTextStartDate.text.toString()),
                             endDate = if (switchEndDateEnabled.isChecked) {
-                                dateFormatter.parseDateFromString(editTextEndDate.text.toString())
+                                dateFormatter.parseLocalDateFromString(editTextEndDate.text.toString())
                             } else null,
                             comment = editTextComment.text.toString(),
                         )
@@ -167,12 +164,12 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                         name = editTextName.text.toString(),
                         amount = editTextDosage.text.toString().toFloatOrNull().orDefault(),
                         type = pillTypesAdapter.getSelectedItemType(),
-                        times = timesAdapter.currentList.distinct(),
-                        startDate = dateFormatter.parseDateFromString(editTextStartDate.text.toString()),
+                        times = timesAdapter.currentList.distinct().toMap(),
                         datesTaken = spinnerDatesTakenType.selectedItem as DatesTakenType,
                         takePillType = spinnerTakePillType.selectedItem as TakePillType,
+                        startDate = dateFormatter.parseLocalDateFromString(editTextStartDate.text.toString()),
                         endDate = if (switchEndDateEnabled.isChecked) {
-                            dateFormatter.parseDateFromString(editTextEndDate.text.toString())
+                            dateFormatter.parseLocalDateFromString(editTextEndDate.text.toString())
                         } else null,
                         comment = editTextComment.text.toString(),
                     )
@@ -194,9 +191,9 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     private fun setupDataIfPillEsNotNull() = with(binding) {
         editTextName.setText(pill?.name.orDefault())
         editTextDosage.setText(pill?.amount.orDefault(1F).toString())
-        timesAdapter.submitList(pill?.times ?: listOf(LocalDate.now().toStartOfDayTimestamp()))
-        editTextStartDate.setText(dateFormatter.formatStandardDateFull(pill?.startDate.orDefault().toOffsetDateTime()))
-        editTextEndDate.setText(dateFormatter.formatStandardDateFull(pill?.endDate.orDefault().toOffsetDateTime()))
+        timesAdapter.submitList(pill?.times?.map { it.key to it.value } ?: listOf(LocalTime.now() to false))
+        editTextStartDate.setText(pill?.startDate?.let { dateFormatter.formatStringFromLocalDate(it) }.orDefault())
+        editTextEndDate.setText(pill?.endDate?.let { dateFormatter.formatStringFromLocalDate(it) }.orDefault())
         editTextComment.setText(pill?.comment.orDefault())
     }
 

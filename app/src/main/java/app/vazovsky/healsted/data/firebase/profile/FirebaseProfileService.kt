@@ -1,11 +1,10 @@
 package app.vazovsky.healsted.data.firebase.profile
 
+import app.vazovsky.healsted.data.firebase.model.MonitoringAttributeDocument
+import app.vazovsky.healsted.data.firebase.model.MoodDocument
+import app.vazovsky.healsted.data.firebase.model.PillDocument
 import app.vazovsky.healsted.data.model.LoyaltyProgress
-import app.vazovsky.healsted.data.model.MonitoringAttribute
-import app.vazovsky.healsted.data.model.Mood
-import app.vazovsky.healsted.data.model.Pill
 import com.google.android.gms.tasks.Task
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 
@@ -21,13 +20,13 @@ interface FirebaseProfileService {
 
     //<editor-fold desc="Pills">
     /** Добавить лекарство в FireStore */
-    fun addProfilePill(uid: String, pill: Pill): Task<Void>
+    fun addProfilePill(uid: String, pill: PillDocument): Task<Void>
 
     /** Обновить лекарство в FireStore */
-    fun updateProfilePill(uid: String, pill: Pill): Task<Void>
+    fun updateProfilePill(uid: String, pill: PillDocument): Task<Void>
 
     /** Удалить лекарство из FireStore */
-    fun deleteProfilePill(uid: String, pill: Pill): Task<Void>
+    fun deleteProfilePill(uid: String, pill: PillDocument): Task<Void>
 
     /** Получить лекарства из FireStore */
     fun fetchProfilePills(uid: String): Task<QuerySnapshot>
@@ -35,13 +34,13 @@ interface FirebaseProfileService {
 
     //<editor-fold desc="Mood">
     /** Добавить настроение в FireStore */
-    fun addProfileMood(uid: String, mood: Mood): Task<Void>
+    fun addProfileMood(uid: String, mood: MoodDocument): Task<Void>
 
     /** Обновить настроение в FireStore */
-    fun updateProfileMood(uid: String, mood: Mood): Task<Void>
+    fun updateProfileMood(uid: String, mood: MoodDocument): Task<Void>
 
     /** Получить сегодняшнее настроение из FireStore */
-    fun fetchProfileTodayMood(uid: String, date: Timestamp): Task<DocumentSnapshot>
+    fun fetchProfileTodayMood(uid: String, date: String): Task<DocumentSnapshot>
 
     /** Получить все настроения из FireStore */
     fun fetchProfileMoods(uid: String): Task<QuerySnapshot>
@@ -49,7 +48,7 @@ interface FirebaseProfileService {
 
     //<editor-fold desc="Health">
     /** Добавить информацию об атрибуте мониторинга здоровья в FireStore */
-    fun addProfileMonitoringAttribute(uid: String, monitoringAttribute: MonitoringAttribute): Task<Void>
+    fun addProfileMonitoringAttribute(uid: String, monitoringAttribute: MonitoringAttributeDocument): Task<Void>
 
     /** Получить информацию об весе из FireStore */
     fun fetchProfileWeight(uid: String): Task<QuerySnapshot>

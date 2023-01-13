@@ -11,7 +11,6 @@ import app.vazovsky.healsted.data.model.Mood
 import app.vazovsky.healsted.databinding.FragmentDashboardBinding
 import app.vazovsky.healsted.extensions.addLinearSpaceItemDecoration
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
-import app.vazovsky.healsted.extensions.toStartOfDayTimestamp
 import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import app.vazovsky.healsted.presentation.dashboard.adapter.TodayPillsAdapter
@@ -20,7 +19,6 @@ import app.vazovsky.healsted.presentation.view.StateViewFlipper
 import app.vazovsky.healsted.presentation.view.timeline.OnDateSelectedListener
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,7 +42,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     override fun callOperations() {
         viewModel.getProfileSnapshot()
-        viewModel.getTodayPillsSnapshot(LocalDate.now().toStartOfDayTimestamp())
+        viewModel.getTodayPillsSnapshot(LocalDate.now())
         viewModel.getTodayMoodSnapshot()
     }
 
@@ -87,7 +85,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitTopInsetsWithPadding()
-        stateViewFlipperMood.setRetryMethod { viewModel.getTodayPillsSnapshot(LocalDate.now().toStartOfDayTimestamp()) }
+        stateViewFlipperMood.setRetryMethod { viewModel.getTodayPillsSnapshot(LocalDate.now()) }
         stateViewFlipper.setRetryMethod { viewModel.getTodayPillsSnapshot(viewModel.selectedDate) }
 
         setFragmentResultListener(REQUEST_KEY_UPDATE_PILLS) { _, _ ->
@@ -118,7 +116,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
                 val selectedDate = LocalDate.of(year, month + 1, day)
                 textViewTitle.text = dateFormatter.getDisplayDifferentDates(LocalDate.now(), selectedDate)
                 textViewDate.text = dateFormatter.formatDateWithDayOfWeek(selectedDate)
-                viewModel.selectedDate = selectedDate.toStartOfDayTimestamp()
+                viewModel.selectedDate = selectedDate
                 viewModel.getTodayPillsSnapshot(viewModel.selectedDate)
             }
 
@@ -169,7 +167,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         addOnFailureListener { Timber.d(it.message) }
     }
 
-    private fun setPillsSnapshotTask(task: Task<QuerySnapshot>, date: Timestamp) = with(task) {
+    private fun setPillsSnapshotTask(task: Task<QuerySnapshot>, date: LocalDate) = with(task) {
         addOnSuccessListener { snapshot -> viewModel.getTodayPills(snapshot, date) }
         addOnFailureListener { Timber.d(it.message) }
     }

@@ -10,7 +10,6 @@ import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.extensions.orDefault
 import app.vazovsky.healsted.extensions.showErrorSnackbar
 import app.vazovsky.healsted.extensions.showInfoSnackbar
-import app.vazovsky.healsted.extensions.toOffsetDateTime
 import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -74,7 +73,7 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
 
     private fun bindProfile(account: Account) = with(binding) {
         editTextNickname.setText(account.nickname)
-        editTextBirthday.setText(dateFormatter.formatStandardDateFull(account.birthday.orDefault().toOffsetDateTime()))
+        editTextBirthday.setText(account.birthday?.let { dateFormatter.formatStringFromLocalDate(it) }.orDefault())
         editTextSurname.setText(account.surname)
         editTextName.setText(account.name)
         editTextPatronymic.setText(account.patronymic)
@@ -86,7 +85,7 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
             val surname = editTextSurname.text.toString()
             val name = editTextName.text.toString()
             val patronymic = editTextPatronymic.text.toString()
-            val birthday = dateFormatter.parseDateFromString(editTextBirthday.text.toString())
+            val birthday = dateFormatter.parseLocalDateFromString(editTextBirthday.text.toString())
 
             val isValidate = listOf(textInputNickname, textInputBirthday).checkInputs()
             if (isValidate) {

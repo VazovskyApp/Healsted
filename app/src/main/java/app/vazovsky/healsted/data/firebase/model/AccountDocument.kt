@@ -1,10 +1,13 @@
-package app.vazovsky.healsted.data.model
+package app.vazovsky.healsted.data.firebase.model
 
+import android.os.Parcelable
+import app.vazovsky.healsted.data.model.User
 import com.google.firebase.firestore.PropertyName
-import java.time.LocalDate
+import kotlinx.parcelize.Parcelize
 
 /** Данные об аккаунте */
-data class Account(
+@Parcelize
+data class AccountDocument(
     /** Владелец аккаунта */
     @PropertyName("accountHolder") val accountHolder: User = User(),
 
@@ -21,8 +24,8 @@ data class Account(
     @PropertyName("patronymic") val patronymic: String = "",
 
     /** Дата рождения */
-    @PropertyName("birthday") val birthday: LocalDate? = null,
+    @PropertyName("birthday") val birthday: String? = null,
 
     /** Аватар */
     @PropertyName("avatar") val avatar: String? = null,
-)
+) : Parcelable

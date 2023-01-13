@@ -6,19 +6,17 @@ import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.Mood
 import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.data.model.base.LoadableResult
+import app.vazovsky.healsted.domain.account.GetAccountUseCase
+import app.vazovsky.healsted.domain.account.ParseSnapshotToAccountUseCase
 import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.mood.GetTodayMoodUseCase
 import app.vazovsky.healsted.domain.mood.ParseSnapshotToMoodUseCase
 import app.vazovsky.healsted.domain.mood.UpdateMoodUseCase
 import app.vazovsky.healsted.domain.pills.GetTodayPillsUseCase
 import app.vazovsky.healsted.domain.pills.ParseSnapshotToTodayPillsUseCase
-import app.vazovsky.healsted.domain.account.GetAccountUseCase
-import app.vazovsky.healsted.domain.account.ParseSnapshotToAccountUseCase
-import app.vazovsky.healsted.extensions.toStartOfDayTimestamp
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import app.vazovsky.healsted.presentation.base.SingleLiveEvent
 import com.google.android.gms.tasks.Task
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,7 +35,7 @@ class DashboardViewModel @Inject constructor(
     private val updateMoodUseCase: UpdateMoodUseCase,
 ) : BaseViewModel() {
 
-    var selectedDate = LocalDate.now().toStartOfDayTimestamp()
+    var selectedDate: LocalDate = LocalDate.now()
 
     /** Данные об аккаунте в виде DocumentSnapshot*/
     private val _profileSnapshotLiveData = MutableLiveData<LoadableResult<Task<DocumentSnapshot>>>()
@@ -78,7 +76,7 @@ class DashboardViewModel @Inject constructor(
     }
 
     /** Получение лекарств на сегодня в виде QuerySnapshot */
-    fun getTodayPillsSnapshot(date: Timestamp) {
+    fun getTodayPillsSnapshot(date: LocalDate) {
         _todayPillsSnapshotLiveData.launchLoadData(
             getTodayPillsUseCase.executeFlow(GetTodayPillsUseCase.Params(date))
         )
@@ -87,7 +85,7 @@ class DashboardViewModel @Inject constructor(
     /** Получение лекарств на сегодня из QuerySnapshot */
     fun getTodayPills(
         snapshot: QuerySnapshot,
-        date: Timestamp,
+        date: LocalDate,
     ) {
         _todayPillsLiveData.launchLoadData(
             parseSnapshotToTodayPillsUseCase.executeFlow(

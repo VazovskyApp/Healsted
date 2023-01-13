@@ -1,6 +1,6 @@
 package app.vazovsky.healsted.data.firebase.auth
 
-import app.vazovsky.healsted.data.model.Account
+import app.vazovsky.healsted.data.firebase.model.AccountDocument
 import app.vazovsky.healsted.data.model.User
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import javax.inject.Inject
@@ -26,9 +26,9 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
     //<editor-fold desc="FireStore">
     override fun saveUser(uid: String, user: User) = firebaseAuthService.saveUser(uid, user)
 
-    override fun saveAccount(uid: String, account: Account) = firebaseAuthService.saveAccount(uid, account)
+    override fun saveAccount(uid: String, account: AccountDocument) = firebaseAuthService.saveAccount(uid, account)
 
-    override fun updateAccount(uid: String, account: Account) = firebaseAuthService.updateAccount(uid, account)
+    override fun updateAccount(uid: String, account: AccountDocument) = firebaseAuthService.updateAccount(uid, account)
 
     override fun deleteAccount(uid: String) = firebaseAuthService.deleteAccount(uid)
 

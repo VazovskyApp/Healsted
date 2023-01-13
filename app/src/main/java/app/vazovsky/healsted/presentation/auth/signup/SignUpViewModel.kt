@@ -12,17 +12,17 @@ import app.vazovsky.healsted.domain.auth.SaveFireStoreUserUseCase
 import app.vazovsky.healsted.domain.auth.SignUpUseCase
 import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.health.AddMonitoringAttributeUseCase
+import app.vazovsky.healsted.domain.loyalty.AddLoyaltyUseCase
 import app.vazovsky.healsted.domain.pills.GetAllPillsUseCase
 import app.vazovsky.healsted.domain.pills.ParseSnapshotToAllPillsUseCase
 import app.vazovsky.healsted.domain.roompills.SaveRoomPillsUseCase
-import app.vazovsky.healsted.domain.loyalty.AddLoyaltyUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import app.vazovsky.healsted.presentation.base.SingleLiveEvent
 import com.google.android.gms.tasks.Task
-import com.google.firebase.Timestamp
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.firestore.QuerySnapshot
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -111,7 +111,7 @@ class SignUpViewModel @Inject constructor(
         name: String = "",
         surname: String = "",
         patronymic: String = "",
-        birthday: Timestamp? = null,
+        birthday: LocalDate? = null,
         avatar: String? = null,
     ) {
         _saveAccountLiveEvent.launchLoadData(

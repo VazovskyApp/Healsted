@@ -1,6 +1,6 @@
 package app.vazovsky.healsted.data.firebase.auth
 
-import app.vazovsky.healsted.data.model.Account
+import app.vazovsky.healsted.data.firebase.model.AccountDocument
 import app.vazovsky.healsted.data.model.User
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
@@ -35,10 +35,10 @@ interface FirebaseAuthRepository {
     fun saveUser(uid: String, user: User): Task<Void>
 
     /** Сохранение аккаунта в FireStore */
-    fun saveAccount(uid: String, account: Account): Task<Void>
+    fun saveAccount(uid: String, account: AccountDocument): Task<Void>
 
     /** Обновление аккаунта в FireStore */
-    fun updateAccount(uid: String, account: Account): Task<Void>
+    fun updateAccount(uid: String, account: AccountDocument): Task<Void>
 
     /** Удаление аккаунта из FireStore */
     fun deleteAccount(uid: String): Task<Void>

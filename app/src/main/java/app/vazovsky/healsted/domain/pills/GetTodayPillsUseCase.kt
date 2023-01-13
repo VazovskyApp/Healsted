@@ -6,8 +6,8 @@ import app.vazovsky.healsted.data.repository.AuthRepository
 import app.vazovsky.healsted.domain.base.UseCaseUnary
 import app.vazovsky.healsted.extensions.orDefault
 import com.google.android.gms.tasks.Task
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.QuerySnapshot
+import java.time.LocalDate
 import javax.inject.Inject
 
 /** Получение лекарств на сегодня в виде QuerySnapshot */
@@ -28,7 +28,7 @@ class GetTodayPillsUseCase @Inject constructor(
 
     data class Params(
         /** Дата, по которой нужно получить лекарства */
-        val date: Timestamp,
+        val date: LocalDate,
     )
 
     data class Result(
@@ -36,6 +36,6 @@ class GetTodayPillsUseCase @Inject constructor(
         val task: Task<QuerySnapshot>,
 
         /** Дата, по которой нужно получить лекарства */
-        val date: Timestamp,
+        val date: LocalDate,
     )
 }

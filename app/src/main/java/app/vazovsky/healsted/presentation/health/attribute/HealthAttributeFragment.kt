@@ -14,7 +14,6 @@ import app.vazovsky.healsted.data.model.MonitoringType
 import app.vazovsky.healsted.databinding.FragmentHealthAttributeBinding
 import app.vazovsky.healsted.extensions.addVerticalDividerItemDecoration
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
-import app.vazovsky.healsted.extensions.toStartOfDayTimestamp
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import app.vazovsky.healsted.presentation.health.REQUEST_KEY_UPDATE_HEALTH
 import app.vazovsky.healsted.presentation.health.attribute.adapter.HealthAttributeHistoryAdapter
@@ -116,7 +115,7 @@ class HealthAttributeFragment : BaseFragment(R.layout.fragment_health_attribute)
                 else -> editTextNewValue.text.toString()
             }
 
-            viewModel.updateMonitoring(MonitoringAttribute(value = newValue, type, LocalDate.now().toStartOfDayTimestamp()))
+            viewModel.updateMonitoring(MonitoringAttribute(value = newValue, type, LocalDate.now()))
         }
     }
 

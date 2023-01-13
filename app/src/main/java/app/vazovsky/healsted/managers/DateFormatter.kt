@@ -3,210 +3,48 @@ package app.vazovsky.healsted.managers
 import android.content.Context
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.extensions.capitalizeFirstChar
-import app.vazovsky.healsted.extensions.toLocalDateTime
-import app.vazovsky.healsted.extensions.toMillis
-import app.vazovsky.healsted.extensions.toOffsetDateTime
-import app.vazovsky.healsted.extensions.toStartOfDayTimestamp
-import app.vazovsky.healsted.extensions.toTimestamp
-import com.google.firebase.Timestamp
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.OffsetDateTime
-import java.time.OffsetTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.*
 import javax.inject.Inject
 
-/** Пример: "07.06.21" */
-private const val STANDARD_DATE_TEMPLATE = "dd.MM.yy"
-
-/** Пример: "07.06.2021" */
-private const val STANDARD_DATE_FULL_TEMPLATE = "dd.MM.yyyy"
-
-/** Пример: "2021.06.07" */
-private const val REVERSED_DATE_FULL_TEMPLATE = "yyyy-MM-dd"
-
-/** Пример: "1" */
-private const val DAY_TEMPLATE = "d"
-
-/** Пример: "апрель" */
-private const val MONTH_TEMPLATE = "LLLL"
-
-/** Пример: "апр." */
-private const val MONTH_SHORT_TEMPLATE = "LLL"
-
-/** Пример: "март 2022" */
-private const val MONTH_YEAR_TEMPLATE = "LLLL yyyy"
-
 /** Пример: "20:23" */
 private const val TIME_TEMPLATE = "HH:mm"
 
+private const val DATE_TEMPLATE = "dd.MM.yyyy"
+
 class DateFormatter @Inject constructor(@ApplicationContext val context: Context) {
 
-    val defaultLocale = Locale.getDefault()
+    private val defaultLocale: Locale = Locale.getDefault()
 
-    private val standardDateFormat = DateTimeFormatter.ofPattern(STANDARD_DATE_TEMPLATE, defaultLocale)
-    private val standardDateFullFormat = DateTimeFormatter.ofPattern(STANDARD_DATE_FULL_TEMPLATE, defaultLocale)
-    private val reversedDateFullFormat = DateTimeFormatter.ofPattern(REVERSED_DATE_FULL_TEMPLATE, defaultLocale)
-    private val dayFormat = DateTimeFormatter.ofPattern(DAY_TEMPLATE, defaultLocale)
     private val timeFormat = DateTimeFormatter.ofPattern(TIME_TEMPLATE, defaultLocale)
+    private val dateFormat = DateTimeFormatter.ofPattern(DATE_TEMPLATE, defaultLocale)
 
-    // Форматы L в java 8 показывают месяц цифрой
-    private val monthFormat = SimpleDateFormat(MONTH_TEMPLATE, defaultLocale)
-    private val monthShortFormat = SimpleDateFormat(MONTH_SHORT_TEMPLATE, defaultLocale)
-    private val monthWithYearFormat = SimpleDateFormat(MONTH_YEAR_TEMPLATE, defaultLocale)
     private val timeSimpleFormat = SimpleDateFormat(TIME_TEMPLATE, defaultLocale)
-    private val dateSimpleFormat = SimpleDateFormat(STANDARD_DATE_TEMPLATE, defaultLocale)
+    private val dateSimpleFormat = SimpleDateFormat(DATE_TEMPLATE, defaultLocale)
 
-    /**
-     * Форматирует дату в формат
-     * @see STANDARD_DATE_TEMPLATE
-     *
-     * Пример: "07.06.21"
-     */
-    fun formatStandardDate(date: LocalDate): String {
-        return standardDateFormat.format(date)
+    /** Парсинг локального времени из строки */
+    fun parseLocalTimeFromString(timeString: String): LocalTime {
+        return LocalTime.parse(timeString, timeFormat)
     }
 
-    /**
-     * Форматирует дату в формат
-     * @see STANDARD_DATE_TEMPLATE
-     *
-     * Пример: "07.06.21"
-     */
-    fun formatStandardDate(date: LocalDateTime): String {
-        return standardDateFormat.format(date)
+    /** Парсинг локальной даты из строки */
+    fun parseLocalDateFromString(dateString: String): LocalDate {
+        return LocalDate.parse(dateString, dateFormat)
     }
 
-    /**
-     * Форматирует дату в формат
-     * @see STANDARD_DATE_TEMPLATE
-     *
-     * Пример: "07.06.21"
-     */
-    fun formatStandardDate(date: OffsetDateTime): String {
-        return standardDateFormat.format(date)
+    /** Форматирование строки из локальной даты */
+    fun formatStringFromLocalDate(date: LocalDate): String {
+        return date.format(dateFormat)
     }
 
-    /**
-     * Форматирует дату в формат
-     * @see STANDARD_DATE_FULL_TEMPLATE
-     *
-     * Пример: "07.06.2021"
-     */
-    fun formatStandardDateFull(date: OffsetDateTime): String {
-        return standardDateFullFormat.format(date)
-    }
-
-    /**
-     * Форматирует дату в формат
-     * @see STANDARD_DATE_FULL_TEMPLATE
-     *
-     * Пример: "07.06.2021"
-     */
-    fun formatStandardDateFull(date: LocalDate): String {
-        return standardDateFullFormat.format(date)
-    }
-
-    /**
-     * Форматирует дату в формат
-     * @see STANDARD_DATE_FULL_TEMPLATE
-     *
-     * Пример: "17.03.1999"
-     */
-    fun formatStandardDateFull(date: LocalDateTime): String {
-        return standardDateFullFormat.format(date)
-    }
-
-    /**
-     * Форматирует дату в формат
-     * @see DAY_TEMPLATE
-     *
-     * Пример: "17"
-     */
-    fun formatDay(date: LocalDate): String {
-        return dayFormat.format(date)
-    }
-
-    /**
-     * Форматирует дату в формат
-     * @see DAY_TEMPLATE
-     *
-     * Пример: "17"
-     */
-    fun formatDay(date: LocalDateTime): String {
-        return dayFormat.format(date)
-    }
-
-    /**
-     * Форматирует дату в формат
-     * @see TIME_TEMPLATE
-     *
-     * Пример: "20:23"
-     */
-    fun formatTime(date: LocalDateTime): String {
-        return timeFormat.format(date)
-    }
-
-    /**
-     * Форматирует дату в формат
-     * @see TIME_TEMPLATE
-     *
-     * Пример: "20:23"
-     */
-    fun formatTime(date: OffsetTime): String {
-        return timeFormat.format(date)
-    }
-
-    fun formatTime(time: Timestamp): String {
-        return formatTime(time.toOffsetDateTime().toOffsetTime())
-    }
-
-    fun parseDateFromString(dateString: String): Timestamp {
-        val parseDate: Date? = dateSimpleFormat.parse(dateString)
-        return parseDate?.let { Timestamp(it) } ?: LocalDate.now().toStartOfDayTimestamp()
-    }
-
-    fun parseTimeFromString(timeString: String): Timestamp {
-        val parseDate: Date? = timeSimpleFormat.parse(timeString)
-        return parseDate?.let { Timestamp(it) } ?: LocalDate.now().toStartOfDayTimestamp()
-    }
-
-    /**
-     * Форматирует дату в формат
-     * @see MONTH_TEMPLATE
-     *
-     * Пример: "Март"
-     */
-    fun formatMonth(date: LocalDate): String {
-        return monthFormat.format(date.toMillis()).capitalizeFirstChar(defaultLocale)
-    }
-
-    /**
-     * Форматирует дату в формат без точки, месяц из трех символов
-     * @see MONTH_SHORT_TEMPLATE
-     *
-     * Пример: "Мар"
-     */
-    fun formatShortMonth(date: LocalDate): String {
-        return monthShortFormat
-            .format(date.toMillis())
-            .capitalizeFirstChar(defaultLocale)
-            .replace(".", "")
-            .substring(0, 3)
-    }
-
-    /**
-     * Форматирует дату в формат
-     * @see MONTH_YEAR_TEMPLATE
-     *
-     * Пример: "март 1999"
-     */
-    fun formatMonthWithYear(date: OffsetDateTime): String {
-        return monthWithYearFormat.format(date.toLocalDate().toMillis())
+    /** Форматирование строки из локального времени */
+    fun formatStringFromLocalTime(time: LocalTime): String {
+        return time.format(timeFormat)
     }
 
     /** Форматирует дату в вид без года и с днем недели
@@ -239,18 +77,16 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
      * Форматирует даты в период
      * Пример: "17 марта 1999 - 6 января 2023"
      */
-    fun formatPeriod(firstDay: Timestamp, lastDay: Timestamp?): String {
-        val firstDayOffset = firstDay.toOffsetDateTime()
-        val lastDayOffset = lastDay?.toOffsetDateTime()
+    fun formatPeriod(firstDay: LocalDate, lastDay: LocalDate?): String {
         return when {
-            lastDayOffset == null -> formatEndlessPeriod(firstDayOffset)
-            firstDayOffset.month == lastDayOffset.month -> formatDatesOneMonth(firstDayOffset, lastDayOffset)
-            firstDayOffset.year == lastDayOffset.year -> formatDatesOneYears(firstDayOffset, lastDayOffset)
-            else -> formatDatesOther(firstDayOffset, lastDayOffset)
+            lastDay == null -> formatEndlessPeriod(firstDay)
+            firstDay.month == lastDay.month -> formatDatesOneMonth(firstDay, lastDay)
+            firstDay.year == lastDay.year -> formatDatesOneYears(firstDay, lastDay)
+            else -> formatDatesOther(firstDay, lastDay)
         }
     }
 
-    private fun formatEndlessPeriod(firstDay: OffsetDateTime): String = buildString {
+    private fun formatEndlessPeriod(firstDay: LocalDate): String = buildString {
         append("${firstDay.dayOfMonth} ${firstDay.month.getDisplayName(TextStyle.FULL, defaultLocale)}")
         append(" - ")
         append(context.getString(R.string.mnemocode_endless))
@@ -259,7 +95,7 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
     /**
      * Форматирует дату в период, если у крайних его дат один год
      */
-    private fun formatDatesOneYears(firstDay: OffsetDateTime, lastDay: OffsetDateTime): String = buildString {
+    private fun formatDatesOneYears(firstDay: LocalDate, lastDay: LocalDate): String = buildString {
         append(firstDay.dayOfMonth)
         append(" ")
         append(firstDay.month.getDisplayName(TextStyle.FULL, defaultLocale))
@@ -274,7 +110,7 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
     /**
      * Форматирует дату в период, если у крайних дат его один месяц
      */
-    private fun formatDatesOneMonth(firstDay: OffsetDateTime, lastDay: OffsetDateTime): String = buildString {
+    private fun formatDatesOneMonth(firstDay: LocalDate, lastDay: LocalDate): String = buildString {
         append(firstDay.dayOfMonth)
         append(" - ")
         append(lastDay.dayOfMonth)
@@ -287,7 +123,7 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
     /**
      * Форматирует дату в период, если у крайних дат его разные месяца и года
      */
-    private fun formatDatesOther(firstDay: OffsetDateTime, lastDay: OffsetDateTime): String = buildString {
+    private fun formatDatesOther(firstDay: LocalDate, lastDay: LocalDate): String = buildString {
         append(firstDay.dayOfMonth)
         append(" ")
         append(firstDay.month.getDisplayName(TextStyle.FULL, defaultLocale))
@@ -299,31 +135,5 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
         append(lastDay.month.getDisplayName(TextStyle.FULL, defaultLocale))
         append(" ")
         append(lastDay.year)
-    }
-
-    /**
-     * Форматирует дату в вид
-     * Пример: "17 марта"
-     */
-    fun formatDayMonth(date: OffsetDateTime): String = buildString {
-        append(date.dayOfMonth)
-        append(" ")
-        append(date.month.getDisplayName(TextStyle.FULL, defaultLocale))
-    }
-
-    /**
-     * Форматирует дату в формат
-     * @see REVERSED_DATE_FULL_TEMPLATE
-     */
-    fun formatReversedDateFull(date: LocalDate): String {
-        return reversedDateFullFormat.format(date)
-    }
-
-    fun formatFromLocalDateToTimestamp(date: LocalDateTime): Timestamp {
-        return date.toTimestamp()
-    }
-
-    fun formatTimestampToLocalDate(timestamp: Timestamp): LocalDateTime {
-        return timestamp.toLocalDateTime()
     }
 }

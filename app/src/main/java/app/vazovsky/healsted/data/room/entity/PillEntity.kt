@@ -28,7 +28,7 @@ data class PillEntity(
     @ColumnInfo(name = "takePillType") val takePillType: TakePillType,
 
     /** Список времени уведомлений */
-    @ColumnInfo(name = "times") val times: List<String>,
+    @ColumnInfo(name = "times") val times: Map<String, Boolean>,
 
     /** Регулярность приема лекарств */
     @ColumnInfo(name = "datesTaken") val datesTaken: DatesTakenType,

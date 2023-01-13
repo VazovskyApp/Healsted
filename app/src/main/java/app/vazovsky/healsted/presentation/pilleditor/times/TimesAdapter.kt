@@ -3,14 +3,14 @@ package app.vazovsky.healsted.presentation.pilleditor.times
 import android.view.ViewGroup
 import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.view.BaseAdapter
-import com.google.firebase.Timestamp
+import java.time.LocalTime
 import javax.inject.Inject
 
 class TimesAdapter @Inject constructor(
     private val dateFormatter: DateFormatter,
-) : BaseAdapter<Timestamp, TimeViewHolder>() {
+) : BaseAdapter<Pair<LocalTime, Boolean>, TimeViewHolder>() {
 
-    lateinit var onDeleteClick: (Timestamp) -> Unit
+    lateinit var onDeleteClick: (Pair<LocalTime, Boolean>) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimeViewHolder {
         return TimeViewHolder(parent, onDeleteClick, dateFormatter)
@@ -20,14 +20,14 @@ class TimesAdapter @Inject constructor(
         holder.bind(getItem(position), position)
     }
 
-    fun addItem(item: Timestamp) {
+    fun addItem(item: Pair<LocalTime, Boolean>) {
         this.items.apply {
             add(item)
         }
         notifyDataSetChanged()
     }
 
-    fun deleteItem(item: Timestamp) {
+    fun deleteItem(item: Pair<LocalTime, Boolean>) {
         this.items.apply {
             remove(item)
         }

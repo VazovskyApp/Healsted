@@ -30,6 +30,6 @@ class TodayPillViewHolder(
 
         textViewName.text = item.name.capitalizeFirstChar(Locale.getDefault())
         textViewCount.text = dataTypeFormatter.formatPill(item)
-        textViewTime.text = dateFormatter.formatTime(item.times?.firstOrNull().orDefault())
+        textViewTime.text = item.times.keys.firstOrNull()?.let { dateFormatter.formatStringFromLocalTime(it) }.orDefault()
     }
 }

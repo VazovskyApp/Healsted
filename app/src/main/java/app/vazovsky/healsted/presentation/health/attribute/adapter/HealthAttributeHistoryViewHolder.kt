@@ -6,7 +6,6 @@ import app.vazovsky.healsted.R
 import app.vazovsky.healsted.data.model.MonitoringAttribute
 import app.vazovsky.healsted.databinding.ItemMonitoringHistoryBinding
 import app.vazovsky.healsted.extensions.inflate
-import app.vazovsky.healsted.extensions.toOffsetDateTime
 import app.vazovsky.healsted.managers.DateFormatter
 import by.kirich1409.viewbindingdelegate.viewBinding
 
@@ -21,6 +20,6 @@ class HealthAttributeHistoryViewHolder(
     fun bind(item: MonitoringAttribute) = with(binding) {
         root.setOnClickListener { onItemClick.invoke(item) }
         textViewValue.text = item.value
-        textViewDate.text = dateFormatter.formatStandardDate(item.date.toOffsetDateTime())
+        textViewDate.text = dateFormatter.formatStringFromLocalDate(item.date)
     }
 }

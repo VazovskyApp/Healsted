@@ -1,12 +1,11 @@
 package app.vazovsky.healsted.data.firebase.profile
 
+import app.vazovsky.healsted.data.firebase.model.MonitoringAttributeDocument
+import app.vazovsky.healsted.data.firebase.model.MoodDocument
+import app.vazovsky.healsted.data.firebase.model.PillDocument
 import app.vazovsky.healsted.data.model.LoyaltyProgress
-import app.vazovsky.healsted.data.model.MonitoringAttribute
 import app.vazovsky.healsted.data.model.MonitoringType
-import app.vazovsky.healsted.data.model.Mood
-import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.extensions.serializeToMap
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import javax.inject.Inject
 
@@ -36,7 +35,7 @@ class FirebaseProfileServiceImpl @Inject constructor(
     //<editor-fold desc="Pills">
     override fun addProfilePill(
         uid: String,
-        pill: Pill,
+        pill: PillDocument,
     ) = firestore.collection(PILLS_COLLECTION)
         .document(uid)
         .collection(PILLS_COLLECTION)
@@ -45,7 +44,7 @@ class FirebaseProfileServiceImpl @Inject constructor(
 
     override fun updateProfilePill(
         uid: String,
-        pill: Pill,
+        pill: PillDocument,
     ) = firestore.collection(PILLS_COLLECTION)
         .document(uid)
         .collection(PILLS_COLLECTION)
@@ -54,7 +53,7 @@ class FirebaseProfileServiceImpl @Inject constructor(
 
     override fun deleteProfilePill(
         uid: String,
-        pill: Pill,
+        pill: PillDocument,
     ) = firestore.collection(PILLS_COLLECTION)
         .document(uid)
         .collection(PILLS_COLLECTION)
@@ -70,29 +69,29 @@ class FirebaseProfileServiceImpl @Inject constructor(
     //<editor-fold desc="Mood">
     override fun addProfileMood(
         uid: String,
-        mood: Mood,
+        mood: MoodDocument,
     ) = firestore.collection(MOODS_COLLECTION)
         .document(uid)
         .collection(MOODS_COLLECTION)
-        .document(mood.date.toString())
+        .document(mood.date)
         .set(mood)
 
     override fun updateProfileMood(
         uid: String,
-        mood: Mood,
+        mood: MoodDocument,
     ) = firestore.collection(MOODS_COLLECTION)
         .document(uid)
         .collection(MOODS_COLLECTION)
-        .document(mood.date.toString())
+        .document(mood.date)
         .update(mood.serializeToMap())
 
     override fun fetchProfileTodayMood(
         uid: String,
-        date: Timestamp,
+        date: String,
     ) = firestore.collection(MOODS_COLLECTION)
         .document(uid)
         .collection(MOODS_COLLECTION)
-        .document(date.toString()).get()
+        .document(date).get()
 
     override fun fetchProfileMoods(
         uid: String,
@@ -104,11 +103,11 @@ class FirebaseProfileServiceImpl @Inject constructor(
     //<editor-fold desc="Health">
     override fun addProfileMonitoringAttribute(
         uid: String,
-        monitoringAttribute: MonitoringAttribute,
+        monitoringAttribute: MonitoringAttributeDocument,
     ) = firestore.collection(HEALTH_COLLECTION)
         .document(uid)
         .collection(monitoringAttribute.type.name)
-        .document(monitoringAttribute.date.toString())
+        .document(monitoringAttribute.date)
         .set(monitoringAttribute)
 
     override fun fetchProfileWeight(

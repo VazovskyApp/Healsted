@@ -2,6 +2,7 @@ package app.vazovsky.healsted.domain.health
 
 import app.vazovsky.healsted.data.firebase.auth.FirebaseAuthRepository
 import app.vazovsky.healsted.data.firebase.profile.FirebaseProfileRepository
+import app.vazovsky.healsted.data.mapper.MonitoringAttributeMapper
 import app.vazovsky.healsted.data.model.MonitoringAttribute
 import app.vazovsky.healsted.data.repository.AuthRepository
 import app.vazovsky.healsted.domain.base.UseCaseUnary
@@ -11,6 +12,7 @@ import javax.inject.Inject
 
 /** Добавление атрибута мониторинга здоровья с текущим значением */
 class AddMonitoringAttributeUseCase @Inject constructor(
+    private val monitoringAttributeMapper: MonitoringAttributeMapper,
     private val firebaseProfileRepository: FirebaseProfileRepository,
     private val authRepository: AuthRepository,
     private val firebaseAuthRepository: FirebaseAuthRepository,
@@ -19,7 +21,10 @@ class AddMonitoringAttributeUseCase @Inject constructor(
     override suspend fun execute(params: Params): Task<Void> {
         val uid = firebaseAuthRepository.getCurrentUserUid() ?: authRepository.getCurrentUserUid().orDefault()
 
-        return firebaseProfileRepository.addProfileMonitoringAttribute(uid, params.monitoringAttribute)
+        return firebaseProfileRepository.addProfileMonitoringAttribute(
+            uid = uid,
+            monitoringAttribute = monitoringAttributeMapper.fromModelToDocument(params.monitoringAttribute)
+        )
     }
 
     data class Params(
