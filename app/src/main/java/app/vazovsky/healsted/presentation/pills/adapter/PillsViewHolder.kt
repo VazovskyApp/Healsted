@@ -1,7 +1,5 @@
 package app.vazovsky.healsted.presentation.pills.adapter
 
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import app.vazovsky.healsted.R
@@ -30,19 +28,29 @@ class PillsViewHolder(
 
         textViewName.text = item.name.capitalizeFirstChar(Locale.getDefault())
         textViewDates.text = dateFormatter.formatPeriod(item.startDate, item.endDate)
-        imageViewIcon.apply {
-            setBackgroundResource(
-                when (item.type) {
-                    PillType.TABLETS -> R.drawable.ic_pill_tablets
-                    PillType.CAPSULE -> R.drawable.ic_pill_capsule
-                    PillType.INJECTION -> R.drawable.ic_pill_injection
-                    PillType.PROCEDURES -> R.drawable.ic_pill_procedures
-                    PillType.DROPS -> R.drawable.ic_pill_drops
-                    PillType.LIQUID -> R.drawable.ic_pill_liquid
-                    PillType.CREAM -> R.drawable.ic_pill_cream
-                    PillType.SPRAY -> R.drawable.ic_pill_spray
-                }
-            )
+        imageViewIcon.setBackgroundResource(
+            when (item.type) {
+                PillType.TABLETS -> R.drawable.ic_pill_tablets
+                PillType.CAPSULE -> R.drawable.ic_pill_capsule
+                PillType.INJECTION -> R.drawable.ic_pill_injection
+                PillType.PROCEDURES -> R.drawable.ic_pill_procedures
+                PillType.DROPS -> R.drawable.ic_pill_drops
+                PillType.LIQUID -> R.drawable.ic_pill_liquid
+                PillType.CREAM -> R.drawable.ic_pill_cream
+                PillType.SPRAY -> R.drawable.ic_pill_spray
+            }
+        )
+
+        val currentProgress = item.times.count { it.value }
+        val maxProgress = item.times.size
+
+        textViewProgressTime.text = buildString {
+            append(currentProgress)
+            append("/")
+            append(maxProgress)
         }
+
+        progressBarTimes.progress = currentProgress
+        progressBarTimes.max = maxProgress
     }
 }

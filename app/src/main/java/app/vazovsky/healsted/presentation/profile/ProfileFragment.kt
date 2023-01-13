@@ -71,14 +71,17 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     private fun bindLoyalty(loyaltyProgress: LoyaltyProgress) = with(binding) {
         textViewLevel.text = loyaltyProgress.level.toString()
 
+        val currentProgress = loyaltyProgress.currentValue
+        val maxProgress = loyaltyProgress.level.xpCount
+
         textViewAccountProgress.text = buildString {
-            append(loyaltyProgress.currentValue)
+            append(currentProgress)
             append(" / ")
-            append(loyaltyProgress.level.xpCount)
+            append(maxProgress)
         }
 
-        progressIndicatorAccountProgress.progress = loyaltyProgress.currentValue
-        progressIndicatorAccountProgress.max = loyaltyProgress.level.xpCount
+        progressBarLevel.progress = currentProgress
+        progressBarLevel.max = maxProgress
     }
 
     private fun setLoyaltySnapshotTask(task: Task<DocumentSnapshot>) {
