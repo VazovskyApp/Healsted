@@ -8,9 +8,9 @@ import javax.inject.Inject
 
 class TimesAdapter @Inject constructor(
     private val dateFormatter: DateFormatter,
-) : BaseAdapter<Pair<LocalTime, Boolean>, TimeViewHolder>() {
+) : BaseAdapter<Pair<String, LocalTime>, TimeViewHolder>() {
 
-    lateinit var onDeleteClick: (Pair<LocalTime, Boolean>) -> Unit
+    lateinit var onDeleteClick: (Pair<String, LocalTime>) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimeViewHolder {
         return TimeViewHolder(parent, onDeleteClick, dateFormatter)
@@ -20,14 +20,14 @@ class TimesAdapter @Inject constructor(
         holder.bind(getItem(position), position)
     }
 
-    fun addItem(item: Pair<LocalTime, Boolean>) {
+    fun addItem(item: Pair<String, LocalTime>) {
         this.items.apply {
             add(item)
         }
         notifyDataSetChanged()
     }
 
-    fun deleteItem(item: Pair<LocalTime, Boolean>) {
+    fun deleteItem(item: Pair<String, LocalTime>) {
         this.items.apply {
             remove(item)
         }

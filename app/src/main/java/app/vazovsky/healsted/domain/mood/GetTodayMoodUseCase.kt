@@ -6,7 +6,7 @@ import app.vazovsky.healsted.data.repository.AuthRepository
 import app.vazovsky.healsted.domain.base.UseCase
 import app.vazovsky.healsted.domain.base.UseCaseUnary
 import app.vazovsky.healsted.extensions.orDefault
-import app.vazovsky.healsted.extensions.toTodayString
+import app.vazovsky.healsted.extensions.toDefaultString
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import java.time.LocalDate
@@ -22,6 +22,6 @@ class GetTodayMoodUseCase @Inject constructor(
     override suspend fun execute(params: UseCase.None): Task<DocumentSnapshot> {
         val uid = firebaseAuthRepository.getCurrentUserUid() ?: authRepository.getCurrentUserUid().orDefault()
 
-        return firebaseProfileRepository.fetchProfileTodayMood(uid, LocalDate.now().toTodayString())
+        return firebaseProfileRepository.fetchProfileTodayMood(uid, LocalDate.now().toDefaultString())
     }
 }

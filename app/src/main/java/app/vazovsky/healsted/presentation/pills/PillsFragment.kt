@@ -15,7 +15,6 @@ import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import app.vazovsky.healsted.presentation.pills.adapter.PillsAdapter
 import app.vazovsky.healsted.presentation.pills.tab.PillsTabsAdapter
-import app.vazovsky.healsted.presentation.view.StateViewFlipper
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.QuerySnapshot
@@ -59,7 +58,7 @@ class PillsFragment : BaseFragment(R.layout.fragment_pills) {
             result.doOnFailure { Timber.d(it.message) }
         }
         localPillsLiveEvent.observe { result ->
-            result.doOnSuccess { Timber.d("LOL: pills: $it") }
+            result.doOnSuccess { Timber.d("pills: $it") }
             result.doOnFailure { Timber.d(it.message) }
         }
     }

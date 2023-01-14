@@ -6,6 +6,7 @@ import app.vazovsky.healsted.extensions.capitalizeFirstChar
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
@@ -15,7 +16,11 @@ import javax.inject.Inject
 /** Пример: "20:23" */
 private const val TIME_TEMPLATE = "HH:mm"
 
+/** Пример: 17.03.1999 */
 private const val DATE_TEMPLATE = "dd.MM.yyyy"
+
+/** Пример: 17.03.1999 20:23 */
+private const val DATE_TIME_TEMPLATE = "dd.MM.yyyy HH:mm"
 
 class DateFormatter @Inject constructor(@ApplicationContext val context: Context) {
 
@@ -23,9 +28,11 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
 
     private val timeFormat = DateTimeFormatter.ofPattern(TIME_TEMPLATE, defaultLocale)
     private val dateFormat = DateTimeFormatter.ofPattern(DATE_TEMPLATE, defaultLocale)
+    private val dateTimeFormat = DateTimeFormatter.ofPattern(DATE_TIME_TEMPLATE, defaultLocale)
 
     private val timeSimpleFormat = SimpleDateFormat(TIME_TEMPLATE, defaultLocale)
     private val dateSimpleFormat = SimpleDateFormat(DATE_TEMPLATE, defaultLocale)
+    private val dateTimeSimpleFormat = SimpleDateFormat(DATE_TIME_TEMPLATE, defaultLocale)
 
     /** Парсинг локального времени из строки */
     fun parseLocalTimeFromString(timeString: String): LocalTime {
@@ -37,6 +44,11 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
         return LocalDate.parse(dateString, dateFormat)
     }
 
+    /** Парсинг локальных дата-времени из строки */
+    fun parseLocalDateTimeFromString(dateTimeString: String): LocalDateTime {
+        return LocalDateTime.parse(dateTimeString, dateTimeFormat)
+    }
+
     /** Форматирование строки из локальной даты */
     fun formatStringFromLocalDate(date: LocalDate): String {
         return date.format(dateFormat)
@@ -45,6 +57,11 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
     /** Форматирование строки из локального времени */
     fun formatStringFromLocalTime(time: LocalTime): String {
         return time.format(timeFormat)
+    }
+
+    /** Форматирование строки из локальных дата-времени */
+    fun formatStringFromLocalDateTime(dateTime: LocalDateTime): String {
+        return dateTime.format(dateTimeFormat)
     }
 
     /** Форматирует дату в вид без года и с днем недели
@@ -62,16 +79,15 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
      * @param firstDate сегодняшняя дата
      * @param secondDate сравниваемая дата
      */
-    fun getDisplayDifferentDates(firstDate: LocalDate, secondDate: LocalDate) =
-        context.getString(
-            when (secondDate) {
-                firstDate -> R.string.dashboard_date_today
-                in LocalDate.MIN..firstDate -> R.string.dashboard_date_early
-                in firstDate..LocalDate.MAX -> R.string.dashboard_date_later
-                // Маловероятный сценарий
-                else -> R.string.dashboard_date_unknown
-            }
-        )
+    fun getDisplayDifferentDates(firstDate: LocalDate, secondDate: LocalDate) = context.getString(
+        when (secondDate) {
+            firstDate -> R.string.dashboard_date_today
+            in LocalDate.MIN..firstDate -> R.string.dashboard_date_early
+            in firstDate..LocalDate.MAX -> R.string.dashboard_date_later
+            // Маловероятный сценарий
+            else -> R.string.dashboard_date_unknown
+        }
+    )
 
     /**
      * Форматирует даты в период

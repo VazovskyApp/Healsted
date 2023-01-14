@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import app.vazovsky.healsted.R
-import app.vazovsky.healsted.data.model.Pill
+import app.vazovsky.healsted.data.model.TodayPillItem
 import app.vazovsky.healsted.databinding.ItemTodayPillBinding
 import app.vazovsky.healsted.extensions.capitalizeFirstChar
 import app.vazovsky.healsted.extensions.getColorIdFromPosition
@@ -15,19 +15,19 @@ import app.vazovsky.healsted.extensions.toIcon
 import app.vazovsky.healsted.managers.DataTypeFormatter
 import app.vazovsky.healsted.managers.DateFormatter
 import by.kirich1409.viewbindingdelegate.viewBinding
-import java.time.LocalTime
+import java.time.LocalDateTime
 import java.util.*
 
 class TodayPillViewHolder(
     parent: ViewGroup,
-    private val onEditItemClick: (Pill) -> Unit,
-    private val onDoneItemClick: (Pill, LocalTime) -> Unit,
+    private val onEditItemClick: (TodayPillItem) -> Unit,
+    private val onDoneItemClick: (TodayPillItem) -> Unit,
     private val dateFormatter: DateFormatter,
     private val dataTypeFormatter: DataTypeFormatter,
 ) : RecyclerView.ViewHolder(parent.inflate(R.layout.item_today_pill)) {
     private val binding by viewBinding(ItemTodayPillBinding::bind)
 
-    fun bind(item: Pill, position: Int) = with(binding) {
+    fun bind(item: TodayPillItem, position: Int) = with(binding) {
         root.apply {
             setOnLongClickListener {
                 onEditItemClick.invoke(item)
@@ -37,18 +37,19 @@ class TodayPillViewHolder(
             setCardBackgroundColor(context.getColor(position.getColorIdFromPosition()))
         }
 
-        textViewName.text = item.name.capitalizeFirstChar(Locale.getDefault())
-        textViewCount.text = dataTypeFormatter.formatPill(item)
+        textViewName.text = item.pill.name.capitalizeFirstChar(Locale.getDefault())
+        textViewCount.text = dataTypeFormatter.formatPill(item.pill)
+        textViewTime.text = dateFormatter.formatStringFromLocalTime(item.time).orDefault()
 
-        val minTime = item.times.maxOf { it.key }
-        val isMinTimeDone = item.times[minTime] ?: false
-        textViewTime.text = dateFormatter.formatStringFromLocalTime(minTime).orDefault()
+        val localDateTime = LocalDateTime.of(item.date, item.time)
+        val isHistoryContainedLocalDateTime = item.pill.history[localDateTime]
+        val isDone = isHistoryContainedLocalDateTime != null
 
-        imageViewIcon.setBackgroundResource(item.type.toIcon())
-        textViewCompleted.isVisible = isMinTimeDone
+        imageViewIcon.setBackgroundResource(item.pill.type.toIcon())
+        textViewCompleted.isVisible = isDone
         imageButtonDone.apply {
-            setOnClickListener { onDoneItemClick.invoke(item, minTime) }
-            background = root.context.getDrawableCompat(if (isMinTimeDone) R.drawable.ic_close else R.drawable.ic_completed)
+            setOnClickListener { onDoneItemClick.invoke(item) }
+            background = root.context.getDrawableCompat(if (isDone) R.drawable.ic_close else R.drawable.ic_completed)
         }
     }
 }

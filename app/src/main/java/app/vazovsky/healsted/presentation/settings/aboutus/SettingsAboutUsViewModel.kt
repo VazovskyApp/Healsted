@@ -3,7 +3,6 @@ package app.vazovsky.healsted.presentation.settings.aboutus
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import timber.log.Timber
 
 @HiltViewModel
 class SettingsAboutUsViewModel @Inject constructor(
@@ -22,7 +21,6 @@ class SettingsAboutUsViewModel @Inject constructor(
 
     /** Открыть чат с разработчиком */
     fun openTelegramVazovsky() {
-        Timber.d("LOL VAZOVSKY")
         navigate(destinations.telegramVazovsky())
     }
 }

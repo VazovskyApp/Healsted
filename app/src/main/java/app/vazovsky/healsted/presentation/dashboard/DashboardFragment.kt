@@ -2,7 +2,9 @@ package app.vazovsky.healsted.presentation.dashboard
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.core.view.updatePadding
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import app.vazovsky.healsted.R
@@ -132,8 +134,11 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     /** Настройка RecyclerView */
     private fun setupRecyclerView() = with(binding.recyclerViewTodayPills) {
         adapter = todayPillsAdapter.apply {
-            onEditItemClick = { pill -> viewModel.openEditPill(pill) }
-            onDoneItemClick = { pill, time -> viewModel.changeStatusTimePill(pill, time) }
+            onEditItemClick = { item -> viewModel.openEditPill(item.pill) }
+            onDoneItemClick = { item ->
+                setFragmentResult(REQUEST_KEY_UPDATE_PILLS, bundleOf())
+                viewModel.changeStatusTimePill(item.pill, item.date, item.time)
+            }
         }
         emptyView = binding.emptyViewTodayPills
         addLinearSpaceItemDecoration(R.dimen.padding_8)

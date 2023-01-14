@@ -13,16 +13,16 @@ import java.time.LocalTime
 
 class TimeViewHolder(
     parent: ViewGroup,
-    private val onDeleteClick: (Pair<LocalTime, Boolean>) -> Unit,
+    private val onDeleteClick: (Pair<String, LocalTime>) -> Unit,
     private val dateFormatter: DateFormatter,
 ) : RecyclerView.ViewHolder(parent.inflate(R.layout.item_time)) {
     private val binding by viewBinding(ItemTimeBinding::bind)
 
-    fun bind(item: Pair<LocalTime, Boolean>, position: Int) = with(binding) {
+    fun bind(item: Pair<String, LocalTime>, position: Int) = with(binding) {
         buttonDelete.apply {
             visibility = if (position != 0) VISIBLE else INVISIBLE
             setOnClickListener { onDeleteClick.invoke(item) }
         }
-        editTextTime.setText(dateFormatter.formatStringFromLocalTime(item.first))
+        editTextTime.setText(dateFormatter.formatStringFromLocalTime(item.second))
     }
 }

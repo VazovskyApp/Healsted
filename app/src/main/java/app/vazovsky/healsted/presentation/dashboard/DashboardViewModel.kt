@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.Mood
 import app.vazovsky.healsted.data.model.Pill
+import app.vazovsky.healsted.data.model.TodayPillItem
 import app.vazovsky.healsted.data.model.base.LoadableResult
 import app.vazovsky.healsted.domain.account.GetAccountUseCase
 import app.vazovsky.healsted.domain.account.ParseSnapshotToAccountUseCase
@@ -50,8 +51,8 @@ class DashboardViewModel @Inject constructor(
     val profileLiveData: LiveData<LoadableResult<Account>> = _profileLiveData
 
     /** Лекарства на сегодня */
-    private val _todayPillsLiveData = MutableLiveData<LoadableResult<List<Pill>>>()
-    val todayPillsLiveData: LiveData<LoadableResult<List<Pill>>> = _todayPillsLiveData
+    private val _todayPillsLiveData = MutableLiveData<LoadableResult<List<TodayPillItem>>>()
+    val todayPillsLiveData: LiveData<LoadableResult<List<TodayPillItem>>> = _todayPillsLiveData
 
     /** Лекарства как DocumentSnapshot */
     private val _todayPillsSnapshotLiveData = MutableLiveData<LoadableResult<GetTodayPillsUseCase.Result>>()
@@ -127,9 +128,9 @@ class DashboardViewModel @Inject constructor(
     }
 
     /** Изменение статуса времени  */
-    fun changeStatusTimePill(pill: Pill, time: LocalTime) {
+    fun changeStatusTimePill(pill: Pill, date: LocalDate, time: LocalTime) {
         _updatePillLiveEvent.launchLoadData(
-            changeTimesPillUseCase.executeFlow(ChangeTimesPillUseCase.Params(pill, time))
+            changeTimesPillUseCase.executeFlow(ChangeTimesPillUseCase.Params(pill, date, time))
         )
     }
 }

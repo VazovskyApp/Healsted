@@ -3,6 +3,7 @@ package app.vazovsky.healsted.data.model
 import android.os.Parcelable
 import com.google.firebase.firestore.PropertyName
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.*
 import kotlinx.parcelize.Parcelize
@@ -23,7 +24,7 @@ data class Pill(
     @PropertyName("takePillType") val takePillType: TakePillType = TakePillType.NEVERMIND,
 
     /** Список времени уведомлений */
-    @PropertyName("times") val times: Map<LocalTime, Boolean> = mapOf(LocalTime.now() to false),
+    @PropertyName("times") val times: Map<String, LocalTime> = mapOf(),
 
     /** Регулярность приема лекарств */
     @PropertyName("datesTaken") val datesTaken: DatesTakenType = DatesTakenType.EVERYDAY,
@@ -41,4 +42,6 @@ data class Pill(
     @PropertyName("amount") val amount: Float = 1F,
 
     @PropertyName("comment") val comment: String = "",
+
+    @PropertyName("history") val history: Map<LocalDateTime, LocalTime> = mutableMapOf(),
 ) : Parcelable

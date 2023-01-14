@@ -28,7 +28,7 @@ data class PillEntity(
     @ColumnInfo(name = "takePillType") val takePillType: TakePillType,
 
     /** Список времени уведомлений */
-    @ColumnInfo(name = "times") val times: Map<String, Boolean>,
+    @ColumnInfo(name = "times") val times: Map<String, String>,
 
     /** Регулярность приема лекарств */
     @ColumnInfo(name = "datesTaken") val datesTaken: DatesTakenType,
@@ -46,4 +46,6 @@ data class PillEntity(
     @ColumnInfo(name = "amount") val amount: Float = 1F,
 
     @ColumnInfo(name = "comment") val comment: String = "",
+
+    @ColumnInfo(name = "history") val history: Map<String, String>,
 ) : Parcelable

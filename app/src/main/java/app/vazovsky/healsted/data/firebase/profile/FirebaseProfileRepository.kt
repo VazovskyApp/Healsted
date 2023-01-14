@@ -30,6 +30,8 @@ interface FirebaseProfileRepository {
 
     /** Получить лекарства из FireStore */
     fun fetchProfilePills(uid: String): Task<QuerySnapshot>
+
+
     //</editor-fold>
 
     //<editor-fold desc="Mood">

@@ -2,7 +2,7 @@ package app.vazovsky.healsted.data.firebase.model
 
 import android.os.Parcelable
 import app.vazovsky.healsted.data.model.MoodType
-import app.vazovsky.healsted.extensions.toTodayString
+import app.vazovsky.healsted.extensions.toDefaultString
 import com.google.firebase.firestore.PropertyName
 import java.time.LocalDate
 import java.util.*
@@ -15,5 +15,5 @@ data class MoodDocument(
     @PropertyName("value") val value: MoodType = MoodType.EMPTY,
 
     /** Дата отметки настроения */
-    @PropertyName("date") val date: String = LocalDate.now().toTodayString(),
+    @PropertyName("date") val date: String = LocalDate.now().toDefaultString(),
 ) : Parcelable

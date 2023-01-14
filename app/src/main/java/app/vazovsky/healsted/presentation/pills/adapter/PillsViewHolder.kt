@@ -9,16 +9,16 @@ import app.vazovsky.healsted.extensions.capitalizeFirstChar
 import app.vazovsky.healsted.extensions.getColorIdFromPosition
 import app.vazovsky.healsted.extensions.inflate
 import app.vazovsky.healsted.extensions.toIcon
-import app.vazovsky.healsted.managers.DataTypeFormatter
 import app.vazovsky.healsted.managers.DateFormatter
 import by.kirich1409.viewbindingdelegate.viewBinding
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.*
 
 class PillsViewHolder(
     parent: ViewGroup,
     private val onItemClick: (Pill) -> Unit,
     private val dateFormatter: DateFormatter,
-    private val dataTypeFormatter: DataTypeFormatter,
 ) : RecyclerView.ViewHolder(parent.inflate(R.layout.item_pill)) {
     private val binding by viewBinding(ItemPillBinding::bind)
 
@@ -32,7 +32,13 @@ class PillsViewHolder(
         textViewDates.text = dateFormatter.formatPeriod(item.startDate, item.endDate)
         imageViewIcon.setBackgroundResource(item.type.toIcon())
 
-        val currentProgress = item.times.count { it.value }
+        var isDoneCount = 0
+        val localDateTimes = item.times.map { LocalDateTime.of(LocalDate.now(), it.value) }
+        item.history.forEach { (dateTime, _) ->
+            if (localDateTimes.contains(dateTime)) isDoneCount++
+        }
+
+        val currentProgress = isDoneCount
         val maxProgress = item.times.size
 
         textViewProgressTime.text = buildString {

@@ -5,10 +5,9 @@ import app.vazovsky.healsted.data.model.DatesTakenSelected
 import app.vazovsky.healsted.data.model.DatesTakenType
 import app.vazovsky.healsted.data.model.PillType
 import app.vazovsky.healsted.data.model.TakePillType
-import app.vazovsky.healsted.extensions.toTodayString
+import app.vazovsky.healsted.extensions.toDefaultString
 import com.google.firebase.firestore.PropertyName
 import java.time.LocalDate
-import java.time.LocalTime
 import java.util.*
 import kotlinx.parcelize.Parcelize
 
@@ -28,7 +27,7 @@ data class PillDocument(
     @PropertyName("takePillType") val takePillType: TakePillType = TakePillType.NEVERMIND,
 
     /** Список времени уведомлений */
-    @PropertyName("times") val times: Map<String, Boolean> = mapOf(LocalTime.of(0, 0).toString() to false),
+    @PropertyName("times") val times: Map<String, String> = mapOf(),
 
     /** Регулярность приема лекарств */
     @PropertyName("datesTaken") val datesTaken: DatesTakenType = DatesTakenType.EVERYDAY,
@@ -37,7 +36,7 @@ data class PillDocument(
     @PropertyName("datesTakenSelected") val datesTakenSelected: List<DatesTakenSelected> = listOf(),
 
     /** Начальная дата принятия лекарств */
-    @PropertyName("startDate") val startDate: String = LocalDate.now().toTodayString(),
+    @PropertyName("startDate") val startDate: String = LocalDate.now().toDefaultString(),
 
     /** Конечная дата принятия лекарств, если есть */
     @PropertyName("endDate") val endDate: String? = null,
@@ -46,4 +45,6 @@ data class PillDocument(
     @PropertyName("amount") val amount: Float = 1F,
 
     @PropertyName("comment") val comment: String = "",
+
+    @PropertyName("history") val history: Map<String, String> = mapOf(),
 ) : Parcelable

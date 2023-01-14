@@ -8,8 +8,11 @@ import app.vazovsky.healsted.data.repository.AuthRepository
 import app.vazovsky.healsted.domain.base.UseCaseUnary
 import app.vazovsky.healsted.extensions.orDefault
 import app.vazovsky.healsted.presentation.pilleditor.UpdateResult
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 import javax.inject.Inject
+import timber.log.Timber
 
 
 class ChangeTimesPillUseCase @Inject constructor(
@@ -22,11 +25,16 @@ class ChangeTimesPillUseCase @Inject constructor(
     override suspend fun execute(params: Params): UpdateResult {
         val uid = firebaseAuthRepository.getCurrentUserUid() ?: authRepository.getCurrentUserUid().orDefault()
 
-        val newTimes = mutableMapOf<LocalTime, Boolean>()
-        params.pill.times.map {
-            newTimes.put(it.key, if (it.key == params.time) !it.value else it.value)
+        val newHistory = mutableMapOf<LocalDateTime, LocalTime>()
+        newHistory.putAll(params.pill.history)
+        val localDateTime = LocalDateTime.of(params.date, params.time)
+        val isDone = newHistory[localDateTime]
+        if (isDone == null || isDone != params.time) {
+            newHistory[localDateTime] = params.time
+        } else if (isDone == params.time) {
+            newHistory.remove(localDateTime, params.time)
         }
-        val newPill = params.pill.copy(times = newTimes)
+        val newPill = params.pill.copy(history = newHistory)
 
         return UpdateResult(
             firebaseProfileRepository.updateProfilePill(uid, pillMapper.fromModelToDocument(newPill)),
@@ -37,6 +45,9 @@ class ChangeTimesPillUseCase @Inject constructor(
     data class Params(
         /** Обновленное лекарство */
         val pill: Pill,
+
+        /** Дата для обновления */
+        val date: LocalDate,
 
         /** Время для обновления */
         val time: LocalTime,

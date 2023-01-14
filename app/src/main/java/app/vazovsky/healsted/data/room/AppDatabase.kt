@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import app.vazovsky.healsted.data.room.AppDatabase.Companion.DATABASE_VERSION
 import app.vazovsky.healsted.data.room.converters.DatesTakenSelectedListConverter
+import app.vazovsky.healsted.data.room.converters.HistoryMapConverter
 import app.vazovsky.healsted.data.room.converters.StringListConverter
 import app.vazovsky.healsted.data.room.converters.TimesMapConverter
 import app.vazovsky.healsted.data.room.dao.PillDao
@@ -13,6 +14,7 @@ import app.vazovsky.healsted.data.room.entity.PillEntity
 /** Класс для базы данных Room */
 @TypeConverters(
     StringListConverter::class,
+    HistoryMapConverter::class,
     TimesMapConverter::class,
     DatesTakenSelectedListConverter::class,
 )
