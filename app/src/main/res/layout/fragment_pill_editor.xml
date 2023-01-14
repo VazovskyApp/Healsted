@@ -34,7 +34,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
             <LinearLayout
                 android:id="@+id/linearLayoutContent"
                 android:layout_width="match_parent"
@@ -98,21 +97,35 @@
                         app:cardCornerRadius="10dp"
                         app:cardElevation="10dp">
 
-                        <LinearLayout
-                            android:id="@+id/linearLayoutAttributes"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayoutAttributes"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_shape_gradient"
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textViewAttributes"
-                                android:layout_width="match_parent"
+                                android:id="@+id/textViewDosage"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="20dp"
                                 android:layout_marginTop="20dp"
                                 android:text="@string/pill_editor_dosage"
-                                android:textAppearance="@style/Font.Heading_3.Medium" />
+                                android:textAppearance="@style/Font.Heading_3.Medium"
+                                app:layout_constraintEnd_toStartOf="@id/spinnerTakePillType"
+                                app:layout_constraintHorizontal_chainStyle="spread"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <Spinner
+                                android:id="@+id/spinnerTakePillType"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="20dp"
+                                app:layout_constraintBottom_toBottomOf="@id/textViewDosage"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/textViewDosage"
+                                app:layout_constraintTop_toTopOf="@id/textViewDosage" />
 
                             <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
                                 android:id="@+id/textInputDosage"
@@ -124,6 +137,7 @@
                                 app:emptyCheck="true"
                                 app:errorEmpty="@string/empty_field_error"
                                 app:errorMalformed="@string/malformed_field_error"
+                                app:layout_constraintTop_toBottomOf="@id/textViewDosage"
                                 app:validationPattern="@string/decimal_validation_pattern">
 
                                 <com.google.android.material.textfield.TextInputEditText
@@ -134,29 +148,63 @@
                                     android:imeOptions="actionNext"
                                     android:inputType="numberDecimal" />
                             </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
 
-                            <LinearLayout
-                                android:id="@+id/linearLayoutSpinners"
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardViewDatesTakenType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_20"
+                        android:layout_marginTop="20dp"
+                        app:cardBackgroundColor="@color/frenchSkyBlue"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="10dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/linearLayoutDatesTakenType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/textViewDatesTakenType"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_20"
+                                android:text="@string/pill_editor_dates_taken_type"
+                                android:textAppearance="@style/Font.Heading_4.Medium"
+                                app:layout_constraintEnd_toStartOf="@id/spinnerDatesTakenType"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <Spinner
+                                android:id="@+id/spinnerDatesTakenType"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/margin_20"
+                                app:layout_constraintBottom_toBottomOf="@id/textViewDatesTakenType"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/textViewDatesTakenType"
+                                app:layout_constraintTop_toTopOf="@id/textViewDatesTakenType" />
+
+                            <FrameLayout
+                                android:id="@+id/frameLayoutDatesTakenSelected"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="16dp"
-                                android:layout_marginVertical="16dp"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
+                                android:visibility="gone"
+                                app:layout_constraintTop_toBottomOf="@id/textViewDatesTakenType">
 
-                                <Spinner
-                                    android:id="@+id/spinnerDatesTakenType"
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/recyclerViewDatesTakenSelected"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1" />
+                                    android:orientation="horizontal"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                    tools:itemCount="7"
+                                    tools:listitem="@layout/item_dates_taken_selected" />
+                            </FrameLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                                <Spinner
-                                    android:id="@+id/spinnerTakePillType"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1" />
-                            </LinearLayout>
-                        </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView

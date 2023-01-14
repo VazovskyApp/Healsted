@@ -13,17 +13,14 @@ import kotlinx.coroutines.flow.shareIn
 
 @HiltViewModel
 class NotificationViewModel @Inject constructor(
-    private val notificationRepository: NotificationRepository
+    private val notificationRepository: NotificationRepository,
 ) : ViewModel() {
 
     /** Нажатие на уведомление */
-    fun clickedOnNotification(
-        endPoint: String,
-        token: String,
-        id: String
-    ): Flow<DataState<Boolean>> = notificationRepository.clickedOnNotification(
-        endPoint = endPoint,
-        authorization = token,
-        id = id
-    ).shareIn(CoroutineScope(Dispatchers.IO), SharingStarted.Eagerly, 1)
+    fun clickedOnNotification(endPoint: String, token: String, id: String): Flow<DataState<Boolean>> =
+        notificationRepository.clickedOnNotification(
+            endPoint = endPoint,
+            authorization = token,
+            id = id,
+        ).shareIn(CoroutineScope(Dispatchers.IO), SharingStarted.Eagerly, 1)
 }

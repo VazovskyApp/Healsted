@@ -2,6 +2,7 @@ package app.vazovsky.healsted.managers
 
 import android.content.Context
 import app.vazovsky.healsted.R
+import app.vazovsky.healsted.data.model.DatesTakenType
 import app.vazovsky.healsted.extensions.capitalizeFirstChar
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.text.SimpleDateFormat
@@ -10,8 +11,11 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
+import java.time.temporal.ChronoUnit
 import java.util.*
 import javax.inject.Inject
+import kotlinx.datetime.DayOfWeek
+import timber.log.Timber
 
 /** Пример: "20:23" */
 private const val TIME_TEMPLATE = "HH:mm"
@@ -72,6 +76,10 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
         append(day.month.getDisplayName(TextStyle.FULL, defaultLocale))
         append(", ")
         append(day.dayOfWeek.getDisplayName(TextStyle.FULL, defaultLocale).capitalizeFirstChar(defaultLocale))
+    }
+
+    fun getDayOfWeekDisplay(day: Int): String = buildString {
+        append(DayOfWeek(day).getDisplayName(TextStyle.SHORT, defaultLocale))
     }
 
     /**
@@ -151,5 +159,33 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
         append(lastDay.month.getDisplayName(TextStyle.FULL, defaultLocale))
         append(" ")
         append(lastDay.year)
+    }
+
+    fun isShownToday(
+        startDate: LocalDate,
+        endDate: LocalDate?,
+        currentDate: LocalDate,
+        datesTakenType: DatesTakenType,
+        datesTakenSelected: List<Int>,
+    ): Boolean {
+        val inDateRange = currentDate >= startDate || (if (endDate != null) endDate <= currentDate else true)
+        return when (datesTakenType) {
+            DatesTakenType.EVERYDAY -> inDateRange
+            DatesTakenType.IN_A_DAY -> {
+                if (inDateRange) {
+                    val differentDates = ChronoUnit.DAYS.between(startDate, currentDate)
+                    differentDates % 2 == 0L
+                } else false
+            }
+
+            DatesTakenType.SELECTED_DAYS -> {
+                if (inDateRange) {
+                    Timber.d("LOL " + currentDate.dayOfWeek.value.toString())
+                    val currentDayOfWeek = currentDate.dayOfWeek.value
+
+                    datesTakenSelected.contains(currentDayOfWeek)
+                } else false
+            }
+        }
     }
 }

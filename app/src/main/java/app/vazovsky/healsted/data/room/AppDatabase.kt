@@ -15,7 +15,6 @@ import app.vazovsky.healsted.data.room.entity.PillEntity
 @TypeConverters(
     StringListConverter::class,
     HistoryMapConverter::class,
-    TimesMapConverter::class,
     DatesTakenSelectedListConverter::class,
 )
 @Database(

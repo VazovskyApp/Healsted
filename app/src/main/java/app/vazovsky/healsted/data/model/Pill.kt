@@ -30,7 +30,7 @@ data class Pill(
     @PropertyName("datesTaken") val datesTaken: DatesTakenType = DatesTakenType.EVERYDAY,
 
     /** Выбранные дни недели для уведомлений */
-    @PropertyName("datesTakenSelected") val datesTakenSelected: List<DatesTakenSelected> = listOf(),
+    @PropertyName("datesTakenSelected") val datesTakenSelected: ArrayList<Int> = arrayListOf(),
 
     /** Начальная дата принятия лекарств */
     @PropertyName("startDate") val startDate: LocalDate = LocalDate.now(),

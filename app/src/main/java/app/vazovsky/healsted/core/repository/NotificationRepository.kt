@@ -8,12 +8,12 @@ interface NotificationRepository {
     fun getNotification(
         endPoint: String,
         authorization: String,
-        deviceId: String
+        deviceId: String,
     ): Flow<DataState<JsonArray?>>
 
     fun clickedOnNotification(
         endPoint: String,
         authorization: String,
-        id: String
+        id: String,
     ): Flow<DataState<Boolean>>
 }

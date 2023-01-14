@@ -81,7 +81,7 @@ class PillMapper @Inject constructor(
         )
     }
 
-    private fun fromEntityToModelTime(entityTime: Map<String, String>): Map<String, LocalTime> {
+    fun fromEntityToModelTime(entityTime: Map<String, String>): Map<String, LocalTime> {
         val modelTime = mutableMapOf<String, LocalTime>()
         entityTime.forEach { (index, time) ->
             modelTime[index] = dateFormatter.parseLocalTimeFromString(time)
@@ -89,7 +89,7 @@ class PillMapper @Inject constructor(
         return modelTime
     }
 
-    private fun fromModelToEntityTime(modelTime: Map<String, LocalTime>): Map<String, String> {
+    fun fromModelToEntityTime(modelTime: Map<String, LocalTime>): Map<String, String> {
         val entityTime = mutableMapOf<String, String>()
         modelTime.forEach { (index, time) ->
             entityTime[index] = dateFormatter.formatStringFromLocalTime(time)
@@ -97,7 +97,7 @@ class PillMapper @Inject constructor(
         return entityTime
     }
 
-    private fun fromEntityMapToModelHistory(entityHistory: Map<String, String>): Map<LocalDateTime, LocalTime> {
+    fun fromEntityMapToModelHistory(entityHistory: Map<String, String>): Map<LocalDateTime, LocalTime> {
         val modelHistory = mutableMapOf<LocalDateTime, LocalTime>()
         entityHistory.forEach { (dateTime, time) ->
             modelHistory[dateFormatter.parseLocalDateTimeFromString(dateTime)] = dateFormatter.parseLocalTimeFromString(time)
@@ -105,11 +105,12 @@ class PillMapper @Inject constructor(
         return modelHistory
     }
 
-    private fun fromModelToEntityHistory(modelHistory: Map<LocalDateTime, LocalTime>): Map<String, String> {
+    fun fromModelToEntityHistory(modelHistory: Map<LocalDateTime, LocalTime>): Map<String, String> {
         val entityHistory = mutableMapOf<String, String>()
         modelHistory.forEach { (dateTime, time) ->
             entityHistory[dateFormatter.formatStringFromLocalDateTime(dateTime)] = dateFormatter.formatStringFromLocalTime(time)
         }
         return entityHistory
     }
+
 }

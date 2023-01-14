@@ -15,7 +15,7 @@ class NotificationRepositoryImpl @Inject constructor(
     override fun getNotification(
         endPoint: String,
         authorization: String,
-        deviceId: String
+        deviceId: String,
     ): Flow<DataState<JsonArray?>> = flow {
         try {
             val response = remoteHelper.getNotification(endPoint, authorization, deviceId)
@@ -30,7 +30,7 @@ class NotificationRepositoryImpl @Inject constructor(
     override fun clickedOnNotification(
         endPoint: String,
         authorization: String,
-        id: String
+        id: String,
     ): Flow<DataState<Boolean>> = flow {
         try {
             val res = remoteHelper.clickedOnNotification(endPoint, authorization, id)

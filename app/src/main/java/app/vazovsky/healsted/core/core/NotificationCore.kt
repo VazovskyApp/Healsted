@@ -15,18 +15,28 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.work.Constraints
 import androidx.work.Data
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import app.vazovsky.healsted.core.viewmodel.NotificationViewModel
 import app.vazovsky.healsted.core.worker.FetchDataWorker
+import app.vazovsky.healsted.data.mapper.PillMapper
+import app.vazovsky.healsted.data.model.Pill
+import app.vazovsky.healsted.data.room.converters.DatesTakenSelectedListConverter
+import app.vazovsky.healsted.data.room.converters.TimesMapConverter
+import app.vazovsky.healsted.extensions.toMinutes
+import app.vazovsky.healsted.extensions.withZeroSecondsAndNano
+import app.vazovsky.healsted.managers.DateFormatter
 import com.google.gson.JsonObject
+import java.time.LocalTime
 import java.util.concurrent.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class NotificationCore @Inject constructor() {
+class NotificationCore @Inject constructor(
+    private val pillMapper: PillMapper,
+    private val dateFormatter: DateFormatter,
+) {
 
     private var notificationViewModel: NotificationViewModel? = null
 
@@ -44,11 +54,17 @@ class NotificationCore @Inject constructor() {
         const val PACKAGE_NAME: String = "PACKAGE_NAME"
         const val CLASS_NAME: String = "CLASS_NAME"
         const val NOTIFICATION_WORK_MANAGER_TAG: String = "NOTIFICATION_WORK_MANAGER_TAG"
+        const val PILL_NAME = "PILL_NAME"
+        const val PILL_TIMES = "PILL_TIMES"
+        const val PILL_START_DATE = "PILL_START_DATE"
+        const val PILL_END_DATE = "PILL_END_DATE"
+        const val PILL_DATES_TAKEN_TYPE = "PILL_DATES_TAKEN_TYPE"
+        const val PILL_DATES_TAKEN_SELECTED = "PILL_DATES_TAKEN_SELECTED"
     }
 
     fun init(
         application: Application,
-        owner: ViewModelStoreOwner
+        owner: ViewModelStoreOwner,
     ) {
         createNotificationDefaultChannel(application)
         notificationViewModel = ViewModelProvider(owner)[NotificationViewModel::class.java]
@@ -63,11 +79,12 @@ class NotificationCore @Inject constructor() {
         notificationImage: Int,
         notificationPackageName: String,
         notificationClassPackageName: String,
+        uid: String,
+        pill: Pill,
     ) {
         val workManager = WorkManager.getInstance(application.applicationContext!!)
 
         val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
             .setRequiresBatteryNotLow(false)
             .build()
 
@@ -78,11 +95,25 @@ class NotificationCore @Inject constructor() {
         data.putInt(NOTIFICATION_IMAGE, notificationImage)
         data.putString(PACKAGE_NAME, notificationPackageName)
         data.putString(CLASS_NAME, notificationClassPackageName)
+        data.putString(PILL_NAME, pill.name)
+        data.putString(PILL_TIMES, TimesMapConverter().mapMapToString(pillMapper.fromModelToEntityTime(pill.times)))
+        data.putString(PILL_START_DATE, dateFormatter.formatStringFromLocalDate(pill.startDate))
+        data.putString(PILL_END_DATE, pill.endDate?.let { dateFormatter.formatStringFromLocalDate(it) })
+        data.putString(PILL_DATES_TAKEN_TYPE, pill.datesTaken.name)
+        data.putString(PILL_DATES_TAKEN_SELECTED, DatesTakenSelectedListConverter().mapListToString(pill.datesTakenSelected))
 
-        val work = PeriodicWorkRequestBuilder<FetchDataWorker>(15, TimeUnit.MINUTES)
+        val nowTime = LocalTime.now().withZeroSecondsAndNano()
+        val firstTime = pill.times.values.sorted().firstOrNull { it >= nowTime } ?: nowTime
+        val differentTime = firstTime.minusMinutes((nowTime.toMinutes()).toLong())
+        val differentTimeMinutes = differentTime.toMinutes()
+
+        val work = OneTimeWorkRequestBuilder<FetchDataWorker>()
             .setConstraints(constraints)
             .addTag(NOTIFICATION_WORK_MANAGER_TAG)
+            .addTag(uid)
+            .addTag(pill.id)
             .setInputData(data.build())
+            .setInitialDelay(differentTimeMinutes.toLong(), TimeUnit.MINUTES)
             .build()
 
         workManager.enqueue(work)
@@ -91,14 +122,14 @@ class NotificationCore @Inject constructor() {
     /** Завершить работу воркера */
     fun cancelWorker(
         application: Application,
-        tag: String
+        tag: String,
     ) {
         WorkManager.getInstance(application.applicationContext!!).cancelAllWorkByTag(tag)
     }
 
     /** Создание стандартного канала уведомлений */
     private fun createNotificationDefaultChannel(
-        application: Application
+        application: Application,
     ) {
         application.apply {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -156,6 +187,6 @@ class NotificationCore @Inject constructor() {
     fun clickedOnNotification(
         endPoint: String,
         token: String,
-        id: String
+        id: String,
     ) = notificationViewModel?.clickedOnNotification(endPoint, token, id)
 }

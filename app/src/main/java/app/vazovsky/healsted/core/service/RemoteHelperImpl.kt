@@ -11,12 +11,12 @@ class RemoteHelperImpl @Inject constructor(
     override suspend fun getNotification(
         endPoint: String,
         authorization: String,
-        deviceId: String
+        deviceId: String,
     ): JsonArray? = remoteService.getNotification(endPoint, authorization, deviceId)
 
     override suspend fun clickedOnNotification(
         endPoint: String,
         authorization: String,
-        id: String
+        id: String,
     ): JsonObject? = remoteService.clickedOnNotification(endPoint, authorization, id)
 }

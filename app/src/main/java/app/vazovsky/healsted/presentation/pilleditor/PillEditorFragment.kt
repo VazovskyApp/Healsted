@@ -2,6 +2,7 @@ package app.vazovsky.healsted.presentation.pilleditor
 
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -10,6 +11,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import app.vazovsky.healsted.R
+import app.vazovsky.healsted.data.model.DatesTakenSelectedItem
 import app.vazovsky.healsted.data.model.DatesTakenType
 import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.data.model.PillType
@@ -23,6 +25,7 @@ import app.vazovsky.healsted.extensions.showErrorSnackbar
 import app.vazovsky.healsted.extensions.toDefaultString
 import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.base.BaseFragment
+import app.vazovsky.healsted.presentation.pilleditor.datestakenselected.DatesTakenSelectedAdapter
 import app.vazovsky.healsted.presentation.pilleditor.pilltypes.PillTypesAdapter
 import app.vazovsky.healsted.presentation.pilleditor.times.TimesAdapter
 import app.vazovsky.healsted.presentation.pills.REQUEST_KEY_UPDATE_PILLS
@@ -35,6 +38,7 @@ import java.util.*
 import javax.inject.Inject
 import timber.log.Timber
 import androidx.constraintlayout.widget.R as ConstraintR
+
 
 /** Экран редактирования или добавления лекарства */
 @AndroidEntryPoint
@@ -51,6 +55,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     @Inject lateinit var dateFormatter: DateFormatter
     @Inject lateinit var pillTypesAdapter: PillTypesAdapter
     @Inject lateinit var timesAdapter: TimesAdapter
+    @Inject lateinit var datesTakenSelectedAdapter: DatesTakenSelectedAdapter
 
     override fun callOperations() {
         viewModel.getPillTypes()
@@ -86,13 +91,12 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         stateViewFlipper.setRetryMethod { viewModel.getPillTypes() }
 
         setupToolbar()
-        setupPillTypeRecyclerView()
-        setupTimesRecyclerView()
         setupDataIfPillEsNotNull()
-
+        setupPillTypeRecyclerView()
+        setupDaysOfWeekRecyclerView()
+        setupTimesRecyclerView()
         setDatesTakenType()
         setTakePillType()
-        setTimeNotification()
         setDateNotification()
 
         setConfirmClick()
@@ -126,12 +130,19 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         linearLayoutParametres.updatePadding(bottom = bottomNavigationViewHeight)
     }
 
+    /** Настройка тулбара */
+    private fun setupToolbar() = with(binding.toolbar) {
+        setNavigationOnClickListener { viewModel.navigateBack() }
+        title = resources.getString(pill?.let { R.string.pill_editor_title_edit_pill } ?: R.string.pill_editor_title_add_pill)
+    }
+
     private fun bindTypes(types: List<PillTypeItem>) = with(pillTypesAdapter) {
         submitList(types)
         selectItem(pill?.type ?: PillType.TABLETS)
         setupDosage()
     }
 
+    /** Настройка типа лекарства */
     private fun setupPillTypeRecyclerView() = with(binding) {
         recyclerViewPillType.adapter = pillTypesAdapter.apply {
             onItemClick = { item ->
@@ -142,21 +153,28 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         }
     }
 
+    /** Настройка времени уведомления */
     private fun setupTimesRecyclerView() = with(binding) {
         recyclerViewTimes.adapter = timesAdapter.apply {
             onDeleteClick = { item -> timesAdapter.deleteItem(item) }
         }
-    }
-
-    /** Настройка времени */
-    private fun setTimeNotification() = with(binding) {
         buttonAddTime.setOnClickListener {
             val localTime = LocalTime.now()
             timesAdapter.addItem(UUID.randomUUID().toString() to localTime)
-            Timber.d(timesAdapter.currentList.toString())
         }
     }
 
+    /** Настройка выбранных дней недели для уведомления */
+    private fun setupDaysOfWeekRecyclerView() = with(binding) {
+        recyclerViewDatesTakenSelected.adapter = datesTakenSelectedAdapter.apply {
+            onItemClick = { item ->
+                this.selectItem(item.value)
+                recyclerViewDatesTakenSelected.invalidate()
+            }
+        }
+    }
+
+    /** Настройка кнопки удаления */
     private fun setDeleteClick() = with(binding.toolbar) {
         menu.findItem(R.id.menuDelete).isVisible = pill != null
         setOnMenuItemClickListener { item ->
@@ -168,9 +186,22 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         }
     }
 
+    /** Настройка кнопки подтверждения */
     private fun setConfirmClick() = with(binding) {
         buttonConfirm.setOnClickListener {
             setFragmentResult(REQUEST_KEY_UPDATE_PILLS, bundleOf())
+
+            val datesTakenType = spinnerDatesTakenType.selectedItem as DatesTakenType
+            val isSelectedDates = datesTakenType == DatesTakenType.SELECTED_DAYS
+
+            if (datesTakenSelectedAdapter.getSelectedItemsValue().isEmpty() && isSelectedDates) {
+                showErrorSnackbar(
+                    "Выберите хотя бы один день для приема лекарства, либо измените частоту приема",
+                    marginBottom = resources.getDimensionPixelOffset(R.dimen.margin_20)
+                )
+                return@setOnClickListener
+            }
+
 
             val listOfInputs = mutableListOf(textInputName, textInputDosage, textInputStartDate)
             if (switchEndDateEnabled.isChecked) listOfInputs.add(textInputEndDate)
@@ -184,6 +215,9 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                             type = pillTypesAdapter.getSelectedItemType(),
                             times = timesAdapter.currentList.distinctBy { it.second }.toMap(),
                             datesTaken = spinnerDatesTakenType.selectedItem as DatesTakenType,
+                            datesTakenSelected = if (isSelectedDates) {
+                                datesTakenSelectedAdapter.getSelectedItemsValue()
+                            } else arrayListOf(),
                             takePillType = spinnerTakePillType.selectedItem as TakePillType,
                             startDate = dateFormatter.parseLocalDateFromString(editTextStartDate.text.toString()),
                             endDate = if (switchEndDateEnabled.isChecked) {
@@ -198,6 +232,9 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                         times = timesAdapter.currentList.distinctBy { dateFormatter.formatStringFromLocalTime(it.second) }
                             .toMap(),
                         datesTaken = spinnerDatesTakenType.selectedItem as DatesTakenType,
+                        datesTakenSelected = if (isSelectedDates) {
+                            datesTakenSelectedAdapter.getSelectedItemsValue()
+                        } else arrayListOf(),
                         takePillType = spinnerTakePillType.selectedItem as TakePillType,
                         startDate = dateFormatter.parseLocalDateFromString(editTextStartDate.text.toString()),
                         endDate = if (switchEndDateEnabled.isChecked) {
@@ -207,25 +244,35 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                     )
                     if (pill == null) viewModel.addPill(newPill) else viewModel.updatePill(newPill)
                 } catch (e: Exception) {
-                    showErrorSnackbar(e.message.toString())
+                    showErrorSnackbar(e.message.toString(), marginBottom = resources.getDimensionPixelOffset(R.dimen.margin_20))
                 }
             }
         }
-    }
-
-    /** Настройка тулбара */
-    private fun setupToolbar() = with(binding.toolbar) {
-        setNavigationOnClickListener { viewModel.navigateBack() }
-        title = resources.getString(pill?.let { R.string.pill_editor_title_edit_pill } ?: R.string.pill_editor_title_add_pill)
     }
 
     /** Заполнение значений из Pill */
     private fun setupDataIfPillEsNotNull() = with(binding) {
         editTextName.setText(pill?.name.orDefault())
         editTextDosage.setText(pill?.amount.orDefault(1F).toString())
-        timesAdapter.submitList(pill?.times?.map { it.key to it.value } ?: listOf(
+        timesAdapter.submitList((pill?.times?.map { it.key to it.value } ?: listOf(
             UUID.randomUUID().toString() to LocalTime.now()
-        ))
+        )).sortedBy { it.second })
+        datesTakenSelectedAdapter.submitList(
+            listOf(
+                DatesTakenSelectedItem(1),
+                DatesTakenSelectedItem(2),
+                DatesTakenSelectedItem(3),
+                DatesTakenSelectedItem(4),
+                DatesTakenSelectedItem(5),
+                DatesTakenSelectedItem(6),
+                DatesTakenSelectedItem(7),
+            )
+        )
+        pill?.datesTakenSelected?.let { list ->
+            list.forEach {
+                datesTakenSelectedAdapter.selectItem(it)
+            }
+        }
         editTextStartDate.setText(pill?.startDate?.let {
             dateFormatter.formatStringFromLocalDate(it)
         } ?: LocalDate.now().toDefaultString())
@@ -241,6 +288,15 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         spinnerDatesTakenType.adapter = ArrayAdapter(
             requireContext(), ConstraintR.layout.support_simple_spinner_dropdown_item, listOfDatesTakenType
         )
+        spinnerDatesTakenType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
+                frameLayoutDatesTakenSelected.isVisible = listOfDatesTakenType[position] == DatesTakenType.SELECTED_DAYS
+            }
+
+            override fun onNothingSelected(parentView: AdapterView<*>?) {
+                // your code here
+            }
+        }
         pill?.let { spinnerDatesTakenType.setSelection(listOfDatesTakenType.indexOf(it.datesTaken)) }
     }
 

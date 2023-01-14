@@ -12,12 +12,18 @@ import app.vazovsky.healsted.core.core.NotificationCore
 import app.vazovsky.healsted.core.core.NotificationCore.Companion.NOTIFICATION_CLICK_ENDPOINT
 import app.vazovsky.healsted.core.core.NotificationCore.Companion.NOTIFICATION_EXTRA
 import app.vazovsky.healsted.core.core.NotificationCore.Companion.NOTIFICATION_ID
+import app.vazovsky.healsted.data.model.DatesTakenType
+import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.databinding.ActivityMainBinding
 import app.vazovsky.healsted.extensions.observeNavigationCommands
+import app.vazovsky.healsted.extensions.withZeroSecondsAndNano
 import app.vazovsky.healsted.managers.BottomNavigationViewManager
 import app.vazovsky.healsted.presentation.base.BaseActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
+import java.time.LocalTime
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -36,27 +42,32 @@ class MainActivity : BaseActivity(), BottomNavigationViewManager {
         setContentView(R.layout.activity_main)
 
         notificationCore.init(application = application, owner = this)
+        val nowTime = LocalTime.now().withZeroSecondsAndNano()
+        val nowDate = LocalDate.now()
+        val pill = Pill(
+            name = "Доза кокаина",
+            times = mapOf(
+                UUID.randomUUID().toString() to nowTime.minusMinutes(1),
+                UUID.randomUUID().toString() to nowTime,
+                UUID.randomUUID().toString() to nowTime.plusMinutes(1),
+                UUID.randomUUID().toString() to nowTime.plusMinutes(2),
+            ),
+            startDate = nowDate,
+            endDate = nowDate.plusDays(2),
+            datesTaken = DatesTakenType.SELECTED_DAYS,
+            datesTakenSelected = arrayListOf(6),
+        )
 
         notificationCore.createWorker(
             application,
             token = getToken(),
             endPoint = "Healsted",
             deviceId = "test",
-            notificationImage = R.drawable.ic_menu_health,
+            notificationImage = R.drawable.ic_logo_red,
             notificationPackageName = "app.vazovsky.healsted",
-            notificationClassPackageName = "app.vazovsky.healsted.MainActivity"
-        )
-
-        notificationCore.sendOnDefaultChannel(
-            context = applicationContext,
-            notificationId = "0",
-            notificationImage = R.drawable.ic_menu_health,
-            data = null,
-            notificationTitle = getString(R.string.notification_title_pill),
-            notificationContent = "Нурофен, 1 капсула. 12:00",
-            notificationPackageName = packageName,
-            notificationClassPackageName = MainActivity::class.java.toString(),
-            clickReferrerEndPoint = "Healsted",
+            notificationClassPackageName = "app.vazovsky.healsted.MainActivity",
+            uid = "5JJpee0Ur5bhOb3Bit2yuuqQoUl1",
+            pill = pill,
         )
 
         setupBottomNavigation()

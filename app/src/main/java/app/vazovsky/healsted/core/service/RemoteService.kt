@@ -9,13 +9,13 @@ interface RemoteService {
     suspend fun getNotification(
         @Url endPoint: String,
         @Header("authorization") authorization: String,
-        @Query("device_id") deviceId: String
+        @Query("device_id") deviceId: String,
     ): JsonArray?
 
     @GET
     suspend fun clickedOnNotification(
         @Url endPoint: String,
         @Header("authorization") authorization: String,
-        @Query("notification_id") id: String
+        @Query("notification_id") id: String,
     ): JsonObject?
 }

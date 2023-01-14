@@ -4,7 +4,6 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import app.vazovsky.healsted.data.model.DatesTakenSelected
 import app.vazovsky.healsted.data.model.DatesTakenType
 import app.vazovsky.healsted.data.model.PillType
 import app.vazovsky.healsted.data.model.TakePillType
@@ -34,7 +33,7 @@ data class PillEntity(
     @ColumnInfo(name = "datesTaken") val datesTaken: DatesTakenType,
 
     /** Выбранные дни недели для уведомлений */
-    @ColumnInfo(name = "datesTakenSelected") val datesTakenSelected: List<DatesTakenSelected>,
+    @ColumnInfo(name = "datesTakenSelected") val datesTakenSelected: ArrayList<Int>,
 
     /** Начальная дата принятия лекарств */
     @ColumnInfo(name = "startDate") val startDate: String,

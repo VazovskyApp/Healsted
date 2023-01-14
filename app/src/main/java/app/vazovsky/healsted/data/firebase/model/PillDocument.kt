@@ -1,7 +1,6 @@
 package app.vazovsky.healsted.data.firebase.model
 
 import android.os.Parcelable
-import app.vazovsky.healsted.data.model.DatesTakenSelected
 import app.vazovsky.healsted.data.model.DatesTakenType
 import app.vazovsky.healsted.data.model.PillType
 import app.vazovsky.healsted.data.model.TakePillType
@@ -33,7 +32,7 @@ data class PillDocument(
     @PropertyName("datesTaken") val datesTaken: DatesTakenType = DatesTakenType.EVERYDAY,
 
     /** Выбранные дни недели для уведомлений */
-    @PropertyName("datesTakenSelected") val datesTakenSelected: List<DatesTakenSelected> = listOf(),
+    @PropertyName("datesTakenSelected") val datesTakenSelected: ArrayList<Int> = arrayListOf(),
 
     /** Начальная дата принятия лекарств */
     @PropertyName("startDate") val startDate: String = LocalDate.now().toDefaultString(),

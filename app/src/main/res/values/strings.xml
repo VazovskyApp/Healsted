@@ -75,6 +75,7 @@
     <string name="pill_editor_add_time">Добавить время</string>
     <string name="pill_editor_comment_hint">Комментарий</string>
     <string name="pill_editor_dosage">Дозировка</string>
+    <string name="pill_editor_dates_taken_type">Частота приема</string>
     <string name="pill_editor_time_hint">Время</string>
     <string name="pill_editor_start_date_hint">Дата начала</string>
     <string name="pill_editor_end_date_hint">Дата конца</string>

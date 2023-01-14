@@ -7,12 +7,12 @@ interface RemoteHelper {
     suspend fun getNotification(
         endPoint: String,
         authorization: String,
-        deviceId: String
+        deviceId: String,
     ): JsonArray?
 
     suspend fun clickedOnNotification(
         endPoint: String,
         authorization: String,
-        id: String
+        id: String,
     ): JsonObject?
 }

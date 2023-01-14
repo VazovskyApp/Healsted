@@ -5,27 +5,34 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.WorkerParameters
+import app.vazovsky.healsted.R
 import app.vazovsky.healsted.core.core.NotificationCore
-import app.vazovsky.healsted.core.model.DataState
 import app.vazovsky.healsted.core.repository.NotificationRepository
+import app.vazovsky.healsted.data.mapper.PillMapper
+import app.vazovsky.healsted.data.model.DatesTakenType
+import app.vazovsky.healsted.data.room.converters.DatesTakenSelectedListConverter
+import app.vazovsky.healsted.data.room.converters.TimesMapConverter
+import app.vazovsky.healsted.managers.DateFormatter
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.flow.catch
+import java.time.LocalDate
+import java.util.concurrent.atomic.*
 import timber.log.Timber
 
-private const val RESPONSE_ID = "id"
-private const val RESPONSE_TITLE = "title"
-private const val RESPONSE_CONTENT = "content"
-private const val RESPONSE_CLICK_REFERRER = "click_referrer"
-private const val RESPONSE_DATA = "data"
 
 @HiltWorker
 class FetchDataWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters,
     private val notificationRepository: NotificationRepository,
-    private val notificationCore: NotificationCore
+    private val notificationCore: NotificationCore,
+    private val pillMapper: PillMapper,
+    private val dateFormatter: DateFormatter,
 ) : CoroutineWorker(appContext, workerParams) {
+
+    companion object {
+        var notificationId = AtomicInteger()
+    }
 
     override suspend fun doWork(): Result {
         val endPoint = inputData.getString(NotificationCore.ENDPOINT_REQUEST)
@@ -33,86 +40,88 @@ class FetchDataWorker @AssistedInject constructor(
         val deviceId = inputData.getString(NotificationCore.DEVICE_ID)
         val packageName = inputData.getString(NotificationCore.PACKAGE_NAME)
         val className = inputData.getString(NotificationCore.CLASS_NAME)
-        val notificationImage = inputData.getInt(
-            NotificationCore.NOTIFICATION_IMAGE,
-            androidx.appcompat.R.drawable.btn_radio_off_mtrl
-        )
+        val notificationImage = inputData.getInt(NotificationCore.NOTIFICATION_IMAGE, R.drawable.ic_logo_red)
 
-        if (endPoint != null && token != null && deviceId != null) {
-            getData(endPoint, token, deviceId, notificationImage, packageName, className)
+        val pillName = inputData.getString(NotificationCore.PILL_NAME)
+
+        val pillTimesString = inputData.getString(NotificationCore.PILL_TIMES)
+        val pillTimes = TimesMapConverter().mapStringToMap(pillTimesString)?.let { pillMapper.fromEntityToModelTime(it) }
+
+        val pillStartDateString = inputData.getString(NotificationCore.PILL_START_DATE)
+        val pillStartDate = pillStartDateString?.let { dateFormatter.parseLocalDateFromString(it) }
+
+        val pillEndDateString = inputData.getString(NotificationCore.PILL_END_DATE)
+        val pillEndDate = pillEndDateString?.let { dateFormatter.parseLocalDateFromString(it) }
+
+        val pillDatesTakenTypeString = inputData.getString(NotificationCore.PILL_DATES_TAKEN_TYPE)
+        val pillDatesTakenType = pillDatesTakenTypeString?.let { DatesTakenType.valueOf(it) }
+
+        val pillDatesTakenSelectedString = inputData.getString(NotificationCore.PILL_DATES_TAKEN_SELECTED)
+        val pillDatesTakenSelectedList = pillDatesTakenSelectedString?.let {
+            DatesTakenSelectedListConverter().mapStringToList(it)
+        } ?: listOf()
+
+        Timber.d("LOL PILL name: $pillName")
+        Timber.d("LOL PILL times: $pillTimes")
+        Timber.d("LOL PILL start date: $pillStartDate")
+        Timber.d("LOL PILL end date: $pillEndDate")
+        Timber.d("LOL PILL pill dates taken type: $pillDatesTakenType")
+        Timber.d("LOL PILL pill dates taken selected: $pillDatesTakenSelectedList")
+
+        Timber.d("LOL DO WORK")
+        if (endPoint != null && token != null && deviceId != null && pillStartDate != null && pillDatesTakenType != null) {
+            if (dateFormatter.isShownToday(
+                    pillStartDate,
+                    pillEndDate,
+                    LocalDate.now(),
+                    pillDatesTakenType,
+                    pillDatesTakenSelectedList,
+                )
+            ) {
+                createPillNotification(
+                    notificationImage,
+                    pillName!!,
+                    packageName!!,
+                    className!!,
+                )
+            }
+
+
+//            createPillNotification(
+//                notificationImage,
+//                pillName!!,
+//                packageName!!,
+//                className!!,
+//            )
+        } else {
         }
 
-        val outputData = Data.Builder()
-            .putString(NotificationCore.NOTIFICATION_DATA, "Notification data")
-            .build()
+        val outputData = Data.Builder().putString(NotificationCore.NOTIFICATION_DATA, "Notification data").build()
 
         return Result.success(outputData)
     }
 
-    /** Получение данных из запроса */
-    private suspend fun getData(
-        endPoint: String,
-        token: String,
-        deviceId: String,
+    private fun createPillNotification(
         notificationImage: Int,
-        packageName: String?,
-        className: String?
+        pillName: String,
+        packageName: String,
+        className: String,
     ) {
-        notificationRepository.getNotification(endPoint, token, deviceId)
-            .catch {
-                Timber.d("OH DAMN IT, WE GOT ERROR (in catch): ${it.message}")
-            }
-            .collect { notificationRes ->
-                when (notificationRes) {
-                    is DataState.Success -> {
-                        try {
-                            val response = notificationRes.data?.get(0)?.asJsonObject
-
-                            val id: String =
-                                if (response?.has(RESPONSE_ID) == true)
-                                    response.get(RESPONSE_ID).toString().replace("\"", "")
-                                else
-                                    "1"
-
-                            val title: String =
-                                if (response?.has(RESPONSE_TITLE) == true)
-                                    response.get(RESPONSE_TITLE).toString().replace("\"", "")
-                                else
-                                    "title"
-
-                            val content: String =
-                                if (response?.has(RESPONSE_CONTENT) == true)
-                                    response.get(RESPONSE_CONTENT).toString().replace("\"", "")
-                                else
-                                    "content"
-
-                            val clickReferrerEndPoint: String =
-                                if (response?.has(RESPONSE_CLICK_REFERRER) == true) {
-                                    response.get(RESPONSE_CLICK_REFERRER).toString().replace("\"", "")
-                                } else {
-                                    // TODO изменить
-                                    "https://automation.basalam.com/api/api_v1.0/notifications/push/read/{notification_id}"
-                                }
-                            val data = response?.getAsJsonObject(RESPONSE_DATA)
-
-                            notificationCore.sendOnDefaultChannel(
-                                applicationContext,
-                                id,
-                                notificationImage,
-                                data,
-                                title,
-                                content,
-                                packageName!!,
-                                className!!,
-                                clickReferrerEndPoint
-                            )
-                        } catch (e: Exception) {
-                            Timber.d("LOL OH DAMN IT, WE GOT ERROR (in collect catch): ${e.message}")
-                        }
-                    }
-
-                    else -> Timber.d("LOL OH DAMN IT, WE GOT SERVER ERROR")
-                }
-            }
+        notificationCore.sendOnDefaultChannel(
+            applicationContext,
+            notificationId.getAndIncrement().toString(),
+            notificationImage,
+            null,
+            applicationContext.getString(R.string.app_name),
+            buildString {
+                append(applicationContext.getString(R.string.notification_title_pill))
+                append(": ")
+                append(pillName)
+            },
+            packageName,
+            className,
+            "Healsted"
+        )
     }
+
 }

@@ -15,6 +15,7 @@ import app.vazovsky.healsted.extensions.toIcon
 import app.vazovsky.healsted.managers.DataTypeFormatter
 import app.vazovsky.healsted.managers.DateFormatter
 import by.kirich1409.viewbindingdelegate.viewBinding
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
@@ -48,6 +49,7 @@ class TodayPillViewHolder(
         imageViewIcon.setBackgroundResource(item.pill.type.toIcon())
         textViewCompleted.isVisible = isDone
         imageButtonDone.apply {
+            isVisible = LocalDate.now().atStartOfDay() >= item.date.atStartOfDay()
             setOnClickListener { onDoneItemClick.invoke(item) }
             background = root.context.getDrawableCompat(if (isDone) R.drawable.ic_close else R.drawable.ic_completed)
         }

@@ -7,6 +7,7 @@ import app.vazovsky.healsted.data.model.TodayPillItem
 import app.vazovsky.healsted.domain.base.UseCaseUnary
 import app.vazovsky.healsted.extensions.orError
 import app.vazovsky.healsted.extensions.toDataClass
+import app.vazovsky.healsted.managers.DateFormatter
 import com.google.firebase.firestore.QuerySnapshot
 import java.time.LocalDate
 import javax.inject.Inject
@@ -14,6 +15,7 @@ import javax.inject.Inject
 /** Парсинг QuerySnapshot в список лекарств на сегодняшний день */
 class ParseSnapshotToTodayPillsUseCase @Inject constructor(
     private val pillMapper: PillMapper,
+    private val dateFormatter: DateFormatter,
 ) : UseCaseUnary<ParseSnapshotToTodayPillsUseCase.Params, List<TodayPillItem>>() {
 
     override suspend fun execute(params: Params): List<TodayPillItem> {
@@ -30,8 +32,17 @@ class ParseSnapshotToTodayPillsUseCase @Inject constructor(
             } else true
         }
         filteredPills.forEach { pill ->
-            pill.times.forEach { (_, time) ->
-                resultPills.add(TodayPillItem(pill = pill, date = params.date, time = time))
+            if (dateFormatter.isShownToday(
+                    pill.startDate,
+                    pill.endDate,
+                    params.date,
+                    pill.datesTaken,
+                    pill.datesTakenSelected,
+                )
+            ) {
+                pill.times.forEach { (_, time) ->
+                    resultPills.add(TodayPillItem(pill = pill, date = params.date, time = time))
+                }
             }
         }
 
