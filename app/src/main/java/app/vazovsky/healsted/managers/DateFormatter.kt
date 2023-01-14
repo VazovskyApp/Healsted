@@ -15,7 +15,6 @@ import java.time.temporal.ChronoUnit
 import java.util.*
 import javax.inject.Inject
 import kotlinx.datetime.DayOfWeek
-import timber.log.Timber
 
 /** Пример: "20:23" */
 private const val TIME_TEMPLATE = "HH:mm"
@@ -171,21 +170,15 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
         val inDateRange = currentDate >= startDate || (if (endDate != null) endDate <= currentDate else true)
         return when (datesTakenType) {
             DatesTakenType.EVERYDAY -> inDateRange
-            DatesTakenType.IN_A_DAY -> {
-                if (inDateRange) {
-                    val differentDates = ChronoUnit.DAYS.between(startDate, currentDate)
-                    differentDates % 2 == 0L
-                } else false
-            }
 
-            DatesTakenType.SELECTED_DAYS -> {
-                if (inDateRange) {
-                    Timber.d("LOL " + currentDate.dayOfWeek.value.toString())
-                    val currentDayOfWeek = currentDate.dayOfWeek.value
+            DatesTakenType.IN_A_DAY -> if (inDateRange) {
+                val differentDates = ChronoUnit.DAYS.between(startDate, currentDate)
+                differentDates % 2 == 0L
+            } else false
 
-                    datesTakenSelected.contains(currentDayOfWeek)
-                } else false
-            }
+            DatesTakenType.SELECTED_DAYS -> if (inDateRange) {
+                datesTakenSelected.contains(currentDate.dayOfWeek.value)
+            } else false
         }
     }
 }
