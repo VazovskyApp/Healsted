@@ -17,7 +17,6 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import java.time.LocalDate
 import java.util.concurrent.atomic.*
-import timber.log.Timber
 
 
 @HiltWorker
@@ -61,14 +60,6 @@ class FetchDataWorker @AssistedInject constructor(
             DatesTakenSelectedListConverter().mapStringToList(it)
         } ?: listOf()
 
-        Timber.d("LOL PILL name: $pillName")
-        Timber.d("LOL PILL times: $pillTimes")
-        Timber.d("LOL PILL start date: $pillStartDate")
-        Timber.d("LOL PILL end date: $pillEndDate")
-        Timber.d("LOL PILL pill dates taken type: $pillDatesTakenType")
-        Timber.d("LOL PILL pill dates taken selected: $pillDatesTakenSelectedList")
-
-        Timber.d("LOL DO WORK")
         if (endPoint != null && token != null && deviceId != null && pillStartDate != null && pillDatesTakenType != null) {
             if (dateFormatter.isShownToday(
                     pillStartDate,
@@ -84,16 +75,11 @@ class FetchDataWorker @AssistedInject constructor(
                     packageName!!,
                     className!!,
                 )
+
+//                notificationCore.createWorker(
+//
+//                )
             }
-
-
-//            createPillNotification(
-//                notificationImage,
-//                pillName!!,
-//                packageName!!,
-//                className!!,
-//            )
-        } else {
         }
 
         val outputData = Data.Builder().putString(NotificationCore.NOTIFICATION_DATA, "Notification data").build()

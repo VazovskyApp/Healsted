@@ -55,7 +55,7 @@ class MainActivity : BaseActivity(), BottomNavigationViewManager {
             startDate = nowDate,
             endDate = nowDate.plusDays(2),
             datesTaken = DatesTakenType.SELECTED_DAYS,
-            datesTakenSelected = arrayListOf(6),
+            datesTakenSelected = arrayListOf<Int>(6),
         )
 
         notificationCore.createWorker(

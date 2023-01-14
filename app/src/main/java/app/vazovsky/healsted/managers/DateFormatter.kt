@@ -15,6 +15,7 @@ import java.time.temporal.ChronoUnit
 import java.util.*
 import javax.inject.Inject
 import kotlinx.datetime.DayOfWeek
+import timber.log.Timber
 
 /** Пример: "20:23" */
 private const val TIME_TEMPLATE = "HH:mm"
@@ -177,7 +178,8 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
             } else false
 
             DatesTakenType.SELECTED_DAYS -> if (inDateRange) {
-                datesTakenSelected.contains(currentDate.dayOfWeek.value)
+                // Очень странно, но в случае, когда запускается из воркера, является флоатом, поэтому нужен map
+                datesTakenSelected.map { it.toInt() }.contains(currentDate.dayOfWeek.value)
             } else false
         }
     }
