@@ -47,7 +47,7 @@ class NotificationCore @Inject constructor(
         const val DEFAULT_PACKAGE_NAME = "app.vazovsky.healsted"
         const val DEFAULT_NOTIFICATION_PACKAGE_NAME = "app.vazovsky.healsted.MainActivity"
 
-        const val Channel_ID_DEFAULT: String = "Channel_ID_DEFAULT"
+        const val CHANNEL_ID_DEFAULT: String = "CHANNEL_ID_DEFAULT"
         const val NOTIFICATION_DATA: String = "NOTIFICATION_DATA"
         const val ENDPOINT_REQUEST: String = "ENDPOINT_REQUEST"
         const val TOKEN: String = "TOKEN"
@@ -148,8 +148,8 @@ class NotificationCore @Inject constructor(
         application.apply {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val importance = NotificationManager.IMPORTANCE_HIGH
-                val channel = NotificationChannel(Channel_ID_DEFAULT, "Channel_Default", importance).apply {
-                    description = "This is default channel"
+                val channel = NotificationChannel(CHANNEL_ID_DEFAULT, "Уведомления о лекарствах", importance).apply {
+                    description = "Разрешить уведомления о лекарствах"
                 }
                 val notificationManager: NotificationManager =
                     getSystemService(NOTIFICATION_SERVICE) as NotificationManager
@@ -184,7 +184,7 @@ class NotificationCore @Inject constructor(
         )
 
         val builder = NotificationCompat
-            .Builder(context, Channel_ID_DEFAULT)
+            .Builder(context, CHANNEL_ID_DEFAULT)
             .setSmallIcon(notificationImage)
             .setContentTitle(notificationTitle)
             .setContentText(notificationContent)

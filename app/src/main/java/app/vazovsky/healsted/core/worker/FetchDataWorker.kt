@@ -16,6 +16,7 @@ import app.vazovsky.healsted.data.model.DatesTakenType
 import app.vazovsky.healsted.data.room.converters.DatesTakenSelectedListConverter
 import app.vazovsky.healsted.data.room.converters.TimesMapConverter
 import app.vazovsky.healsted.extensions.toMinutes
+import app.vazovsky.healsted.extensions.withZeroSecondsAndNano
 import app.vazovsky.healsted.managers.DateFormatter
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -68,9 +69,7 @@ class FetchDataWorker @AssistedInject constructor(
             DatesTakenSelectedListConverter().mapStringToList(it)
         } ?: arrayListOf()
 
-        if (endPoint != null && token != null && deviceId != null &&
-            accountUid != null && pillId != null && pillStartDate != null && pillDatesTakenType != null && pillTimes != null
-        ) {
+        if (endPoint != null && token != null && deviceId != null && accountUid != null && pillId != null && pillStartDate != null && pillDatesTakenType != null && pillTimes != null) {
             if (dateFormatter.isShownToday(
                     pillStartDate,
                     pillEndDate,
@@ -112,9 +111,7 @@ class FetchDataWorker @AssistedInject constructor(
     ) {
         val workManager = WorkManager.getInstance(applicationContext)
 
-        val constraints = Constraints.Builder()
-            .setRequiresBatteryNotLow(false)
-            .build()
+        val constraints = Constraints.Builder().setRequiresBatteryNotLow(false).build()
 
         val data = Data.Builder()
         data.putString(NotificationCore.ENDPOINT_REQUEST, NotificationCore.DEFAULT_ENDPOINT)
@@ -139,8 +136,8 @@ class FetchDataWorker @AssistedInject constructor(
             DatesTakenSelectedListConverter().mapListToString(pillDatesTakenSelectedList),
         )
 
-        val nowTime = LocalTime.now()
-        val soonTime = times.values.sorted().firstOrNull { it >= nowTime }
+        val nowTime = LocalTime.now().plusMinutes(1)
+        val soonTime = times.values.sorted().firstOrNull { it.withZeroSecondsAndNano() > nowTime.withZeroSecondsAndNano() }
         val firstTime = times.values.minOf { it }
         val differentTime =
             soonTime?.minusMinutes(nowTime.toMinutes().toLong()) ?: LocalTime.MIDNIGHT.minusMinutes(nowTime.toMinutes().toLong())
@@ -148,14 +145,9 @@ class FetchDataWorker @AssistedInject constructor(
         val differentTimeMinutes = differentTime.toMinutes()
         Timber.d("LOL: times: ${times.values}; soonTime: $soonTime; differentTime: $differentTime")
 
-        val work = OneTimeWorkRequestBuilder<FetchDataWorker>()
-            .setConstraints(constraints)
-            .addTag(NotificationCore.NOTIFICATION_WORK_MANAGER_TAG)
-            .addTag(uid)
-            .addTag(pillId)
-            .setInputData(data.build())
-            .setInitialDelay(differentTimeMinutes.toLong(), TimeUnit.MINUTES)
-            .build()
+        val work = OneTimeWorkRequestBuilder<FetchDataWorker>().setConstraints(constraints)
+            .addTag(NotificationCore.NOTIFICATION_WORK_MANAGER_TAG).addTag(uid).addTag(pillId).setInputData(data.build())
+            .setInitialDelay(differentTimeMinutes.toLong(), TimeUnit.MINUTES).build()
 
         workManager.enqueue(work)
     }
