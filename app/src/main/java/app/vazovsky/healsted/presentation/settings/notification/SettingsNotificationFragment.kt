@@ -17,9 +17,7 @@ class SettingsNotificationFragment : BaseFragment(R.layout.fragment_settings_not
     private val binding by viewBinding(FragmentSettingsNotificationBinding::bind)
     private val viewModel: SettingsNotificationViewModel by viewModels()
 
-    override fun callOperations() {
-
-    }
+    override fun callOperations() = Unit
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitTopInsetsWithPadding()

@@ -11,7 +11,6 @@ import androidx.work.WorkerParameters
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.core.core.NotificationCore
 import app.vazovsky.healsted.core.core.NotificationCore.Companion.DEFAULT_ENDPOINT
-import app.vazovsky.healsted.core.repository.NotificationRepository
 import app.vazovsky.healsted.data.mapper.PillMapper
 import app.vazovsky.healsted.data.model.DatesTakenType
 import app.vazovsky.healsted.data.room.converters.DatesTakenSelectedListConverter
@@ -26,12 +25,10 @@ import java.util.concurrent.*
 import java.util.concurrent.atomic.*
 import timber.log.Timber
 
-
 @HiltWorker
 class FetchDataWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters,
-    private val notificationRepository: NotificationRepository,
     private val notificationCore: NotificationCore,
     private val pillMapper: PillMapper,
     private val dateFormatter: DateFormatter,
@@ -182,8 +179,7 @@ class FetchDataWorker @AssistedInject constructor(
             },
             packageName,
             className,
-            DEFAULT_ENDPOINT
+            DEFAULT_ENDPOINT,
         )
     }
-
 }

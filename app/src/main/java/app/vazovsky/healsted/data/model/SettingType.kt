@@ -4,9 +4,6 @@ package app.vazovsky.healsted.data.model
 enum class SettingType(private val friendlyName: String) {
     ACCOUNT("Аккаунт"),
     NOTIFICATION("Уведомления"),
-    REPORT_A_BAG("Рассказать о баге"),
-    SEND_FEEDBACK("Отправить обратную связь"),
-    FEATURES("Будущие фичи"),
     ABOUT_US("О приложении"),
     LOG_OUT("Выйти");
 

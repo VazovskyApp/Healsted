@@ -16,6 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
+            app:menu="@menu/delete_menu"
             app:navigationIcon="@drawable/ic_back"
             app:title="@string/settings_account_title"
             app:titleTextAppearance="@style/Font.Heading_1.Black" />
@@ -36,29 +37,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/imageViewAvatar"
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:shapeAppearanceOverlay="@style/CircleShape" />
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    app:layout_constraintBottom_toBottomOf="@id/imageViewAvatar"
-                    app:layout_constraintEnd_toEndOf="@id/imageViewAvatar"
-                    app:shapeAppearanceOverlay="@style/CircleShape"
-                    app:srcCompat="@drawable/bg_edit" />
-
                 <TextView
                     android:id="@+id/textViewNickname"
                     android:layout_width="match_parent"
@@ -67,7 +45,7 @@
                     android:layout_marginTop="20dp"
                     android:text="@string/settings_account_nickname"
                     android:textAppearance="@style/Font.Heading_3.Medium"
-                    app:layout_constraintTop_toBottomOf="@id/imageViewAvatar" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
                     android:id="@+id/textInputNickname"
@@ -220,24 +198,8 @@
                     android:text="@string/settings_account_save"
                     android:textAllCaps="true"
                     android:textAppearance="@style/Font.Body_1.Bold"
-                    app:layout_constraintBottom_toTopOf="@id/buttonDelete"
-                    app:layout_constraintTop_toBottomOf="@id/textInputBirthday" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonDelete"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_16"
-                    android:backgroundTint="@color/pillsCardRed"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:padding="16dp"
-                    android:text="@string/settings_account_delete"
-                    android:textAllCaps="true"
-                    android:textAppearance="@style/Font.Body_1.Bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textInputBirthday"
-                    app:layout_constraintVertical_bias="1" />
+                    app:layout_constraintTop_toBottomOf="@id/textInputBirthday" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </app.vazovsky.healsted.presentation.view.StateViewFlipper>
     </androidx.core.widget.NestedScrollView>

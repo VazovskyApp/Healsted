@@ -5,7 +5,6 @@ import androidx.fragment.app.viewModels
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.core.core.NotificationCore
 import app.vazovsky.healsted.data.model.SettingType
-import app.vazovsky.healsted.data.model.SettingsItem
 import app.vazovsky.healsted.databinding.FragmentSettingsBinding
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.extensions.showErrorSnackbar
@@ -36,7 +35,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         observeNavigationCommands()
         settingsLiveData.observe { result ->
             binding.stateViewFlipper.setStateFromResult(result)
-            result.doOnSuccess { settings -> bindSettings(settings) }
+            result.doOnSuccess { settings -> settingsAdapter.submitList(settings) }
             result.doOnFailure { Timber.d(it.message) }
         }
         signOutLiveEvent.observe { result ->
@@ -55,19 +54,13 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         setupRecyclerView()
     }
 
-    private fun bindSettings(settings: List<SettingsItem>) {
-        settingsAdapter.submitList(settings)
-    }
-
+    /** Настройка RecyclerView */
     private fun setupRecyclerView() = with(binding) {
         recyclerViewSettings.adapter = settingsAdapter
         settingsAdapter.onItemClick = { item ->
             when (item.type) {
                 SettingType.ACCOUNT -> viewModel.openAccount()
                 SettingType.NOTIFICATION -> viewModel.openNotifications()
-                SettingType.REPORT_A_BAG -> viewModel.openReportBug()
-                SettingType.SEND_FEEDBACK -> viewModel.openSendFeedback()
-                SettingType.FEATURES -> viewModel.openFeatures()
                 SettingType.ABOUT_US -> viewModel.openAboutUs()
                 SettingType.LOG_OUT -> {
                     viewModel.signOut()

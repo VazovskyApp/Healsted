@@ -56,6 +56,7 @@
     <string name="dashboard_date_unknown">Неизвестно</string>
     <string name="dashboard_empty_pills_title">На сегодня нет лекарств</string>
     <string name="dashboard_empty_pills_comment">Вы можете добавить их во вкладке Лекарства</string>
+    <string name="dashboard_today_pill_completed">Завершено</string>
 
     <string name="pill_type_cream">мг</string>
     <string name="pill_type_liquid">мл</string>

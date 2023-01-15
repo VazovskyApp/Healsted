@@ -29,18 +29,16 @@ class SettingsAboutUsFragment : BaseFragment(R.layout.fragment_settings_about_us
         setDeveloped()
     }
 
-    private fun setDeveloped() = with(binding.textViewDeveloper) {
-        text = buildString {
-            append(resources.getString(R.string.settings_about_us_developed_prev))
-            append(" ")
-            append(resources.getString(R.string.settings_about_us_developed_vazovsky))
-        }
-        setOnClickListener { viewModel.openTelegramVazovsky() }
-    }
-
+    /** Настройка всех кликов */
     private fun setClicks() = with(binding) {
         toolbar.setNavigationOnClickListener { viewModel.navigateBack() }
         textViewShare.setOnClickListener { viewModel.shareUrl() }
         textViewTelegram.setOnClickListener { viewModel.openTelegramChannel() }
+    }
+
+    /** Настройка кнопки Developed by VazovskyApp */
+    private fun setDeveloped() = with(binding.textViewDeveloper) {
+        text = resources.getString(R.string.settings_about_us_developed)
+        setOnClickListener { viewModel.openTelegramVazovsky() }
     }
 }

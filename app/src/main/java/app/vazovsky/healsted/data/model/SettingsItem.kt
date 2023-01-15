@@ -9,7 +9,4 @@ data class SettingsItem(
 
     /** Иконка */
     @DrawableRes val icon: Int?,
-
-    /** Группа настроек */
-    val group: SettingsGroup,
 )

@@ -23,25 +23,9 @@
     <string name="settings_about_us_description">Приложение для отслеживания принятия лекарств. Если вам нужно принять лекарства, а вы забыли это сделать, то приложение поможет вам не забыть это сделать вовремя.</string>
     <string name="settings_about_us_share">Поделиться приложением</string>
     <string name="settings_about_us_telegram">Telegram Channel</string>
-    <string name="settings_about_us_developed_prev">Developed by</string>
-    <string name="settings_about_us_developed_vazovsky">VazovskyApp</string>
-
-    <!-- Settings Send feedback -->
-    <string name="settings_send_feedback_title">Написать разработчику</string>
-    <string name="settings_send_feedback_description">Мы всегда рады вашим отзывам :)</string>
+    <string name="settings_about_us_developed">Developed by VazovskyApp</string>
 
     <!-- Settings Notification -->
     <string name="settings_notifications_title">Уведомления</string>
 
-    <!-- Settings Report bug -->
-    <string name="settings_report_bug_title">Нам правда очень жаль,\nРасскажите, что не так?</string>
-    <string name="settings_report_bug_description">Мы постараемся стать лучше</string>
-    <string name="settings_report_bug_hint">Что стоит исправить?</string>
-    <string name="settings_report_bug_send">Отправить</string>
-    <string name="dashboard_today_pill_completed">Завершено</string>
-
-    <!-- Settings Features -->
-    <string name="settings_features_title">Будущие фичи</string>
-    <string name="settings_features_description">Приложение находится в стадии разработки</string>
-    <string name="settings_features_list_title">В будущем станут доступны функции:</string>
 </resources>

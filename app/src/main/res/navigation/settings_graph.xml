@@ -17,17 +17,8 @@
             android:id="@+id/action_settingsFragment_to_settingsNotificationFragment"
             app:destination="@id/settingsNotificationFragment" />
         <action
-            android:id="@+id/action_settingsFragment_to_settingsReportBugFragment"
-            app:destination="@id/settingsReportBugFragment" />
-        <action
-            android:id="@+id/action_settingsFragment_to_settingsSendFeedbackFragment"
-            app:destination="@id/settingsSendFeedbackFragment" />
-        <action
             android:id="@+id/action_settingsFragment_to_settingsAccountFragment"
             app:destination="@id/settingsAccountFragment" />
-        <action
-            android:id="@+id/action_settingsFragment_to_settingsFeaturesFragment"
-            app:destination="@id/settingsFeaturesFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsAccountFragment"
@@ -44,19 +35,4 @@
         android:name="app.vazovsky.healsted.presentation.settings.notification.SettingsNotificationFragment"
         android:label="SettingsNotificationFragment"
         tools:layout="@layout/fragment_settings_notification" />
-    <fragment
-        android:id="@+id/settingsReportBugFragment"
-        android:name="app.vazovsky.healsted.presentation.settings.reportbug.SettingsReportBugFragment"
-        android:label="SettingsReportBugFragment"
-        tools:layout="@layout/fragment_settings_report_bug" />
-    <fragment
-        android:id="@+id/settingsSendFeedbackFragment"
-        android:name="app.vazovsky.healsted.presentation.settings.sendfeedback.SettingsSendFeedbackFragment"
-        android:label="SettingsSendFeedbackFragment"
-        tools:layout="@layout/fragment_settings_send_feedback" />
-    <fragment
-        android:id="@+id/settingsFeaturesFragment"
-        android:name="app.vazovsky.healsted.presentation.settings.features.SettingsFeaturesFragment"
-        android:label="SettingsFeaturesFragment"
-        tools:layout="@layout/fragment_settings_features" />
 </navigation>

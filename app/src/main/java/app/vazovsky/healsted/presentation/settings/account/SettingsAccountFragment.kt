@@ -65,24 +65,14 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
         }
     }
 
-    private fun setDeleteAccountTask(task: Task<Void>?, uid: String) {
-        task?.apply {
-            addOnSuccessListener {
-                notificationCore.cancelWorker(requireActivity().application, uid)
-                viewModel.deleteAccountFireStore()
-            }
-            addOnFailureListener { Timber.d(it.message) }
-        } ?: Timber.d("Не удалось удалить аккаунт")
-    }
-
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
         root.fitTopInsetsWithPadding()
-        toolbar.setNavigationOnClickListener { viewModel.navigateBack() }
 
-        setupConfirm()
-        setupDelete()
+        setupToolbar()
+        setupSave()
     }
 
+    /** Привязка профиля */
     private fun bindProfile(account: Account) = with(binding) {
         editTextNickname.setText(account.nickname)
         editTextBirthday.setText(account.birthday?.let { dateFormatter.formatStringFromLocalDate(it) }.orDefault())
@@ -91,34 +81,46 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
         editTextPatronymic.setText(account.patronymic)
     }
 
-    private fun setupConfirm() = with(binding) {
-        buttonSave.setOnClickListener {
-            val nickname = editTextNickname.text.toString()
-            val surname = editTextSurname.text.toString()
-            val name = editTextName.text.toString()
-            val patronymic = editTextPatronymic.text.toString()
-            val birthday = dateFormatter.parseLocalDateFromString(editTextBirthday.text.toString())
+    /** Настройка тулбара */
+    private fun setupToolbar() = with(binding.toolbar) {
+        setNavigationOnClickListener { viewModel.navigateBack() }
+        setOnMenuItemClickListener { item ->
+            if (item.itemId == R.id.menuDelete) viewModel.deleteAccountFirebase()
+            true
+        }
+    }
 
-            val isValidate = listOf(textInputNickname, textInputBirthday).checkInputs()
-            if (isValidate) {
-                val editedAccount = account?.copy(
-                    nickname = nickname,
-                    surname = surname,
-                    name = name,
-                    patronymic = patronymic,
-                    birthday = birthday,
-                )
-                if (editedAccount != null) {
-                    viewModel.updateAccount(editedAccount)
-                }
+    /** Настройка кнопки Сохранить */
+    private fun setupSave() = with(binding) {
+        buttonSave.setOnClickListener { saveWithCheckValidate() }
+    }
+
+    /** Сохранение профиля с проверкой валидности данных */
+    private fun saveWithCheckValidate() = with(binding) {
+        val nickname = editTextNickname.text.toString()
+        val surname = editTextSurname.text.toString()
+        val name = editTextName.text.toString()
+        val patronymic = editTextPatronymic.text.toString()
+        val birthday = dateFormatter.parseLocalDateFromString(editTextBirthday.text.toString())
+
+        val isValidate = listOf(textInputNickname, textInputBirthday).checkInputs()
+        if (isValidate) {
+            val editedAccount = account?.copy(
+                nickname = nickname,
+                surname = surname,
+                name = name,
+                patronymic = patronymic,
+                birthday = birthday,
+            )
+            if (editedAccount != null) {
+                viewModel.updateAccount(editedAccount)
             }
         }
     }
 
-    private fun setupDelete() = with(binding) {
-        buttonDelete.setOnClickListener {
-            viewModel.deleteAccountFirebase()
-        }
+    private fun setProfileSnapshotTask(task: Task<DocumentSnapshot>) = with(task) {
+        addOnSuccessListener { viewModel.getProfile(it) }
+        addOnFailureListener { Timber.d(it.message) }
     }
 
     private fun setEditAccountTask(task: Task<Void>) = with(task) {
@@ -126,8 +128,13 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
         addOnFailureListener { showErrorSnackbar("Не удалось обновить профиль") }
     }
 
-    private fun setProfileSnapshotTask(task: Task<DocumentSnapshot>) = with(task) {
-        addOnSuccessListener { viewModel.getProfile(it) }
-        addOnFailureListener { Timber.d(it.message) }
+    private fun setDeleteAccountTask(task: Task<Void>?, uid: String) {
+        task?.apply {
+            addOnSuccessListener {
+                notificationCore.cancelWorker(requireActivity().application, uid)
+                viewModel.deleteAccountFireStore()
+            }
+            addOnFailureListener { Timber.d(it.message) }
+        } ?: Timber.d("Не удалось удалить аккаунт")
     }
 }

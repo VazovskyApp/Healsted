@@ -41,4 +41,6 @@ interface PillDao {
     /** Удаление лекарства из Room */
     @Delete()
     suspend fun deletePill(pill: PillEntity)
+
+
 }
