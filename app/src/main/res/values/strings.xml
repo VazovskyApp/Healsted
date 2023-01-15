@@ -101,4 +101,5 @@
     <string name="okay">OKAY</string>
     <string name="good">GOOD</string>
     <string name="great">GREAT</string>
+    <string name="profile_pills_history">История</string>
 </resources>

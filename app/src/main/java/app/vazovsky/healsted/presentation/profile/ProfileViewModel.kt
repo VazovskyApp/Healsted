@@ -3,16 +3,17 @@ package app.vazovsky.healsted.presentation.profile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import app.vazovsky.healsted.data.model.Account
-import app.vazovsky.healsted.data.model.LoyaltyProgress
+import app.vazovsky.healsted.data.model.TodayPillItem
 import app.vazovsky.healsted.data.model.base.LoadableResult
-import app.vazovsky.healsted.domain.base.UseCase
-import app.vazovsky.healsted.domain.loyalty.GetLoyaltyUseCase
 import app.vazovsky.healsted.domain.account.GetAccountUseCase
-import app.vazovsky.healsted.domain.loyalty.ParseSnapshotToLoyaltyUseCase
 import app.vazovsky.healsted.domain.account.ParseSnapshotToAccountUseCase
+import app.vazovsky.healsted.domain.base.UseCase
+import app.vazovsky.healsted.domain.pills.GetAllPillsUseCase
+import app.vazovsky.healsted.domain.pills.ParseSnapshotToPillsHistoryUseCase
 import app.vazovsky.healsted.presentation.base.BaseViewModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -20,8 +21,8 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val getAccountUseCase: GetAccountUseCase,
     private val parseSnapshotToAccountUseCase: ParseSnapshotToAccountUseCase,
-    private val getLoyaltyUseCase: GetLoyaltyUseCase,
-    private val parseSnapshotToLoyaltyUseCase: ParseSnapshotToLoyaltyUseCase,
+    private val getAllPillsUseCase: GetAllPillsUseCase,
+    private val parseSnapshotToPillsHistoryUseCase: ParseSnapshotToPillsHistoryUseCase,
 ) : BaseViewModel() {
     /** Данные об аккаунте */
     private val _profileSnapshotLiveData = MutableLiveData<LoadableResult<Task<DocumentSnapshot>>>()
@@ -31,13 +32,13 @@ class ProfileViewModel @Inject constructor(
     private val _profileLiveData = MutableLiveData<LoadableResult<Account>>()
     val profileLiveData: LiveData<LoadableResult<Account>> = _profileLiveData
 
-    /** Данные об уровне в программе лояльности */
-    private val _loyaltySnapshotLiveData = MutableLiveData<LoadableResult<Task<DocumentSnapshot>>>()
-    val loyaltySnapshotLiveData: LiveData<LoadableResult<Task<DocumentSnapshot>>> = _loyaltySnapshotLiveData
+    /** Таблетки из FireStore в виде QuerySnapshot */
+    private val _listPillsSnapshotLiveData = MutableLiveData<LoadableResult<Task<QuerySnapshot>>>()
+    val listPillsSnapshotLiveData: LiveData<LoadableResult<Task<QuerySnapshot>>> = _listPillsSnapshotLiveData
 
-    /** Данные об уровне в программе лояльности */
-    private val _loyaltyLiveData = MutableLiveData<LoadableResult<LoyaltyProgress>>()
-    val loyaltyLiveData: LiveData<LoadableResult<LoyaltyProgress>> = _loyaltyLiveData
+    /** Таблетки из FireStore из QuerySnapshot */
+    private val _listPillsHistoryLiveData = MutableLiveData<LoadableResult<List<TodayPillItem>>>()
+    val listPillsHistoryLiveData: LiveData<LoadableResult<List<TodayPillItem>>> = _listPillsHistoryLiveData
 
     /** Получение данных об аккаунте */
     fun getProfileSnapshot() {
@@ -52,17 +53,15 @@ class ProfileViewModel @Inject constructor(
         )
     }
 
-    /** Получение данных о программе лояльности */
-    fun getLoyaltySnapshot() {
-        _loyaltySnapshotLiveData.launchLoadData(
-            getLoyaltyUseCase.executeFlow(UseCase.None)
+    fun getPillsHistorySnapshot() {
+        _listPillsSnapshotLiveData.launchLoadData(
+            getAllPillsUseCase.executeFlow(UseCase.None)
         )
     }
 
-    /** Получение данных о программе лояльности */
-    fun getLoyalty(snapshot: DocumentSnapshot) {
-        _loyaltyLiveData.launchLoadData(
-            parseSnapshotToLoyaltyUseCase.executeFlow(ParseSnapshotToLoyaltyUseCase.Params(snapshot))
+    fun getPillsHistory(snapshot: QuerySnapshot) {
+        _listPillsHistoryLiveData.launchLoadData(
+            parseSnapshotToPillsHistoryUseCase.executeFlow(ParseSnapshotToPillsHistoryUseCase.Params(snapshot))
         )
     }
 }

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/margin_20"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    tools:cardBackgroundColor="@color/pills_card_blue">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_shape_gradient">
+
+        <ImageView
+            android:id="@+id/imageViewIcon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/margin_16"
+            android:backgroundTint="@color/pillsCardTransparent5A"
+            android:contentDescription="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@drawable/ic_pill_capsule" />
+
+        <TextView
+            android:id="@+id/textViewName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="@dimen/margin_8"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/Font.Body_1.Bold"
+            app:layout_constraintEnd_toStartOf="@id/textViewTime"
+            app:layout_constraintStart_toEndOf="@id/imageViewIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Нурофен" />
+
+        <TextView
+            android:id="@+id/textViewCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="@dimen/margin_8"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/Font.Body_1.Medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageViewIcon"
+            app:layout_constraintTop_toBottomOf="@id/textViewName"
+            app:layout_constraintVertical_bias="1"
+            tools:text="8 таблеток" />
+
+        <TextView
+            android:id="@+id/textViewTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_16"
+            android:textAppearance="@style/Font.Body_1.Bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="11:11" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
