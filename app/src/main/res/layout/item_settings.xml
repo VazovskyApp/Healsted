@@ -6,7 +6,7 @@
     android:background="?selectableItemBackground"
     android:clickable="true"
     android:focusable="true">
-    <!-- TODO сделать нормальный ripple -->
+
     <ImageView
         android:id="@+id/imageViewIcon"
         android:layout_width="36dp"

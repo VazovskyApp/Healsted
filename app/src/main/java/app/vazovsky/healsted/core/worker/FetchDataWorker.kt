@@ -10,6 +10,7 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.core.core.NotificationCore
+import app.vazovsky.healsted.core.core.NotificationCore.Companion.DEFAULT_ENDPOINT
 import app.vazovsky.healsted.core.repository.NotificationRepository
 import app.vazovsky.healsted.data.mapper.PillMapper
 import app.vazovsky.healsted.data.model.DatesTakenType
@@ -181,7 +182,7 @@ class FetchDataWorker @AssistedInject constructor(
             },
             packageName,
             className,
-            "Healsted"
+            DEFAULT_ENDPOINT
         )
     }
 

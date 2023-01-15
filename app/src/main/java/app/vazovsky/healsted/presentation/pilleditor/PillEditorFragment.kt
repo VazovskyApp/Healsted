@@ -332,13 +332,8 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         addOnSuccessListener {
             notificationCore.cancelWorker(requireActivity().application, pill.id)
             notificationCore.createWorker(
-                requireActivity().application,
-                token = NotificationCore.DEFAULT_TOKEN,
-                endPoint = NotificationCore.DEFAULT_ENDPOINT,
-                deviceId = NotificationCore.DEFAULT_DEVICE_ID,
+                application = requireActivity().application,
                 notificationImage = R.drawable.ic_logo_red,
-                notificationPackageName = NotificationCore.DEFAULT_PACKAGE_NAME,
-                notificationClassPackageName = NotificationCore.DEFAULT_NOTIFICATION_PACKAGE_NAME,
                 uid = uid,
                 pill = pill,
             )

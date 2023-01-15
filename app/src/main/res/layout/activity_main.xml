@@ -33,7 +33,6 @@
             app:labelVisibilityMode="unlabeled"
             app:menu="@menu/bottom_navigation_menu" />
 
-        <!-- TODO поправить баг с тем, что изначально кнопка находится выше -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabDashboard"
             android:layout_width="@dimen/bottom_navigation_fab_size"

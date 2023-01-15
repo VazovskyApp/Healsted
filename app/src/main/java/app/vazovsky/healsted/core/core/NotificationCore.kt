@@ -47,7 +47,6 @@ class NotificationCore @Inject constructor(
         const val DEFAULT_PACKAGE_NAME = "app.vazovsky.healsted"
         const val DEFAULT_NOTIFICATION_PACKAGE_NAME = "app.vazovsky.healsted.MainActivity"
 
-
         const val Channel_ID_DEFAULT: String = "Channel_ID_DEFAULT"
         const val NOTIFICATION_DATA: String = "NOTIFICATION_DATA"
         const val ENDPOINT_REQUEST: String = "ENDPOINT_REQUEST"
@@ -82,12 +81,12 @@ class NotificationCore @Inject constructor(
     /** Создать воркер */
     fun createWorker(
         application: Application,
-        token: String,
-        endPoint: String,
-        deviceId: String,
+        token: String = DEFAULT_TOKEN,
+        endPoint: String = DEFAULT_ENDPOINT,
+        deviceId: String = DEFAULT_DEVICE_ID,
         notificationImage: Int,
-        notificationPackageName: String,
-        notificationClassPackageName: String,
+        notificationPackageName: String = DEFAULT_PACKAGE_NAME,
+        notificationClassPackageName: String = DEFAULT_NOTIFICATION_PACKAGE_NAME,
         uid: String,
         pill: Pill,
     ) {

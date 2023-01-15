@@ -29,8 +29,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!-- TODO придумать, чем это вообще заполнить -->
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

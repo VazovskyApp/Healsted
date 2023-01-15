@@ -3,6 +3,7 @@ package app.vazovsky.healsted.presentation.auth.signup
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import app.vazovsky.healsted.R
+import app.vazovsky.healsted.core.core.NotificationCore
 import app.vazovsky.healsted.databinding.FragmentSignUpBinding
 import app.vazovsky.healsted.domain.auth.SaveFireStoreUserUseCase
 import app.vazovsky.healsted.extensions.checkInputs
@@ -27,6 +28,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     private val viewModel: SignUpViewModel by viewModels()
 
     @Inject lateinit var firebaseAuthExceptionManager: FirebaseAuthExceptionManager
+    @Inject lateinit var notificationCore: NotificationCore
     override fun callOperations() = Unit
 
     override fun onBindViewModel() = with(viewModel) {
@@ -68,7 +70,20 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
             result.doOnFailure { Timber.d(it.message) }
         }
         listPillsLiveEvent.observe { result ->
-            result.doOnSuccess { pills -> viewModel.saveRoomPills(pills) }
+            result.doOnSuccess {
+                result.doOnSuccess { parseResult ->
+                    viewModel.saveRoomPills(parseResult.pills)
+                    parseResult.pills.forEach { pill ->
+                        notificationCore.cancelWorker(requireActivity().application, pill.id)
+                        notificationCore.createWorker(
+                            application = requireActivity().application,
+                            notificationImage = R.drawable.ic_logo_red,
+                            uid = parseResult.uid,
+                            pill = pill,
+                        )
+                    }
+                }
+            }
             result.doOnFailure { Timber.d(it.message) }
         }
         saveRoomPillsLiveEvent.observe { result ->

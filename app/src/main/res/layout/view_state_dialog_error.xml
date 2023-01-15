@@ -33,7 +33,6 @@
         android:textColor="?android:textColor"
         tools:text="@string/error_internet_message" />
 
-    <!-- TODO сделать стиль кнопки -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonError"
         android:layout_width="wrap_content"

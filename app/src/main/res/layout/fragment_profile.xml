@@ -109,8 +109,6 @@
             android:background="@drawable/bg_round_sheet"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <!-- TODO Подумать над заполнением профиля -->
-
             <TextView
                 android:id="@+id/textViewTitle"
                 android:layout_width="match_parent"

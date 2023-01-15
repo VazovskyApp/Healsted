@@ -75,8 +75,8 @@ class SignUpViewModel @Inject constructor(
     val listPillsSnapshotLiveEvent: LiveData<LoadableResult<Task<QuerySnapshot>>> = _listPillsSnapshotLiveEvent
 
     /** Таблетки из FireStore из QuerySnapshot */
-    private val _listPillsLiveEvent = SingleLiveEvent<LoadableResult<List<Pill>>>()
-    val listPillsLiveEvent: LiveData<LoadableResult<List<Pill>>> = _listPillsLiveEvent
+    private val _listPillsLiveEvent = SingleLiveEvent<LoadableResult<ParseSnapshotToAllPillsUseCase.Result>>()
+    val listPillsLiveEvent: LiveData<LoadableResult<ParseSnapshotToAllPillsUseCase.Result>> = _listPillsLiveEvent
 
     /** Сохранение лекарств в Room */
     private val _saveRoomPillsLiveEvent = SingleLiveEvent<LoadableResult<Boolean>>()

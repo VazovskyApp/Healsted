@@ -30,7 +30,6 @@ class SettingsSendFeedbackFragment : BaseFragment(R.layout.fragment_settings_sen
 
     private fun setupToolbar() = with(binding) {
         toolbar.setNavigationOnClickListener { viewModel.navigateBack() }
-        /** TODO сделать слушатель в зависимости от заполнения editTextFeedback. Нужно ограничение, что принимаются сообщения от 50 символов */
         toolbar.menu.findItem(R.id.menuSend).isEnabled = !editTextFeedback.text.isNullOrBlank()
     }
 

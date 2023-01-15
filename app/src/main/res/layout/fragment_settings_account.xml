@@ -35,7 +35,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <!-- Todo сделать обводку -->
+
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/imageViewAvatar"
                     android:layout_width="160dp"
@@ -47,7 +47,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:shapeAppearanceOverlay="@style/CircleShape" />
 
-                <!-- Todo сделать красивее -->
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
@@ -223,7 +222,7 @@
                     android:textAppearance="@style/Font.Body_1.Bold"
                     app:layout_constraintBottom_toTopOf="@id/buttonDelete"
                     app:layout_constraintTop_toBottomOf="@id/textInputBirthday" />
-                <!-- TODO убрать кнопку подальше, а то нажать можно случайно -->
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonDelete"
                     android:layout_width="match_parent"

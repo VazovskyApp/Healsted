@@ -9,7 +9,6 @@ import app.vazovsky.healsted.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-/** Экран с настройками уведомлений TODO нужно придумать заполнение */
 @AndroidEntryPoint
 class SettingsNotificationFragment : BaseFragment(R.layout.fragment_settings_notification) {
 

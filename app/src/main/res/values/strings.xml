@@ -88,7 +88,6 @@
     <string name="health_update">Обновить</string>
 
     <!-- Health Attribute -->
-    <!-- TODO сделать строки для атрибутов мониторинга относительно кол-ва -->
     <string name="health_attribute_add_value">Добавить значение</string>
     <string name="health_attribute_current_value">Текущее значение:</string>
     <string name="health_attribute_switch_remind_to_measure">Напоминать об измерении</string>

@@ -38,7 +38,6 @@ class FirebaseAuthServiceImpl @Inject constructor(
 
     override fun logOut() = firebaseAuth.signOut()
 
-    /** TODO не удаляется аккаунт из Firebase */
     override fun deleteAccountFromFirebaseAuth() = firebaseAuth.currentUser?.delete()
     //</editor-fold>
 

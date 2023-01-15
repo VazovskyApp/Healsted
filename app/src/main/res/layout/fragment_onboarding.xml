@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Todo сделать заполнение, скорей всего будет делаться после полной разработки приложения -->
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="match_parent"

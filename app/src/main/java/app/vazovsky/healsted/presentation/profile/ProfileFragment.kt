@@ -56,7 +56,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         stateViewFlipper.setRetryMethod { viewModel.getProfileSnapshot() }
 
         textViewLevel.setOnClickListener {
-            //TODO сделать открытие BottomSheet с инфой об уровнях
         }
     }
 
