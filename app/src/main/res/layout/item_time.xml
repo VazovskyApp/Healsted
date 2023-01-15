@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/pill_editor_time_hint"
             android:imeOptions="actionNext"
-            android:inputType="numberDecimal" />
+            android:inputType="time"
+            android:maxLines="1" />
     </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
 
     <ImageButton

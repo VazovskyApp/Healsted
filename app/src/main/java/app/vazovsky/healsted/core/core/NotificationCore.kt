@@ -24,13 +24,13 @@ import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.data.room.converters.DatesTakenSelectedListConverter
 import app.vazovsky.healsted.data.room.converters.TimesMapConverter
 import app.vazovsky.healsted.extensions.toMinutes
-import app.vazovsky.healsted.extensions.withZeroSecondsAndNano
 import app.vazovsky.healsted.managers.DateFormatter
 import com.google.gson.JsonObject
 import java.time.LocalTime
 import java.util.concurrent.*
 import javax.inject.Inject
 import javax.inject.Singleton
+import timber.log.Timber
 
 @Singleton
 class NotificationCore @Inject constructor(
@@ -41,6 +41,13 @@ class NotificationCore @Inject constructor(
     private var notificationViewModel: NotificationViewModel? = null
 
     companion object {
+        const val DEFAULT_TOKEN = "**"
+        const val DEFAULT_ENDPOINT = "Healsted"
+        const val DEFAULT_DEVICE_ID = "test"
+        const val DEFAULT_PACKAGE_NAME = "app.vazovsky.healsted"
+        const val DEFAULT_NOTIFICATION_PACKAGE_NAME = "app.vazovsky.healsted.MainActivity"
+
+
         const val Channel_ID_DEFAULT: String = "Channel_ID_DEFAULT"
         const val NOTIFICATION_DATA: String = "NOTIFICATION_DATA"
         const val ENDPOINT_REQUEST: String = "ENDPOINT_REQUEST"
@@ -54,6 +61,8 @@ class NotificationCore @Inject constructor(
         const val PACKAGE_NAME: String = "PACKAGE_NAME"
         const val CLASS_NAME: String = "CLASS_NAME"
         const val NOTIFICATION_WORK_MANAGER_TAG: String = "NOTIFICATION_WORK_MANAGER_TAG"
+        const val ACCOUNT_UID: String = "ACCOUNT_UID"
+        const val PILL_ID = "PILL_ID"
         const val PILL_NAME = "PILL_NAME"
         const val PILL_TIMES = "PILL_TIMES"
         const val PILL_START_DATE = "PILL_START_DATE"
@@ -101,11 +110,17 @@ class NotificationCore @Inject constructor(
         data.putString(PILL_END_DATE, pill.endDate?.let { dateFormatter.formatStringFromLocalDate(it) })
         data.putString(PILL_DATES_TAKEN_TYPE, pill.datesTaken.name)
         data.putString(PILL_DATES_TAKEN_SELECTED, DatesTakenSelectedListConverter().mapListToString(pill.datesTakenSelected))
+        data.putString(ACCOUNT_UID, uid)
+        data.putString(PILL_ID, pill.id)
 
-        val nowTime = LocalTime.now().withZeroSecondsAndNano()
-        val firstTime = pill.times.values.sorted().firstOrNull { it >= nowTime } ?: nowTime
-        val differentTime = firstTime.minusMinutes((nowTime.toMinutes()).toLong())
+        val nowTime = LocalTime.now()
+        val soonTime = pill.times.values.sorted().firstOrNull { it >= nowTime }
+        val firstTime = pill.times.values.minOf { it }
+        val differentTime =
+            soonTime?.minusMinutes(nowTime.toMinutes().toLong()) ?: LocalTime.MIDNIGHT.minusMinutes(nowTime.toMinutes().toLong())
+                .plusMinutes(firstTime.toMinutes().toLong())
         val differentTimeMinutes = differentTime.toMinutes()
+        Timber.d("LOL: times: ${pill.times.values}; soonTime: $soonTime; differentTime: $differentTime")
 
         val work = OneTimeWorkRequestBuilder<FetchDataWorker>()
             .setConstraints(constraints)

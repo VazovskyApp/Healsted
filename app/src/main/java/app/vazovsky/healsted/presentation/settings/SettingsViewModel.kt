@@ -24,8 +24,8 @@ class SettingsViewModel @Inject constructor(
     private val _settingsLiveData = MutableLiveData<LoadableResult<List<SettingsItem>>>()
     val settingsLiveData: LiveData<LoadableResult<List<SettingsItem>>> = _settingsLiveData
 
-    private val _signOutLiveEvent = SingleLiveEvent<LoadableResult<Unit>>()
-    val signOutLiveEvent: LiveData<LoadableResult<Unit>> = _signOutLiveEvent
+    private val _signOutLiveEvent = SingleLiveEvent<LoadableResult<SignOutUseCase.Result>>()
+    val signOutLiveEvent: LiveData<LoadableResult<SignOutUseCase.Result>> = _signOutLiveEvent
 
     /** Получение настроек */
     fun getSettings() {

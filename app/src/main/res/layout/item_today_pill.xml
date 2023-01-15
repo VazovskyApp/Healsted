@@ -29,24 +29,30 @@
 
         <TextView
             android:id="@+id/textViewName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="@dimen/margin_8"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textAppearance="@style/Font.Body_1.Bold"
+            app:layout_constraintEnd_toStartOf="@id/textViewTime"
             app:layout_constraintStart_toEndOf="@id/imageViewIcon"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Нурофен" />
 
         <TextView
             android:id="@+id/textViewCount"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="@dimen/margin_8"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textAppearance="@style/Font.Body_1.Medium"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/textViewCompleted"
             app:layout_constraintStart_toEndOf="@id/imageViewIcon"
             app:layout_constraintTop_toBottomOf="@id/textViewName"
             app:layout_constraintVertical_bias="1"
@@ -79,8 +85,8 @@
         <ImageButton
             android:id="@+id/imageButtonDone"
             android:layout_width="0dp"
-            android:layout_margin="@dimen/margin_8"
             android:layout_height="0dp"
+            android:layout_margin="@dimen/margin_8"
             android:background="@drawable/ic_completed"
             android:clickable="true"
             android:contentDescription="@null"

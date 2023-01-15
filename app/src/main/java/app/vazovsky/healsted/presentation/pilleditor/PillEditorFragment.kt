@@ -11,6 +11,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import app.vazovsky.healsted.R
+import app.vazovsky.healsted.core.core.NotificationCore
 import app.vazovsky.healsted.data.model.DatesTakenSelectedItem
 import app.vazovsky.healsted.data.model.DatesTakenType
 import app.vazovsky.healsted.data.model.Pill
@@ -27,6 +28,7 @@ import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import app.vazovsky.healsted.presentation.pilleditor.datestakenselected.DatesTakenSelectedAdapter
 import app.vazovsky.healsted.presentation.pilleditor.pilltypes.PillTypesAdapter
+import app.vazovsky.healsted.presentation.pilleditor.times.TimeItem
 import app.vazovsky.healsted.presentation.pilleditor.times.TimesAdapter
 import app.vazovsky.healsted.presentation.pills.REQUEST_KEY_UPDATE_PILLS
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -48,6 +50,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
 
     private val binding by viewBinding(FragmentPillEditorBinding::bind)
     private val viewModel: PillEditorViewModel by viewModels()
+    @Inject lateinit var notificationCore: NotificationCore
 
     private val args: PillEditorFragmentArgs by navArgs()
     private val pill by lazy { args.pill }
@@ -69,7 +72,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
             result.doOnFailure { Timber.d(it.message) }
         }
         updatePillLiveEvent.observe { result ->
-            result.doOnSuccess { setUpdatePillTask(it.task, it.pill) }
+            result.doOnSuccess { setUpdatePillTask(it.task, it.pill, it.uid) }
             result.doOnFailure { Timber.d(it.message) }
         }
         updateLocalPillLiveEvent.observe { result ->
@@ -156,11 +159,21 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     /** Настройка времени уведомления */
     private fun setupTimesRecyclerView() = with(binding) {
         recyclerViewTimes.adapter = timesAdapter.apply {
-            onDeleteClick = { item -> timesAdapter.deleteItem(item) }
+            onDeleteClick = { item ->
+                recyclerViewTimes.post {
+                    timesAdapter.deleteItem(item)
+                }
+            }
+            editTime = { newPair, position ->
+                recyclerViewTimes.post {
+                    timesAdapter.updateItem(newPair, position)
+                }
+            }
         }
         buttonAddTime.setOnClickListener {
-            val localTime = LocalTime.now()
-            timesAdapter.addItem(UUID.randomUUID().toString() to localTime)
+            recyclerViewTimes.post {
+                timesAdapter.addItem(TimeItem(UUID.randomUUID().toString(), LocalTime.now()))
+            }
         }
     }
 
@@ -197,11 +210,10 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
             if (datesTakenSelectedAdapter.getSelectedItemsValue().isEmpty() && isSelectedDates) {
                 showErrorSnackbar(
                     "Выберите хотя бы один день для приема лекарства, либо измените частоту приема",
-                    marginBottom = resources.getDimensionPixelOffset(R.dimen.margin_20)
+                    marginBottom = resources.getDimensionPixelOffset(R.dimen.margin_20),
                 )
                 return@setOnClickListener
             }
-
 
             val listOfInputs = mutableListOf(textInputName, textInputDosage, textInputStartDate)
             if (switchEndDateEnabled.isChecked) listOfInputs.add(textInputEndDate)
@@ -213,7 +225,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                             name = editTextName.text.toString(),
                             amount = editTextDosage.text.toString().toFloatOrNull().orDefault(),
                             type = pillTypesAdapter.getSelectedItemType(),
-                            times = timesAdapter.currentList.distinctBy { it.second }.toMap(),
+                            times = timesAdapter.currentList.distinctBy { it.time }.associate { it.id to it.time },
                             datesTaken = spinnerDatesTakenType.selectedItem as DatesTakenType,
                             datesTakenSelected = if (isSelectedDates) {
                                 datesTakenSelectedAdapter.getSelectedItemsValue()
@@ -229,8 +241,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                         name = editTextName.text.toString(),
                         amount = editTextDosage.text.toString().toFloatOrNull().orDefault(),
                         type = pillTypesAdapter.getSelectedItemType(),
-                        times = timesAdapter.currentList.distinctBy { dateFormatter.formatStringFromLocalTime(it.second) }
-                            .toMap(),
+                        times = timesAdapter.currentList.distinctBy { it.time }.associate { it.id to it.time },
                         datesTaken = spinnerDatesTakenType.selectedItem as DatesTakenType,
                         datesTakenSelected = if (isSelectedDates) {
                             datesTakenSelectedAdapter.getSelectedItemsValue()
@@ -254,9 +265,12 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     private fun setupDataIfPillEsNotNull() = with(binding) {
         editTextName.setText(pill?.name.orDefault())
         editTextDosage.setText(pill?.amount.orDefault(1F).toString())
-        timesAdapter.submitList((pill?.times?.map { it.key to it.value } ?: listOf(
-            UUID.randomUUID().toString() to LocalTime.now()
-        )).sortedBy { it.second })
+        timesAdapter.submitList(pill?.times?.map { TimeItem(it.key, it.value) } ?: listOf(
+            TimeItem(
+                id = UUID.randomUUID().toString(),
+                time = LocalTime.now(),
+            )
+        ))
         datesTakenSelectedAdapter.submitList(
             listOf(
                 DatesTakenSelectedItem(1),
@@ -314,13 +328,30 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         switchEndDateEnabled.setOnCheckedChangeListener { _, isChecked -> cardViewEndDateNotification.isVisible = isChecked }
     }
 
-    private fun setUpdatePillTask(task: Task<Void>, pill: Pill) = with(task) {
-        addOnSuccessListener { viewModel.updateLocalPill(pill) }
+    private fun setUpdatePillTask(task: Task<Void>, pill: Pill, uid: String) = with(task) {
+        addOnSuccessListener {
+            notificationCore.cancelWorker(requireActivity().application, pill.id)
+            notificationCore.createWorker(
+                requireActivity().application,
+                token = NotificationCore.DEFAULT_TOKEN,
+                endPoint = NotificationCore.DEFAULT_ENDPOINT,
+                deviceId = NotificationCore.DEFAULT_DEVICE_ID,
+                notificationImage = R.drawable.ic_logo_red,
+                notificationPackageName = NotificationCore.DEFAULT_PACKAGE_NAME,
+                notificationClassPackageName = NotificationCore.DEFAULT_NOTIFICATION_PACKAGE_NAME,
+                uid = uid,
+                pill = pill,
+            )
+            viewModel.updateLocalPill(pill)
+        }
         addOnFailureListener { Timber.d(it.message) }
     }
 
     private fun setDeletePillTask(task: Task<Void>, pill: Pill) = with(task) {
-        addOnSuccessListener { viewModel.deleteLocalPill(pill) }
+        addOnSuccessListener {
+            notificationCore.cancelWorker(requireActivity().application, pill.id)
+            viewModel.deleteLocalPill(pill)
+        }
         addOnFailureListener { Timber.d(it.message) }
     }
 }

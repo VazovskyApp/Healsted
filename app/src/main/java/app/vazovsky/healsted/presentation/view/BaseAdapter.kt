@@ -3,6 +3,7 @@ package app.vazovsky.healsted.presentation.view
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder> : RecyclerView.Adapter<VH>() {
+
     protected val items = mutableListOf<T>()
 
     override fun getItemCount() = items.size

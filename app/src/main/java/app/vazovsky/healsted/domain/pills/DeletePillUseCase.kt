@@ -22,8 +22,9 @@ class DeletePillUseCase @Inject constructor(
         val uid = firebaseAuthRepository.getCurrentUserUid() ?: authRepository.getCurrentUserUid().orDefault()
 
         return UpdateResult(
-            firebaseProfileRepository.deleteProfilePill(uid, pillMapper.fromModelToDocument(params.pill)),
-            params.pill,
+            task = firebaseProfileRepository.deleteProfilePill(uid, pillMapper.fromModelToDocument(params.pill)),
+            pill = params.pill,
+            uid = uid,
         )
     }
 

@@ -9,6 +9,11 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.core.core.NotificationCore
+import app.vazovsky.healsted.core.core.NotificationCore.Companion.DEFAULT_DEVICE_ID
+import app.vazovsky.healsted.core.core.NotificationCore.Companion.DEFAULT_ENDPOINT
+import app.vazovsky.healsted.core.core.NotificationCore.Companion.DEFAULT_NOTIFICATION_PACKAGE_NAME
+import app.vazovsky.healsted.core.core.NotificationCore.Companion.DEFAULT_PACKAGE_NAME
+import app.vazovsky.healsted.core.core.NotificationCore.Companion.DEFAULT_TOKEN
 import app.vazovsky.healsted.core.core.NotificationCore.Companion.NOTIFICATION_CLICK_ENDPOINT
 import app.vazovsky.healsted.core.core.NotificationCore.Companion.NOTIFICATION_EXTRA
 import app.vazovsky.healsted.core.core.NotificationCore.Companion.NOTIFICATION_ID
@@ -54,29 +59,29 @@ class MainActivity : BaseActivity(), BottomNavigationViewManager {
             ),
             startDate = nowDate,
             endDate = nowDate.plusDays(2),
-            datesTaken = DatesTakenType.SELECTED_DAYS,
-            datesTakenSelected = arrayListOf<Int>(6),
+            datesTaken = DatesTakenType.EVERYDAY,
+            datesTakenSelected = arrayListOf<Int>(),
         )
-
-        notificationCore.createWorker(
-            application,
-            token = getToken(),
-            endPoint = "Healsted",
-            deviceId = "test",
-            notificationImage = R.drawable.ic_logo_red,
-            notificationPackageName = "app.vazovsky.healsted",
-            notificationClassPackageName = "app.vazovsky.healsted.MainActivity",
-            uid = "5JJpee0Ur5bhOb3Bit2yuuqQoUl1",
-            pill = pill,
-        )
+//
+//        notificationCore.createWorker(
+//            application,
+//            token = DEFAULT_TOKEN,
+//            endPoint = DEFAULT_ENDPOINT,
+//            deviceId = DEFAULT_DEVICE_ID,
+//            notificationImage = R.drawable.ic_logo_red,
+//            notificationPackageName = DEFAULT_PACKAGE_NAME,
+//            notificationClassPackageName = DEFAULT_NOTIFICATION_PACKAGE_NAME,
+//            uid = "5JJpee0Ur5bhOb3Bit2yuuqQoUl1",
+//            pill = pill,
+//        )
 
         setupBottomNavigation()
     }
 
-    override fun onResume() {
-        super.onResume()
-        checkIntent(intent)
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        checkIntent(intent)
+//    }
 
     override fun setNavigationViewVisibility(isVisible: Boolean) {
         binding.bottomNavigationViewContainer.isVisible = isVisible
@@ -84,26 +89,22 @@ class MainActivity : BaseActivity(), BottomNavigationViewManager {
 
     override fun getNavigationView() = binding.bottomNavigationViewContainer
 
-    private fun getToken(): String {
-        return "**"
-    }
-
-    private fun checkIntent(intent: Intent?) {
-        intent?.let {
-            if (it.hasExtra(NOTIFICATION_EXTRA)) {
-                val endPoint = it.getStringExtra(NOTIFICATION_CLICK_ENDPOINT)
-                val id = it.getStringExtra(NOTIFICATION_ID)
-
-                if (endPoint != null && id != null) {
-                    notificationCore.clickedOnNotification(
-                        endPoint = endPoint,
-                        token = getToken(),
-                        id = id
-                    )
-                }
-            }
-        }
-    }
+//    private fun checkIntent(intent: Intent?) {
+//        intent?.let {
+//            if (it.hasExtra(NOTIFICATION_EXTRA)) {
+//                val endPoint = it.getStringExtra(NOTIFICATION_CLICK_ENDPOINT)
+//                val id = it.getStringExtra(NOTIFICATION_ID)
+//
+//                if (endPoint != null && id != null) {
+//                    notificationCore.clickedOnNotification(
+//                        endPoint = endPoint,
+//                        token = DEFAULT_TOKEN,
+//                        id = id
+//                    )
+//                }
+//            }
+//        }
+//    }
 
     /** Настройка нижнего меню навигации */
     private fun setupBottomNavigation() {

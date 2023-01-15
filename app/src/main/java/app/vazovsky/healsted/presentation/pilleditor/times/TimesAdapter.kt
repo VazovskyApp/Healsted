@@ -8,26 +8,42 @@ import javax.inject.Inject
 
 class TimesAdapter @Inject constructor(
     private val dateFormatter: DateFormatter,
-) : BaseAdapter<Pair<String, LocalTime>, TimeViewHolder>() {
+) : BaseAdapter<TimeItem, TimeViewHolder>() {
 
-    lateinit var onDeleteClick: (Pair<String, LocalTime>) -> Unit
+    lateinit var onDeleteClick: (TimeItem) -> Unit
+    lateinit var editTime: (TimeItem, Int) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimeViewHolder {
-        return TimeViewHolder(parent, onDeleteClick, dateFormatter)
+        return TimeViewHolder(parent, onDeleteClick, editTime, dateFormatter)
     }
 
     override fun onBindViewHolder(holder: TimeViewHolder, position: Int) {
         holder.bind(getItem(position), position)
     }
 
-    fun addItem(item: Pair<String, LocalTime>) {
+    override fun onBindViewHolder(holder: TimeViewHolder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.isEmpty()) {
+            holder.bind(getItem(position), position)
+        } else {
+            if (payloads[0] is LocalTime) {
+                holder.bindTimeState(payloads[0] as LocalTime)
+            }
+        }
+    }
+
+    fun addItem(item: TimeItem) {
         this.items.apply {
             add(item)
         }
         notifyDataSetChanged()
     }
 
-    fun deleteItem(item: Pair<String, LocalTime>) {
+    fun updateItem(item: TimeItem, position: Int) {
+        items[position] = item
+        notifyItemChanged(position, item.time)
+    }
+
+    fun deleteItem(item: TimeItem) {
         this.items.apply {
             remove(item)
         }

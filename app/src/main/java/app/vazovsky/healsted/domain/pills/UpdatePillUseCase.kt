@@ -22,8 +22,9 @@ class UpdatePillUseCase @Inject constructor(
         val uid = firebaseAuthRepository.getCurrentUserUid() ?: authRepository.getCurrentUserUid().orDefault()
 
         return UpdateResult(
-            firebaseProfileRepository.updateProfilePill(uid, pillMapper.fromModelToDocument(params.pill)),
-            params.pill,
+            task = firebaseProfileRepository.updateProfilePill(uid, pillMapper.fromModelToDocument(params.pill)),
+            pill = params.pill,
+            uid = uid,
         )
     }
 

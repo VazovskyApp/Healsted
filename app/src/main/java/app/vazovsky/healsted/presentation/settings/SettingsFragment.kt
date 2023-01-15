@@ -3,6 +3,7 @@ package app.vazovsky.healsted.presentation.settings
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import app.vazovsky.healsted.R
+import app.vazovsky.healsted.core.core.NotificationCore
 import app.vazovsky.healsted.data.model.SettingType
 import app.vazovsky.healsted.data.model.SettingsItem
 import app.vazovsky.healsted.databinding.FragmentSettingsBinding
@@ -24,6 +25,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     private val binding by viewBinding(FragmentSettingsBinding::bind)
     private val viewModel: SettingsViewModel by viewModels()
 
+    @Inject lateinit var notificationCore: NotificationCore
     @Inject lateinit var settingsAdapter: SettingsAdapter
 
     override fun callOperations() {
@@ -38,7 +40,10 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             result.doOnFailure { Timber.d(it.message) }
         }
         signOutLiveEvent.observe { result ->
-            result.doOnSuccess { viewModel.openAuth() }
+            result.doOnSuccess {
+                notificationCore.cancelWorker(requireActivity().application, it.uid)
+                viewModel.openAuth()
+            }
             result.doOnFailure { showErrorSnackbar(it.message) }
         }
     }

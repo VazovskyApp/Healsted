@@ -3,6 +3,7 @@ package app.vazovsky.healsted.presentation.settings.account
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import app.vazovsky.healsted.R
+import app.vazovsky.healsted.core.core.NotificationCore
 import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.databinding.FragmentSettingsAccountBinding
 import app.vazovsky.healsted.extensions.checkInputs
@@ -28,6 +29,7 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
     private val binding by viewBinding(FragmentSettingsAccountBinding::bind)
     private val viewModel: SettingsAccountViewModel by viewModels()
 
+    @Inject lateinit var notificationCore: NotificationCore
     @Inject lateinit var dateFormatter: DateFormatter
     private var account: Account? = null
 
@@ -54,13 +56,23 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
             result.doOnFailure { showErrorSnackbar("Не удалось обновить профиль") }
         }
         deleteAccountFirebaseLiveData.observe { result ->
-            result.doOnSuccess { viewModel.deleteAccountFireStore() }
+            result.doOnSuccess { setDeleteAccountTask(it.task, it.uid) }
             result.doOnFailure { Timber.d(it.message) }
         }
         deleteAccountFireStoreLiveData.observe { result ->
             result.doOnSuccess { viewModel.openAuth() }
             result.doOnFailure { Timber.d(it.message) }
         }
+    }
+
+    private fun setDeleteAccountTask(task: Task<Void>?, uid: String) {
+        task?.apply {
+            addOnSuccessListener {
+                notificationCore.cancelWorker(requireActivity().application, uid)
+                viewModel.deleteAccountFireStore()
+            }
+            addOnFailureListener { Timber.d(it.message) }
+        } ?: Timber.d("Не удалось удалить аккаунт")
     }
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {

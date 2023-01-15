@@ -39,6 +39,7 @@ class ChangeTimesPillUseCase @Inject constructor(
         return UpdateResult(
             firebaseProfileRepository.updateProfilePill(uid, pillMapper.fromModelToDocument(newPill)),
             newPill,
+            uid,
         )
     }
 

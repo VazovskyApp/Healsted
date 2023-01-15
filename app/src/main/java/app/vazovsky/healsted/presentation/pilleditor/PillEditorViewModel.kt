@@ -93,5 +93,6 @@ class PillEditorViewModel @Inject constructor(
 
 data class UpdateResult(
     val task: Task<Void>,
-    val pill: Pill
+    val pill: Pill,
+    val uid:String,
 )
