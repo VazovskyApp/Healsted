@@ -165,8 +165,8 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                 val newItem = TimeItem(UUID.randomUUID().toString(), LocalTime.now())
                 timesAdapter.addItem(newItem, item, position)
             }
-            onDeleteClick = { item, position ->
-                timesAdapter.deleteItem(item, )
+            onDeleteClick = { item ->
+                timesAdapter.deleteItem(item)
             }
             editTime = { newPair, position ->
                 recyclerViewTimes.post {

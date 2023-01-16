@@ -11,7 +11,7 @@ class TimesAdapter @Inject constructor(
 ) : BaseAdapter<TimeItem, TimeViewHolder>() {
 
     lateinit var onAddClick: (TimeItem, Int) -> Unit
-    lateinit var onDeleteClick: (TimeItem, Int) -> Unit
+    lateinit var onDeleteClick: (TimeItem) -> Unit
     lateinit var editTime: (TimeItem, Int) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimeViewHolder {

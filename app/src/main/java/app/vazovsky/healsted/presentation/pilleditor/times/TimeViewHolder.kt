@@ -2,7 +2,6 @@ package app.vazovsky.healsted.presentation.pilleditor.times
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
@@ -18,7 +17,7 @@ import java.time.LocalTime
 class TimeViewHolder(
     parent: ViewGroup,
     private val onAddClick: (TimeItem, Int) -> Unit,
-    private val onDeleteClick: (TimeItem, Int) -> Unit,
+    private val onDeleteClick: (TimeItem) -> Unit,
     private val editTime: (TimeItem, Int) -> Unit,
     private val dateFormatter: DateFormatter,
 ) : RecyclerView.ViewHolder(parent.inflate(R.layout.item_time)) {
@@ -33,17 +32,19 @@ class TimeViewHolder(
             updateItem()
         }
 
-        override fun afterTextChanged(s: Editable?) {
-            updateItem()
-        }
+        override fun afterTextChanged(s: Editable?) = Unit
     }
 
 
     fun bind(item: TimeItem, isLastPosition: Boolean) = with(binding) {
         this@TimeViewHolder.item = item
+        if (isLastPosition) {
+            editTextTime.requestFocus()
+            editTextTime.setSelection(editTextTime.text.toString().length)
+        }
         buttonDelete.apply {
             buttonDelete.visibility = if (isLastPosition) INVISIBLE else VISIBLE
-            setOnClickListener { onDeleteClick.invoke(item, bindingAdapterPosition) }
+            setOnClickListener { onDeleteClick.invoke(item) }
         }
         buttonAdd.apply {
             visibility = if (isLastPosition) VISIBLE else INVISIBLE
@@ -60,10 +61,13 @@ class TimeViewHolder(
     }
 
     private fun updateItem() = with(binding) {
+        val newText = editTextTime.text.toString()
         if (textInputTime.validate()) {
-            val newText = editTextTime.text.toString()
             val newItem = TimeItem(item?.id.orDefault(), dateFormatter.parseLocalTimeFromString(newText))
             editTime.invoke(newItem, bindingAdapterPosition)
+            editTextTime.requestFocus()
+            editTextTime.setSelection(newText.length)
+        } else {
             editTextTime.setSelection(newText.length)
         }
     }
