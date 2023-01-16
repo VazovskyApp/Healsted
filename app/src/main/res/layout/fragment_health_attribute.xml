@@ -67,9 +67,9 @@
                     android:layout_marginEnd="@dimen/margin_8"
                     android:layout_weight="1"
                     app:emptyCheck="true"
-                    app:errorEmpty="Введите значение"
-                    app:errorMalformed="@string/malformed_field_error"
-                    app:validationPattern="@string/decimal_validation_pattern">
+                    app:errorEmpty="@string/decimal_and_numeric_error"
+                    app:errorMalformed="@string/decimal_and_numeric_error"
+                    app:validationPattern="@string/decimal_and_numeric_validation_pattern">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextNewValue"
@@ -77,6 +77,7 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
                         android:inputType="text"
+                        android:maxLines="1"
                         android:textAppearance="@style/Font.Body_1.Bold" />
                 </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
 
@@ -88,9 +89,9 @@
                     android:layout_marginStart="@dimen/margin_8"
                     android:layout_weight="1"
                     app:emptyCheck="true"
-                    app:errorEmpty="Введите значение"
-                    app:errorMalformed="@string/malformed_field_error"
-                    app:validationPattern="@string/decimal_validation_pattern">
+                    app:errorEmpty="@string/decimal_and_numeric_error"
+                    app:errorMalformed="@string/decimal_and_numeric_error"
+                    app:validationPattern="@string/decimal_and_numeric_validation_pattern">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextNewValueSecond"
@@ -98,6 +99,7 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
                         android:inputType="text"
+                        android:maxLines="1"
                         android:textAppearance="@style/Font.Body_1.Bold" />
                 </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
             </LinearLayout>
