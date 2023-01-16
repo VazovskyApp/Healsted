@@ -1,6 +1,5 @@
 package app.vazovsky.healsted.extensions
 
-import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.*
@@ -18,18 +17,17 @@ fun Float.formatWithoutTrailingZero(): String {
 }
 
 /**
- * Форматирование дробных чисел до десятых и без нуля на конце.
+ * Форматирование дробных чисел до сотых и без нуля на конце.
  */
 fun Float.formatDecimalWithSpacing(): String {
     val df = DecimalFormat(
-        "###,###.#",
+        "###,###.##",
         DecimalFormatSymbols(Locale.getDefault()).apply {
             decimalSeparator = '.'
             groupingSeparator = ' '
             patternSeparator = ' '
         }
     )
-    df.roundingMode = RoundingMode.CEILING
     return df.format(this)
 }
 
@@ -41,3 +39,4 @@ fun Float.formatDecimal(): String {
     val temp = "%.1f".format((this * 10).roundToInt() / 10f)
     return temp.replace(',', '.')
 }
+

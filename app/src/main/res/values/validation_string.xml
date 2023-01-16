@@ -29,6 +29,6 @@
     <string name="empty_password_error">Введите пароль.</string>
     <string name="password_validation_pattern">^[a-zA-Z0-9]{6,20}$</string>
 
-    <string name="decimal_and_numeric_validation_pattern">^([0-9][0-9]*)+(.[0-9]{1,2})?$</string>
+    <string name="decimal_and_numeric_validation_pattern">^([0-9][0-9]*)+(.[0-9]{1,})?$</string>
     <string name="decimal_and_numeric_error">Введите корректное значение в виде 0 или 0.0.</string>
 </resources>
