@@ -39,7 +39,7 @@ fun MonitoringAttributeDocument?.orError() = this ?: throw Exception()
 fun MoodDocument?.orDefault() = this ?: MoodDocument()
 fun MoodDocument?.orError() = this ?: throw Exception()
 
-fun PillType.toIcon() = when (this) {
+fun PillType?.toIcon() = when (this) {
     PillType.TABLETS -> R.drawable.ic_pill_tablets
     PillType.CAPSULE -> R.drawable.ic_pill_capsule
     PillType.INJECTION -> R.drawable.ic_pill_injection
@@ -48,4 +48,5 @@ fun PillType.toIcon() = when (this) {
     PillType.LIQUID -> R.drawable.ic_pill_liquid
     PillType.CREAM -> R.drawable.ic_pill_cream
     PillType.SPRAY -> R.drawable.ic_pill_spray
+    else -> R.drawable.ic_logo_red
 }

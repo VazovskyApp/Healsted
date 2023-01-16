@@ -27,15 +27,15 @@ class TimeViewHolder(
     private val watcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
 
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            updateItem()
+        }
 
-        override fun afterTextChanged(s: Editable?) = with(binding) {
-            if (textInputTime.validate()) {
-                val newItem = TimeItem(item?.id.orDefault(), dateFormatter.parseLocalTimeFromString(editTextTime.text.toString()))
-                editTime.invoke(newItem, position)
-            }
+        override fun afterTextChanged(s: Editable?) {
+            updateItem()
         }
     }
+
 
     fun bind(item: TimeItem, position: Int) = with(binding) {
         this@TimeViewHolder.item = item
@@ -51,5 +51,14 @@ class TimeViewHolder(
         item = TimeItem(item?.id.orDefault(), time)
         editTextTime.removeTextChangedListener(watcher)
         editTextTime.setText(dateFormatter.formatStringFromLocalTime(time))
+    }
+
+    private fun updateItem() = with(binding) {
+        if (textInputTime.validate()) {
+            val newText = editTextTime.text.toString()
+            val newItem = TimeItem(item?.id.orDefault(), dateFormatter.parseLocalTimeFromString(newText))
+            editTime.invoke(newItem, bindingAdapterPosition)
+            editTextTime.setSelection(newText.length)
+        }
     }
 }

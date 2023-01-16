@@ -25,4 +25,22 @@ class DataTypeFormatter @Inject constructor(@ApplicationContext val context: Con
             }
         )
     }
+
+    fun formatPill(amount: Float, type: PillType?) = buildString {
+        val amountInt = amount.toInt()
+        val amountDecimal = amount.formatDecimalWithSpacing()
+        append(
+            when (type) {
+                PillType.TABLETS -> context.resources.getQuantityString(R.plurals.tablets, amountInt, amountDecimal)
+                PillType.CAPSULE -> context.resources.getQuantityString(R.plurals.capsules, amountInt, amountDecimal)
+                PillType.INJECTION -> context.resources.getQuantityString(R.plurals.injections, amountInt, amountDecimal)
+                PillType.PROCEDURES -> context.resources.getQuantityString(R.plurals.procedures, amountInt, amountDecimal)
+                PillType.DROPS -> context.resources.getQuantityString(R.plurals.drops, amountInt, amountDecimal)
+                PillType.SPRAY -> context.resources.getQuantityString(R.plurals.spray, amountInt, amountDecimal)
+                PillType.CREAM -> amountDecimal + " " + context.resources.getString(R.string.pill_type_cream)
+                PillType.LIQUID -> amountDecimal + " " + context.resources.getString(R.string.pill_type_liquid)
+                else -> amountDecimal + " " + context.resources.getString(R.string.pill_type_other)
+            }
+        )
+    }
 }

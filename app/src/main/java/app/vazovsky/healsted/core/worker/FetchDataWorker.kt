@@ -10,19 +10,28 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.core.core.NotificationCore
+import app.vazovsky.healsted.core.core.NotificationCore.Companion.DEFAULT_DEVICE_ID
 import app.vazovsky.healsted.core.core.NotificationCore.Companion.DEFAULT_ENDPOINT
+import app.vazovsky.healsted.core.core.NotificationCore.Companion.DEFAULT_NOTIFICATION_PACKAGE_NAME
+import app.vazovsky.healsted.core.core.NotificationCore.Companion.DEFAULT_PACKAGE_NAME
+import app.vazovsky.healsted.core.core.NotificationCore.Companion.DEFAULT_TOKEN
 import app.vazovsky.healsted.core.core.NotificationCore.Companion.FULL_DAY_MINUTES
 import app.vazovsky.healsted.data.mapper.PillMapper
 import app.vazovsky.healsted.data.model.DatesTakenType
+import app.vazovsky.healsted.data.model.PillType
 import app.vazovsky.healsted.data.room.converters.DatesTakenSelectedListConverter
 import app.vazovsky.healsted.data.room.converters.TimesMapConverter
+import app.vazovsky.healsted.extensions.capitalizeFirstChar
+import app.vazovsky.healsted.extensions.toIcon
 import app.vazovsky.healsted.extensions.toMinutes
 import app.vazovsky.healsted.extensions.withZeroSecondsAndNano
+import app.vazovsky.healsted.managers.DataTypeFormatter
 import app.vazovsky.healsted.managers.DateFormatter
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import java.time.LocalDate
 import java.time.LocalTime
+import java.util.*
 import java.util.concurrent.*
 import java.util.concurrent.atomic.*
 import timber.log.Timber
@@ -34,6 +43,7 @@ class FetchDataWorker @AssistedInject constructor(
     private val notificationCore: NotificationCore,
     private val pillMapper: PillMapper,
     private val dateFormatter: DateFormatter,
+    private val dataTypeFormatter: DataTypeFormatter,
 ) : CoroutineWorker(appContext, workerParams) {
 
     companion object {
@@ -53,6 +63,11 @@ class FetchDataWorker @AssistedInject constructor(
 
         val pillName = inputData.getString(NotificationCore.PILL_NAME)
 
+        val pillAmount = inputData.getFloat(NotificationCore.PILL_AMOUNT, 1F)
+
+        val pillTypeString = inputData.getString(NotificationCore.PILL_TYPE)
+        val pillType = pillTypeString?.let { PillType.valueOf(it) }
+
         val pillTimesString = inputData.getString(NotificationCore.PILL_TIMES)
         val pillTimes = TimesMapConverter().mapStringToMap(pillTimesString)?.let { pillMapper.fromEntityToModelTime(it) }
 
@@ -71,9 +86,7 @@ class FetchDataWorker @AssistedInject constructor(
         } ?: arrayListOf()
 
 
-        if (endPoint != null && token != null && deviceId != null && accountUid != null && pillId != null
-            && pillStartDate != null && pillDatesTakenType != null && pillTimes != null
-        ) {
+        if (endPoint != null && token != null && deviceId != null && accountUid != null && pillId != null && pillStartDate != null && pillDatesTakenType != null && pillTimes != null) {
             if (dateFormatter.isShownToday(
                     pillStartDate,
                     pillEndDate,
@@ -83,8 +96,9 @@ class FetchDataWorker @AssistedInject constructor(
                 )
             ) {
                 createPillNotification(
-                    notificationImage,
                     pillName!!,
+                    pillAmount,
+                    pillType,
                     packageName!!,
                     className!!,
                 )
@@ -92,7 +106,7 @@ class FetchDataWorker @AssistedInject constructor(
                 createNewWorker(
                     accountUid, pillId, pillName, pillStartDate, pillEndDate,
                     pillDatesTakenType, pillDatesTakenSelectedList, pillTimes,
-                    notificationImage,
+                    pillType.toIcon(), pillAmount, pillType,
                 )
             }
         }
@@ -112,22 +126,26 @@ class FetchDataWorker @AssistedInject constructor(
         pillDatesTakenSelectedList: ArrayList<Int>,
         times: Map<String, LocalTime>,
         notificationImage: Int,
+        pillAmount: Float,
+        pillType: PillType?,
     ) {
         val workManager = WorkManager.getInstance(applicationContext)
 
         val constraints = Constraints.Builder().setRequiresBatteryNotLow(false).build()
 
         val data = Data.Builder()
-        data.putString(NotificationCore.ENDPOINT_REQUEST, NotificationCore.DEFAULT_ENDPOINT)
-        data.putString(NotificationCore.TOKEN, NotificationCore.DEFAULT_TOKEN)
-        data.putString(NotificationCore.DEVICE_ID, NotificationCore.DEFAULT_DEVICE_ID)
+        data.putString(NotificationCore.ENDPOINT_REQUEST, DEFAULT_ENDPOINT)
+        data.putString(NotificationCore.TOKEN, DEFAULT_TOKEN)
+        data.putString(NotificationCore.DEVICE_ID, DEFAULT_DEVICE_ID)
         data.putInt(NotificationCore.NOTIFICATION_IMAGE, notificationImage)
-        data.putString(NotificationCore.PACKAGE_NAME, NotificationCore.DEFAULT_PACKAGE_NAME)
-        data.putString(NotificationCore.CLASS_NAME, NotificationCore.DEFAULT_NOTIFICATION_PACKAGE_NAME)
+        data.putString(NotificationCore.PACKAGE_NAME, DEFAULT_PACKAGE_NAME)
+        data.putString(NotificationCore.CLASS_NAME, DEFAULT_NOTIFICATION_PACKAGE_NAME)
 
         data.putString(NotificationCore.ACCOUNT_UID, uid)
         data.putString(NotificationCore.PILL_ID, pillId)
         data.putString(NotificationCore.PILL_NAME, pillName)
+        data.putFloat(NotificationCore.PILL_AMOUNT, pillAmount)
+        data.putString(NotificationCore.PILL_TYPE, pillType?.name)
         data.putString(
             NotificationCore.PILL_TIMES,
             TimesMapConverter().mapMapToString(pillMapper.fromModelToEntityTime(times)),
@@ -155,8 +173,10 @@ class FetchDataWorker @AssistedInject constructor(
         val differentTime = (if (soonTime == null) {
             /** Конечное время */
             val midnight = LocalTime.MIDNIGHT
+
             /** Время до полуночи */
             val minutesUntilMidnight = midnight.minusMinutes(nowTime.toMinutes().toLong())
+
             /** Время от начала дня до нужного времени */
             val minutesUntilCurrentTime = firstTime.toMinutes().toLong()
             minutesUntilMidnight.plusMinutes(minutesUntilCurrentTime)
@@ -168,8 +188,10 @@ class FetchDataWorker @AssistedInject constructor(
             differentTimeMinutes = FULL_DAY_MINUTES
         }
         val differentTimeSecond = differentTimeMinutes * 60 - nowTimeWithSeconds.second
-        Timber.d("LOL: times: ${times.values}; soonTime: $soonTime; differentTimeMinutes: $differentTimeMinutes")
-        Timber.d("LOL: seconds: $differentTimeSecond")
+        Timber.d(
+            "LOL: times: ${times.values}; soonTime: $soonTime; minutes:" + " $differentTimeMinutes; seconds: $differentTimeSecond"
+        )
+
         val work = OneTimeWorkRequestBuilder<FetchDataWorker>().setConstraints(constraints)
             .addTag(NotificationCore.NOTIFICATION_WORK_MANAGER_TAG).addTag(uid).addTag(pillId).setInputData(data.build())
             .setInitialDelay(differentTimeSecond.toLong(), TimeUnit.SECONDS).build()
@@ -178,21 +200,22 @@ class FetchDataWorker @AssistedInject constructor(
     }
 
     private fun createPillNotification(
-        notificationImage: Int,
         pillName: String,
+        pillAmount: Float,
+        pillType: PillType?,
         packageName: String,
         className: String,
     ) {
         notificationCore.sendOnDefaultChannel(
             applicationContext,
             notificationId.getAndIncrement().toString(),
-            notificationImage,
+            R.drawable.ic_logo_red,
             null,
-            applicationContext.getString(R.string.app_name),
+            applicationContext.getString(R.string.notification_title_pill),
             buildString {
-                append(applicationContext.getString(R.string.notification_title_pill))
+                append(pillName.capitalizeFirstChar(Locale.getDefault()))
                 append(": ")
-                append(pillName)
+                append(dataTypeFormatter.formatPill(pillAmount, pillType))
             },
             packageName,
             className,

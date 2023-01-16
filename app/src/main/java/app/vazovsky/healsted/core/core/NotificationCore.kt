@@ -23,6 +23,7 @@ import app.vazovsky.healsted.data.mapper.PillMapper
 import app.vazovsky.healsted.data.model.Pill
 import app.vazovsky.healsted.data.room.converters.DatesTakenSelectedListConverter
 import app.vazovsky.healsted.data.room.converters.TimesMapConverter
+import app.vazovsky.healsted.extensions.getColorIdFromPosition
 import app.vazovsky.healsted.extensions.toMinutes
 import app.vazovsky.healsted.extensions.withZeroSecondsAndNano
 import app.vazovsky.healsted.managers.DateFormatter
@@ -65,6 +66,8 @@ class NotificationCore @Inject constructor(
         const val ACCOUNT_UID: String = "ACCOUNT_UID"
         const val PILL_ID = "PILL_ID"
         const val PILL_NAME = "PILL_NAME"
+        const val PILL_AMOUNT = "PILL_AMOUNT"
+        const val PILL_TYPE = "PILL_TYPE"
         const val PILL_TIMES = "PILL_TIMES"
         const val PILL_START_DATE = "PILL_START_DATE"
         const val PILL_END_DATE = "PILL_END_DATE"
@@ -106,6 +109,8 @@ class NotificationCore @Inject constructor(
         data.putString(PACKAGE_NAME, notificationPackageName)
         data.putString(CLASS_NAME, notificationClassPackageName)
         data.putString(PILL_NAME, pill.name)
+        data.putFloat(PILL_AMOUNT, pill.amount)
+        data.putString(PILL_TYPE, pill.type.name)
         data.putString(PILL_TIMES, TimesMapConverter().mapMapToString(pillMapper.fromModelToEntityTime(pill.times)))
         data.putString(PILL_START_DATE, dateFormatter.formatStringFromLocalDate(pill.startDate))
         data.putString(PILL_END_DATE, pill.endDate?.let { dateFormatter.formatStringFromLocalDate(it) })
@@ -120,7 +125,7 @@ class NotificationCore @Inject constructor(
 
         /** Ближайшее время в списке */
         val soonTime = pill.times.values.sorted().firstOrNull { itemTime ->
-            itemTime >= nowTime
+            itemTime >= nowTime && itemTime.withZeroSecondsAndNano() != nowTime.withZeroSecondsAndNano()
         }?.withZeroSecondsAndNano()
 
         /** Минимальное время в списке */
@@ -129,8 +134,10 @@ class NotificationCore @Inject constructor(
         val differentTime = if (soonTime == null) {
             /** Полночь */
             val midnight = LocalTime.MIDNIGHT
+
             /** Время до полуночи */
             val minutesUntilMidnight = midnight.minusMinutes(nowTime.toMinutes().toLong())
+
             /** Время от начала дня до нужного времени */
             val minutesUntilCurrentTime = firstTime.toMinutes().toLong()
             minutesUntilMidnight.plusMinutes(minutesUntilCurrentTime)
@@ -142,8 +149,11 @@ class NotificationCore @Inject constructor(
             differentTimeMinutes = FULL_DAY_MINUTES
         }
         val differentTimeSecond = differentTimeMinutes * 60 - nowTimeWithSeconds.second
-        Timber.d("LOL: times: ${pill.times.values}; soonTime: $soonTime; differentTimeMinutes: $differentTimeMinutes")
-        Timber.d("LOL: seconds: $differentTimeSecond")
+        Timber.d(
+            "LOL: times: ${pill.times.values}; soonTime: $soonTime; " +
+                    "minutes: $differentTimeMinutes; seconds: $differentTimeSecond"
+        )
+
         val work = OneTimeWorkRequestBuilder<FetchDataWorker>()
             .setConstraints(constraints)
             .addTag(NOTIFICATION_WORK_MANAGER_TAG)
@@ -209,9 +219,11 @@ class NotificationCore @Inject constructor(
         val builder = NotificationCompat
             .Builder(context, CHANNEL_ID_DEFAULT)
             .setSmallIcon(notificationImage)
+            .setColorized(true)
+            .setColor(context.getColor(notificationId.toInt().getColorIdFromPosition()))
             .setContentTitle(notificationTitle)
             .setContentText(notificationContent)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
             .setContentIntent(notifyPendingIntent)
             .setAutoCancel(true)
 

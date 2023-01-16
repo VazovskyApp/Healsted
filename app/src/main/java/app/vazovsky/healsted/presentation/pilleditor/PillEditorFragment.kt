@@ -162,9 +162,8 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     private fun setupTimesRecyclerView() = with(binding) {
         recyclerViewTimes.adapter = timesAdapter.apply {
             onDeleteClick = { item ->
-                recyclerViewTimes.post {
-                    timesAdapter.deleteItem(item)
-                }
+                timesAdapter.deleteItem(item)
+
             }
             editTime = { newPair, position ->
                 recyclerViewTimes.post {
@@ -173,9 +172,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
             }
         }
         buttonAddTime.setOnClickListener {
-            recyclerViewTimes.post {
-                timesAdapter.addItem(TimeItem(UUID.randomUUID().toString(), LocalTime.now()))
-            }
+            timesAdapter.addItem(TimeItem(UUID.randomUUID().toString(), LocalTime.now().withZeroSecondsAndNano()))
         }
     }
 
@@ -227,7 +224,8 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                             name = editTextName.text.toString(),
                             amount = editTextDosage.text.toString().toFloatOrNull().orDefault(),
                             type = pillTypesAdapter.getSelectedItemType(),
-                            times = timesAdapter.currentList.distinctBy { it.time }.associate { it.id to it.time },
+                            times = timesAdapter.currentList.sortedBy { it.time }.distinctBy { it.time }
+                                .associate { it.id to it.time },
                             datesTaken = spinnerDatesTakenType.selectedItem as DatesTakenType,
                             datesTakenSelected = if (isSelectedDates) {
                                 datesTakenSelectedAdapter.getSelectedItemsValue()
@@ -243,7 +241,8 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                         name = editTextName.text.toString(),
                         amount = editTextDosage.text.toString().toFloatOrNull().orDefault(),
                         type = pillTypesAdapter.getSelectedItemType(),
-                        times = timesAdapter.currentList.distinctBy { it.time }.associate { it.id to it.time },
+                        times = timesAdapter.currentList.sortedBy { it.time }.distinctBy { it.time }
+                            .associate { it.id to it.time },
                         datesTaken = spinnerDatesTakenType.selectedItem as DatesTakenType,
                         datesTakenSelected = if (isSelectedDates) {
                             datesTakenSelectedAdapter.getSelectedItemsValue()
@@ -281,12 +280,12 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     /** Заполнение значений из Pill */
     private fun setupDataIfPillEsNotNull() = with(binding) {
         editTextName.setText(pill?.name.orDefault())
-        timesAdapter.submitList(pill?.times?.map { TimeItem(it.key, it.value) } ?: listOf(
+        timesAdapter.submitList((pill?.times?.map { TimeItem(it.key, it.value) } ?: listOf(
             TimeItem(
                 id = UUID.randomUUID().toString(),
                 time = LocalTime.now().withZeroSecondsAndNano(),
             )
-        ))
+        )))
         datesTakenSelectedAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7).map { DatesTakenSelectedItem(it) })
         pill?.datesTakenSelected?.let { list ->
             list.forEach {
