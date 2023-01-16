@@ -36,7 +36,6 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="@style/Font.Body_1.Bold"
-            app:layout_constraintBottom_toTopOf="@id/textViewCount"
             app:layout_constraintEnd_toStartOf="@id/textViewTime"
             app:layout_constraintStart_toEndOf="@id/imageViewIcon"
             app:layout_constraintTop_toTopOf="parent"
@@ -56,7 +55,6 @@
             app:layout_constraintEnd_toStartOf="@id/textViewDate"
             app:layout_constraintStart_toEndOf="@id/imageViewIcon"
             app:layout_constraintTop_toBottomOf="@id/textViewName"
-            app:layout_constraintVertical_bias="1"
             tools:text="8 таблеток" />
 
         <TextView
@@ -66,19 +64,18 @@
             android:layout_marginTop="@dimen/margin_8"
             android:layout_marginEnd="@dimen/margin_16"
             android:textAppearance="@style/Font.Body_1.Bold"
-            app:layout_constraintBottom_toTopOf="@id/textViewDate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="spread"
             tools:text="11:11" />
 
         <TextView
             android:id="@+id/textViewDate"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginVertical="@dimen/margin_8"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="@dimen/margin_16"
-            android:textAppearance="@style/Font.Body_1.Bold"
+            android:layout_marginBottom="@dimen/margin_8"
+            android:textAppearance="@style/Font.Body_1.Medium"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textViewTime"
