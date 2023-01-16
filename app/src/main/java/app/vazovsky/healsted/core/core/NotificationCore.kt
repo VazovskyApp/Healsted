@@ -115,7 +115,8 @@ class NotificationCore @Inject constructor(
         data.putString(PILL_ID, pill.id)
 
         /** Начало текущей минуты */
-        val nowTime = LocalTime.now().withZeroSecondsAndNano()
+        val nowTimeWithSeconds = LocalTime.now()
+        val nowTime = nowTimeWithSeconds.withZeroSecondsAndNano()
 
         /** Ближайшее время в списке */
         val soonTime = pill.times.values.sorted().firstOrNull { itemTime ->
@@ -126,9 +127,11 @@ class NotificationCore @Inject constructor(
         val firstTime = pill.times.values.minOf { it }
 
         val differentTime = if (soonTime == null) {
-            /** Конечное время */
+            /** Полночь */
             val midnight = LocalTime.MIDNIGHT
+            /** Время до полуночи */
             val minutesUntilMidnight = midnight.minusMinutes(nowTime.toMinutes().toLong())
+            /** Время от начала дня до нужного времени */
             val minutesUntilCurrentTime = firstTime.toMinutes().toLong()
             minutesUntilMidnight.plusMinutes(minutesUntilCurrentTime)
         } else {
@@ -138,16 +141,16 @@ class NotificationCore @Inject constructor(
         if (differentTimeMinutes == 0) {
             differentTimeMinutes = FULL_DAY_MINUTES
         }
-
+        val differentTimeSecond = differentTimeMinutes * 60 - nowTimeWithSeconds.second
         Timber.d("LOL: times: ${pill.times.values}; soonTime: $soonTime; differentTimeMinutes: $differentTimeMinutes")
-
+        Timber.d("LOL: seconds: $differentTimeSecond")
         val work = OneTimeWorkRequestBuilder<FetchDataWorker>()
             .setConstraints(constraints)
             .addTag(NOTIFICATION_WORK_MANAGER_TAG)
             .addTag(uid)
             .addTag(pill.id)
             .setInputData(data.build())
-            .setInitialDelay(differentTimeMinutes.toLong(), TimeUnit.MINUTES)
+            .setInitialDelay(differentTimeSecond.toLong(), TimeUnit.SECONDS)
             .build()
 
         workManager.enqueue(work)

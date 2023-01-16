@@ -141,11 +141,12 @@ class FetchDataWorker @AssistedInject constructor(
         )
 
         /** Начало текущей минуты */
-        val nowTime = LocalTime.now().withZeroSecondsAndNano()
+        val nowTimeWithSeconds = LocalTime.now()
+        val nowTime = nowTimeWithSeconds.withZeroSecondsAndNano()
 
         /** Ближайшее время в списке */
         val soonTime = times.values.sorted().firstOrNull { itemTime ->
-            itemTime >= nowTime
+            itemTime.withZeroSecondsAndNano() > nowTime.withZeroSecondsAndNano()
         }?.withZeroSecondsAndNano()
 
         /** Минимальное время в списке */
@@ -154,7 +155,9 @@ class FetchDataWorker @AssistedInject constructor(
         val differentTime = (if (soonTime == null) {
             /** Конечное время */
             val midnight = LocalTime.MIDNIGHT
+            /** Время до полуночи */
             val minutesUntilMidnight = midnight.minusMinutes(nowTime.toMinutes().toLong())
+            /** Время от начала дня до нужного времени */
             val minutesUntilCurrentTime = firstTime.toMinutes().toLong()
             minutesUntilMidnight.plusMinutes(minutesUntilCurrentTime)
         } else {
@@ -164,12 +167,12 @@ class FetchDataWorker @AssistedInject constructor(
         if (differentTimeMinutes == 0) {
             differentTimeMinutes = FULL_DAY_MINUTES
         }
-
+        val differentTimeSecond = differentTimeMinutes * 60 - nowTimeWithSeconds.second
         Timber.d("LOL: times: ${times.values}; soonTime: $soonTime; differentTimeMinutes: $differentTimeMinutes")
-
+        Timber.d("LOL: seconds: $differentTimeSecond")
         val work = OneTimeWorkRequestBuilder<FetchDataWorker>().setConstraints(constraints)
             .addTag(NotificationCore.NOTIFICATION_WORK_MANAGER_TAG).addTag(uid).addTag(pillId).setInputData(data.build())
-            .setInitialDelay(differentTimeMinutes.toLong(), TimeUnit.MINUTES).build()
+            .setInitialDelay(differentTimeSecond.toLong(), TimeUnit.SECONDS).build()
 
         workManager.enqueue(work)
     }
