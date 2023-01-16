@@ -135,10 +135,10 @@
                                 android:layout_marginHorizontal="@dimen/margin_16"
                                 android:layout_marginTop="8dp"
                                 app:emptyCheck="true"
-                                app:errorEmpty="@string/empty_field_error"
-                                app:errorMalformed="@string/malformed_field_error"
+                                app:errorEmpty="@string/decimal_and_numeric_error"
+                                app:errorMalformed="@string/decimal_and_numeric_error"
                                 app:layout_constraintTop_toBottomOf="@id/textViewDosage"
-                                app:validationPattern="@string/decimal_validation_pattern">
+                                app:validationPattern="@string/decimal_and_numeric_validation_pattern">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/editTextDosage"
