@@ -16,6 +16,7 @@ import java.time.LocalTime
 
 class TimeViewHolder(
     parent: ViewGroup,
+    private val onAddClick: (TimeItem, Int) -> Unit,
     private val onDeleteClick: (TimeItem) -> Unit,
     private val editTime: (TimeItem, Int) -> Unit,
     private val dateFormatter: DateFormatter,
@@ -31,17 +32,23 @@ class TimeViewHolder(
             updateItem()
         }
 
-        override fun afterTextChanged(s: Editable?) {
-            updateItem()
-        }
+        override fun afterTextChanged(s: Editable?) = Unit
     }
 
 
-    fun bind(item: TimeItem, position: Int) = with(binding) {
+    fun bind(item: TimeItem, isLastPosition: Boolean) = with(binding) {
         this@TimeViewHolder.item = item
+        if (isLastPosition) {
+            editTextTime.requestFocus()
+            editTextTime.setSelection(editTextTime.text.toString().length)
+        }
         buttonDelete.apply {
-            visibility = if (position != 0) VISIBLE else INVISIBLE
+            buttonDelete.visibility = if (isLastPosition) INVISIBLE else VISIBLE
             setOnClickListener { onDeleteClick.invoke(item) }
+        }
+        buttonAdd.apply {
+            visibility = if (isLastPosition) VISIBLE else INVISIBLE
+            setOnClickListener { onAddClick.invoke(item, bindingAdapterPosition) }
         }
         editTextTime.setText(dateFormatter.formatStringFromLocalTime(item.time))
         editTextTime.addTextChangedListener(watcher)
@@ -54,10 +61,13 @@ class TimeViewHolder(
     }
 
     private fun updateItem() = with(binding) {
+        val newText = editTextTime.text.toString()
         if (textInputTime.validate()) {
-            val newText = editTextTime.text.toString()
             val newItem = TimeItem(item?.id.orDefault(), dateFormatter.parseLocalTimeFromString(newText))
             editTime.invoke(newItem, bindingAdapterPosition)
+            editTextTime.requestFocus()
+            editTextTime.setSelection(newText.length)
+        } else {
             editTextTime.setSelection(newText.length)
         }
     }
