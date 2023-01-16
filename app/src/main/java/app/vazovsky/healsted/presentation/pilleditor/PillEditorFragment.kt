@@ -257,7 +257,22 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                 } catch (e: Exception) {
                     showErrorSnackbar(e.message.toString(), marginBottom = resources.getDimensionPixelOffset(R.dimen.margin_20))
                 }
+            } else {
+                when {
+                    !textInputName.validate() -> scrollToError(y = textInputName.top)
+                    !textInputDosage.validate() -> scrollToError(y = cardViewAttributes.bottom)
+                    !textInputStartDate.validate() -> scrollToError(y = cardViewStartDateNotification.bottom)
+                    switchEndDateEnabled.isChecked
+                            && !textInputEndDate.validate() -> scrollToError(y = cardViewEndDateNotification.bottom)
+                    else -> Unit
+                }
             }
+        }
+    }
+
+    private fun scrollToError(x: Int = 0, y: Int) = with(binding) {
+        nestedScrollView.post {
+            nestedScrollView.smoothScrollTo(x, y)
         }
     }
 
