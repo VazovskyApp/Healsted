@@ -14,7 +14,8 @@ import app.vazovsky.healsted.data.model.MonitoringType
 import app.vazovsky.healsted.databinding.FragmentHealthAttributeBinding
 import app.vazovsky.healsted.extensions.addVerticalDividerItemDecoration
 import app.vazovsky.healsted.extensions.checkInputs
-import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
+import app.vazovsky.healsted.extensions.fitKeyboardInsetsWithPadding
+import app.vazovsky.healsted.extensions.showErrorSnackbar
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import app.vazovsky.healsted.presentation.health.REQUEST_KEY_UPDATE_HEALTH
 import app.vazovsky.healsted.presentation.health.attribute.adapter.HealthAttributeHistoryAdapter
@@ -83,7 +84,7 @@ class HealthAttributeFragment : BaseFragment(R.layout.fragment_health_attribute)
     }
 
     override fun onSetupLayout(savedInstanceState: Bundle?) = with(binding) {
-        root.fitTopInsetsWithPadding()
+        root.fitKeyboardInsetsWithPadding()
 
         setupToolbar()
         setupRecyclerView()
@@ -112,22 +113,55 @@ class HealthAttributeFragment : BaseFragment(R.layout.fragment_health_attribute)
         buttonUpdate.setOnClickListener {
             setFragmentResult(REQUEST_KEY_UPDATE_HEALTH, bundleOf())
             val checkList = mutableListOf(textInputNewValue)
-            if(type == MonitoringType.BLOOD_PRESSURE) checkList.add(textInputNewValueSecond)
+            if (type == MonitoringType.BLOOD_PRESSURE) checkList.add(textInputNewValueSecond)
 
-            if (checkList.checkInputs()){
-                val newValue = when (type) {
-                    MonitoringType.BLOOD_PRESSURE -> buildString {
-                        append(editTextNewValue.text)
-                        append("/")
-                        append(editTextNewValueSecond.text)
+            if (checkList.checkInputs()) {
+                if (validateEditTexts()) {
+                    val newValue = when (type) {
+                        MonitoringType.BLOOD_PRESSURE -> buildString {
+                            append(editTextNewValue.text)
+                            append("/")
+                            append(editTextNewValueSecond.text)
+                        }
+
+                        else -> editTextNewValue.text.toString()
                     }
-
-                    else -> editTextNewValue.text.toString()
+                    viewModel.updateMonitoring(MonitoringAttribute(value = newValue, type, LocalDate.now()))
+                } else {
+                    showErrorSnackbar(resources.getString(R.string.health_attribute_value_invalid))
                 }
-
-                viewModel.updateMonitoring(MonitoringAttribute(value = newValue, type, LocalDate.now()))
             }
         }
+    }
+
+    private fun validateEditTexts(): Boolean = with(binding) {
+        val firstText = editTextNewValue.text.toString()
+        val secondText = editTextNewValueSecond.text.toString()
+        var isValid = true
+        when (type) {
+            MonitoringType.BLOOD_PRESSURE -> {
+                val valueFirst = firstText.toFloat()
+                val valueSecond = secondText.toFloat()
+                isValid = valueFirst in MIN_BLOOD_PRESSURE_UP..MAX_BLOOD_PRESSURE_UP
+                        && valueSecond in MIN_BLOOD_PRESSURE_DOWN..MAX_BLOOD_PRESSURE_DOWN
+            }
+
+            MonitoringType.HEIGHT -> {
+                val valueFirst = firstText.toFloat()
+                isValid = valueFirst in MIN_HEIGHT..MAX_HEIGHT
+            }
+
+            MonitoringType.WEIGHT -> {
+                val valueFirst = firstText.toFloat()
+                isValid = valueFirst in MIN_WEIGHT..MAX_WEIGHT
+            }
+
+            MonitoringType.TEMPERATURE -> {
+                val valueFirst = firstText.toFloat()
+                isValid = valueFirst in MIN_TEMPERATURE..MAX_TEMPERATURE
+            }
+        }
+        return@with isValid
     }
 
     private fun setMonitoringSnapshotTask(task: Task<QuerySnapshot>) = with(task) {
@@ -171,5 +205,22 @@ class HealthAttributeFragment : BaseFragment(R.layout.fragment_health_attribute)
     private fun setNewValueHintExceptBloodPressure(type: MonitoringType) = with(binding) {
         textInputNewValue.hint = type.toString()
         textInputNewValueSecond.hint = ""
+    }
+
+    companion object {
+        const val MIN_BLOOD_PRESSURE_UP = 90F
+        const val MAX_BLOOD_PRESSURE_UP = 180F
+
+        const val MIN_BLOOD_PRESSURE_DOWN = 50F
+        const val MAX_BLOOD_PRESSURE_DOWN = 110F
+
+        const val MIN_HEIGHT = 50F
+        const val MAX_HEIGHT = 300F
+
+        const val MIN_WEIGHT = 10F
+        const val MAX_WEIGHT = 500F
+
+        const val MIN_TEMPERATURE = 24F
+        const val MAX_TEMPERATURE = 44F
     }
 }

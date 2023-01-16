@@ -95,6 +95,7 @@
     <string name="health_attribute_history">История</string>
     <string name="health_attribute_value_title">Значение</string>
     <string name="health_attribute_date_title">Дата</string>
+    <string name="health_attribute_value_invalid">Вы уверены, что все так плохо? Возможно, стоит обратиться к врачу (если вы до него, конечно, дойдете).</string>
 
     <string name="awful">AWFUL</string>
     <string name="bad">BAD</string>
