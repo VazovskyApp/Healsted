@@ -6,7 +6,6 @@ import app.vazovsky.healsted.R
 import app.vazovsky.healsted.core.core.NotificationCore
 import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.databinding.FragmentSettingsAccountBinding
-import app.vazovsky.healsted.extensions.checkInputs
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.extensions.orDefault
 import app.vazovsky.healsted.extensions.showErrorSnackbar
@@ -97,23 +96,33 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
 
     /** Сохранение профиля с проверкой валидности данных */
     private fun saveWithCheckValidate() = with(binding) {
-        val nickname = editTextNickname.text.toString()
-        val surname = editTextSurname.text.toString()
-        val name = editTextName.text.toString()
-        val patronymic = editTextPatronymic.text.toString()
-        val birthday = dateFormatter.parseLocalDateFromString(editTextBirthday.text.toString())
+        if (textInputNickname.validate()) {
+            try {
+                val nickname = editTextNickname.text.toString()
+                val surname = editTextSurname.text.toString()
+                val name = editTextName.text.toString()
+                val patronymic = editTextPatronymic.text.toString()
 
-        val isValidate = listOf(textInputNickname, textInputBirthday).checkInputs()
-        if (isValidate) {
-            val editedAccount = account?.copy(
-                nickname = nickname,
-                surname = surname,
-                name = name,
-                patronymic = patronymic,
-                birthday = birthday,
-            )
-            if (editedAccount != null) {
-                viewModel.updateAccount(editedAccount)
+                val editedAccount = account?.copy(
+                    nickname = nickname.orDefault(),
+                    surname = surname.orDefault(),
+                    name = name.orDefault(),
+                    patronymic = patronymic.orDefault(),
+                )
+
+                if (editedAccount != null) {
+                    if (!editTextBirthday.text.isNullOrBlank() && textInputBirthday.validate()) {
+                        val birthday = dateFormatter.parseLocalDateFromString(editTextBirthday.text.toString())
+                        val editedAccountWithBirthday = editedAccount.copy(
+                            birthday = birthday,
+                        )
+                        viewModel.updateAccount(editedAccountWithBirthday)
+                    } else {
+                        viewModel.updateAccount(editedAccount)
+                    }
+                }
+            } catch (e: Exception) {
+                showErrorSnackbar(resources.getString(R.string.error_something_wrong_title))
             }
         }
     }
