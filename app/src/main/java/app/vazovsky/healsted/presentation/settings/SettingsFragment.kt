@@ -40,7 +40,11 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         }
         signOutLiveEvent.observe { result ->
             result.doOnSuccess {
-                notificationCore.cancelWorker(requireActivity().application, it.uid)
+                try {
+                    notificationCore.cancelWorker(requireActivity().application, it.uid)
+                } catch (e: Exception) {
+                    Timber.d(e.message)
+                }
                 viewModel.openAuth()
             }
             result.doOnFailure { showErrorSnackbar(it.message) }

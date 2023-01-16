@@ -49,13 +49,17 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
             result.doOnSuccess { parseResult ->
                 viewModel.saveRoomPills(parseResult.pills)
                 parseResult.pills.forEach { pill ->
-                    notificationCore.cancelWorker(requireActivity().application, pill.id)
-                    notificationCore.createWorker(
-                        application = requireActivity().application,
-                        notificationImage = R.drawable.ic_logo_red,
-                        uid = parseResult.uid,
-                        pill = pill,
-                    )
+                    try {
+                        notificationCore.cancelWorker(requireActivity().application, pill.id)
+                        notificationCore.createWorker(
+                            application = requireActivity().application,
+                            notificationImage = R.drawable.ic_logo_red,
+                            uid = parseResult.uid,
+                            pill = pill,
+                        )
+                    } catch (e: Exception) {
+                        Timber.d(e.message)
+                    }
                 }
             }
             result.doOnFailure { Timber.d(it.message) }

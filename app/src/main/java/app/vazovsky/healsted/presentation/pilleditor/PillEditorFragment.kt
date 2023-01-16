@@ -24,6 +24,7 @@ import app.vazovsky.healsted.extensions.fitKeyboardInsetsWithPadding
 import app.vazovsky.healsted.extensions.orDefault
 import app.vazovsky.healsted.extensions.showErrorSnackbar
 import app.vazovsky.healsted.extensions.toDefaultString
+import app.vazovsky.healsted.extensions.withZeroSecondsAndNano
 import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import app.vazovsky.healsted.presentation.pilleditor.datestakenselected.DatesTakenSelectedAdapter
@@ -262,8 +263,8 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                     !textInputName.validate() -> scrollToError(y = textInputName.top)
                     !textInputDosage.validate() -> scrollToError(y = cardViewAttributes.bottom)
                     !textInputStartDate.validate() -> scrollToError(y = cardViewStartDateNotification.bottom)
-                    switchEndDateEnabled.isChecked
-                            && !textInputEndDate.validate() -> scrollToError(y = cardViewEndDateNotification.bottom)
+                    switchEndDateEnabled.isChecked && !textInputEndDate.validate() -> scrollToError(y = cardViewEndDateNotification.bottom)
+
                     else -> Unit
                 }
             }
@@ -283,20 +284,10 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         timesAdapter.submitList(pill?.times?.map { TimeItem(it.key, it.value) } ?: listOf(
             TimeItem(
                 id = UUID.randomUUID().toString(),
-                time = LocalTime.now(),
+                time = LocalTime.now().withZeroSecondsAndNano(),
             )
         ))
-        datesTakenSelectedAdapter.submitList(
-            listOf(
-                DatesTakenSelectedItem(1),
-                DatesTakenSelectedItem(2),
-                DatesTakenSelectedItem(3),
-                DatesTakenSelectedItem(4),
-                DatesTakenSelectedItem(5),
-                DatesTakenSelectedItem(6),
-                DatesTakenSelectedItem(7),
-            )
-        )
+        datesTakenSelectedAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7).map { DatesTakenSelectedItem(it) })
         pill?.datesTakenSelected?.let { list ->
             list.forEach {
                 datesTakenSelectedAdapter.selectItem(it)
@@ -345,13 +336,17 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
 
     private fun setUpdatePillTask(task: Task<Void>, pill: Pill, uid: String) = with(task) {
         addOnSuccessListener {
-            notificationCore.cancelWorker(requireActivity().application, pill.id)
-            notificationCore.createWorker(
-                application = requireActivity().application,
-                notificationImage = R.drawable.ic_logo_red,
-                uid = uid,
-                pill = pill,
-            )
+            try {
+                notificationCore.cancelWorker(requireActivity().application, pill.id)
+                notificationCore.createWorker(
+                    application = requireActivity().application,
+                    notificationImage = R.drawable.ic_logo_red,
+                    uid = uid,
+                    pill = pill,
+                )
+            } catch (e: Exception) {
+                Timber.d(e.message)
+            }
             viewModel.updateLocalPill(pill)
         }
         addOnFailureListener { Timber.d(it.message) }
@@ -359,7 +354,11 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
 
     private fun setDeletePillTask(task: Task<Void>, pill: Pill) = with(task) {
         addOnSuccessListener {
-            notificationCore.cancelWorker(requireActivity().application, pill.id)
+            try {
+                notificationCore.cancelWorker(requireActivity().application, pill.id)
+            } catch (e: Exception) {
+                Timber.d(e.message)
+            }
             viewModel.deleteLocalPill(pill)
         }
         addOnFailureListener { Timber.d(it.message) }
