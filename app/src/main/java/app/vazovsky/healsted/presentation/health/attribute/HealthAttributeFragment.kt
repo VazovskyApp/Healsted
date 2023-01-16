@@ -13,6 +13,7 @@ import app.vazovsky.healsted.data.model.MonitoringAttribute
 import app.vazovsky.healsted.data.model.MonitoringType
 import app.vazovsky.healsted.databinding.FragmentHealthAttributeBinding
 import app.vazovsky.healsted.extensions.addVerticalDividerItemDecoration
+import app.vazovsky.healsted.extensions.checkInputs
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import app.vazovsky.healsted.presentation.health.REQUEST_KEY_UPDATE_HEALTH
@@ -110,17 +111,22 @@ class HealthAttributeFragment : BaseFragment(R.layout.fragment_health_attribute)
     private fun setupUpdate() = with(binding) {
         buttonUpdate.setOnClickListener {
             setFragmentResult(REQUEST_KEY_UPDATE_HEALTH, bundleOf())
-            val newValue = when (type) {
-                MonitoringType.BLOOD_PRESSURE -> buildString {
-                    append(editTextNewValue.text)
-                    append("/")
-                    append(editTextNewValueSecond.text)
+            val checkList = mutableListOf(textInputNewValue)
+            if(type == MonitoringType.BLOOD_PRESSURE) checkList.add(textInputNewValueSecond)
+
+            if (checkList.checkInputs()){
+                val newValue = when (type) {
+                    MonitoringType.BLOOD_PRESSURE -> buildString {
+                        append(editTextNewValue.text)
+                        append("/")
+                        append(editTextNewValueSecond.text)
+                    }
+
+                    else -> editTextNewValue.text.toString()
                 }
 
-                else -> editTextNewValue.text.toString()
+                viewModel.updateMonitoring(MonitoringAttribute(value = newValue, type, LocalDate.now()))
             }
-
-            viewModel.updateMonitoring(MonitoringAttribute(value = newValue, type, LocalDate.now()))
         }
     }
 
