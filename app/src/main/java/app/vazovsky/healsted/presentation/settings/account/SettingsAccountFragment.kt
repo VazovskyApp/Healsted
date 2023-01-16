@@ -17,6 +17,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
 import javax.inject.Inject
 import timber.log.Timber
 
@@ -75,7 +76,11 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
     /** Привязка профиля */
     private fun bindProfile(account: Account) = with(binding) {
         editTextNickname.setText(account.nickname)
-        editTextBirthday.setText(account.birthday?.let { dateFormatter.formatStringFromLocalDate(it) }.orDefault())
+        editTextBirthday.setText(
+            dateFormatter.formatStringFromLocalDate(
+                account.birthday ?: LocalDate.of(1970, 1, 1)
+            )
+        )
         editTextSurname.setText(account.surname)
         editTextName.setText(account.name)
         editTextPatronymic.setText(account.patronymic)
@@ -97,23 +102,27 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
 
     /** Сохранение профиля с проверкой валидности данных */
     private fun saveWithCheckValidate() = with(binding) {
-        val nickname = editTextNickname.text.toString()
-        val surname = editTextSurname.text.toString()
-        val name = editTextName.text.toString()
-        val patronymic = editTextPatronymic.text.toString()
-        val birthday = dateFormatter.parseLocalDateFromString(editTextBirthday.text.toString())
-
         val isValidate = listOf(textInputNickname, textInputBirthday).checkInputs()
         if (isValidate) {
-            val editedAccount = account?.copy(
-                nickname = nickname,
-                surname = surname,
-                name = name,
-                patronymic = patronymic,
-                birthday = birthday,
-            )
-            if (editedAccount != null) {
-                viewModel.updateAccount(editedAccount)
+            try {
+                val nickname = editTextNickname.text.toString()
+                val surname = editTextSurname.text.toString()
+                val name = editTextName.text.toString()
+                val patronymic = editTextPatronymic.text.toString()
+                val birthday = dateFormatter.parseLocalDateFromString(editTextBirthday.text.toString())
+
+                val editedAccount = account?.copy(
+                    nickname = nickname.orDefault(),
+                    surname = surname.orDefault(),
+                    name = name.orDefault(),
+                    patronymic = patronymic.orDefault(),
+                    birthday = birthday,
+                )
+                if (editedAccount != null) {
+                    viewModel.updateAccount(editedAccount)
+                }
+            } catch (e: Exception) {
+                showErrorSnackbar(resources.getString(R.string.error_something_wrong_title))
             }
         }
     }
