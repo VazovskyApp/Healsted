@@ -11,6 +11,7 @@ import androidx.work.WorkerParameters
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.core.core.NotificationCore
 import app.vazovsky.healsted.core.core.NotificationCore.Companion.DEFAULT_ENDPOINT
+import app.vazovsky.healsted.core.core.NotificationCore.Companion.FULL_DAY_MINUTES
 import app.vazovsky.healsted.data.mapper.PillMapper
 import app.vazovsky.healsted.data.model.DatesTakenType
 import app.vazovsky.healsted.data.room.converters.DatesTakenSelectedListConverter
@@ -69,7 +70,10 @@ class FetchDataWorker @AssistedInject constructor(
             DatesTakenSelectedListConverter().mapStringToList(it)
         } ?: arrayListOf()
 
-        if (endPoint != null && token != null && deviceId != null && accountUid != null && pillId != null && pillStartDate != null && pillDatesTakenType != null && pillTimes != null) {
+
+        if (endPoint != null && token != null && deviceId != null && accountUid != null && pillId != null
+            && pillStartDate != null && pillDatesTakenType != null && pillTimes != null
+        ) {
             if (dateFormatter.isShownToday(
                     pillStartDate,
                     pillEndDate,
@@ -136,14 +140,32 @@ class FetchDataWorker @AssistedInject constructor(
             DatesTakenSelectedListConverter().mapListToString(pillDatesTakenSelectedList),
         )
 
-        val nowTime = LocalTime.now().plusMinutes(1)
-        val soonTime = times.values.sorted().firstOrNull { it.withZeroSecondsAndNano() > nowTime.withZeroSecondsAndNano() }
+        /** Начало текущей минуты */
+        val nowTime = LocalTime.now().withZeroSecondsAndNano()
+
+        /** Ближайшее время в списке */
+        val soonTime = times.values.sorted().firstOrNull { itemTime ->
+            itemTime >= nowTime
+        }?.withZeroSecondsAndNano()
+
+        /** Минимальное время в списке */
         val firstTime = times.values.minOf { it }
-        val differentTime =
-            soonTime?.minusMinutes(nowTime.toMinutes().toLong()) ?: LocalTime.MIDNIGHT.minusMinutes(nowTime.toMinutes().toLong())
-                .plusMinutes(firstTime.toMinutes().toLong())
-        val differentTimeMinutes = differentTime.toMinutes()
-        Timber.d("LOL: times: ${times.values}; soonTime: $soonTime; differentTime: $differentTime")
+
+        val differentTime = (if (soonTime == null) {
+            /** Конечное время */
+            val midnight = LocalTime.MIDNIGHT
+            val minutesUntilMidnight = midnight.minusMinutes(nowTime.toMinutes().toLong())
+            val minutesUntilCurrentTime = firstTime.toMinutes().toLong()
+            minutesUntilMidnight.plusMinutes(minutesUntilCurrentTime)
+        } else {
+            soonTime.minusMinutes(nowTime.toMinutes().toLong())
+        })
+        var differentTimeMinutes = differentTime.toMinutes()
+        if (differentTimeMinutes == 0) {
+            differentTimeMinutes = FULL_DAY_MINUTES
+        }
+
+        Timber.d("LOL: times: ${times.values}; soonTime: $soonTime; differentTimeMinutes: $differentTimeMinutes")
 
         val work = OneTimeWorkRequestBuilder<FetchDataWorker>().setConstraints(constraints)
             .addTag(NotificationCore.NOTIFICATION_WORK_MANAGER_TAG).addTag(uid).addTag(pillId).setInputData(data.build())

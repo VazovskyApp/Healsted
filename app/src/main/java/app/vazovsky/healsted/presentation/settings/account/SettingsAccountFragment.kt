@@ -140,7 +140,11 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
     private fun setDeleteAccountTask(task: Task<Void>?, uid: String) {
         task?.apply {
             addOnSuccessListener {
-                notificationCore.cancelWorker(requireActivity().application, uid)
+                try {
+                    notificationCore.cancelWorker(requireActivity().application, uid)
+                } catch (e: Exception) {
+                    Timber.d(e.message)
+                }
                 viewModel.deleteAccountFireStore()
             }
             addOnFailureListener { Timber.d(it.message) }

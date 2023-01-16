@@ -74,13 +74,17 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                 result.doOnSuccess { parseResult ->
                     viewModel.saveRoomPills(parseResult.pills)
                     parseResult.pills.forEach { pill ->
-                        notificationCore.cancelWorker(requireActivity().application, pill.id)
-                        notificationCore.createWorker(
-                            application = requireActivity().application,
-                            notificationImage = R.drawable.ic_logo_red,
-                            uid = parseResult.uid,
-                            pill = pill,
-                        )
+                        try {
+                            notificationCore.cancelWorker(requireActivity().application, pill.id)
+                            notificationCore.createWorker(
+                                application = requireActivity().application,
+                                notificationImage = R.drawable.ic_logo_red,
+                                uid = parseResult.uid,
+                                pill = pill,
+                            )
+                        } catch (e: Exception) {
+                            Timber.d(e.message)
+                        }
                     }
                 }
             }
