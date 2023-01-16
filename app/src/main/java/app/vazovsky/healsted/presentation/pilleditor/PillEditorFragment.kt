@@ -96,6 +96,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
 
         setupToolbar()
         setupDataIfPillEsNotNull()
+        setupDosageString()
         setupPillTypeRecyclerView()
         setupDaysOfWeekRecyclerView()
         setupTimesRecyclerView()
@@ -280,7 +281,6 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     /** Заполнение значений из Pill */
     private fun setupDataIfPillEsNotNull() = with(binding) {
         editTextName.setText(pill?.name.orDefault())
-        editTextDosage.setText(pill?.amount.orDefault(1F).toString())
         timesAdapter.submitList(pill?.times?.map { TimeItem(it.key, it.value) } ?: listOf(
             TimeItem(
                 id = UUID.randomUUID().toString(),
@@ -300,6 +300,20 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
             dateFormatter.formatStringFromLocalDate(it)
         } ?: LocalDate.now().toDefaultString())
         editTextComment.setText(pill?.comment.orDefault())
+    }
+
+    /** Настройка поля дозировки */
+    private fun setupDosageString() = with(binding) {
+        val dosageText = pill?.let { data ->
+            val amount = data.amount
+            val amountInt = amount.toInt()
+            if (amount > amountInt.toFloat()) {
+                amount
+            } else {
+                amountInt
+            }
+        } ?: DEFAULT_DOSAGE_VALUE
+        editTextDosage.setText(dosageText.toString())
     }
 
     /** Настройка спиннера для DatesTakenType */
@@ -362,5 +376,9 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
             viewModel.deleteLocalPill(pill)
         }
         addOnFailureListener { Timber.d(it.message) }
+    }
+
+    companion object {
+        const val DEFAULT_DOSAGE_VALUE = "1"
     }
 }
