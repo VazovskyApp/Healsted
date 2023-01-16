@@ -30,6 +30,7 @@ class PillsHistoryViewHolder(
         textViewName.text = item.pill.name.capitalizeFirstChar(Locale.getDefault())
         textViewCount.text = dataTypeFormatter.formatPill(item.pill)
         textViewTime.text = dateFormatter.formatStringFromLocalTime(item.time).orDefault()
+        textViewDate.text = dateFormatter.formatStringFromLocalDate(item.date).orDefault()
 
         imageViewIcon.setBackgroundResource(item.pill.type.toIcon())
     }
