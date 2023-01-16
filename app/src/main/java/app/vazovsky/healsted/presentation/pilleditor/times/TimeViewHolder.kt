@@ -2,6 +2,7 @@ package app.vazovsky.healsted.presentation.pilleditor.times
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
@@ -16,7 +17,8 @@ import java.time.LocalTime
 
 class TimeViewHolder(
     parent: ViewGroup,
-    private val onDeleteClick: (TimeItem) -> Unit,
+    private val onAddClick: (TimeItem, Int) -> Unit,
+    private val onDeleteClick: (TimeItem, Int) -> Unit,
     private val editTime: (TimeItem, Int) -> Unit,
     private val dateFormatter: DateFormatter,
 ) : RecyclerView.ViewHolder(parent.inflate(R.layout.item_time)) {
@@ -37,11 +39,15 @@ class TimeViewHolder(
     }
 
 
-    fun bind(item: TimeItem, position: Int) = with(binding) {
+    fun bind(item: TimeItem, isLastPosition: Boolean) = with(binding) {
         this@TimeViewHolder.item = item
         buttonDelete.apply {
-            visibility = if (position != 0) VISIBLE else INVISIBLE
-            setOnClickListener { onDeleteClick.invoke(item) }
+            buttonDelete.visibility = if (isLastPosition) INVISIBLE else VISIBLE
+            setOnClickListener { onDeleteClick.invoke(item, bindingAdapterPosition) }
+        }
+        buttonAdd.apply {
+            visibility = if (isLastPosition) VISIBLE else INVISIBLE
+            setOnClickListener { onAddClick.invoke(item, bindingAdapterPosition) }
         }
         editTextTime.setText(dateFormatter.formatStringFromLocalTime(item.time))
         editTextTime.addTextChangedListener(watcher)

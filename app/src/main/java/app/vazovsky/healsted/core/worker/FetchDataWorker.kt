@@ -189,7 +189,8 @@ class FetchDataWorker @AssistedInject constructor(
         }
         val differentTimeSecond = differentTimeMinutes * 60 - nowTimeWithSeconds.second
         Timber.d(
-            "LOL: times: ${times.values}; soonTime: $soonTime; minutes:" + " $differentTimeMinutes; seconds: $differentTimeSecond"
+            "LOL: times: ${times.values}; soonTime: $soonTime; minutes:" +
+                    " $differentTimeMinutes; seconds: $differentTimeSecond"
         )
 
         val work = OneTimeWorkRequestBuilder<FetchDataWorker>().setConstraints(constraints)

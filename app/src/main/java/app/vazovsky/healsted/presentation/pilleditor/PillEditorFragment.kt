@@ -161,18 +161,18 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     /** Настройка времени уведомления */
     private fun setupTimesRecyclerView() = with(binding) {
         recyclerViewTimes.adapter = timesAdapter.apply {
-            onDeleteClick = { item ->
-                timesAdapter.deleteItem(item)
-
+            onAddClick = { item, position ->
+                val newItem = TimeItem(UUID.randomUUID().toString(), LocalTime.now())
+                timesAdapter.addItem(newItem, item, position)
+            }
+            onDeleteClick = { item, position ->
+                timesAdapter.deleteItem(item, )
             }
             editTime = { newPair, position ->
                 recyclerViewTimes.post {
                     timesAdapter.updateItem(newPair, position)
                 }
             }
-        }
-        buttonAddTime.setOnClickListener {
-            timesAdapter.addItem(TimeItem(UUID.randomUUID().toString(), LocalTime.now().withZeroSecondsAndNano()))
         }
     }
 

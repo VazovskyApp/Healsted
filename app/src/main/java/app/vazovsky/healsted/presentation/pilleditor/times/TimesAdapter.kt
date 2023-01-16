@@ -10,20 +10,21 @@ class TimesAdapter @Inject constructor(
     private val dateFormatter: DateFormatter,
 ) : BaseAdapter<TimeItem, TimeViewHolder>() {
 
-    lateinit var onDeleteClick: (TimeItem) -> Unit
+    lateinit var onAddClick: (TimeItem, Int) -> Unit
+    lateinit var onDeleteClick: (TimeItem, Int) -> Unit
     lateinit var editTime: (TimeItem, Int) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimeViewHolder {
-        return TimeViewHolder(parent, onDeleteClick, editTime, dateFormatter)
+        return TimeViewHolder(parent, onAddClick, onDeleteClick, editTime, dateFormatter)
     }
 
     override fun onBindViewHolder(holder: TimeViewHolder, position: Int) {
-        holder.bind(getItem(position), position)
+        holder.bind(getItem(position), position == itemCount - 1)
     }
 
     override fun onBindViewHolder(holder: TimeViewHolder, position: Int, payloads: MutableList<Any>) {
         if (payloads.isEmpty()) {
-            holder.bind(getItem(position), position)
+            holder.bind(getItem(position), position == itemCount - 1)
         } else {
             if (payloads[0] is LocalTime) {
                 holder.bindTimeState(payloads[0] as LocalTime)
@@ -31,7 +32,8 @@ class TimesAdapter @Inject constructor(
         }
     }
 
-    fun addItem(item: TimeItem) {
+    fun addItem(item: TimeItem, focusableItem: TimeItem, position: Int) {
+        notifyItemChanged(position, focusableItem.time)
         this.items.apply {
             add(item)
         }
