@@ -304,14 +304,9 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
 
     /** Настройка поля дозировки */
     private fun setupDosageString() = with(binding) {
-        val dosageText = pill?.let { data ->
-            val amount = data.amount
-            val amountInt = amount.toInt()
-            if (amount > amountInt.toFloat()) {
-                amount
-            } else {
-                amountInt
-            }
+        val dosageText = pill?.amount?.let { amount ->
+            val compareResult = amount.compareTo(amount.toInt())
+            if (compareResult > 0) amount else amount.toInt()
         } ?: DEFAULT_DOSAGE_VALUE
         editTextDosage.setText(dosageText.toString())
     }
