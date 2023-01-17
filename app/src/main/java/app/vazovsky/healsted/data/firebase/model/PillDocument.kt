@@ -1,6 +1,7 @@
 package app.vazovsky.healsted.data.firebase.model
 
 import android.os.Parcelable
+import androidx.annotation.Nullable
 import app.vazovsky.healsted.data.model.DatesTakenType
 import app.vazovsky.healsted.data.model.PillType
 import app.vazovsky.healsted.data.model.TakePillType

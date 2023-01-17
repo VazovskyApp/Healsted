@@ -15,6 +15,7 @@ import app.vazovsky.healsted.presentation.base.SingleLiveEvent
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,6 +27,9 @@ class SettingsAccountViewModel @Inject constructor(
     private val deleteAccountUseCase: DeleteAccountUseCase,
     private val deleteFirestoreAccountUseCase: DeleteFirestoreAccountUseCase,
 ) : BaseViewModel() {
+
+    var birthday: LocalDate? = null
+
     /** Профиль в виде DocumentSnapshot */
     private val _profileSnapshotLiveData = MutableLiveData<LoadableResult<Task<DocumentSnapshot>>>()
     val profileSnapshotLiveData: LiveData<LoadableResult<Task<DocumentSnapshot>>> = _profileSnapshotLiveData

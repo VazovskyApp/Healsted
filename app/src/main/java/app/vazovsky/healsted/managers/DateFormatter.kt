@@ -6,9 +6,11 @@ import app.vazovsky.healsted.data.model.DatesTakenType
 import app.vazovsky.healsted.extensions.capitalizeFirstChar
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.text.SimpleDateFormat
+import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.time.temporal.ChronoUnit
@@ -182,5 +184,16 @@ class DateFormatter @Inject constructor(@ApplicationContext val context: Context
                 datesTakenSelected.map { it.toInt() }.contains(currentDate.dayOfWeek.value)
             } else false
         }
+    }
+
+    fun getLocalDate(millis: Long): LocalDate {
+        return LocalDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault()).toLocalDate()
+    }
+
+    fun getLocalDateString(millis: Long): String {
+        val localDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault()).toLocalDate()
+        Timber.d("LOL LOCAL DATE: $localDate")
+        Timber.d("LOL STRING LOCAL DATE: ${formatStringFromLocalDate(localDate)}")
+        return formatStringFromLocalDate(localDate)
     }
 }

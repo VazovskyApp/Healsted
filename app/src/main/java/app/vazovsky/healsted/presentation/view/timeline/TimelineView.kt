@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import app.vazovsky.healsted.extensions.orDefault
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -20,6 +21,8 @@ class TimelineView @JvmOverloads constructor(
     var dayTextColor = 0
     var selectedColor = 0
     var disabledDateColor = 0
+
+    var selectedDate: Calendar? = null
 
     var year = 0
         private set
@@ -58,7 +61,8 @@ class TimelineView @JvmOverloads constructor(
      */
     @SuppressLint("SimpleDateFormat")
     fun setActiveDate(activeDate: Calendar) {
-        try {
+        return try {
+            selectedDate = activeDate
             val initialDate: Date = SimpleDateFormat("yyyy-MM-dd")
                 .parse(year.toString() + "-" + (month + 1) + "-" + date) as Date
             val diff: Long = activeDate.time.time - initialDate.time
@@ -67,8 +71,21 @@ class TimelineView @JvmOverloads constructor(
             invalidate()
         } catch (e: ParseException) {
             e.printStackTrace()
+            throw Exception()
         }
     }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getActivePosition(): Int {
+        return selectedDate?.let {
+            val initialDate: Date = SimpleDateFormat("yyyy-MM-dd")
+                .parse(year.toString() + "-" + (month + 1) + "-" + date) as Date
+            val diff: Long = it.time.time - initialDate.time
+            (diff / (1000 * 60 * 60 * 24)).toInt()
+        } ?: 0
+    }
+
+    fun getItemsCount() = adapter?.itemCount.orDefault()
 
     fun deactivateDates(deactivatedDates: List<Date>) {
         adapter?.disableDates(deactivatedDates)

@@ -116,6 +116,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     private fun setupTimeline() = with(binding) {
         datePickerTimeline.setInitialDate(2023, 0, 1)
         datePickerTimeline.setActiveDate(Calendar.getInstance())
+        datePickerTimeline.scrollToActivePosition()
         textViewTitle.text = dateFormatter.getDisplayDifferentDates(LocalDate.now(), LocalDate.now())
         textViewDate.text = dateFormatter.formatDateWithDayOfWeek(LocalDate.now())
         datePickerTimeline.setOnDateSelectedListener(object : OnDateSelectedListener {

@@ -16,6 +16,7 @@ import app.vazovsky.healsted.presentation.base.BaseViewModel
 import app.vazovsky.healsted.presentation.base.SingleLiveEvent
 import com.google.android.gms.tasks.Task
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -94,5 +95,5 @@ class PillEditorViewModel @Inject constructor(
 data class UpdateResult(
     val task: Task<Void>,
     val pill: Pill,
-    val uid:String,
+    val uid: String,
 )
