@@ -11,6 +11,7 @@ import app.vazovsky.healsted.R
 import app.vazovsky.healsted.data.model.Account
 import app.vazovsky.healsted.data.model.Mood
 import app.vazovsky.healsted.data.model.Pill
+import app.vazovsky.healsted.data.model.TodayPillItem
 import app.vazovsky.healsted.databinding.FragmentDashboardBinding
 import app.vazovsky.healsted.extensions.addLinearSpaceItemDecoration
 import app.vazovsky.healsted.extensions.fitTopInsetsWithPadding
@@ -67,7 +68,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         }
         todayPillsLiveData.observe { result ->
             binding.stateViewFlipper.setStateFromResult(result)
-            result.doOnSuccess { pills -> todayPillsAdapter.submitList(pills) }
+            result.doOnSuccess { pills -> bindPills(pills) }
             result.doOnFailure { Timber.d(it.message) }
         }
         todayMoodSnapshotLiveData.observe { result ->
@@ -112,6 +113,25 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         viewModel.updateMood(Mood(binding.ratingBarMood.getCurrentRateStatus()))
     }
 
+    /** Привязка данных для тулбара */
+    private fun bindToolbar(profile: Account) = with(binding.toolbar) {
+        val currentHour = LocalTime.now().hour
+        title = resources.getString(
+            when (currentHour) {
+                in 6..11 -> R.string.welcome_string_morning
+                in 12..16 -> R.string.welcome_string_afternoon
+                in 17..21 -> R.string.welcome_string_evening
+                else -> R.string.welcome_string_night
+            },
+            profile.nickname,
+        )
+    }
+
+    /** Привязка лекарств */
+    private fun bindPills(pills: List<TodayPillItem>) = with(binding) {
+        todayPillsAdapter.submitList(pills)
+    }
+
     /** Настройка таймлайна */
     private fun setupTimeline() = with(binding) {
         datePickerTimeline.setInitialDate(2023, 0, 1)
@@ -143,20 +163,6 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         }
         emptyView = binding.emptyViewTodayPills
         addLinearSpaceItemDecoration(R.dimen.padding_8)
-    }
-
-    /** Привязка данных для тулбара */
-    private fun bindToolbar(profile: Account) = with(binding.toolbar) {
-        val currentHour = LocalTime.now().hour
-        title = resources.getString(
-            when (currentHour) {
-                in 6..11 -> R.string.welcome_string_morning
-                in 12..16 -> R.string.welcome_string_afternoon
-                in 17..21 -> R.string.welcome_string_evening
-                else -> R.string.welcome_string_night
-            },
-            profile.nickname,
-        )
     }
 
     /** Привязка настроения */

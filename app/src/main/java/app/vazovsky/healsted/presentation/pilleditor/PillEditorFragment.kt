@@ -227,7 +227,6 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                 return@setOnClickListener
             }
             val isEndDateEnabled = switchEndDateEnabled.isChecked
-            Timber.d("LOL ENABLED:$isEndDateEnabled")
 
             if (listOf(textInputName, textInputDosage).checkInputs()) {
                 try {

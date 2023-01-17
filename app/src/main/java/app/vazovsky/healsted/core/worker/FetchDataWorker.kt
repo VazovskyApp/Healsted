@@ -22,7 +22,6 @@ import app.vazovsky.healsted.data.model.PillType
 import app.vazovsky.healsted.data.room.converters.DatesTakenSelectedListConverter
 import app.vazovsky.healsted.data.room.converters.TimesMapConverter
 import app.vazovsky.healsted.extensions.capitalizeFirstChar
-import app.vazovsky.healsted.extensions.toIcon
 import app.vazovsky.healsted.extensions.toMinutes
 import app.vazovsky.healsted.extensions.withZeroSecondsAndNano
 import app.vazovsky.healsted.managers.DataTypeFormatter
@@ -56,7 +55,6 @@ class FetchDataWorker @AssistedInject constructor(
         val deviceId = inputData.getString(NotificationCore.DEVICE_ID)
         val packageName = inputData.getString(NotificationCore.PACKAGE_NAME)
         val className = inputData.getString(NotificationCore.CLASS_NAME)
-        val notificationImage = inputData.getInt(NotificationCore.NOTIFICATION_IMAGE, R.drawable.ic_logo_red)
 
         val accountUid = inputData.getString(NotificationCore.ACCOUNT_UID)
         val pillId = inputData.getString(NotificationCore.PILL_ID)
@@ -103,10 +101,11 @@ class FetchDataWorker @AssistedInject constructor(
                     className!!,
                 )
 
+
                 createNewWorker(
-                    accountUid, pillId, pillName, pillStartDate, pillEndDate,
-                    pillDatesTakenType, pillDatesTakenSelectedList, pillTimes,
-                    pillType.toIcon(), pillAmount, pillType,
+                    accountUid, pillId, pillName,
+                    pillStartDate, pillEndDate, pillDatesTakenType,
+                    pillDatesTakenSelectedList, pillTimes, pillAmount, pillType,
                 )
             }
         }
@@ -125,7 +124,6 @@ class FetchDataWorker @AssistedInject constructor(
         pillDatesTakenType: DatesTakenType,
         pillDatesTakenSelectedList: ArrayList<Int>,
         times: Map<String, LocalTime>,
-        notificationImage: Int,
         pillAmount: Float,
         pillType: PillType?,
     ) {
@@ -137,7 +135,6 @@ class FetchDataWorker @AssistedInject constructor(
         data.putString(NotificationCore.ENDPOINT_REQUEST, DEFAULT_ENDPOINT)
         data.putString(NotificationCore.TOKEN, DEFAULT_TOKEN)
         data.putString(NotificationCore.DEVICE_ID, DEFAULT_DEVICE_ID)
-        data.putInt(NotificationCore.NOTIFICATION_IMAGE, notificationImage)
         data.putString(NotificationCore.PACKAGE_NAME, DEFAULT_PACKAGE_NAME)
         data.putString(NotificationCore.CLASS_NAME, DEFAULT_NOTIFICATION_PACKAGE_NAME)
 
