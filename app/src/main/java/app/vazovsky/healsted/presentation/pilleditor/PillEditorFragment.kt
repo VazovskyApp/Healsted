@@ -24,6 +24,7 @@ import app.vazovsky.healsted.databinding.FragmentPillEditorBinding
 import app.vazovsky.healsted.extensions.checkInputs
 import app.vazovsky.healsted.extensions.fitKeyboardInsetsWithPadding
 import app.vazovsky.healsted.extensions.orDefault
+import app.vazovsky.healsted.extensions.serializeToMap
 import app.vazovsky.healsted.extensions.showErrorSnackbar
 import app.vazovsky.healsted.extensions.toDefaultString
 import app.vazovsky.healsted.extensions.withZeroSecondsAndNano
@@ -102,7 +103,6 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         stateViewFlipper.setRetryMethod { viewModel.getPillTypes() }
 
         setupToolbar()
-        setDateNotification()
         setupDataIfPillEsNotNull()
         setupDosageString()
         setupPillTypeRecyclerView()
@@ -227,10 +227,9 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                 return@setOnClickListener
             }
             val isEndDateEnabled = switchEndDateEnabled.isChecked
+            Timber.d("LOL ENABLED:$isEndDateEnabled")
 
-            if (listOf(textInputName, textInputDosage).checkInputs() &&
-                viewModel.startDate != null && if (isEndDateEnabled) viewModel.endDate != null else true
-            ) {
+            if (listOf(textInputName, textInputDosage).checkInputs()) {
                 try {
                     val newPill = pill?.let {
                         pill?.copy(
@@ -245,7 +244,9 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                             } else arrayListOf(),
                             takePillType = spinnerTakePillType.selectedItem as TakePillType,
                             startDate = dateFormatter.parseLocalDateFromString(textViewStartDateValue.text.toString()),
-                            endDate = if (isEndDateEnabled) viewModel.endDate else null,
+                            endDate = if (isEndDateEnabled) {
+                                dateFormatter.parseLocalDateFromString(textViewEndDateValue.text.toString())
+                            } else null,
                             comment = editTextComment.text.toString(),
                         )
                     } ?: Pill(
@@ -260,7 +261,9 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                         } else arrayListOf(),
                         takePillType = spinnerTakePillType.selectedItem as TakePillType,
                         startDate = dateFormatter.parseLocalDateFromString(textViewStartDateValue.text.toString()),
-                        endDate = if (isEndDateEnabled) viewModel.endDate else null,
+                        endDate = if (isEndDateEnabled) {
+                            dateFormatter.parseLocalDateFromString(textViewEndDateValue.text.toString())
+                        } else null,
                         comment = editTextComment.text.toString(),
                     )
                     if (pill == null) viewModel.addPill(newPill) else viewModel.updatePill(newPill)
@@ -271,12 +274,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                 when {
                     !textInputName.validate() -> scrollToError(y = textInputName.top)
                     !textInputDosage.validate() -> scrollToError(y = cardViewAttributes.bottom)
-                    viewModel.startDate == null -> scrollToError(y = cardViewStartDateNotification.bottom)
-                    switchEndDateEnabled.isChecked && viewModel.startDate != null -> scrollToError(
-                        y = cardViewEndDateNotification.bottom
-                    )
-
-                    else -> Unit
+                    else -> showErrorSnackbar(resources.getString(R.string.error_something_wrong_title))
                 }
             }
         }
@@ -303,6 +301,9 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                 datesTakenSelectedAdapter.selectItem(it)
             }
         }
+        switchEndDateEnabled.setOnCheckedChangeListener { _, isChecked ->
+            cardViewEndDateNotification.isVisible = isChecked
+        }
         setupStartDate()
         setupEndDate()
         editTextComment.setText(pill?.comment.orDefault())
@@ -312,12 +313,10 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         textViewStartDateValue.text = pill?.startDate?.let {
             dateFormatter.formatStringFromLocalDate(it)
         } ?: LocalDate.now().toDefaultString()
-        viewModel.startDate = pill?.startDate
         cardViewStartDate.setOnClickListener {
-            val calendar = createDatePicker(viewModel.startDate)
+            val calendar = createDatePicker(dateFormatter.parseLocalDateFromString(textViewStartDateValue.text.toString()))
             calendar.show(requireActivity().supportFragmentManager, resources.getString(R.string.calendar_pill_date_tag))
             calendar.addOnPositiveButtonClickListener { millis ->
-                viewModel.startDate = dateFormatter.getLocalDate(millis)
                 textViewStartDateValue.text = dateFormatter.getLocalDateString(millis)
             }
         }
@@ -326,14 +325,12 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     private fun setupEndDate() = with(binding) {
         textViewEndDateValue.text = pill?.endDate?.let {
             dateFormatter.formatStringFromLocalDate(it)
-        } ?: LocalDate.now().toDefaultString()
-        viewModel.endDate = pill?.endDate
-        switchEndDateEnabled.isChecked = viewModel.endDate != null
+        } ?: LocalDate.now().plusDays(1).toDefaultString()
+        switchEndDateEnabled.isChecked = pill?.endDate != null
         cardViewEndDate.setOnClickListener {
-            val calendar = createDatePicker(viewModel.endDate)
+            val calendar = createDatePicker(dateFormatter.parseLocalDateFromString(textViewEndDateValue.text.toString()))
             calendar.show(requireActivity().supportFragmentManager, resources.getString(R.string.calendar_pill_date_tag))
             calendar.addOnPositiveButtonClickListener { millis ->
-                viewModel.endDate = dateFormatter.getLocalDate(millis)
                 textViewEndDateValue.text = dateFormatter.getLocalDateString(millis)
             }
         }
@@ -375,10 +372,6 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         pill?.let { spinnerTakePillType.setSelection(listOfTakePillType.indexOf(it.takePillType)) }
     }
 
-    /** Настройка дат */
-    private fun setDateNotification() = with(binding) {
-        switchEndDateEnabled.setOnCheckedChangeListener { _, isChecked -> cardViewEndDateNotification.isVisible = isChecked }
-    }
 
     private fun setUpdatePillTask(task: Task<Void>, pill: Pill, uid: String) = with(task) {
         addOnSuccessListener {

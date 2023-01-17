@@ -93,11 +93,11 @@ class TimelineAdapter(private val timelineView: TimelineView, private var select
                 rootView.background = timelineView.resources.getDrawable(R.drawable.bg_shape)
                 selectedView = rootView
             } else {
-                rootView.setBackground(null)
+                rootView.background = null
             }
             for (date in deactivatedDates) {
                 val tempCalendar: Calendar = Calendar.getInstance()
-                tempCalendar.setTime(date)
+                tempCalendar.time = date
                 if (tempCalendar.get(Calendar.DAY_OF_MONTH) == day && tempCalendar.get(Calendar.MONTH) == month && tempCalendar.get(
                         Calendar.YEAR
                     ) == year
@@ -105,7 +105,7 @@ class TimelineAdapter(private val timelineView: TimelineView, private var select
                     monthView.setTextColor(timelineView.disabledDateColor)
                     dateView.setTextColor(timelineView.disabledDateColor)
                     dayView.setTextColor(timelineView.disabledDateColor)
-                    rootView.setBackground(null)
+                    rootView.background = null
                     return true
                 }
             }
@@ -115,7 +115,7 @@ class TimelineAdapter(private val timelineView: TimelineView, private var select
 
     companion object {
         private const val TAG = "TimelineAdapter"
-        private val WEEK_DAYS: Array<String> = DateFormatSymbols.getInstance().getShortWeekdays()
-        private val MONTH_NAME: Array<String> = DateFormatSymbols.getInstance().getShortMonths()
+        private val WEEK_DAYS: Array<String> = DateFormatSymbols.getInstance().shortWeekdays
+        private val MONTH_NAME: Array<String> = DateFormatSymbols.getInstance().shortMonths
     }
 }

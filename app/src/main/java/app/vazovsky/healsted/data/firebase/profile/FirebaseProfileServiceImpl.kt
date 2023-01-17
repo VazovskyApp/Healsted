@@ -14,6 +14,19 @@ const val PILLS_COLLECTION = "pills"
 const val MOODS_COLLECTION = "moods"
 const val HEALTH_COLLECTION = "health"
 
+const val PILL_ID = "id"
+const val PILL_NAME = "name"
+const val PILL_TYPE = "type"
+const val PILL_TAKE_PILL_TYPE = "takePillType"
+const val PILL_TIMES = "times"
+const val PILL_DATES_TAKEN = "datesTaken"
+const val PILL_DATES_TAKEN_SELECTED = "datesTakenSelected"
+const val PILL_START_DATE = "startDate"
+const val PILL_END_DATE = "endDate"
+const val PILL_AMOUNT = "amount"
+const val PILL_COMMENT = "comment"
+const val PILL_HISTORY = "history"
+
 class FirebaseProfileServiceImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
 ) : FirebaseProfileService {
@@ -49,7 +62,22 @@ class FirebaseProfileServiceImpl @Inject constructor(
         .document(uid)
         .collection(PILLS_COLLECTION)
         .document(pill.id)
-        .update(pill.serializeToMap())
+        .update(
+            mapOf(
+                PILL_ID to pill.id,
+                PILL_NAME to pill.name,
+                PILL_TYPE to pill.type,
+                PILL_TAKE_PILL_TYPE to pill.takePillType,
+                PILL_TIMES to pill.times,
+                PILL_DATES_TAKEN to pill.datesTaken,
+                PILL_DATES_TAKEN_SELECTED to pill.datesTakenSelected,
+                PILL_START_DATE to pill.startDate,
+                PILL_END_DATE to pill.endDate,
+                PILL_AMOUNT to pill.amount,
+                PILL_COMMENT to pill.comment,
+                PILL_HISTORY to pill.history,
+            )
+        )
 
     override fun deleteProfilePill(
         uid: String,

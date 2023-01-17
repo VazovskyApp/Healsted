@@ -29,9 +29,6 @@ class PillEditorViewModel @Inject constructor(
     private val deleteRoomPillUseCase: DeleteRoomPillUseCase,
 ) : BaseViewModel() {
 
-    var startDate: LocalDate? = null
-    var endDate: LocalDate? = null
-
     /** Типы лекарств */
     private val _pillTypesLiveData = MutableLiveData<LoadableResult<List<PillTypeItem>>>()
     val pillTypesLiveData: LiveData<LoadableResult<List<PillTypeItem>>> = _pillTypesLiveData
