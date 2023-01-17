@@ -3,4 +3,6 @@
     <string name="telegram_channel_link">tg://resolve?domain=healsted</string>
     <string name="telegram_vazovsky_link">tg://resolve?domain=vazovsky_app</string>
     <string name="share_link">https://www.t.me/healsted</string>
+
+    <string name="calendar_account_tag">ACCOUNT</string>
 </resources>

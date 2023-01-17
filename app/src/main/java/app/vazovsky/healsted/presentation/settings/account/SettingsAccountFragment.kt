@@ -1,5 +1,7 @@
 package app.vazovsky.healsted.presentation.settings.account
 
+import android.icu.util.Calendar
+import android.icu.util.TimeZone
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import app.vazovsky.healsted.R
@@ -14,8 +16,11 @@ import app.vazovsky.healsted.managers.DateFormatter
 import app.vazovsky.healsted.presentation.base.BaseFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
 import javax.inject.Inject
 import timber.log.Timber
 
@@ -30,6 +35,7 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
 
     @Inject lateinit var notificationCore: NotificationCore
     @Inject lateinit var dateFormatter: DateFormatter
+
     private var account: Account? = null
 
     override fun callOperations() {
@@ -68,16 +74,30 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
         root.fitTopInsetsWithPadding()
 
         setupToolbar()
+        setupBirthday()
         setupSave()
     }
 
     /** Привязка профиля */
     private fun bindProfile(account: Account) = with(binding) {
         editTextNickname.setText(account.nickname)
-        editTextBirthday.setText(account.birthday?.let { dateFormatter.formatStringFromLocalDate(it) }.orDefault())
+        textViewBirthdayValue.text = account.birthday?.let { dateFormatter.formatStringFromLocalDate(it) }.orDefault()
+        viewModel.birthday = account.birthday
         editTextSurname.setText(account.surname)
         editTextName.setText(account.name)
         editTextPatronymic.setText(account.patronymic)
+    }
+
+    private fun setupBirthday() = with(binding) {
+        cardViewBirthday.setOnClickListener {
+            val calendar = createDatePicker(viewModel.birthday)
+            calendar.show(requireActivity().supportFragmentManager, resources.getString(R.string.calendar_account_tag))
+            calendar.addOnPositiveButtonClickListener { millis ->
+                viewModel.birthday = dateFormatter.getLocalDate(millis)
+                textViewBirthdayValue.text = dateFormatter.getLocalDateString(millis)
+                Timber.d("LOL TEXT VALUE: ${textViewBirthdayValue.text}")
+            }
+        }
     }
 
     /** Настройка тулбара */
@@ -111,11 +131,9 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
                 )
 
                 if (editedAccount != null) {
-                    if (!editTextBirthday.text.isNullOrBlank() && textInputBirthday.validate()) {
-                        val birthday = dateFormatter.parseLocalDateFromString(editTextBirthday.text.toString())
-                        val editedAccountWithBirthday = editedAccount.copy(
-                            birthday = birthday,
-                        )
+                    if (viewModel.birthday != null) {
+                        val birthday = viewModel.birthday
+                        val editedAccountWithBirthday = editedAccount.copy(birthday = birthday)
                         viewModel.updateAccount(editedAccountWithBirthday)
                     } else {
                         viewModel.updateAccount(editedAccount)
@@ -149,5 +167,37 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
             }
             addOnFailureListener { Timber.d(it.message) }
         } ?: Timber.d("Не удалось удалить аккаунт")
+    }
+
+    private fun createDatePicker(date: LocalDate?): MaterialDatePicker<Long> {
+        return MaterialDatePicker.Builder
+            .datePicker()
+            .setTitleText("Выберите дату рождения")
+            .apply {
+                val today = MaterialDatePicker.todayInUtcMilliseconds()
+                val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+                calendar.timeInMillis = today
+                calendar[Calendar.YEAR] = 1900
+                val startDate = calendar.timeInMillis
+
+                calendar.timeInMillis = today
+                val endDate = calendar.timeInMillis
+
+                val openDate = date?.let {
+                    calendar.timeInMillis = today
+                    calendar[Calendar.YEAR] = date.year
+                    calendar[Calendar.MONTH] = date.month.value - 1
+                    calendar[Calendar.DAY_OF_MONTH] = date.dayOfMonth
+                    calendar.timeInMillis
+                } ?: endDate
+
+                val constraint: CalendarConstraints = CalendarConstraints.Builder()
+                    .setOpenAt(openDate)
+                    .setStart(startDate)
+                    .setEnd(endDate)
+                    .build()
+                setCalendarConstraints(constraint)
+            }
+            .build()
     }
 }
