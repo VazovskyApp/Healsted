@@ -18,8 +18,8 @@
 
     <!-- Settings About us -->
     <string name="settings_about_us_title">О приложении</string>
-    <string name="settings_about_us_version">Версия 1.0.2</string>
-    <string name="settings_about_us_issue_date">Выпущено 17.01.2023</string>
+    <string name="settings_about_us_version">Версия 1.0.3</string>
+    <string name="settings_about_us_issue_date">Выпущено 18.01.2023</string>
     <string name="settings_about_us_description">Приложение для отслеживания принятия лекарств. Если вам нужно принять лекарства, а вы забыли это сделать, то приложение поможет вам не забыть это сделать вовремя.</string>
     <string name="settings_about_us_share">Поделиться приложением</string>
     <string name="settings_about_us_telegram">Telegram Channel</string>
