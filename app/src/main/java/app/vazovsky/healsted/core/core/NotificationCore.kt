@@ -47,7 +47,7 @@ class NotificationCore @Inject constructor(
         const val DEFAULT_ENDPOINT = "Healsted"
         const val DEFAULT_DEVICE_ID = "test"
         const val DEFAULT_PACKAGE_NAME = "app.vazovsky.healsted"
-        const val DEFAULT_NOTIFICATION_PACKAGE_NAME = "app.vazovsky.healsted.MainActivity"
+        const val DEFAULT_NOTIFICATION_PACKAGE_NAME = "app.vazovsky.healsted.presentation.mainscreen.MainActivity"
         const val FULL_DAY_MINUTES = 1440
 
         const val CHANNEL_ID_DEFAULT: String = "CHANNEL_ID_DEFAULT"
@@ -58,7 +58,6 @@ class NotificationCore @Inject constructor(
         const val NOTIFICATION_EXTRA: String = "NOTIFICATION_EXTRA"
         const val NOTIFICATION_ID: String = "NOTIFICATION_ID"
         const val NOTIFICATION_CLICK_ENDPOINT: String = "NOTIFICATION_CLICK_ENDPOINT"
-        const val NOTIFICATION_IMAGE: String = "NOTIFICATION_IMAGE"
         const val NOTIFICATION_CLICK_DATA_EXTRA: String = "NOTIFICATION_CLICK_EXTRA"
         const val PACKAGE_NAME: String = "PACKAGE_NAME"
         const val CLASS_NAME: String = "CLASS_NAME"
@@ -105,7 +104,6 @@ class NotificationCore @Inject constructor(
         data.putString(ENDPOINT_REQUEST, endPoint)
         data.putString(TOKEN, token)
         data.putString(DEVICE_ID, deviceId)
-        data.putInt(NOTIFICATION_IMAGE, notificationImage)
         data.putString(PACKAGE_NAME, notificationPackageName)
         data.putString(CLASS_NAME, notificationClassPackageName)
         data.putString(PILL_NAME, pill.name)
