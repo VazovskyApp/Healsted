@@ -107,6 +107,12 @@ class DatePickerTimeline @JvmOverloads constructor(
         }
     }
 
+    /** Проскролит так, чтоб было видно предыдущие две даты и следующие три */
+    fun scrollToActivePosition() = with(binding) {
+        val activePosition = timelineView.getActivePosition()
+        timelineView.scrollToPosition(if (activePosition - 2 < 0) activePosition else activePosition - 2)
+    }
+
     fun getActiveDate() = with(binding) {
         timelineView.date
     }
