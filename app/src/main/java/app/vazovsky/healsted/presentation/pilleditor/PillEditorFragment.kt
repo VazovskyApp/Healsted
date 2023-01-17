@@ -1,5 +1,7 @@
 package app.vazovsky.healsted.presentation.pilleditor
 
+import android.icu.util.Calendar
+import android.icu.util.TimeZone
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -34,6 +36,8 @@ import app.vazovsky.healsted.presentation.pilleditor.times.TimesAdapter
 import app.vazovsky.healsted.presentation.pills.REQUEST_KEY_UPDATE_PILLS
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK
 import com.google.android.material.timepicker.TimeFormat
@@ -98,6 +102,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         stateViewFlipper.setRetryMethod { viewModel.getPillTypes() }
 
         setupToolbar()
+        setDateNotification()
         setupDataIfPillEsNotNull()
         setupDosageString()
         setupPillTypeRecyclerView()
@@ -105,7 +110,6 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         setupTimesRecyclerView()
         setDatesTakenType()
         setTakePillType()
-        setDateNotification()
 
         setConfirmClick()
         setDeleteClick()
@@ -166,7 +170,7 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         recyclerViewTimes.adapter = timesAdapter.apply {
             onEditClick = { item, position ->
                 val timePicker = createTimePicker(item)
-                timePicker.show(requireActivity().supportFragmentManager, "PILL_EDITOR")
+                timePicker.show(requireActivity().supportFragmentManager, resources.getString(R.string.calendar_pill_time_tag))
                 timePicker.addOnPositiveButtonClickListener {
                     val newTime = item.copy(time = LocalTime.of(timePicker.hour, timePicker.minute))
                     recyclerViewTimes.post {
@@ -222,11 +226,11 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                 )
                 return@setOnClickListener
             }
+            val isEndDateEnabled = switchEndDateEnabled.isChecked
 
-            val listOfInputs = mutableListOf(textInputName, textInputDosage, textInputStartDate)
-            if (switchEndDateEnabled.isChecked) listOfInputs.add(textInputEndDate)
-            val validated = listOfInputs.checkInputs()
-            if (validated) {
+            if (listOf(textInputName, textInputDosage).checkInputs() &&
+                viewModel.startDate != null && if (isEndDateEnabled) viewModel.endDate != null else true
+            ) {
                 try {
                     val newPill = pill?.let {
                         pill?.copy(
@@ -240,10 +244,8 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                                 datesTakenSelectedAdapter.getSelectedItemsValue()
                             } else arrayListOf(),
                             takePillType = spinnerTakePillType.selectedItem as TakePillType,
-                            startDate = dateFormatter.parseLocalDateFromString(editTextStartDate.text.toString()),
-                            endDate = if (switchEndDateEnabled.isChecked) {
-                                dateFormatter.parseLocalDateFromString(editTextEndDate.text.toString())
-                            } else null,
+                            startDate = dateFormatter.parseLocalDateFromString(textViewStartDateValue.text.toString()),
+                            endDate = if (isEndDateEnabled) viewModel.endDate else null,
                             comment = editTextComment.text.toString(),
                         )
                     } ?: Pill(
@@ -257,10 +259,8 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                             datesTakenSelectedAdapter.getSelectedItemsValue()
                         } else arrayListOf(),
                         takePillType = spinnerTakePillType.selectedItem as TakePillType,
-                        startDate = dateFormatter.parseLocalDateFromString(editTextStartDate.text.toString()),
-                        endDate = if (switchEndDateEnabled.isChecked) {
-                            dateFormatter.parseLocalDateFromString(editTextEndDate.text.toString())
-                        } else null,
+                        startDate = dateFormatter.parseLocalDateFromString(textViewStartDateValue.text.toString()),
+                        endDate = if (isEndDateEnabled) viewModel.endDate else null,
                         comment = editTextComment.text.toString(),
                     )
                     if (pill == null) viewModel.addPill(newPill) else viewModel.updatePill(newPill)
@@ -271,8 +271,10 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                 when {
                     !textInputName.validate() -> scrollToError(y = textInputName.top)
                     !textInputDosage.validate() -> scrollToError(y = cardViewAttributes.bottom)
-                    !textInputStartDate.validate() -> scrollToError(y = cardViewStartDateNotification.bottom)
-                    switchEndDateEnabled.isChecked && !textInputEndDate.validate() -> scrollToError(y = cardViewEndDateNotification.bottom)
+                    viewModel.startDate == null -> scrollToError(y = cardViewStartDateNotification.bottom)
+                    switchEndDateEnabled.isChecked && viewModel.startDate != null -> scrollToError(
+                        y = cardViewEndDateNotification.bottom
+                    )
 
                     else -> Unit
                 }
@@ -301,13 +303,40 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                 datesTakenSelectedAdapter.selectItem(it)
             }
         }
-        editTextStartDate.setText(pill?.startDate?.let {
-            dateFormatter.formatStringFromLocalDate(it)
-        } ?: LocalDate.now().toDefaultString())
-        editTextEndDate.setText(pill?.endDate?.let {
-            dateFormatter.formatStringFromLocalDate(it)
-        } ?: LocalDate.now().toDefaultString())
+        setupStartDate()
+        setupEndDate()
         editTextComment.setText(pill?.comment.orDefault())
+    }
+
+    private fun setupStartDate() = with(binding) {
+        textViewStartDateValue.text = pill?.startDate?.let {
+            dateFormatter.formatStringFromLocalDate(it)
+        } ?: LocalDate.now().toDefaultString()
+        viewModel.startDate = pill?.startDate
+        cardViewStartDate.setOnClickListener {
+            val calendar = createDatePicker(viewModel.startDate)
+            calendar.show(requireActivity().supportFragmentManager, resources.getString(R.string.calendar_pill_date_tag))
+            calendar.addOnPositiveButtonClickListener { millis ->
+                viewModel.startDate = dateFormatter.getLocalDate(millis)
+                textViewStartDateValue.text = dateFormatter.getLocalDateString(millis)
+            }
+        }
+    }
+
+    private fun setupEndDate() = with(binding) {
+        textViewEndDateValue.text = pill?.endDate?.let {
+            dateFormatter.formatStringFromLocalDate(it)
+        } ?: LocalDate.now().toDefaultString()
+        viewModel.endDate = pill?.endDate
+        switchEndDateEnabled.isChecked = viewModel.endDate != null
+        cardViewEndDate.setOnClickListener {
+            val calendar = createDatePicker(viewModel.endDate)
+            calendar.show(requireActivity().supportFragmentManager, resources.getString(R.string.calendar_pill_date_tag))
+            calendar.addOnPositiveButtonClickListener { millis ->
+                viewModel.endDate = dateFormatter.getLocalDate(millis)
+                textViewEndDateValue.text = dateFormatter.getLocalDateString(millis)
+            }
+        }
     }
 
     /** Настройка поля дозировки */
@@ -391,6 +420,41 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
             .build()
     }
 
+    private fun createDatePicker(date: LocalDate?): MaterialDatePicker<Long> {
+        return MaterialDatePicker.Builder
+            .datePicker()
+            .setTitleText("Выберите дату")
+            .apply {
+                val today = MaterialDatePicker.todayInUtcMilliseconds()
+                val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+                calendar.timeInMillis = today
+                calendar[Calendar.YEAR] = 1900
+                val startDate = calendar.timeInMillis
+
+                calendar.timeInMillis = today
+                calendar[Calendar.YEAR] = 3000
+                val endDate = calendar.timeInMillis
+
+                calendar.timeInMillis = today
+                val todayDate = calendar.timeInMillis
+
+                val openDate = date?.let {
+                    calendar.timeInMillis = today
+                    calendar[Calendar.YEAR] = date.year
+                    calendar[Calendar.MONTH] = date.month.value - 1
+                    calendar[Calendar.DAY_OF_MONTH] = date.dayOfMonth
+                    calendar.timeInMillis
+                } ?: todayDate
+
+                val constraint: CalendarConstraints = CalendarConstraints.Builder()
+                    .setOpenAt(openDate)
+                    .setStart(startDate)
+                    .setEnd(endDate)
+                    .build()
+                setCalendarConstraints(constraint)
+            }
+            .build()
+    }
 
     companion object {
         const val DEFAULT_DOSAGE_VALUE = "1"

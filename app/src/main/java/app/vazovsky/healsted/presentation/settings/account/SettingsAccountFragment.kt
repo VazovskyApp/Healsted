@@ -95,7 +95,6 @@ class SettingsAccountFragment : BaseFragment(R.layout.fragment_settings_account)
             calendar.addOnPositiveButtonClickListener { millis ->
                 viewModel.birthday = dateFormatter.getLocalDate(millis)
                 textViewBirthdayValue.text = dateFormatter.getLocalDateString(millis)
-                Timber.d("LOL TEXT VALUE: ${textViewBirthdayValue.text}")
             }
         }
     }
