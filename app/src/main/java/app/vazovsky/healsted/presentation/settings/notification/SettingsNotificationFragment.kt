@@ -1,6 +1,8 @@
 package app.vazovsky.healsted.presentation.settings.notification
 
 import android.os.Bundle
+import android.view.View
+import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import app.vazovsky.healsted.R
 import app.vazovsky.healsted.databinding.FragmentSettingsNotificationBinding
@@ -26,5 +28,11 @@ class SettingsNotificationFragment : BaseFragment(R.layout.fragment_settings_not
 
     override fun onBindViewModel() = with(viewModel) {
         observeNavigationCommands()
+
+        binding.buttonAppSettings.setOnClickListener { viewModel.openAppSettings() }
+    }
+
+    override fun applyBottomNavigationViewPadding(view: View, bottomNavigationViewHeight: Int) = with(binding) {
+        constraintLayout.updatePadding(bottom = bottomNavigationViewHeight)
     }
 }

@@ -84,6 +84,9 @@
     <string name="pill_editor_confirm">Подтвердить</string>
     <string name="pill_editor_other">Дополнительно</string>
 
+    <!-- Profile -->
+    <string name="profile_pills_history">История</string>
+
     <!-- Health -->
     <string name="health_title">Мое здоровье</string>
     <string name="health_update">Обновить</string>
@@ -102,5 +105,4 @@
     <string name="okay">OKAY</string>
     <string name="good">GOOD</string>
     <string name="great">GREAT</string>
-    <string name="profile_pills_history">История</string>
 </resources>

@@ -26,10 +26,50 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/textViewGuideTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_16"
+                android:text="@string/settings_notifications_guide_title"
+                android:textAlignment="center"
+                android:textAppearance="@style/Font.Heading_3.Medium"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewGuide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_16"
+                android:text="@string/settings_notifications_guide"
+                android:textAppearance="@style/Font.Body_1.Bold"
+                app:layout_constraintTop_toBottomOf="@id/textViewGuideTitle" />
+
+            <TextView
+                android:id="@+id/textViewGuideList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_16"
+                android:text="@string/settings_notifications_guide_list"
+                android:textAppearance="@style/Font.Body_1.Medium"
+                app:layout_constraintTop_toBottomOf="@id/textViewGuide" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonAppSettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="@dimen/margin_16"
+                android:backgroundTint="?colorOnPrimary"
+                android:text="@string/settings_notifications_open_app_settings"
+                android:textColor="?colorOnBackground"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewGuideList" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

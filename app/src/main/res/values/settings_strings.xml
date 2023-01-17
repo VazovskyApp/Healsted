@@ -27,5 +27,8 @@
 
     <!-- Settings Notification -->
     <string name="settings_notifications_title">Уведомления</string>
-
+    <string name="settings_notifications_guide_title">Краткая инструкция по настройке уведомлений</string>
+    <string name="settings_notifications_guide">При неккоректной работе уведомлений стоит совершить ряд действий в настройках приложения</string>
+    <string name="settings_notifications_guide_list">- Разрешить все уведомления приложения, особенно в категории "Уведомления о лекарствах" (если она у вас видна)\n- Отключить контроль активности (или другую аналогичную функцию, которая контролирует заряд батареи) для данного приложения\n- Разрешить всплывающие окна и постоянные уведомления\n- Если все выше перечисленное не помогло, закрепите приложение во всегда открытых</string>
+    <string name="settings_notifications_open_app_settings">Настройки приложения</string>
 </resources>

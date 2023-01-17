@@ -5,4 +5,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingsNotificationViewModel @Inject constructor() : BaseViewModel()
+class SettingsNotificationViewModel @Inject constructor(
+    private val destinations: SettingsNotificationDestinations,
+) : BaseViewModel() {
+    fun openAppSettings() {
+        navigate(destinations.appSettings())
+    }
+}
