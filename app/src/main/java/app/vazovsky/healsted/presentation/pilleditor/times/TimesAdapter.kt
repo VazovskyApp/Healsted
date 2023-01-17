@@ -10,12 +10,12 @@ class TimesAdapter @Inject constructor(
     private val dateFormatter: DateFormatter,
 ) : BaseAdapter<TimeItem, TimeViewHolder>() {
 
-    lateinit var onAddClick: (TimeItem, Int) -> Unit
+    lateinit var onEditClick: (TimeItem, Int) -> Unit
+    lateinit var onAddClick: (TimeItem) -> Unit
     lateinit var onDeleteClick: (TimeItem) -> Unit
-    lateinit var editTime: (TimeItem, Int) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimeViewHolder {
-        return TimeViewHolder(parent, onAddClick, onDeleteClick, editTime, dateFormatter)
+        return TimeViewHolder(parent, onEditClick, onAddClick, onDeleteClick, dateFormatter)
     }
 
     override fun onBindViewHolder(holder: TimeViewHolder, position: Int) {
@@ -32,8 +32,7 @@ class TimesAdapter @Inject constructor(
         }
     }
 
-    fun addItem(item: TimeItem, focusableItem: TimeItem, position: Int) {
-        notifyItemChanged(position, focusableItem.time)
+    fun addItem(item: TimeItem) {
         this.items.apply {
             add(item)
         }
@@ -51,4 +50,6 @@ class TimesAdapter @Inject constructor(
         }
         notifyDataSetChanged()
     }
+
+    fun getLastItem() = items.last()
 }

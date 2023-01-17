@@ -164,13 +164,15 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/linearLayoutDatesTakenType"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_shape_gradient"
+                            android:paddingVertical="@dimen/padding_16">
 
                             <TextView
                                 android:id="@+id/textViewDatesTakenType"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="@dimen/margin_20"
+                                android:layout_marginStart="@dimen/margin_16"
                                 android:text="@string/pill_editor_dates_taken_type"
                                 android:textAppearance="@style/Font.Heading_4.Medium"
                                 app:layout_constraintEnd_toStartOf="@id/spinnerDatesTakenType"
@@ -181,7 +183,7 @@
                                 android:id="@+id/spinnerDatesTakenType"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/margin_20"
+                                android:layout_marginEnd="@dimen/margin_16"
                                 app:layout_constraintBottom_toBottomOf="@id/textViewDatesTakenType"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/textViewDatesTakenType"
@@ -191,6 +193,7 @@
                                 android:id="@+id/frameLayoutDatesTakenSelected"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_20"
                                 android:visibility="gone"
                                 app:layout_constraintTop_toBottomOf="@id/textViewDatesTakenType">
 
@@ -213,6 +216,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_20"
                         android:layout_marginTop="20dp"
+                        android:paddingVertical="16dp"
                         app:cardBackgroundColor="@color/frenchSkyBlue"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="10dp">
@@ -236,20 +240,11 @@
                                 android:id="@+id/recyclerViewTimes"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
+                                android:layout_marginVertical="8dp"
                                 android:orientation="vertical"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 tools:itemCount="1"
                                 tools:listitem="@layout/item_time" />
-
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/buttonAddTime"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="@dimen/margin_16"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginBottom="20dp"
-                                android:text="@string/pill_editor_add_time" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 

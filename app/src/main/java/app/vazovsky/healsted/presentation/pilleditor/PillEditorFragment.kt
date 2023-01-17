@@ -34,6 +34,9 @@ import app.vazovsky.healsted.presentation.pilleditor.times.TimesAdapter
 import app.vazovsky.healsted.presentation.pills.REQUEST_KEY_UPDATE_PILLS
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.tasks.Task
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK
+import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.LocalTime
@@ -108,6 +111,10 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         setDeleteClick()
     }
 
+    override fun applyBottomNavigationViewPadding(view: View, bottomNavigationViewHeight: Int) = with(binding) {
+        linearLayoutParametres.updatePadding(bottom = bottomNavigationViewHeight)
+    }
+
     private fun setupDosage() = with(binding) {
         val type = pillTypesAdapter.getSelectedItemType()
         textInputDosage.hint = when (type) {
@@ -129,10 +136,6 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
                 append(resources.getString(R.string.pill_type_other))
             }
         }
-    }
-
-    override fun applyBottomNavigationViewPadding(view: View, bottomNavigationViewHeight: Int) = with(binding) {
-        linearLayoutParametres.updatePadding(bottom = bottomNavigationViewHeight)
     }
 
     /** Настройка тулбара */
@@ -161,17 +164,23 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
     /** Настройка времени уведомления */
     private fun setupTimesRecyclerView() = with(binding) {
         recyclerViewTimes.adapter = timesAdapter.apply {
-            onAddClick = { item, position ->
-                val newItem = TimeItem(UUID.randomUUID().toString(), LocalTime.now())
-                timesAdapter.addItem(newItem, item, position)
+            onEditClick = { item, position ->
+                val timePicker = createTimePicker(item)
+                timePicker.show(requireActivity().supportFragmentManager, "PILL_EDITOR")
+                timePicker.addOnPositiveButtonClickListener {
+                    val newTime = item.copy(time = LocalTime.of(timePicker.hour, timePicker.minute))
+                    recyclerViewTimes.post {
+                        timesAdapter.updateItem(newTime, position)
+                    }
+                }
+            }
+            onAddClick = {
+                val lastElement = timesAdapter.getLastItem()
+                val newItem = TimeItem(UUID.randomUUID().toString(), LocalTime.of(lastElement.time.hour, 0))
+                timesAdapter.addItem(newItem)
             }
             onDeleteClick = { item ->
                 timesAdapter.deleteItem(item)
-            }
-            editTime = { newPair, position ->
-                recyclerViewTimes.post {
-                    timesAdapter.updateItem(newPair, position)
-                }
             }
         }
     }
@@ -371,6 +380,17 @@ class PillEditorFragment : BaseFragment(R.layout.fragment_pill_editor) {
         }
         addOnFailureListener { Timber.d(it.message) }
     }
+
+    private fun createTimePicker(item: TimeItem): MaterialTimePicker {
+        return MaterialTimePicker.Builder()
+            .setTitleText("Выберите время")
+            .setHour(item.time.hour)
+            .setMinute(item.time.minute)
+            .setTimeFormat(TimeFormat.CLOCK_24H)
+            .setInputMode(INPUT_MODE_CLOCK)
+            .build()
+    }
+
 
     companion object {
         const val DEFAULT_DOSAGE_VALUE = "1"
