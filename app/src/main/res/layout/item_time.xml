@@ -1,65 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/margin_16">
+    android:layout_marginHorizontal="@dimen/margin_16"
+    android:layout_marginVertical="@dimen/margin_8"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp">
 
-    <app.vazovsky.healsted.presentation.view.ValidationTextInputLayout
-        android:id="@+id/textInputTime"
-        style="@style/TextInputLayoutTheme"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:emptyCheck="true"
-        app:errorEmpty="@string/empty_time_error"
-        app:errorMalformed="@string/malformed_time_error"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/buttonDelete"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:validationPattern="@string/time_validation_pattern">
+        android:layout_margin="@dimen/margin_4">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextTime"
-            android:layout_width="match_parent"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textViewTime"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/pill_editor_time_hint"
-            android:imeOptions="actionNext"
-            android:inputType="time"
-            android:maxLength="5"
-            android:maxLines="1" />
-    </app.vazovsky.healsted.presentation.view.ValidationTextInputLayout>
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingVertical="@dimen/padding_16"
+            android:textAppearance="@style/Font.Body_1.Bold"
+            android:textColor="?colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/buttonDelete"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/buttonDelete"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/ic_close"
-        android:backgroundTint="?colorOnPrimary"
-        android:clickable="true"
-        android:contentDescription="@null"
-        android:focusable="true"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textInputTime"
-        app:layout_constraintTop_toTopOf="@id/textInputTime" />
+        <ImageButton
+            android:id="@+id/buttonDelete"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/ic_minus"
+            android:backgroundTint="?colorPrimary"
+            android:clickable="true"
+            android:contentDescription="@null"
+            android:focusable="true"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/textViewTime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/textViewTime"
+            app:layout_constraintTop_toTopOf="@id/textViewTime" />
 
-    <ImageButton
-        android:id="@+id/buttonAdd"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/ic_plus"
-        android:backgroundTint="?colorOnPrimary"
-        android:clickable="true"
-        android:contentDescription="@null"
-        android:focusable="true"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textInputTime"
-        app:layout_constraintTop_toTopOf="@id/textInputTime" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageButton
+            android:id="@+id/buttonAdd"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/ic_plus"
+            android:backgroundTint="?colorPrimary"
+            android:clickable="true"
+            android:contentDescription="@null"
+            android:focusable="true"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/textViewTime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/textViewTime"
+            app:layout_constraintTop_toTopOf="@id/textViewTime" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
