@@ -14,11 +14,12 @@ android {
     compileSdk 33
 
     defaultConfig {
+        manifestPlaceholders = [hostName:"healsted.vazovsky.app"]
         applicationId "app.vazovsky.healsted"
         minSdk 24
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -29,6 +30,15 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            //applicationIdSuffix ".debug"
+            debuggable true
+        }
+        staging {
+            initWith debug
+            manifestPlaceholders = [hostName:"healsted.vazovsky.app"]
+            applicationIdSuffix ".debugStaging"
         }
     }
     compileOptions {

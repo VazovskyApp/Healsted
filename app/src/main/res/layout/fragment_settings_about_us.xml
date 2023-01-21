@@ -20,112 +20,107 @@
             app:titleTextAppearance="@style/Font.Heading_1" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <app.vazovsky.healsted.presentation.view.StateViewFlipper
+        android:id="@+id/stateViewFlipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <ImageView
-            android:id="@+id/imageViewLogo"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_marginTop="40dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_logo" />
-
-        <TextView
-            android:id="@+id/textViewAppName"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/app_name"
-            android:textAlignment="center"
-            android:textAppearance="@style/Font.Body_1.Bold"
-            android:textSize="24sp"
-            app:layout_constraintTop_toBottomOf="@id/imageViewLogo" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textViewVersion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/settings_about_us_version"
-            android:textAlignment="center"
-            android:textAppearance="@style/Font.Body_1"
-            android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@id/textViewAppName" />
+            <ImageView
+                android:id="@+id/imageViewLogo"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_logo" />
 
-        <TextView
-            android:id="@+id/textViewIssueDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/settings_about_us_issue_date"
-            android:textAlignment="center"
-            android:textAppearance="@style/Font.Body_1"
-            android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@id/textViewVersion" />
+            <TextView
+                android:id="@+id/textViewAppName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/app_name"
+                android:textAlignment="center"
+                android:textAppearance="@style/Font.Body_1.Bold"
+                android:textSize="24sp"
+                app:layout_constraintTop_toBottomOf="@id/imageViewLogo" />
 
-        <TextView
-            android:id="@+id/textViewDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="32dp"
-            android:layout_marginTop="32dp"
-            android:text="@string/settings_about_us_description"
-            android:textAlignment="center"
-            android:textAppearance="@style/Font.Body_1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewIssueDate" />
+            <TextView
+                android:id="@+id/textViewVersion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/settings_about_us_version"
+                android:textAlignment="center"
+                android:textAppearance="@style/Font.Body_1"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@id/textViewAppName" />
 
-        <TextView
-            android:id="@+id/textViewTelegram"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawablePadding="8dp"
-            android:padding="@dimen/padding_16"
-            android:text="@string/settings_about_us_telegram"
-            android:textAlignment="center"
-            android:textAppearance="@style/Font.Body_1.Bold"
-            app:drawableLeftCompat="@drawable/ic_telegram"
-            app:drawableTint="?colorOnPrimary"
-            app:layout_constraintBottom_toTopOf="@id/textViewShare"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewDescription"
-            app:layout_constraintVertical_bias="1" />
+            <TextView
+                android:id="@+id/textViewDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="32dp"
+                android:text="@string/settings_about_us_description"
+                android:textAlignment="center"
+                android:textAppearance="@style/Font.Body_1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewVersion" />
 
-        <TextView
-            android:id="@+id/textViewShare"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:drawablePadding="8dp"
-            android:padding="@dimen/padding_16"
-            android:text="@string/settings_about_us_share"
-            android:textAlignment="center"
-            android:textAppearance="@style/Font.Body_1.Bold"
-            app:drawableLeftCompat="@drawable/ic_share"
-            app:drawableTint="?colorOnPrimary"
-            app:layout_constraintBottom_toTopOf="@id/textViewDeveloper"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/textViewTelegram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:padding="@dimen/padding_16"
+                android:text="@string/settings_about_us_telegram"
+                android:textAlignment="center"
+                android:textAppearance="@style/Font.Body_1.Bold"
+                app:drawableLeftCompat="@drawable/ic_telegram"
+                app:drawableTint="?colorOnPrimary"
+                app:layout_constraintBottom_toTopOf="@id/textViewShare"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewDescription"
+                app:layout_constraintVertical_bias="1" />
 
-        <TextView
-            android:id="@+id/textViewDeveloper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:background="?selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="10dp"
-            android:textAlignment="center"
-            android:textAppearance="@style/Font.Body_1.Bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="1" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textViewShare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:drawablePadding="8dp"
+                android:padding="@dimen/padding_16"
+                android:text="@string/settings_about_us_share"
+                android:textAlignment="center"
+                android:textAppearance="@style/Font.Body_1.Bold"
+                app:drawableLeftCompat="@drawable/ic_share"
+                app:drawableTint="?colorOnPrimary"
+                app:layout_constraintBottom_toTopOf="@id/textViewDeveloper"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewDeveloper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="10dp"
+                android:textAlignment="center"
+                android:textAppearance="@style/Font.Body_1.Bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="1" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </app.vazovsky.healsted.presentation.view.StateViewFlipper>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,5 +1,9 @@
 package app.vazovsky.healsted.di
 
+import app.vazovsky.healsted.data.appinfo.repository.AppInfoRepository
+import app.vazovsky.healsted.data.appinfo.repository.AppInfoRepositoryImpl
+import app.vazovsky.healsted.data.appinfo.repository.BuildConfigProvider
+import app.vazovsky.healsted.data.appinfo.repository.BuildConfigProviderImpl
 import app.vazovsky.healsted.data.firebase.auth.FirebaseAuthRepository
 import app.vazovsky.healsted.data.firebase.auth.FirebaseAuthRepositoryImpl
 import app.vazovsky.healsted.data.firebase.profile.FirebaseProfileRepository
@@ -51,4 +55,10 @@ abstract class RepositoryModule {
     abstract fun bindRoomRepository(
         roomRepository: RoomRepositoryImpl
     ): RoomRepository
+
+    @Binds
+    abstract fun bindAppInfoRepository(
+        appInfoRepository: AppInfoRepositoryImpl
+    ): AppInfoRepository
+
 }
