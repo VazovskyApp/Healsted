@@ -14,7 +14,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        manifestPlaceholders = [hostName:"healsted.vazovsky.app"]
+       // manifestPlaceholders = [hostName:"healsted.vazovsky.app"]
         applicationId "app.vazovsky.healsted"
         minSdk 24
         targetSdk 33
@@ -28,17 +28,19 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            debuggable false
+            versionNameSuffix "-release"
+            signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            consumerProguardFiles 'proguard-rules.pro'
         }
         debug{
-            //applicationIdSuffix ".debug"
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+            minifyEnabled false
+            signingConfig signingConfigs.debug
             debuggable true
-        }
-        staging {
-            initWith debug
-            manifestPlaceholders = [hostName:"healsted.vazovsky.app"]
-            applicationIdSuffix ".debugStaging"
         }
     }
     compileOptions {
@@ -51,6 +53,9 @@ android {
     }
     buildFeatures {
         viewBinding true
+    }
+    lint {
+        baseline = file("lint-baseline.xml")
     }
 }
 
@@ -78,7 +83,6 @@ dependencies {
 
     implementation(libs.view.binding)
     implementation(libs.timber)
-    implementation(libs.gson)
 
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)

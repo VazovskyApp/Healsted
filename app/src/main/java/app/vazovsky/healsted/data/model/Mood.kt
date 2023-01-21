@@ -1,7 +1,7 @@
 package app.vazovsky.healsted.data.model
 
 import android.os.Parcelable
-import com.google.firebase.firestore.PropertyName
+import com.google.gson.annotations.SerializedName
 import java.time.LocalDate
 import kotlinx.parcelize.Parcelize
 
@@ -9,8 +9,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Mood(
     /** Значение настроения */
-    @PropertyName("value") val value: MoodType = MoodType.EMPTY,
+    @SerializedName("value") val value: MoodType = MoodType.EMPTY,
 
     /** Дата отметки настроения */
-    @PropertyName("date") val date: LocalDate = LocalDate.now(),
+    @SerializedName("date") val date: LocalDate = LocalDate.now(),
 ) : Parcelable

@@ -41,6 +41,43 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:963930440934:android:2cec737594991b7c7da727",
+        "android_client_info": {
+          "package_name": "app.vazovsky.healsted.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "963930440934-uqvfspg68ctnk2738v2ae4hjr32hrlqg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.vazovsky.healsted.dev",
+            "certificate_hash": "4f668add255c91fd5e42285dd4b3474b534a4e4b"
+          }
+        },
+        {
+          "client_id": "963930440934-c5avv7mgmh26pckdj5gp3kjajvgn9p2s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe7sRNNfdilUwJMUMYHnfVeIUFzVuaF1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "963930440934-c5avv7mgmh26pckdj5gp3kjajvgn9p2s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

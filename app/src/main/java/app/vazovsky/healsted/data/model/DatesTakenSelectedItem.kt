@@ -1,9 +1,11 @@
 package app.vazovsky.healsted.data.model
 
+import com.google.gson.annotations.SerializedName
+
 data class DatesTakenSelectedItem(
     /** День */
-    val value: Int,
+    @SerializedName("value") val value: Int,
 
     /** Выбран ли день */
-    var selected: Boolean = false,
+    @SerializedName("selected") var selected: Boolean = false,
 )

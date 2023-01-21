@@ -1,15 +1,17 @@
 package app.vazovsky.healsted.data.model
 
+import com.google.gson.annotations.SerializedName
+
 /** Вкладка для экрана с лекарствами */
 data class PillsTab(
     /** Имя вкладки */
-    val tabName: String,
+    @SerializedName("tabName") val tabName: String,
 
     /** Слот для запроса вкладки */
-    val slot: PillsTabSlot,
+    @SerializedName("slot") val slot: PillsTabSlot,
 
     /** Выбрана ли вкладка */
-    val selected: Boolean,
+    @SerializedName("selected") val selected: Boolean,
 )
 
 /** Слот для вкладки */
