@@ -4,6 +4,7 @@ import android.os.Parcelable
 import app.vazovsky.healsted.data.model.MoodType
 import app.vazovsky.healsted.extensions.toDefaultString
 import com.google.firebase.firestore.PropertyName
+import com.google.gson.annotations.SerializedName
 import java.time.LocalDate
 import java.util.*
 import kotlinx.parcelize.Parcelize
@@ -12,8 +13,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class MoodDocument(
     /** Значение настроения */
-    @PropertyName("value") val value: MoodType = MoodType.EMPTY,
+    @SerializedName("value") @PropertyName("value") val value: MoodType = MoodType.EMPTY,
 
     /** Дата отметки настроения */
-    @PropertyName("date") val date: String = LocalDate.now().toDefaultString(),
+    @SerializedName("date") @PropertyName("date") val date: String = LocalDate.now().toDefaultString(),
 ) : Parcelable

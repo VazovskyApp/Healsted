@@ -2,6 +2,7 @@ package app.vazovsky.healsted.data.model
 
 import android.os.Parcelable
 import com.google.firebase.firestore.PropertyName
+import com.google.gson.annotations.SerializedName
 import java.time.LocalDate
 import kotlinx.parcelize.Parcelize
 
@@ -9,11 +10,11 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class MonitoringAttribute(
     /** Значение */
-    @PropertyName("value") var value: String = "0",
+    @SerializedName("value") var value: String = "0",
 
     /** Тип атрибута */
-    @PropertyName("type") val type: MonitoringType = MonitoringType.BLOOD_PRESSURE,
+    @SerializedName("type") val type: MonitoringType = MonitoringType.BLOOD_PRESSURE,
 
     /** Дата отметки значения */
-    @PropertyName("date") val date: LocalDate = LocalDate.now(),
+    @SerializedName("date") val date: LocalDate = LocalDate.now(),
 ) : Parcelable
